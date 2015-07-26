@@ -20,6 +20,7 @@
 
 @implementation PlayerViewController
 
+bool handleError;
 Session *session;
 Player *player;
 TFHpple *parser;
@@ -34,6 +35,7 @@ bool playerNotLoaded = YES;
 bool needsLoadGamesButton = YES;
 
 - (void)viewDidLoad {
+    handleError = NO;
     [super viewDidLoad];
     [self loadScrollView];
     needsLoadGamesButton = YES;
@@ -110,21 +112,34 @@ bool needsLoadGamesButton = YES;
 }
 
 - (void)loadPlayer {
+    bool playerFound = NO;
     NSString *url = [NSString stringWithFormat:@"http://espn.go.com/nba/players/_/search/%@",[player.lastName stringByReplacingOccurrencesOfString:@" " withString:@"_"]];
     NSData *html = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
     parser = [TFHpple hppleWithHTMLData:html];
     if ([[[[parser searchWithXPathQuery:@"//h1[@class='h2']"] firstObject] content] containsString:@"NBA Player Search -"]) { //couldnt find player first try
-        NSLog(@"Couldnt Find player, looking deeper...");
+        NSLog(@"Could not Find player, looking deeper...");
         for (TFHppleElement *p in [parser searchWithXPathQuery:@"//table[@class='tablehead']/tr"]) {
             if (![[p objectForKey:@"class"] isEqual:@"stathead"] && ![[p objectForKey:@"class"] isEqual:@"colhead"]) {
                 NSArray *name = [p.firstChild.firstChild.content componentsSeparatedByString:@", "];
                 if ([name[1] containsString:player.firstName]) { //player found
                     parser = [TFHpple hppleWithHTMLData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[p.firstChild.firstChild objectForKey:@"href"]]]];
                     NSLog(@"Found player");
+                    playerFound = YES;
                     break;
                 }
             }
         }
+    }
+    else playerFound = YES;
+    if (!playerFound) {
+        handleError = YES;
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Player Not Found"
+                                                        message:@"The requested player was not found on ESPNs server. This is likely a frontend error."
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        return;
     }
     //name, team
     _playerNameDisplay.text = [[[parser searchWithXPathQuery:@"//div[@class='mod-content']/h1"] firstObject] content];
@@ -161,6 +176,7 @@ bool needsLoadGamesButton = YES;
 }
 
 - (void)loadGameLogTableView {
+    if (handleError) return;
     _gameTableView.delegate = self;
     _gameTableView.dataSource = self;
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 414, 40)];
@@ -378,6 +394,7 @@ bool gameLogIsBasic = YES;
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (handleError) return 0;
     if (tableView == _infoTableView) return info.count;
     if (tableView == _statsBasicTableView) return 2;
     if (tableView == _gamesBasicTableView) return 3;

@@ -87,11 +87,11 @@ bool expanded = NO;
 
 - (void)loadTableHeaderView {
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 414, 40)];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 100, 30)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 110, 30)];
     label.text = @"Auto-refresh:";
     label.textAlignment = NSTextAlignmentRight;
     label.textColor = [UIColor lightGrayColor];
-    self.autorefreshSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(120, 4.5, 51, 31)];
+    self.autorefreshSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(130, 4.5, 51, 31)];
     self.autorefreshSwitch.onTintColor = [UIColor lightGrayColor];
     [self.autorefreshSwitch addTarget:self action:@selector(autorefreshStateChanged:) forControlEvents:UIControlEventValueChanged];
     updateTimer = [[NSTimer alloc] initWithFireDate:[NSDate date] interval:2 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
@@ -101,6 +101,7 @@ bool expanded = NO;
 }
 
 - (void)autorefreshStateChanged:(UISwitch *)sender{
+    if (handleError) return;
     if (sender.isOn) {
         updateTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
         [self timerFired:nil];
@@ -177,7 +178,7 @@ NSTimer *updateTimer;
     if (nodes.count == 0) {
         NSLog(@"Error");
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Matchup Found"
-                                                        message:@"No matchup was found for this week. \n\nThis message is to be expected in the offseason. \n\nIf you should have a game this week, check your leagueID, teamID, seaasonID, and scoringPeriodID in the \"more\" tab."
+                                                        message:@"No matchup was found for this week. \n\nThis message is to be expected in the offseason. \n\nIf you should have a game this week, check your league, team, seaason, and scoringID in the \"more\" tab."
                                                        delegate:self
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
@@ -185,6 +186,7 @@ NSTimer *updateTimer;
         handleError = YES;
         return;
     }
+    handleError = NO;
     for (int i = 0; i < nodes.count; i++) {
         TFHppleElement *element = nodes[i];
         if ([element objectForKey:@"id"]) {
