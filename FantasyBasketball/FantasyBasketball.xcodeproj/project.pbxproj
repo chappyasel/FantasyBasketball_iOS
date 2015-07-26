@@ -176,7 +176,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		F90461E21A6C2A2A008A2C8E /* Fantasy Basketball */ = {
+		F90461E21A6C2A2A008A2C8E /* FB - Widget */ = {
 			isa = PBXGroup;
 			children = (
 				F90461E51A6C2A2A008A2C8E /* TodayViewController.h */,
@@ -184,6 +184,7 @@
 				F90461E81A6C2A2A008A2C8E /* MainInterface.storyboard */,
 				F90461E31A6C2A2A008A2C8E /* Supporting Files */,
 			);
+			name = "FB - Widget";
 			path = "Fantasy Basketball";
 			sourceTree = "<group>";
 		};
@@ -198,18 +199,11 @@
 		F965907F1A676DB2005384D1 = {
 			isa = PBXGroup;
 			children = (
-				F9908E021AA26365008DF9D8 /* Images */,
-				F96590C01A6785F0005384D1 /* hpple */,
-				F9AB4B021A6C30B200A00B0F /* Session.h */,
-				F9AB4B031A6C30B200A00B0F /* Session.m */,
-				F9AB4B001A6C30B200A00B0F /* Player.h */,
-				F9AB4B011A6C30B200A00B0F /* Player.m */,
-				F9D7023A1A9F678000AAEB18 /* PlayerCell.h */,
-				F9D7023B1A9F678000AAEB18 /* PlayerCell.m */,
-				F9908DFD1AA250F0008DF9D8 /* MatchupPlayerCell.h */,
-				F9908DFE1AA250F0008DF9D8 /* MatchupPlayerCell.m */,
+				F9E4AE251B655150006CFDE4 /* Classes */,
 				F965908A1A676DB2005384D1 /* FantasyBasketball */,
-				F90461E21A6C2A2A008A2C8E /* Fantasy Basketball */,
+				F9E4AE261B65515A006CFDE4 /* Third Party */,
+				F90461E21A6C2A2A008A2C8E /* FB - Widget */,
+				F9908E021AA26365008DF9D8 /* Images */,
 				F96590A71A676DB3005384D1 /* FantasyBasketballTests */,
 				F90461DF1A6C2A29008A2C8E /* Frameworks */,
 				F96590891A676DB2005384D1 /* Products */,
@@ -229,23 +223,10 @@
 		F965908A1A676DB2005384D1 /* FantasyBasketball */ = {
 			isa = PBXGroup;
 			children = (
+				F97303DC1B655A8C00193A1D /* View Controllers */,
+				F96590981A676DB3005384D1 /* Main.storyboard */,
 				F965908F1A676DB2005384D1 /* AppDelegate.h */,
 				F96590901A676DB2005384D1 /* AppDelegate.m */,
-				F933F76F1A6B5414009E24D8 /* MatchupViewController.h */,
-				F933F7701A6B5414009E24D8 /* MatchupViewController.m */,
-				F96590B41A6773E8005384D1 /* MyTeamViewController.h */,
-				F96590B51A6773E8005384D1 /* MyTeamViewController.m */,
-				F96590B71A677441005384D1 /* PlayersViewController.h */,
-				F96590B81A677441005384D1 /* PlayersViewController.m */,
-				F933F76C1A6B2585009E24D8 /* DailyLeadersViewController.h */,
-				F933F76D1A6B2585009E24D8 /* DailyLeadersViewController.m */,
-				F96590BA1A67745D005384D1 /* MoreViewController.h */,
-				F96590BB1A67745D005384D1 /* MoreViewController.m */,
-				F970637E1A6C98B800A50A43 /* PlayerViewController.h */,
-				F970637F1A6C98B800A50A43 /* PlayerViewController.m */,
-				F97063811A6C98D600A50A43 /* WebViewController.h */,
-				F97063821A6C98D700A50A43 /* WebViewController.m */,
-				F96590981A676DB3005384D1 /* Main.storyboard */,
 				F965909B1A676DB3005384D1 /* Images.xcassets */,
 				F965909D1A676DB3005384D1 /* LaunchScreen.xib */,
 				F965908B1A676DB2005384D1 /* Supporting Files */,
@@ -294,6 +275,83 @@
 			path = FantasyBasketball;
 			sourceTree = "<group>";
 		};
+		F97303DC1B655A8C00193A1D /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F97303DD1B655AA500193A1D /* Matchup */,
+				F97303DE1B655AAE00193A1D /* My Team */,
+				F97303DF1B655AB800193A1D /* Players */,
+				F97303E01B655AC300193A1D /* Daily Leaders */,
+				F97303E11B655ACD00193A1D /* More */,
+				F97303E21B655AD300193A1D /* Individual Player */,
+				F97303E31B655ADC00193A1D /* Wep Page */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		F97303DD1B655AA500193A1D /* Matchup */ = {
+			isa = PBXGroup;
+			children = (
+				F933F76F1A6B5414009E24D8 /* MatchupViewController.h */,
+				F933F7701A6B5414009E24D8 /* MatchupViewController.m */,
+			);
+			name = Matchup;
+			sourceTree = "<group>";
+		};
+		F97303DE1B655AAE00193A1D /* My Team */ = {
+			isa = PBXGroup;
+			children = (
+				F96590B41A6773E8005384D1 /* MyTeamViewController.h */,
+				F96590B51A6773E8005384D1 /* MyTeamViewController.m */,
+			);
+			name = "My Team";
+			sourceTree = "<group>";
+		};
+		F97303DF1B655AB800193A1D /* Players */ = {
+			isa = PBXGroup;
+			children = (
+				F96590B71A677441005384D1 /* PlayersViewController.h */,
+				F96590B81A677441005384D1 /* PlayersViewController.m */,
+			);
+			name = Players;
+			sourceTree = "<group>";
+		};
+		F97303E01B655AC300193A1D /* Daily Leaders */ = {
+			isa = PBXGroup;
+			children = (
+				F933F76C1A6B2585009E24D8 /* DailyLeadersViewController.h */,
+				F933F76D1A6B2585009E24D8 /* DailyLeadersViewController.m */,
+			);
+			name = "Daily Leaders";
+			sourceTree = "<group>";
+		};
+		F97303E11B655ACD00193A1D /* More */ = {
+			isa = PBXGroup;
+			children = (
+				F96590BA1A67745D005384D1 /* MoreViewController.h */,
+				F96590BB1A67745D005384D1 /* MoreViewController.m */,
+			);
+			name = More;
+			sourceTree = "<group>";
+		};
+		F97303E21B655AD300193A1D /* Individual Player */ = {
+			isa = PBXGroup;
+			children = (
+				F970637E1A6C98B800A50A43 /* PlayerViewController.h */,
+				F970637F1A6C98B800A50A43 /* PlayerViewController.m */,
+			);
+			name = "Individual Player";
+			sourceTree = "<group>";
+		};
+		F97303E31B655ADC00193A1D /* Wep Page */ = {
+			isa = PBXGroup;
+			children = (
+				F97063811A6C98D600A50A43 /* WebViewController.h */,
+				F97063821A6C98D700A50A43 /* WebViewController.m */,
+			);
+			name = "Wep Page";
+			sourceTree = "<group>";
+		};
 		F9908E021AA26365008DF9D8 /* Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -309,6 +367,45 @@
 				F9908E041AA26372008DF9D8 /* playerCourtBG.png */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		F9E4AE231B655101006CFDE4 /* User Interface */ = {
+			isa = PBXGroup;
+			children = (
+				F9D7023A1A9F678000AAEB18 /* PlayerCell.h */,
+				F9D7023B1A9F678000AAEB18 /* PlayerCell.m */,
+				F9908DFD1AA250F0008DF9D8 /* MatchupPlayerCell.h */,
+				F9908DFE1AA250F0008DF9D8 /* MatchupPlayerCell.m */,
+			);
+			name = "User Interface";
+			sourceTree = "<group>";
+		};
+		F9E4AE241B655122006CFDE4 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F9AB4B021A6C30B200A00B0F /* Session.h */,
+				F9AB4B031A6C30B200A00B0F /* Session.m */,
+				F9AB4B001A6C30B200A00B0F /* Player.h */,
+				F9AB4B011A6C30B200A00B0F /* Player.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		F9E4AE251B655150006CFDE4 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				F9E4AE241B655122006CFDE4 /* Models */,
+				F9E4AE231B655101006CFDE4 /* User Interface */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		F9E4AE261B65515A006CFDE4 /* Third Party */ = {
+			isa = PBXGroup;
+			children = (
+				F96590C01A6785F0005384D1 /* hpple */,
+			);
+			name = "Third Party";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

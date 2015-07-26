@@ -14,7 +14,7 @@
 @property int leagueID;
 @property int teamID;
 @property int seasonID;
-@property int scoringPeriodID;
+@property int scoringPeriodID; //all session variables set in AppDelegate.m
 
 @property Player *player;
 @property NSString *link;
