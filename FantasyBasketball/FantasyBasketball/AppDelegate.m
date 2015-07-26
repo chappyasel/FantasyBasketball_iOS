@@ -23,17 +23,42 @@ Session *session;
     session.leagueID = 294156;
     session.teamID = 11;
     session.seasonID = 2015;
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/clubhouse?leagueId=%d&teamId=%d&seasonId=%d&version=today",session.leagueID,session.teamID,session.seasonID]];
-    NSData *html = [NSData dataWithContentsOfURL:url];
+    //OLD SCORINGPERIODID METHOD
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/clubhouse?leagueId=%d&teamId=%d&seasonId=%d",session.leagueID,session.teamID,session.seasonID]];
+    NSError *error;
+    NSData *html = [NSData dataWithContentsOfURL:url options:NSDataReadingMapped error:&error];
+    if (error) NSLog(@"%@",error);
     TFHpple *parser = [TFHpple hppleWithHTMLData:html];
-    NSString *XpathQueryString = @"//div[@class='playertablefiltersmenucontainer']/a";
+    NSString *XpathQueryString = @"//script";
     NSArray *nodes = [parser searchWithXPathQuery:XpathQueryString];
-    NSString *string = [[nodes firstObject] objectForKey:@"onclick"];
-    NSRange r = [string rangeOfString:@"scoringPeriodId="];
-    int beg = (int)r.length + (int)r.location;
-    int end = (int)[string rangeOfString:@"&view="].location;
-    session.scoringPeriodID = [[string substringWithRange:NSMakeRange(beg, end-beg)] intValue];
+    for (TFHppleElement *node in nodes) {
+        if ([node.content containsString:@"scoringPeriodId"]) {
+            NSString *content = node.content;
+            NSRange r = [content rangeOfString:@"scoringPeriodId: "];
+            int beg = (int)r.length + (int)r.location;
+            int end = (int)[content rangeOfString:@",\n\t\tcurrentScoringPeriodId:"].location;
+            session.scoringPeriodID = [[content substringWithRange:NSMakeRange(beg, end-beg)] intValue];
+            break;
+        }
+    }
+    if (session.scoringPeriodID == 0) NSLog(@"scoringPeriodID is 0, probable error");
+    /* //POSSIBLE NEW METHOD
+    NSString *dateString = @"03-Sep-14";
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"dd-MMM-yy";
+    NSDate *refDate = [dateFormatter dateFromString:dateString];
+    session.scoringPeriodID = (int)[self daysBetweenDate:refDate andDate:[NSDate date]];
+    */
     return YES;
+}
+
+- (NSInteger)daysBetweenDate:(NSDate*)fromDateTime andDate:(NSDate*)toDateTime {
+    NSDate *fromDate, *toDate;
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    [calendar rangeOfUnit:NSCalendarUnitDay startDate:&fromDate interval:NULL forDate:fromDateTime];
+    [calendar rangeOfUnit:NSCalendarUnitDay startDate:&toDate interval:NULL forDate:toDateTime];
+    NSDateComponents *difference = [calendar components:NSCalendarUnitDay fromDate:fromDate toDate:toDate options:0];
+    return [difference day];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

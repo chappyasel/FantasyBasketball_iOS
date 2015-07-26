@@ -18,6 +18,8 @@
 @implementation MatchupViewController
 
 Session *session;
+bool handleError;
+
 UINavigationBar *barMU;
 NSMutableArray *playersMU1;
 NSMutableArray *playersMU2;
@@ -31,7 +33,9 @@ bool expanded = NO;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    handleError = NO;
     cells = [[NSMutableArray alloc] init];
+    if (handleError) return;
     [self loadplayersMU];
     [self loadTableView];
     [self loadNavBar];
@@ -56,6 +60,7 @@ bool expanded = NO;
 }
 
 - (void)refreshScores {
+    if (handleError) return;
     NSString *XpathQueryString = @"//tr[@style='text-align:right; background:#f2f2e8']/td/span";
     NSArray *nodes = [parserMU searchWithXPathQuery:XpathQueryString];
     _team1Display1.text = [nodes[0] content];
@@ -72,7 +77,7 @@ bool expanded = NO;
     _tableView.dataSource = self;
     _tableView.separatorInset = UIEdgeInsetsMake(15, 0, 0, 15);
     _tableView.contentInset = UIEdgeInsetsMake(120, 0, 47, 0);
-    _tableView.contentOffset = CGPointMake(0, 0); //CORECTLY DISPLAYS HEADER
+    _tableView.contentOffset = CGPointMake(0, 0); //CORRECTLY DISPLAYS HEADER
     _tableView.showsHorizontalScrollIndicator = NO;
     _tableView.showsVerticalScrollIndicator = NO;
     [self loadTableHeaderView];
@@ -161,12 +166,25 @@ NSTimer *updateTimer;
 - (void)loadplayersMU {
     numStartersMU1 = 0, numStartersMU2 = 0;
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/boxscorefull?leagueId=%d&teamId=%d&scoringPeriodId=%d&seasonId=%d&view=scoringperiod&version=full",session.leagueID,session.teamID,session.scoringPeriodID,session.seasonID]];
-    NSData *html = [NSData dataWithContentsOfURL:url];
+    NSError *error;
+    NSData *html = [NSData dataWithContentsOfURL:url options:NSDataReadingMapped error:&error];
+    if (error) NSLog(@"Matchup error: %@",error);
     parserMU = [TFHpple hppleWithHTMLData:html];
     NSString *XpathQueryString = @"//table[@class='playerTableTable tableBody']/tr";
     NSArray *nodes = [parserMU searchWithXPathQuery:XpathQueryString];
     playersMU1 = [[NSMutableArray alloc] initWithCapacity:13];
     playersMU2 = [[NSMutableArray alloc] initWithCapacity:13];
+    if (nodes.count == 0) {
+        NSLog(@"Error");
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Matchup Found"
+                                                        message:@"No matchup was found for this week. \n\nThis message is to be expected in the offseason. \n\nIf you should have a game this week, check your leagueID, teamID, seaasonID, and scoringPeriodID in the \"more\" tab."
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        handleError = YES;
+        return;
+    }
     for (int i = 0; i < nodes.count; i++) {
         TFHppleElement *element = nodes[i];
         if ([element objectForKey:@"id"]) {
@@ -208,6 +226,7 @@ NSTimer *updateTimer;
 #pragma mark - Table View
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (handleError) return 0;
     return 10;
 }
 
