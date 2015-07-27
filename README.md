@@ -5,3 +5,9 @@ Utilizes:
   -Hpple
   -BEMLineGraph
   -MZFormViewController
+
+###Player details view
+<img src="./Screenshots/Player.png" alt="Drawing" width="200 px"/>
+
+###Player view
+<img src="./Screenshots/Players.png" alt="Drawing" width="200 px"/>
