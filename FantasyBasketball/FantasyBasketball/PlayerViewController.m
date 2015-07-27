@@ -46,10 +46,11 @@ bool needsLoadGamesButton = YES;
     self.imageOperationQueue.maxConcurrentOperationCount = 4;
     self.imageCache = [[NSCache alloc] init];
     _loadViewBG = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
-    _loadViewBG.frame = CGRectMake(0, 0, 414, 800);
+    _loadViewBG.frame = CGRectMake(0, 0, 375, 680);
     [self.view addSubview:_loadViewBG];
     [self.view bringSubviewToFront:_loadViewIndicator];
-    _loadViewIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(197, 358, 20, 20)];
+    _loadViewIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+    _loadViewIndicator.center = _loadViewBG.center;
     _loadViewIndicator.color = [UIColor lightGrayColor];
     [self.view addSubview:_loadViewIndicator];
     [_loadViewIndicator startAnimating];
@@ -88,19 +89,19 @@ bool needsLoadGamesButton = YES;
 
 - (void)loadScrollView { //and its contents (tables...)
     //tab 1: Current game, Full stats, recent games overview, last rotowire, own%, news
-    _gameTableView = [[UITableView alloc] initWithFrame:CGRectMake(414, 0, 414, 480)];
-    _rotoworldTableView = [[UITableView alloc] initWithFrame:CGRectMake(414*2, 0, 414, 480)];
-    _statsScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(414*3, 0, 414, 480)];
-    _newsTableView = [[UITableView alloc] initWithFrame:CGRectMake(414*4, 0, 414, 480)];
-    _gameTableView.contentInset = UIEdgeInsetsMake(40, 0, 0, 0);
-    _newsTableView.contentInset = UIEdgeInsetsMake(40, 0, 0, 0);
-    _statsScrollView.contentInset = UIEdgeInsetsMake(40, 0, 0, 0);
-    _rotoworldTableView.contentInset = UIEdgeInsetsMake(40, 0, 0, 0);
+    _gameTableView = [[UITableView alloc] initWithFrame:CGRectMake(375, 0, 375, 420)];
+    _rotoworldTableView = [[UITableView alloc] initWithFrame:CGRectMake(375*2, 0, 375, 420)];
+    _statsScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(375*3, 0, 375, 420)];
+    _newsTableView = [[UITableView alloc] initWithFrame:CGRectMake(375*4, 0, 375, 420)];
+    //_gameTableView.contentInset = UIEdgeInsetsMake(40, 0, 0, 0);
+    //_newsTableView.contentInset = UIEdgeInsetsMake(40, 0, 0, 0);
+    //_statsScrollView.contentInset = UIEdgeInsetsMake(40, 0, 0, 0);
+    //_rotoworldTableView.contentInset = UIEdgeInsetsMake(40, 0, 0, 0);
     [_bottomScrollView addSubview:_newsTableView];
     [_bottomScrollView addSubview:_gameTableView];
     [_bottomScrollView addSubview:_statsScrollView];
     [_bottomScrollView addSubview:_rotoworldTableView];
-    _bottomScrollView.contentSize = CGSizeMake(414*5, 480);
+    _bottomScrollView.contentSize = CGSizeMake(375*5, 420);
     _bottomScrollView.delegate = self;
     [self.view bringSubviewToFront:_titleView];
 }
@@ -184,7 +185,7 @@ bool needsLoadGamesButton = YES;
     if (handleError) return;
     _gameTableView.delegate = self;
     _gameTableView.dataSource = self;
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 414, 40)];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 375, 40)];
     UISegmentedControl *segControl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(50, 5.5, 314, 29)];
     segControl.tintColor = [UIColor lightGrayColor];
     [segControl insertSegmentWithTitle:@"Simple" atIndex:0 animated:NO];
@@ -451,7 +452,7 @@ bool gameLogIsBasic = YES;
         NSString *text = [NSString stringWithFormat:@"%@ %@",[rotoworld[indexPath.row] objectForKey:@"report"],[rotoworld[indexPath.row] objectForKey:@"impact"]];
         UIFont *font = [UIFont systemFontOfSize:15];
         NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:@ {NSFontAttributeName: font}];
-        CGRect rect = [attributedText boundingRectWithSize:(CGSize){394.0, CGFLOAT_MAX} options:NSStringDrawingUsesLineFragmentOrigin context:nil];
+        CGRect rect = [attributedText boundingRectWithSize:(CGSize){375-20.0, CGFLOAT_MAX} options:NSStringDrawingUsesLineFragmentOrigin context:nil];
         return (CGFloat)rect.size.height+30;
     }
     return 120;
@@ -462,16 +463,14 @@ bool gameLogIsBasic = YES;
         if (gameLogIsBasic) {
             UIView *cell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _gameTableView.frame.size.width, 40)];
             cell.backgroundColor = [UIColor lightGrayColor];
-            //STATS LABELS
-            //    214     |      200
-            //50 46 46 72 | 40 40 40 40 40
-            NSString *arr[9] = {@"DATE", @"FPTS", @"MIN", @"FGM-A", @"REB", @"AST", @"BLK", @"STL", @"PTS"};
-            for (int i = 0; i < 9; i++) {
+            //   165   |      210
+            //65 50 50 | 42 42 42 42 42
+            NSString *arr[8] = {@"DATE", @"FPTS", @"MIN", @"REB", @"AST", @"BLK", @"STL", @"PTS"};
+            for (int i = 0; i < 8; i++) {
                 UILabel *stats;
-                if (i == 0) stats = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 40)];
-                else if (i == 1 || i == 2) stats = [[UILabel alloc] initWithFrame:CGRectMake(i*46+4, 0, 46, 40)];
-                else if (i == 3) stats = [[UILabel alloc] initWithFrame:CGRectMake(214-72, 0, 72, 40)];
-                else stats = [[UILabel alloc] initWithFrame:CGRectMake(40*i-160+214, 0, 40, 40)];
+                if (i == 0) stats = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 65, 40)];
+                else if (i == 1 || i == 2) stats = [[UILabel alloc] initWithFrame:CGRectMake(i*50+15, 0, 50, 40)];
+                else stats = [[UILabel alloc] initWithFrame:CGRectMake(42*i-126+165, 0, 42, 40)];
                 stats.text = [NSString stringWithFormat:@"%@",arr[i]];
                 stats.font = [UIFont boldSystemFontOfSize:17];
                 stats.textAlignment = NSTextAlignmentCenter;
@@ -511,16 +510,14 @@ bool gameLogIsBasic = YES;
     if (tableView == _gamesBasicTableView) {
         UIView *cell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _gameTableView.frame.size.width, 40)];
         cell.backgroundColor = [UIColor lightGrayColor];
-        //STATS LABELS
-        //    214     |      200
-        //50 46 46 72 | 40 40 40 40 40
-        NSString *arr[9] = {@"DATE", @"FPTS", @"MIN", @"FGM-A", @"REB", @"AST", @"BLK", @"STL", @"PTS"};
-        for (int i = 0; i < 9; i++) {
+        //   165   |      210
+        //65 50 50 | 42 42 42 42 42
+        NSString *arr[8] = {@"DATE", @"FPTS", @"MIN", @"REB", @"AST", @"BLK", @"STL", @"PTS"};
+        for (int i = 0; i < 8; i++) {
             UILabel *stats;
-            if (i == 0) stats = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 40)];
-            else if (i == 1 || i == 2) stats = [[UILabel alloc] initWithFrame:CGRectMake(i*46+4, 0, 46, 40)];
-            else if (i == 3) stats = [[UILabel alloc] initWithFrame:CGRectMake(214-72, 0, 72, 40)];
-            else stats = [[UILabel alloc] initWithFrame:CGRectMake(40*i-160+214, 0, 40, 40)];
+            if (i == 0) stats = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 65, 40)];
+            else if (i == 1 || i == 2) stats = [[UILabel alloc] initWithFrame:CGRectMake(i*50+15, 0, 50, 40)];
+            else stats = [[UILabel alloc] initWithFrame:CGRectMake(42*i-126+165, 0, 42, 40)];
             stats.text = [NSString stringWithFormat:@"%@",arr[i]];
             stats.font = [UIFont boldSystemFontOfSize:17];
             stats.textAlignment = NSTextAlignmentCenter;
@@ -563,9 +560,9 @@ bool gameLogIsBasic = YES;
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
         cell = nil;
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier];
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 399, 30)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 375-15, 30)];
         label.text = info[indexPath.row];
-        label.font = [UIFont systemFontOfSize:16];
+        label.font = [UIFont systemFontOfSize:15];
         [cell addSubview:label];
         return cell;
     }
@@ -588,8 +585,10 @@ bool gameLogIsBasic = YES;
     }
     if (tableView == _gameTableView) {
         if (gameLogIsBasic) {
-            //    214     |      200
-            //50 46 46 72 | 40 40 40 40 40
+            //       0    1    2    3   4   5   6   7   8   9  10  11  12  13  14 15 16
+            //game: date game fpts min fgm fga 3pm 3pa ftm fta reb ast blk stl pf to pts
+            //   165   |      210
+            //65 50 50 | 42 42 42 42 42
             static NSString *MyIdentifier = @"MyIdentifier";
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
             cell = nil;
@@ -597,7 +596,7 @@ bool gameLogIsBasic = YES;
             float height = 30.0;
             if (needsLoadGamesButton) height = 40.0;
             if (indexPath.row == games.count && needsLoadGamesButton) { //last row
-                UIButton *more = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 414, 40)];
+                UIButton *more = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 375, 40)];
                 [more setTitle:@"Load More Games" forState:UIControlStateNormal];
                 [more addTarget:self action:@selector(moreGames:) forControlEvents:UIControlEventTouchUpInside];
                 [more setTitleColor:[UIColor colorWithRed:0 green:0.478431 blue:1.0 alpha:1.0] forState:UIControlStateNormal];
@@ -605,20 +604,18 @@ bool gameLogIsBasic = YES;
             }
             else {
                 NSMutableArray *game = games[indexPath.row];
-                for (int i = 0; i < 9; i++) {
+                for (int i = 0; i < 8; i++) {
                     UILabel *stats;
-                    if (i == 0) stats = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, height)];
-                    else if (i == 1 || i == 2) stats = [[UILabel alloc] initWithFrame:CGRectMake(i*46+4, 0, 46, height)];
-                    else if (i == 3) stats = [[UILabel alloc] initWithFrame:CGRectMake(214-72, 0, 72, height)];
-                    else stats = [[UILabel alloc] initWithFrame:CGRectMake(40*i-160+214, 0, 40, height)];
+                    if (i == 0) stats = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 65, 40)];
+                    else if (i == 1 || i == 2) stats = [[UILabel alloc] initWithFrame:CGRectMake(i*50+15, 0, 50, 40)];
+                    else stats = [[UILabel alloc] initWithFrame:CGRectMake(42*i-126+165, 0, 42, 40)];
                     if (i==0)      stats.text = [NSString stringWithFormat:@"%@",[[game[0] componentsSeparatedByString:@" "] lastObject]];
                     else if (i==1) stats.text = [NSString stringWithFormat:@"%@",game[2]];
                     else if (i==2) stats.text = [NSString stringWithFormat:@"%@",game[3]];
-                    else if (i==3) stats.text = [NSString stringWithFormat:@"%@-%@",game[4],game[5]];
-                    else if (i==4) stats.text = [NSString stringWithFormat:@"%@",game[10]];
-                    else if (i==5) stats.text = [NSString stringWithFormat:@"%@",game[11]];
-                    else if (i==6) stats.text = [NSString stringWithFormat:@"%@",game[12]];
-                    else if (i==7) stats.text = [NSString stringWithFormat:@"%@",game[13]];
+                    else if (i==3) stats.text = [NSString stringWithFormat:@"%@",game[10]];
+                    else if (i==4) stats.text = [NSString stringWithFormat:@"%@",game[11]];
+                    else if (i==5) stats.text = [NSString stringWithFormat:@"%@",game[12]];
+                    else if (i==6) stats.text = [NSString stringWithFormat:@"%@",game[13]];
                     else           stats.text = [NSString stringWithFormat:@"%@",game[16]];
                     stats.font = [UIFont systemFontOfSize:17];
                     stats.textAlignment = NSTextAlignmentCenter;
@@ -635,7 +632,7 @@ bool gameLogIsBasic = YES;
             float height = 30.0;
             if (needsLoadGamesButton) height = 40.0;
             if (indexPath.row == games.count && needsLoadGamesButton) { //last row
-                UIButton *more = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 414, 40)];
+                UIButton *more = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 375, 40)];
                 [more setTitle:@"Load More Games" forState:UIControlStateNormal];
                 [more addTarget:self action:@selector(moreGames:) forControlEvents:UIControlEventTouchUpInside];
                 [more setTitleColor:[UIColor colorWithRed:0 green:0.478431 blue:1.0 alpha:1.0] forState:UIControlStateNormal];
@@ -670,27 +667,25 @@ bool gameLogIsBasic = YES;
     else if (tableView == _gamesBasicTableView) {
         //       0    1    2    3   4   5   6   7   8   9  10  11  12  13  14 15 16
         //game: date game fpts min fgm fga 3pm 3pa ftm fta reb ast blk stl pf to pts
-        //    214     |      200
-        //50 46 46 72 | 40 40 40 40 40
+        //   165   |      210
+        //65 50 50 | 42 42 42 42 42
         static NSString *MyIdentifier = @"MyIdentifier";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
         cell = nil;
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier];
         NSMutableArray *game = games[indexPath.row];
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 8; i++) {
             UILabel *stats;
-            if (i == 0) stats = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 40)];
-            else if (i == 1 || i == 2) stats = [[UILabel alloc] initWithFrame:CGRectMake(i*46+4, 0, 46, 40)];
-            else if (i == 3) stats = [[UILabel alloc] initWithFrame:CGRectMake(214-72, 0, 72, 40)];
-            else stats = [[UILabel alloc] initWithFrame:CGRectMake(40*i-160+214, 0, 40, 40)];
+            if (i == 0) stats = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 65, 40)];
+            else if (i == 1 || i == 2) stats = [[UILabel alloc] initWithFrame:CGRectMake(i*50+15, 0, 50, 40)];
+            else stats = [[UILabel alloc] initWithFrame:CGRectMake(42*i-126+165, 0, 42, 40)];
             if (i==0)      stats.text = [NSString stringWithFormat:@"%@",[[game[0] componentsSeparatedByString:@" "] lastObject]];
             else if (i==1) stats.text = [NSString stringWithFormat:@"%@",game[2]];
             else if (i==2) stats.text = [NSString stringWithFormat:@"%@",game[3]];
-            else if (i==3) stats.text = [NSString stringWithFormat:@"%@-%@",game[4],game[5]];
-            else if (i==4) stats.text = [NSString stringWithFormat:@"%@",game[10]];
-            else if (i==5) stats.text = [NSString stringWithFormat:@"%@",game[11]];
-            else if (i==6) stats.text = [NSString stringWithFormat:@"%@",game[12]];
-            else if (i==7) stats.text = [NSString stringWithFormat:@"%@",game[13]];
+            else if (i==3) stats.text = [NSString stringWithFormat:@"%@",game[10]];
+            else if (i==4) stats.text = [NSString stringWithFormat:@"%@",game[11]];
+            else if (i==5) stats.text = [NSString stringWithFormat:@"%@",game[12]];
+            else if (i==6) stats.text = [NSString stringWithFormat:@"%@",game[13]];
             else           stats.text = [NSString stringWithFormat:@"%@",game[16]];
             stats.font = [UIFont systemFontOfSize:17];
             stats.textAlignment = NSTextAlignmentCenter;
@@ -706,17 +701,17 @@ bool gameLogIsBasic = YES;
         NSMutableDictionary *rotoPeice = rotoworld[indexPath.row];
         float height = [self tableView:_rotoworldTableView heightForRowAtIndexPath:indexPath];
         //start
-        UILabel *text = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 394, height-25)];
+        UILabel *text = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 375-20, height-25)];
         text.text = [NSString stringWithFormat:@"%@ %@",[rotoPeice objectForKey:@"report"],[rotoPeice objectForKey:@"impact"]];
         text.font = [UIFont systemFontOfSize:15];
         text.numberOfLines = (int)(text.frame.size.height/text.font.lineHeight);
         [cell addSubview:text];
-        UILabel *extra = [[UILabel alloc] initWithFrame:CGRectMake(10, height-20, 260, 15)];
+        UILabel *extra = [[UILabel alloc] initWithFrame:CGRectMake(10, height-20, 205, 15)];
         extra.text = [NSString stringWithFormat:@"%@ %@",[rotoPeice objectForKey:@"source"],[rotoPeice objectForKey:@"related"]];
         extra.textColor = [UIColor lightGrayColor];
         extra.font = [UIFont systemFontOfSize:13];
         [cell addSubview:extra];
-        UILabel *time = [[UILabel alloc] initWithFrame:CGRectMake(264, height-20, 140, 15)];
+        UILabel *time = [[UILabel alloc] initWithFrame:CGRectMake(225, height-20, 140, 15)];
         time.text = [rotoPeice objectForKey:@"date"];
         time.textColor = [UIColor lightGrayColor];
         time.font = [UIFont systemFontOfSize:13];
@@ -757,20 +752,20 @@ bool gameLogIsBasic = YES;
             //image.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:]]];
             [cell addSubview:image];
         }
-        UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 404, 20)];
+        UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 375-10, 20)];
         title.text = [newsPeice objectForKey:@"title"];
         if (![newsPeice objectForKey:@"title"]) title.text = @"Rotowire Player Update";
-        title.font = [UIFont boldSystemFontOfSize:17];
+        title.font = [UIFont boldSystemFontOfSize:16];
         [cell addSubview:title];
-        UILabel *text = [[UILabel alloc] initWithFrame:CGRectMake(10+x, 15, 394-x, 90)];
+        UILabel *text = [[UILabel alloc] initWithFrame:CGRectMake(10+x, 15, 375-20-x, 90)];
         text.text = [newsPeice objectForKey:@"text"];
         text.numberOfLines = 4;
         text.font = [UIFont systemFontOfSize:15];
         [cell addSubview:text];
-        UILabel *time = [[UILabel alloc] initWithFrame:CGRectMake(110, 100, 294, 15)];
+        UILabel *time = [[UILabel alloc] initWithFrame:CGRectMake(110, 100, 375-120, 15)];
         time.text = [newsPeice objectForKey:@"time"];
         time.textColor = [UIColor lightGrayColor];
-        time.font = [UIFont systemFontOfSize:13];
+        time.font = [UIFont systemFontOfSize:12];
         time.textAlignment = NSTextAlignmentRight;
         [cell addSubview:time];
         return cell;
@@ -801,14 +796,14 @@ bool gameLogIsBasic = YES;
 }
 
 - (NSInteger)numberOfGapsBetweenLabelsOnLineGraph:(nonnull BEMSimpleLineGraphView *)graph {
-    return 2;
+    return 4;
 }
 
 int numGraphPoints;
 
 - (NSInteger)numberOfPointsInLineGraph:(BEMSimpleLineGraphView *)graph {
     numGraphPoints = (games.count < 15) ? (int)games.count : 15;
-    _graphNameDisplay.text = [NSString stringWithFormat:@"Fanstasy Points: (Last %d games)",numGraphPoints];
+    _graphNameDisplay.text = [NSString stringWithFormat:@"Fanstasy Points (Last %d games)",numGraphPoints];
     return numGraphPoints;
 }
 
@@ -844,7 +839,7 @@ int numGraphPoints;
         scrollDistanceP = scrollView.contentOffset.x;
     }
     else if (scrollView == _bottomScrollView){
-        float dist = scrollView.contentOffset.x/414;
+        float dist = scrollView.contentOffset.x/375;
         if (dist <= 1.0) { //between 1,2
             _scrollIndicator.frame = CGRectMake(_tabButton1.frame.origin.x+(_tabButton2.frame.origin.x-_tabButton1.frame.origin.x)*dist, 37, _tabButton1.frame.size.width+(_tabButton2.frame.size.width-_tabButton1.frame.size.width)*dist, 3);
         }
@@ -861,23 +856,23 @@ int numGraphPoints;
 }
 
 - (IBAction)tab1Pressed:(UIButton *)sender {
-    [_bottomScrollView scrollRectToVisible:CGRectMake(0, 0, 414, 1) animated:YES];
+    [_bottomScrollView scrollRectToVisible:CGRectMake(0, 0, 375, 1) animated:YES];
 }
 
 - (IBAction)tab2Pressed:(UIButton *)sender {
-    [_bottomScrollView scrollRectToVisible:CGRectMake(414, 0, 414, 1) animated:YES];
+    [_bottomScrollView scrollRectToVisible:CGRectMake(375, 0, 375, 1) animated:YES];
 }
 
 - (IBAction)tab3Pressed:(UIButton *)sender {
-    [_bottomScrollView scrollRectToVisible:CGRectMake(414*2, 0, 414, 1) animated:YES];
+    [_bottomScrollView scrollRectToVisible:CGRectMake(375*2, 0, 375, 1) animated:YES];
 }
 
 - (IBAction)tab4Pressed:(UIButton *)sender {
-    [_bottomScrollView scrollRectToVisible:CGRectMake(414*3, 0, 414, 1) animated:YES];
+    [_bottomScrollView scrollRectToVisible:CGRectMake(375*3, 0, 375, 1) animated:YES];
 }
 
 - (IBAction)tab5Pressed:(UIButton *)sender {
-    [_bottomScrollView scrollRectToVisible:CGRectMake(414*4, 0, 414, 1) animated:YES];
+    [_bottomScrollView scrollRectToVisible:CGRectMake(375*4, 0, 375, 1) animated:YES];
 }
 
 #pragma mark - Swipe Gesture
