@@ -391,7 +391,14 @@ NSArray *pickerData;
     session.link = [player gameLink];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UIViewController *viewController = (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:@"w"];
-    [self presentViewController:viewController animated:YES completion:nil];
+    //[self addChildViewController:viewController];
+    //[self presentViewController:viewController animated:YES completion:nil];
+    viewController.modalPresentationStyle=UIModalPresentationFormSheet;
+    viewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self presentViewController:viewController animated:YES completion:^{
+        viewController.view.superview.frame = CGRectMake(0, 0, 310, 500);
+        viewController.view.superview.center = self.view.center;
+    }];
 }
 
 #pragma mark - Navigation

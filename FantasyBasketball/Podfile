@@ -1,0 +1,11 @@
+# Uncomment this line to define a global platform for your project
+platform :ios, '8.1'
+
+target 'FantasyBasketball' do
+    pod 'MZAppearance'
+end
+
+target 'FantasyBasketballTests' do
+
+end
+
