@@ -7,16 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F90461E11A6C2A2A008A2C8E /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F90461E01A6C2A29008A2C8E /* NotificationCenter.framework */; };
-		F90461E71A6C2A2A008A2C8E /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F90461E61A6C2A2A008A2C8E /* TodayViewController.m */; };
-		F90461E91A6C2A2A008A2C8E /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F90461E81A6C2A2A008A2C8E /* MainInterface.storyboard */; };
-		F90461EC1A6C2A2A008A2C8E /* Fantasy Basketball.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = F90461DE1A6C2A29008A2C8E /* Fantasy Basketball.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		F933F76E1A6B2585009E24D8 /* DailyLeadersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F933F76D1A6B2585009E24D8 /* DailyLeadersViewController.m */; };
 		F933F7711A6B5414009E24D8 /* MatchupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F933F7701A6B5414009E24D8 /* MatchupViewController.m */; };
 		F93DC6B51AA4D90C00EFFC57 /* TabBarItemDL_S@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F93DC6B11AA4D90C00EFFC57 /* TabBarItemDL_S@2x.png */; };
 		F93DC6B61AA4D90C00EFFC57 /* TabBarItemMT_S@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F93DC6B21AA4D90C00EFFC57 /* TabBarItemMT_S@2x.png */; };
 		F93DC6B71AA4D90C00EFFC57 /* TabBarItemMU_S@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F93DC6B31AA4D90C00EFFC57 /* TabBarItemMU_S@2x.png */; };
 		F93DC6B81AA4D90C00EFFC57 /* TabBarItemPL_S@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F93DC6B41AA4D90C00EFFC57 /* TabBarItemPL_S@2x.png */; };
+		F954E97A1B65E4D9000F323F /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = F954E9771B65E4D9000F323F /* Player.m */; };
+		F954E97B1B65E4D9000F323F /* Session.m in Sources */ = {isa = PBXBuildFile; fileRef = F954E9791B65E4D9000F323F /* Session.m */; };
+		F954E9821B65E501000F323F /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = F954E97D1B65E501000F323F /* TFHpple.m */; };
+		F954E9831B65E501000F323F /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = F954E97F1B65E501000F323F /* TFHppleElement.m */; };
+		F954E9841B65E501000F323F /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = F954E9811B65E501000F323F /* XPathQuery.m */; };
+		F954E9901B65E52C000F323F /* BEMAverageLine.m in Sources */ = {isa = PBXBuildFile; fileRef = F954E9871B65E52C000F323F /* BEMAverageLine.m */; };
+		F954E9911B65E52C000F323F /* BEMCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = F954E9891B65E52C000F323F /* BEMCircle.m */; };
+		F954E9921B65E52C000F323F /* BEMLine.m in Sources */ = {isa = PBXBuildFile; fileRef = F954E98B1B65E52C000F323F /* BEMLine.m */; };
+		F954E9931B65E52C000F323F /* BEMPermanentPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = F954E98D1B65E52C000F323F /* BEMPermanentPopupView.m */; };
+		F954E9941B65E52C000F323F /* BEMSimpleLineGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = F954E98F1B65E52C000F323F /* BEMSimpleLineGraphView.m */; };
 		F965908E1A676DB2005384D1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F965908D1A676DB2005384D1 /* main.m */; };
 		F96590911A676DB2005384D1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F96590901A676DB2005384D1 /* AppDelegate.m */; };
 		F965909A1A676DB3005384D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F96590981A676DB3005384D1 /* Main.storyboard */; };
@@ -29,6 +35,10 @@
 		F96590CB1A67872E005384D1 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F96590CA1A67872E005384D1 /* libxml2.dylib */; };
 		F97063801A6C98B800A50A43 /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F970637F1A6C98B800A50A43 /* PlayerViewController.m */; };
 		F97063831A6C98D700A50A43 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F97063821A6C98D700A50A43 /* WebViewController.m */; };
+		F976584E1B65E69100ACC050 /* Fantasy Basketball.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = F97658491B65E69100ACC050 /* Fantasy Basketball.entitlements */; };
+		F976584F1B65E69100ACC050 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F976584A1B65E69100ACC050 /* Info.plist */; };
+		F97658501B65E69100ACC050 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F976584B1B65E69100ACC050 /* MainInterface.storyboard */; };
+		F97658511B65E69100ACC050 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F976584D1B65E69100ACC050 /* TodayViewController.m */; };
 		F9908DFF1AA250F0008DF9D8 /* MatchupPlayerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9908DFE1AA250F0008DF9D8 /* MatchupPlayerCell.m */; };
 		F9908E051AA26372008DF9D8 /* playerBG.png in Resources */ = {isa = PBXBuildFile; fileRef = F9908E031AA26372008DF9D8 /* playerBG.png */; };
 		F9908E061AA26372008DF9D8 /* playerCourtBG.png in Resources */ = {isa = PBXBuildFile; fileRef = F9908E041AA26372008DF9D8 /* playerCourtBG.png */; };
@@ -36,28 +46,10 @@
 		F9908E181AA2D0CD008DF9D8 /* TabBarItemMT@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F9908E141AA2D0CD008DF9D8 /* TabBarItemMT@2x.png */; };
 		F9908E191AA2D0CD008DF9D8 /* TabBarItemMU@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F9908E151AA2D0CD008DF9D8 /* TabBarItemMU@2x.png */; };
 		F9908E1A1AA2D0CD008DF9D8 /* TabBarItemPL@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F9908E161AA2D0CD008DF9D8 /* TabBarItemPL@2x.png */; };
-		F9AB4AFD1A6C30A900A00B0F /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AB4AF81A6C30A900A00B0F /* TFHpple.m */; };
-		F9AB4AFE1A6C30A900A00B0F /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AB4AFA1A6C30A900A00B0F /* TFHppleElement.m */; };
-		F9AB4AFF1A6C30A900A00B0F /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AB4AFC1A6C30A900A00B0F /* XPathQuery.m */; };
-		F9AB4B041A6C30B200A00B0F /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AB4B011A6C30B200A00B0F /* Player.m */; };
-		F9AB4B051A6C30B200A00B0F /* Session.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AB4B031A6C30B200A00B0F /* Session.m */; };
-		F9AB4B061A6C30DF00A00B0F /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AB4B011A6C30B200A00B0F /* Player.m */; };
-		F9AB4B071A6C30E300A00B0F /* Session.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AB4B031A6C30B200A00B0F /* Session.m */; };
-		F9AB4B081A6C30E600A00B0F /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AB4AF81A6C30A900A00B0F /* TFHpple.m */; };
-		F9AB4B091A6C30EF00A00B0F /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AB4AFA1A6C30A900A00B0F /* TFHppleElement.m */; };
-		F9AB4B0A1A6C30F200A00B0F /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AB4AFC1A6C30A900A00B0F /* XPathQuery.m */; };
-		F9AB4B0B1A6C30F800A00B0F /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F96590CA1A67872E005384D1 /* libxml2.dylib */; };
 		F9D7023C1A9F678000AAEB18 /* PlayerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D7023B1A9F678000AAEB18 /* PlayerCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		F90461EA1A6C2A2A008A2C8E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F96590801A676DB2005384D1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F90461DD1A6C2A29008A2C8E;
-			remoteInfo = "Fantasy Basketball";
-		};
 		F96590A51A676DB3005384D1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F96590801A676DB2005384D1 /* Project object */;
@@ -74,7 +66,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				F90461EC1A6C2A2A008A2C8E /* Fantasy Basketball.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -82,12 +73,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		F90461DE1A6C2A29008A2C8E /* Fantasy Basketball.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Fantasy Basketball.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F90461E01A6C2A29008A2C8E /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
-		F90461E41A6C2A2A008A2C8E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F90461E51A6C2A2A008A2C8E /* TodayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodayViewController.h; sourceTree = "<group>"; };
-		F90461E61A6C2A2A008A2C8E /* TodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
-		F90461E81A6C2A2A008A2C8E /* MainInterface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
 		F933F76C1A6B2585009E24D8 /* DailyLeadersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DailyLeadersViewController.h; sourceTree = "<group>"; };
 		F933F76D1A6B2585009E24D8 /* DailyLeadersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DailyLeadersViewController.m; sourceTree = "<group>"; };
 		F933F76F1A6B5414009E24D8 /* MatchupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchupViewController.h; sourceTree = "<group>"; };
@@ -96,6 +82,26 @@
 		F93DC6B21AA4D90C00EFFC57 /* TabBarItemMT_S@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TabBarItemMT_S@2x.png"; path = "FantasyBasketball/Images/TabBarItemMT_S@2x.png"; sourceTree = "<group>"; };
 		F93DC6B31AA4D90C00EFFC57 /* TabBarItemMU_S@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TabBarItemMU_S@2x.png"; path = "FantasyBasketball/Images/TabBarItemMU_S@2x.png"; sourceTree = "<group>"; };
 		F93DC6B41AA4D90C00EFFC57 /* TabBarItemPL_S@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TabBarItemPL_S@2x.png"; path = "FantasyBasketball/Images/TabBarItemPL_S@2x.png"; sourceTree = "<group>"; };
+		F954E9761B65E4D9000F323F /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Player.h; path = Classes/Player.h; sourceTree = "<group>"; };
+		F954E9771B65E4D9000F323F /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Player.m; path = Classes/Player.m; sourceTree = "<group>"; };
+		F954E9781B65E4D9000F323F /* Session.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Session.h; path = Classes/Session.h; sourceTree = "<group>"; };
+		F954E9791B65E4D9000F323F /* Session.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Session.m; path = Classes/Session.m; sourceTree = "<group>"; };
+		F954E97C1B65E501000F323F /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TFHpple.h; path = "Third Party/Hpple/TFHpple.h"; sourceTree = SOURCE_ROOT; };
+		F954E97D1B65E501000F323F /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TFHpple.m; path = "Third Party/Hpple/TFHpple.m"; sourceTree = SOURCE_ROOT; };
+		F954E97E1B65E501000F323F /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TFHppleElement.h; path = "Third Party/Hpple/TFHppleElement.h"; sourceTree = SOURCE_ROOT; };
+		F954E97F1B65E501000F323F /* TFHppleElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TFHppleElement.m; path = "Third Party/Hpple/TFHppleElement.m"; sourceTree = SOURCE_ROOT; };
+		F954E9801B65E501000F323F /* XPathQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XPathQuery.h; path = "Third Party/Hpple/XPathQuery.h"; sourceTree = SOURCE_ROOT; };
+		F954E9811B65E501000F323F /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XPathQuery.m; path = "Third Party/Hpple/XPathQuery.m"; sourceTree = SOURCE_ROOT; };
+		F954E9861B65E52C000F323F /* BEMAverageLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BEMAverageLine.h; path = "Third Party/BEMSimpleLineGraph/BEMAverageLine.h"; sourceTree = SOURCE_ROOT; };
+		F954E9871B65E52C000F323F /* BEMAverageLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BEMAverageLine.m; path = "Third Party/BEMSimpleLineGraph/BEMAverageLine.m"; sourceTree = SOURCE_ROOT; };
+		F954E9881B65E52C000F323F /* BEMCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BEMCircle.h; path = "Third Party/BEMSimpleLineGraph/BEMCircle.h"; sourceTree = SOURCE_ROOT; };
+		F954E9891B65E52C000F323F /* BEMCircle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BEMCircle.m; path = "Third Party/BEMSimpleLineGraph/BEMCircle.m"; sourceTree = SOURCE_ROOT; };
+		F954E98A1B65E52C000F323F /* BEMLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BEMLine.h; path = "Third Party/BEMSimpleLineGraph/BEMLine.h"; sourceTree = SOURCE_ROOT; };
+		F954E98B1B65E52C000F323F /* BEMLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BEMLine.m; path = "Third Party/BEMSimpleLineGraph/BEMLine.m"; sourceTree = SOURCE_ROOT; };
+		F954E98C1B65E52C000F323F /* BEMPermanentPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BEMPermanentPopupView.h; path = "Third Party/BEMSimpleLineGraph/BEMPermanentPopupView.h"; sourceTree = SOURCE_ROOT; };
+		F954E98D1B65E52C000F323F /* BEMPermanentPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BEMPermanentPopupView.m; path = "Third Party/BEMSimpleLineGraph/BEMPermanentPopupView.m"; sourceTree = SOURCE_ROOT; };
+		F954E98E1B65E52C000F323F /* BEMSimpleLineGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BEMSimpleLineGraphView.h; path = "Third Party/BEMSimpleLineGraph/BEMSimpleLineGraphView.h"; sourceTree = SOURCE_ROOT; };
+		F954E98F1B65E52C000F323F /* BEMSimpleLineGraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BEMSimpleLineGraphView.m; path = "Third Party/BEMSimpleLineGraph/BEMSimpleLineGraphView.m"; sourceTree = SOURCE_ROOT; };
 		F96590881A676DB2005384D1 /* FantasyBasketball.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FantasyBasketball.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F965908C1A676DB2005384D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F965908D1A676DB2005384D1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -118,6 +124,11 @@
 		F970637F1A6C98B800A50A43 /* PlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerViewController.m; sourceTree = "<group>"; };
 		F97063811A6C98D600A50A43 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		F97063821A6C98D700A50A43 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
+		F97658491B65E69100ACC050 /* Fantasy Basketball.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "Fantasy Basketball.entitlements"; path = "FB - Widget/Fantasy Basketball.entitlements"; sourceTree = SOURCE_ROOT; };
+		F976584A1B65E69100ACC050 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "FB - Widget/Info.plist"; sourceTree = SOURCE_ROOT; };
+		F976584B1B65E69100ACC050 /* MainInterface.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = MainInterface.storyboard; path = "FB - Widget/MainInterface.storyboard"; sourceTree = SOURCE_ROOT; };
+		F976584C1B65E69100ACC050 /* TodayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TodayViewController.h; path = "FB - Widget/TodayViewController.h"; sourceTree = SOURCE_ROOT; };
+		F976584D1B65E69100ACC050 /* TodayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TodayViewController.m; path = "FB - Widget/TodayViewController.m"; sourceTree = SOURCE_ROOT; };
 		F9908DFD1AA250F0008DF9D8 /* MatchupPlayerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MatchupPlayerCell.h; path = FantasyBasketball/MatchupPlayerCell.h; sourceTree = "<group>"; };
 		F9908DFE1AA250F0008DF9D8 /* MatchupPlayerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MatchupPlayerCell.m; path = FantasyBasketball/MatchupPlayerCell.m; sourceTree = "<group>"; };
 		F9908E031AA26372008DF9D8 /* playerBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = playerBG.png; path = FantasyBasketball/Images/playerBG.png; sourceTree = "<group>"; };
@@ -126,30 +137,11 @@
 		F9908E141AA2D0CD008DF9D8 /* TabBarItemMT@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TabBarItemMT@2x.png"; path = "FantasyBasketball/Images/TabBarItemMT@2x.png"; sourceTree = "<group>"; };
 		F9908E151AA2D0CD008DF9D8 /* TabBarItemMU@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TabBarItemMU@2x.png"; path = "FantasyBasketball/Images/TabBarItemMU@2x.png"; sourceTree = "<group>"; };
 		F9908E161AA2D0CD008DF9D8 /* TabBarItemPL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TabBarItemPL@2x.png"; path = "FantasyBasketball/Images/TabBarItemPL@2x.png"; sourceTree = "<group>"; };
-		F9AB4AF71A6C30A900A00B0F /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = SOURCE_ROOT; };
-		F9AB4AF81A6C30A900A00B0F /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = SOURCE_ROOT; };
-		F9AB4AF91A6C30A900A00B0F /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHppleElement.h; sourceTree = SOURCE_ROOT; };
-		F9AB4AFA1A6C30A900A00B0F /* TFHppleElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHppleElement.m; sourceTree = SOURCE_ROOT; };
-		F9AB4AFB1A6C30A900A00B0F /* XPathQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPathQuery.h; sourceTree = SOURCE_ROOT; };
-		F9AB4AFC1A6C30A900A00B0F /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPathQuery.m; sourceTree = SOURCE_ROOT; };
-		F9AB4B001A6C30B200A00B0F /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
-		F9AB4B011A6C30B200A00B0F /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
-		F9AB4B021A6C30B200A00B0F /* Session.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Session.h; sourceTree = "<group>"; };
-		F9AB4B031A6C30B200A00B0F /* Session.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Session.m; sourceTree = "<group>"; };
 		F9D7023A1A9F678000AAEB18 /* PlayerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayerCell.h; path = FantasyBasketball/PlayerCell.h; sourceTree = "<group>"; };
 		F9D7023B1A9F678000AAEB18 /* PlayerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayerCell.m; path = FantasyBasketball/PlayerCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		F90461DB1A6C2A29008A2C8E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F90461E11A6C2A2A008A2C8E /* NotificationCenter.framework in Frameworks */,
-				F9AB4B0B1A6C30F800A00B0F /* libxml2.dylib in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		F96590851A676DB2005384D1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -179,21 +171,32 @@
 		F90461E21A6C2A2A008A2C8E /* FB - Widget */ = {
 			isa = PBXGroup;
 			children = (
-				F90461E51A6C2A2A008A2C8E /* TodayViewController.h */,
-				F90461E61A6C2A2A008A2C8E /* TodayViewController.m */,
-				F90461E81A6C2A2A008A2C8E /* MainInterface.storyboard */,
-				F90461E31A6C2A2A008A2C8E /* Supporting Files */,
+				F97658491B65E69100ACC050 /* Fantasy Basketball.entitlements */,
+				F976584A1B65E69100ACC050 /* Info.plist */,
+				F976584B1B65E69100ACC050 /* MainInterface.storyboard */,
+				F976584C1B65E69100ACC050 /* TodayViewController.h */,
+				F976584D1B65E69100ACC050 /* TodayViewController.m */,
 			);
 			name = "FB - Widget";
 			path = "Fantasy Basketball";
 			sourceTree = "<group>";
 		};
-		F90461E31A6C2A2A008A2C8E /* Supporting Files */ = {
+		F954E9851B65E507000F323F /* BEMLineGraph */ = {
 			isa = PBXGroup;
 			children = (
-				F90461E41A6C2A2A008A2C8E /* Info.plist */,
+				F954E9861B65E52C000F323F /* BEMAverageLine.h */,
+				F954E9871B65E52C000F323F /* BEMAverageLine.m */,
+				F954E9881B65E52C000F323F /* BEMCircle.h */,
+				F954E9891B65E52C000F323F /* BEMCircle.m */,
+				F954E98A1B65E52C000F323F /* BEMLine.h */,
+				F954E98B1B65E52C000F323F /* BEMLine.m */,
+				F954E98C1B65E52C000F323F /* BEMPermanentPopupView.h */,
+				F954E98D1B65E52C000F323F /* BEMPermanentPopupView.m */,
+				F954E98E1B65E52C000F323F /* BEMSimpleLineGraphView.h */,
+				F954E98F1B65E52C000F323F /* BEMSimpleLineGraphView.m */,
 			);
-			name = "Supporting Files";
+			name = BEMLineGraph;
+			path = FantasyBasketball;
 			sourceTree = "<group>";
 		};
 		F965907F1A676DB2005384D1 = {
@@ -215,7 +218,6 @@
 			children = (
 				F96590881A676DB2005384D1 /* FantasyBasketball.app */,
 				F96590A41A676DB3005384D1 /* FantasyBasketballTests.xctest */,
-				F90461DE1A6C2A29008A2C8E /* Fantasy Basketball.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -264,12 +266,12 @@
 			isa = PBXGroup;
 			children = (
 				F96590CA1A67872E005384D1 /* libxml2.dylib */,
-				F9AB4AF71A6C30A900A00B0F /* TFHpple.h */,
-				F9AB4AF81A6C30A900A00B0F /* TFHpple.m */,
-				F9AB4AF91A6C30A900A00B0F /* TFHppleElement.h */,
-				F9AB4AFA1A6C30A900A00B0F /* TFHppleElement.m */,
-				F9AB4AFB1A6C30A900A00B0F /* XPathQuery.h */,
-				F9AB4AFC1A6C30A900A00B0F /* XPathQuery.m */,
+				F954E97C1B65E501000F323F /* TFHpple.h */,
+				F954E97D1B65E501000F323F /* TFHpple.m */,
+				F954E97E1B65E501000F323F /* TFHppleElement.h */,
+				F954E97F1B65E501000F323F /* TFHppleElement.m */,
+				F954E9801B65E501000F323F /* XPathQuery.h */,
+				F954E9811B65E501000F323F /* XPathQuery.m */,
 			);
 			name = hpple;
 			path = FantasyBasketball;
@@ -383,10 +385,10 @@
 		F9E4AE241B655122006CFDE4 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				F9AB4B021A6C30B200A00B0F /* Session.h */,
-				F9AB4B031A6C30B200A00B0F /* Session.m */,
-				F9AB4B001A6C30B200A00B0F /* Player.h */,
-				F9AB4B011A6C30B200A00B0F /* Player.m */,
+				F954E9761B65E4D9000F323F /* Player.h */,
+				F954E9771B65E4D9000F323F /* Player.m */,
+				F954E9781B65E4D9000F323F /* Session.h */,
+				F954E9791B65E4D9000F323F /* Session.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -404,6 +406,7 @@
 			isa = PBXGroup;
 			children = (
 				F96590C01A6785F0005384D1 /* hpple */,
+				F954E9851B65E507000F323F /* BEMLineGraph */,
 			);
 			name = "Third Party";
 			sourceTree = "<group>";
@@ -411,23 +414,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F90461DD1A6C2A29008A2C8E /* Fantasy Basketball */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F90461EF1A6C2A2A008A2C8E /* Build configuration list for PBXNativeTarget "Fantasy Basketball" */;
-			buildPhases = (
-				F90461DA1A6C2A29008A2C8E /* Sources */,
-				F90461DB1A6C2A29008A2C8E /* Frameworks */,
-				F90461DC1A6C2A29008A2C8E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Fantasy Basketball";
-			productName = "Fantasy Basketball";
-			productReference = F90461DE1A6C2A29008A2C8E /* Fantasy Basketball.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 		F96590871A676DB2005384D1 /* FantasyBasketball */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F96590AE1A676DB3005384D1 /* Build configuration list for PBXNativeTarget "FantasyBasketball" */;
@@ -440,7 +426,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				F90461EB1A6C2A2A008A2C8E /* PBXTargetDependency */,
 			);
 			name = FantasyBasketball;
 			productName = FantasyBasketball;
@@ -474,15 +459,6 @@
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = CD;
 				TargetAttributes = {
-					F90461DD1A6C2A29008A2C8E = {
-						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = AE4TCQ8Z49;
-						SystemCapabilities = {
-							com.apple.ApplicationGroups.iOS = {
-								enabled = 0;
-							};
-						};
-					};
 					F96590871A676DB2005384D1 = {
 						CreatedOnToolsVersion = 6.1.1;
 					};
@@ -507,20 +483,11 @@
 			targets = (
 				F96590871A676DB2005384D1 /* FantasyBasketball */,
 				F96590A31A676DB3005384D1 /* FantasyBasketballTests */,
-				F90461DD1A6C2A29008A2C8E /* Fantasy Basketball */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		F90461DC1A6C2A29008A2C8E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F90461E91A6C2A2A008A2C8E /* MainInterface.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		F96590861A676DB2005384D1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -529,9 +496,12 @@
 				F93DC6B61AA4D90C00EFFC57 /* TabBarItemMT_S@2x.png in Resources */,
 				F965909A1A676DB3005384D1 /* Main.storyboard in Resources */,
 				F9908E181AA2D0CD008DF9D8 /* TabBarItemMT@2x.png in Resources */,
+				F976584E1B65E69100ACC050 /* Fantasy Basketball.entitlements in Resources */,
+				F97658501B65E69100ACC050 /* MainInterface.storyboard in Resources */,
 				F9908E061AA26372008DF9D8 /* playerCourtBG.png in Resources */,
 				F965909F1A676DB3005384D1 /* LaunchScreen.xib in Resources */,
 				F93DC6B51AA4D90C00EFFC57 /* TabBarItemDL_S@2x.png in Resources */,
+				F976584F1B65E69100ACC050 /* Info.plist in Resources */,
 				F93DC6B81AA4D90C00EFFC57 /* TabBarItemPL_S@2x.png in Resources */,
 				F965909C1A676DB3005384D1 /* Images.xcassets in Resources */,
 				F9908E191AA2D0CD008DF9D8 /* TabBarItemMU@2x.png in Resources */,
@@ -551,39 +521,32 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		F90461DA1A6C2A29008A2C8E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F9AB4B061A6C30DF00A00B0F /* Player.m in Sources */,
-				F90461E71A6C2A2A008A2C8E /* TodayViewController.m in Sources */,
-				F9AB4B071A6C30E300A00B0F /* Session.m in Sources */,
-				F9AB4B081A6C30E600A00B0F /* TFHpple.m in Sources */,
-				F9AB4B0A1A6C30F200A00B0F /* XPathQuery.m in Sources */,
-				F9AB4B091A6C30EF00A00B0F /* TFHppleElement.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		F96590841A676DB2005384D1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				F96590911A676DB2005384D1 /* AppDelegate.m in Sources */,
 				F97063831A6C98D700A50A43 /* WebViewController.m in Sources */,
+				F954E9841B65E501000F323F /* XPathQuery.m in Sources */,
+				F954E9931B65E52C000F323F /* BEMPermanentPopupView.m in Sources */,
 				F96590B91A677441005384D1 /* PlayersViewController.m in Sources */,
+				F954E9821B65E501000F323F /* TFHpple.m in Sources */,
 				F933F7711A6B5414009E24D8 /* MatchupViewController.m in Sources */,
-				F9AB4B041A6C30B200A00B0F /* Player.m in Sources */,
 				F933F76E1A6B2585009E24D8 /* DailyLeadersViewController.m in Sources */,
 				F97063801A6C98B800A50A43 /* PlayerViewController.m in Sources */,
-				F9AB4B051A6C30B200A00B0F /* Session.m in Sources */,
+				F954E9911B65E52C000F323F /* BEMCircle.m in Sources */,
+				F954E97B1B65E4D9000F323F /* Session.m in Sources */,
 				F9D7023C1A9F678000AAEB18 /* PlayerCell.m in Sources */,
-				F9AB4AFF1A6C30A900A00B0F /* XPathQuery.m in Sources */,
-				F9AB4AFE1A6C30A900A00B0F /* TFHppleElement.m in Sources */,
+				F954E9831B65E501000F323F /* TFHppleElement.m in Sources */,
 				F96590B61A6773E8005384D1 /* MyTeamViewController.m in Sources */,
+				F97658511B65E69100ACC050 /* TodayViewController.m in Sources */,
+				F954E9941B65E52C000F323F /* BEMSimpleLineGraphView.m in Sources */,
+				F954E97A1B65E4D9000F323F /* Player.m in Sources */,
 				F965908E1A676DB2005384D1 /* main.m in Sources */,
+				F954E9901B65E52C000F323F /* BEMAverageLine.m in Sources */,
 				F9908DFF1AA250F0008DF9D8 /* MatchupPlayerCell.m in Sources */,
+				F954E9921B65E52C000F323F /* BEMLine.m in Sources */,
 				F96590BC1A67745D005384D1 /* MoreViewController.m in Sources */,
-				F9AB4AFD1A6C30A900A00B0F /* TFHpple.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -598,11 +561,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		F90461EB1A6C2A2A008A2C8E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F90461DD1A6C2A29008A2C8E /* Fantasy Basketball */;
-			targetProxy = F90461EA1A6C2A2A008A2C8E /* PBXContainerItemProxy */;
-		};
 		F96590A61A676DB3005384D1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F96590871A676DB2005384D1 /* FantasyBasketball */;
@@ -630,48 +588,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		F90461ED1A6C2A2A008A2C8E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "Fantasy Basketball/Fantasy Basketball.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SDKROOT)/usr/include/libxml2",
-				);
-				INFOPLIST_FILE = "Fantasy Basketball/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		F90461EE1A6C2A2A008A2C8E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "Fantasy Basketball/Fantasy Basketball.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SDKROOT)/usr/include/libxml2",
-				);
-				INFOPLIST_FILE = "Fantasy Basketball/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
 		F96590AC1A676DB3005384D1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -819,15 +735,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F90461EF1A6C2A2A008A2C8E /* Build configuration list for PBXNativeTarget "Fantasy Basketball" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F90461ED1A6C2A2A008A2C8E /* Debug */,
-				F90461EE1A6C2A2A008A2C8E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		F96590831A676DB2005384D1 /* Build configuration list for PBXProject "FantasyBasketball" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
