@@ -47,7 +47,17 @@
 		F9908E181AA2D0CD008DF9D8 /* TabBarItemMT@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F9908E141AA2D0CD008DF9D8 /* TabBarItemMT@2x.png */; };
 		F9908E191AA2D0CD008DF9D8 /* TabBarItemMU@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F9908E151AA2D0CD008DF9D8 /* TabBarItemMU@2x.png */; };
 		F9908E1A1AA2D0CD008DF9D8 /* TabBarItemPL@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F9908E161AA2D0CD008DF9D8 /* TabBarItemPL@2x.png */; };
+		F9947F6A1B66A44E008F9B70 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9947F691B66A44E008F9B70 /* CoreGraphics.framework */; };
+		F9947F6C1B66A456008F9B70 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9947F6B1B66A456008F9B70 /* UIKit.framework */; };
+		F9947F6E1B66A45F008F9B70 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9947F6D1B66A45F008F9B70 /* Foundation.framework */; };
 		F9D7023C1A9F678000AAEB18 /* PlayerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D7023B1A9F678000AAEB18 /* PlayerCell.m */; };
+		F9DB2EE71B669DCA00B7AC82 /* MZFormSheetBackgroundWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = F9DB2ED91B669DCA00B7AC82 /* MZFormSheetBackgroundWindow.m */; };
+		F9DB2EE81B669DCA00B7AC82 /* MZFormSheetBackgroundWindowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9DB2EDB1B669DCA00B7AC82 /* MZFormSheetBackgroundWindowViewController.m */; };
+		F9DB2EE91B669DCA00B7AC82 /* MZFormSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9DB2EDD1B669DCA00B7AC82 /* MZFormSheetController.m */; };
+		F9DB2EEA1B669DCA00B7AC82 /* MZFormSheetSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = F9DB2EDF1B669DCA00B7AC82 /* MZFormSheetSegue.m */; };
+		F9DB2EEB1B669DCA00B7AC82 /* MZFormSheetTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = F9DB2EE11B669DCA00B7AC82 /* MZFormSheetTransition.m */; };
+		F9DB2EEC1B669DCA00B7AC82 /* UIImage+Additional.m in Sources */ = {isa = PBXBuildFile; fileRef = F9DB2EE41B669DCA00B7AC82 /* UIImage+Additional.m */; };
+		F9DB2EED1B669DCA00B7AC82 /* UIViewController+TargetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9DB2EE61B669DCA00B7AC82 /* UIViewController+TargetViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -141,8 +151,27 @@
 		F9908E141AA2D0CD008DF9D8 /* TabBarItemMT@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TabBarItemMT@2x.png"; path = "FantasyBasketball/Images/TabBarItemMT@2x.png"; sourceTree = "<group>"; };
 		F9908E151AA2D0CD008DF9D8 /* TabBarItemMU@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TabBarItemMU@2x.png"; path = "FantasyBasketball/Images/TabBarItemMU@2x.png"; sourceTree = "<group>"; };
 		F9908E161AA2D0CD008DF9D8 /* TabBarItemPL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TabBarItemPL@2x.png"; path = "FantasyBasketball/Images/TabBarItemPL@2x.png"; sourceTree = "<group>"; };
+		F9947F691B66A44E008F9B70 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		F9947F6B1B66A456008F9B70 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		F9947F6D1B66A45F008F9B70 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F9D7023A1A9F678000AAEB18 /* PlayerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayerCell.h; path = FantasyBasketball/PlayerCell.h; sourceTree = "<group>"; };
 		F9D7023B1A9F678000AAEB18 /* PlayerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayerCell.m; path = FantasyBasketball/PlayerCell.m; sourceTree = "<group>"; };
+		F9DB2ED81B669DCA00B7AC82 /* MZFormSheetBackgroundWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MZFormSheetBackgroundWindow.h; path = "Third Party/MZFormSheetController/MZFormSheetBackgroundWindow.h"; sourceTree = "<group>"; };
+		F9DB2ED91B669DCA00B7AC82 /* MZFormSheetBackgroundWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MZFormSheetBackgroundWindow.m; path = "Third Party/MZFormSheetController/MZFormSheetBackgroundWindow.m"; sourceTree = "<group>"; };
+		F9DB2EDA1B669DCA00B7AC82 /* MZFormSheetBackgroundWindowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MZFormSheetBackgroundWindowViewController.h; path = "Third Party/MZFormSheetController/MZFormSheetBackgroundWindowViewController.h"; sourceTree = "<group>"; };
+		F9DB2EDB1B669DCA00B7AC82 /* MZFormSheetBackgroundWindowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MZFormSheetBackgroundWindowViewController.m; path = "Third Party/MZFormSheetController/MZFormSheetBackgroundWindowViewController.m"; sourceTree = "<group>"; };
+		F9DB2EDC1B669DCA00B7AC82 /* MZFormSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MZFormSheetController.h; path = "Third Party/MZFormSheetController/MZFormSheetController.h"; sourceTree = "<group>"; };
+		F9DB2EDD1B669DCA00B7AC82 /* MZFormSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MZFormSheetController.m; path = "Third Party/MZFormSheetController/MZFormSheetController.m"; sourceTree = "<group>"; };
+		F9DB2EDE1B669DCA00B7AC82 /* MZFormSheetSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MZFormSheetSegue.h; path = "Third Party/MZFormSheetController/MZFormSheetSegue.h"; sourceTree = "<group>"; };
+		F9DB2EDF1B669DCA00B7AC82 /* MZFormSheetSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MZFormSheetSegue.m; path = "Third Party/MZFormSheetController/MZFormSheetSegue.m"; sourceTree = "<group>"; };
+		F9DB2EE01B669DCA00B7AC82 /* MZFormSheetTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MZFormSheetTransition.h; path = "Third Party/MZFormSheetController/MZFormSheetTransition.h"; sourceTree = "<group>"; };
+		F9DB2EE11B669DCA00B7AC82 /* MZFormSheetTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MZFormSheetTransition.m; path = "Third Party/MZFormSheetController/MZFormSheetTransition.m"; sourceTree = "<group>"; };
+		F9DB2EE21B669DCA00B7AC82 /* MZMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MZMacro.h; path = "Third Party/MZFormSheetController/MZMacro.h"; sourceTree = "<group>"; };
+		F9DB2EE31B669DCA00B7AC82 /* UIImage+Additional.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Additional.h"; path = "Third Party/MZFormSheetController/UIImage+Additional.h"; sourceTree = "<group>"; };
+		F9DB2EE41B669DCA00B7AC82 /* UIImage+Additional.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Additional.m"; path = "Third Party/MZFormSheetController/UIImage+Additional.m"; sourceTree = "<group>"; };
+		F9DB2EE51B669DCA00B7AC82 /* UIViewController+TargetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+TargetViewController.h"; path = "Third Party/MZFormSheetController/UIViewController+TargetViewController.h"; sourceTree = "<group>"; };
+		F9DB2EE61B669DCA00B7AC82 /* UIViewController+TargetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+TargetViewController.m"; path = "Third Party/MZFormSheetController/UIViewController+TargetViewController.m"; sourceTree = "<group>"; };
+		F9DB2EF11B66A25E00B7AC82 /* FanstasyBaskeyballPrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FanstasyBaskeyballPrefixHeader.pch; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +179,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9947F6E1B66A45F008F9B70 /* Foundation.framework in Frameworks */,
+				F9947F6C1B66A456008F9B70 /* UIKit.framework in Frameworks */,
+				F9947F6A1B66A44E008F9B70 /* CoreGraphics.framework in Frameworks */,
 				F96590CB1A67872E005384D1 /* libxml2.dylib in Frameworks */,
 				62F83CE2C126DEFEF597543B /* libPods-FantasyBasketball.a in Frameworks */,
 			);
@@ -177,6 +209,9 @@
 		F90461DF1A6C2A29008A2C8E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F9947F6D1B66A45F008F9B70 /* Foundation.framework */,
+				F9947F6B1B66A456008F9B70 /* UIKit.framework */,
+				F9947F691B66A44E008F9B70 /* CoreGraphics.framework */,
 				F90461E01A6C2A29008A2C8E /* NotificationCenter.framework */,
 				7EB74AB10145C6C0AE2BFA13 /* libPods-FantasyBasketball.a */,
 			);
@@ -255,6 +290,7 @@
 		F965908B1A676DB2005384D1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F9DB2EF11B66A25E00B7AC82 /* FanstasyBaskeyballPrefixHeader.pch */,
 				F965908C1A676DB2005384D1 /* Info.plist */,
 				F965908D1A676DB2005384D1 /* main.m */,
 			);
@@ -390,6 +426,21 @@
 		F9E319AA1B660509004201AD /* MZForm */ = {
 			isa = PBXGroup;
 			children = (
+				F9DB2ED81B669DCA00B7AC82 /* MZFormSheetBackgroundWindow.h */,
+				F9DB2ED91B669DCA00B7AC82 /* MZFormSheetBackgroundWindow.m */,
+				F9DB2EDA1B669DCA00B7AC82 /* MZFormSheetBackgroundWindowViewController.h */,
+				F9DB2EDB1B669DCA00B7AC82 /* MZFormSheetBackgroundWindowViewController.m */,
+				F9DB2EDC1B669DCA00B7AC82 /* MZFormSheetController.h */,
+				F9DB2EDD1B669DCA00B7AC82 /* MZFormSheetController.m */,
+				F9DB2EDE1B669DCA00B7AC82 /* MZFormSheetSegue.h */,
+				F9DB2EDF1B669DCA00B7AC82 /* MZFormSheetSegue.m */,
+				F9DB2EE01B669DCA00B7AC82 /* MZFormSheetTransition.h */,
+				F9DB2EE11B669DCA00B7AC82 /* MZFormSheetTransition.m */,
+				F9DB2EE21B669DCA00B7AC82 /* MZMacro.h */,
+				F9DB2EE31B669DCA00B7AC82 /* UIImage+Additional.h */,
+				F9DB2EE41B669DCA00B7AC82 /* UIImage+Additional.m */,
+				F9DB2EE51B669DCA00B7AC82 /* UIViewController+TargetViewController.h */,
+				F9DB2EE61B669DCA00B7AC82 /* UIViewController+TargetViewController.m */,
 			);
 			name = MZForm;
 			sourceTree = "<group>";
@@ -482,7 +533,7 @@
 		F96590801A676DB2005384D1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = CD;
 				TargetAttributes = {
 					F96590871A676DB2005384D1 = {
@@ -589,21 +640,28 @@
 				F954E9841B65E501000F323F /* XPathQuery.m in Sources */,
 				F954E9931B65E52C000F323F /* BEMPermanentPopupView.m in Sources */,
 				F96590B91A677441005384D1 /* PlayersViewController.m in Sources */,
+				F9DB2EE91B669DCA00B7AC82 /* MZFormSheetController.m in Sources */,
 				F954E9821B65E501000F323F /* TFHpple.m in Sources */,
 				F933F7711A6B5414009E24D8 /* MatchupViewController.m in Sources */,
 				F933F76E1A6B2585009E24D8 /* DailyLeadersViewController.m in Sources */,
 				F97063801A6C98B800A50A43 /* PlayerViewController.m in Sources */,
+				F9DB2EE81B669DCA00B7AC82 /* MZFormSheetBackgroundWindowViewController.m in Sources */,
 				F954E9911B65E52C000F323F /* BEMCircle.m in Sources */,
 				F954E97B1B65E4D9000F323F /* Session.m in Sources */,
 				F9D7023C1A9F678000AAEB18 /* PlayerCell.m in Sources */,
 				F954E9831B65E501000F323F /* TFHppleElement.m in Sources */,
+				F9DB2EEB1B669DCA00B7AC82 /* MZFormSheetTransition.m in Sources */,
 				F96590B61A6773E8005384D1 /* MyTeamViewController.m in Sources */,
 				F97658511B65E69100ACC050 /* TodayViewController.m in Sources */,
 				F954E9941B65E52C000F323F /* BEMSimpleLineGraphView.m in Sources */,
+				F9DB2EEA1B669DCA00B7AC82 /* MZFormSheetSegue.m in Sources */,
+				F9DB2EED1B669DCA00B7AC82 /* UIViewController+TargetViewController.m in Sources */,
 				F954E97A1B65E4D9000F323F /* Player.m in Sources */,
 				F965908E1A676DB2005384D1 /* main.m in Sources */,
 				F954E9901B65E52C000F323F /* BEMAverageLine.m in Sources */,
 				F9908DFF1AA250F0008DF9D8 /* MatchupPlayerCell.m in Sources */,
+				F9DB2EEC1B669DCA00B7AC82 /* UIImage+Additional.m in Sources */,
+				F9DB2EE71B669DCA00B7AC82 /* MZFormSheetBackgroundWindow.m in Sources */,
 				F954E9921B65E52C000F323F /* BEMLine.m in Sources */,
 				F96590BC1A67745D005384D1 /* MoreViewController.m in Sources */,
 			);
@@ -667,6 +725,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -729,6 +788,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "/Users/chappysthebest1/Desktop/Github Repos/FantasyBasketball_iOS/FantasyBasketball/FantasyBasketball/FanstasyBaskeyballPrefixHeader.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -736,6 +797,7 @@
 				);
 				INFOPLIST_FILE = FantasyBasketball/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "CDdesigns.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "";
 			};
@@ -747,6 +809,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "/Users/chappysthebest1/Desktop/Github Repos/FantasyBasketball_iOS/FantasyBasketball/FantasyBasketball/FanstasyBaskeyballPrefixHeader.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -754,6 +818,7 @@
 				);
 				INFOPLIST_FILE = FantasyBasketball/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "CDdesigns.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "";
 			};
@@ -773,6 +838,7 @@
 				);
 				INFOPLIST_FILE = FantasyBasketballTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "CDdesigns.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FantasyBasketball.app/FantasyBasketball";
 			};
@@ -788,6 +854,7 @@
 				);
 				INFOPLIST_FILE = FantasyBasketballTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "CDdesigns.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FantasyBasketball.app/FantasyBasketball";
 			};
