@@ -209,7 +209,7 @@
                                 <rect key="frame" x="0.0" y="256" width="414" height="480"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Last 3 Games" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h2j-9f-Kfw">
-                                        <rect key="frame" x="117" y="293" width="180" height="21"/>
+                                        <rect key="frame" x="117" y="297" width="180" height="21"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                         <nil key="highlightedColor"/>
@@ -219,24 +219,24 @@
                                         <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableView>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="40" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="VWP-Vg-06E">
-                                        <rect key="frame" x="0.0" y="167" width="414" height="120"/>
-                                        <animations/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </tableView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="25" sectionHeaderHeight="1" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="03j-6q-NC5">
-                                        <rect key="frame" x="0.0" y="73" width="414" height="60"/>
+                                        <rect key="frame" x="0.0" y="65" width="414" height="60"/>
                                         <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Stats" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mcV-yr-QAO">
-                                        <rect key="frame" x="117" y="140" width="180" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Info" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x6A-WM-86k">
+                                        <rect key="frame" x="117" y="42" width="180" height="21"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Info" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x6A-WM-86k">
-                                        <rect key="frame" x="117" y="50" width="180" height="21"/>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hXs-vL-4C5">
+                                        <rect key="frame" x="0.0" y="153" width="414" height="140"/>
+                                        <animations/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Fantasy Points" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mcV-yr-QAO">
+                                        <rect key="frame" x="71" y="127" width="272" height="23"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                         <nil key="highlightedColor"/>
@@ -486,6 +486,8 @@
                         <outlet property="careerDisplay2" destination="GbD-Y7-Okf" id="gSp-rk-o3o"/>
                         <outlet property="careerDisplay3" destination="ALC-Hg-Ck3" id="UAm-gS-Bsg"/>
                         <outlet property="gamesBasicTableView" destination="aVM-ha-6o9" id="5Za-gO-p96"/>
+                        <outlet property="graphContainerView" destination="hXs-vL-4C5" id="PxL-pi-bI2"/>
+                        <outlet property="graphNameDisplay" destination="mcV-yr-QAO" id="GXc-ht-TgN"/>
                         <outlet property="infoTableView" destination="03j-6q-NC5" id="sDz-yC-2Vn"/>
                         <outlet property="playerImageView" destination="kr5-YW-5Yk" id="kxA-Qr-y6h"/>
                         <outlet property="playerNameDisplay" destination="IZW-qa-jcQ" id="MXG-Je-FKS"/>
@@ -494,7 +496,6 @@
                         <outlet property="seasonDisplay1" destination="m0W-Ax-kAJ" id="DLs-iu-deP"/>
                         <outlet property="seasonDisplay2" destination="bB7-8h-gsE" id="9mU-fA-ZgN"/>
                         <outlet property="seasonDisplay3" destination="9T7-m5-iGM" id="XO2-R9-BAg"/>
-                        <outlet property="statsBasicTableView" destination="VWP-Vg-06E" id="shO-66-q9w"/>
                         <outlet property="tabButton1" destination="8E8-lm-jsC" id="LuW-0u-bsD"/>
                         <outlet property="tabButton2" destination="xCX-n1-cPS" id="RzQ-YQ-bZ7"/>
                         <outlet property="tabButton3" destination="hh9-ZT-s24" id="Fhn-8l-qEA"/>

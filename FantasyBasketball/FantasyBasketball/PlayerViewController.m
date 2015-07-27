@@ -10,8 +10,9 @@
 #import "Session.h"
 #import "Player.h"
 #import "TFHpple.h"
+#import "BEMSimpleLineGraphView.h"
 
-@interface PlayerViewController ()
+@interface PlayerViewController () <BEMSimpleLineGraphDataSource, BEMSimpleLineGraphDelegate>
 
 @property (nonatomic, strong) NSOperationQueue *imageOperationQueue;
 @property (nonatomic, strong) NSCache *imageCache;
@@ -57,7 +58,7 @@ bool needsLoadGamesButton = YES;
 
 - (void)viewDidAppear:(BOOL)animated {
     if (playerNotLoaded) {
-        [super viewDidAppear:nil];
+        [super viewDidAppear:animated];
         [self loadScrollView];
         [self loadOverview];
         [self loadPlayer];
@@ -71,12 +72,16 @@ bool needsLoadGamesButton = YES;
 - (void)contLoading {
     scrollViewsP = [[NSMutableArray alloc] init];
     if (parser.data != nil) {
+        dispatch_async(dispatch_get_main_queue(), ^{
         [self performSelectorInBackground:@selector(loadGameLogTableView) withObject:nil];
+        [self performSelectorInBackground:@selector(loadGraphView) withObject:nil];
         [self performSelectorInBackground:@selector(loadInfoTableView) withObject:nil];
         [self performSelectorInBackground:@selector(loadStatsBasicTableView) withObject:nil];
         [self performSelectorInBackground:@selector(loadRotoworldTableView) withObject:nil];
         [self performSelectorInBackground:@selector(loadStatsScrollView) withObject:nil];
         [self performSelectorInBackground:@selector(loadNewsLogTableView) withObject:nil];
+        [self performSelectorInBackground:@selector(moreGames:) withObject:nil];
+        });
     }
     else NSLog(@"Player not found.");
 }
@@ -191,6 +196,31 @@ bool needsLoadGamesButton = YES;
     //game log
     [self parseGamesWithParser:parser];
     [_gameTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+}
+
+- (void)loadGraphView {
+    _graphView = [[BEMSimpleLineGraphView alloc] initWithFrame:CGRectMake(0, 0, _graphContainerView.frame.size.width, _graphContainerView.frame.size.height)];
+    _graphView.delegate = self;
+    _graphView.dataSource = self;
+    _graphView.enableBezierCurve = YES;
+    _graphView.averageLine.enableAverageLine = YES;
+    _graphView.averageLine.width = 1;
+    _graphView.averageLine.alpha = 0.6;
+    _graphView.averageLine.color = [UIColor grayColor];
+    _graphView.colorLine = [UIColor lightGrayColor];
+    _graphView.colorPoint = [UIColor lightGrayColor];
+    _graphView.colorTop = [UIColor whiteColor];
+    _graphView.colorBottom = [UIColor lightGrayColor];
+    _graphView.colorBackgroundXaxis = [UIColor whiteColor];
+    _graphView.alphaBottom = 0.15;
+    _graphView.enableYAxisLabel = YES;
+    _graphView.enablePopUpReport = YES;
+    _graphView.widthLine = 2.0;
+    _graphView.alwaysDisplayDots = YES;
+    _graphView.autoScaleYAxis = YES;
+    _graphView.animationGraphEntranceTime = 1.0;
+    
+    [_graphContainerView addSubview:_graphView];
 }
 
 bool gameLogIsBasic = YES;
@@ -344,6 +374,7 @@ bool gameLogIsBasic = YES;
     }
     [_gamesBasicTableView reloadData];
     [_gameTableView reloadData];
+    [_graphView reloadGraph];
 }
 
 - (void)moreGames:(UIButton *)sender {
@@ -386,12 +417,11 @@ bool gameLogIsBasic = YES;
     [_newsTableView reloadData];
 }
 
-#pragma mark - Table View
+#pragma mark - Table View Delegate Methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
-
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (handleError) return 0;
@@ -404,14 +434,14 @@ bool gameLogIsBasic = YES;
     return news.count;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (tableView == _gameTableView) return 40;
     if (tableView == _gamesBasicTableView ||
         tableView == _statsBasicTableView) return 40;
     return 0;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == _infoTableView) return 30;
     if (tableView == _statsBasicTableView ||
         tableView == _gamesBasicTableView) return 40;
@@ -748,7 +778,7 @@ bool gameLogIsBasic = YES;
     return nil;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == _newsTableView) {
         NSMutableDictionary *newsPeice = news[indexPath.row];
@@ -764,9 +794,51 @@ bool gameLogIsBasic = YES;
     }
 }
 
+#pragma mark - BEMSimpleGraphView Delegate Methods
+
+- (NSInteger)numberOfYAxisLabelsOnLineGraph:(BEMSimpleLineGraphView *)graph {
+    return 2;
+}
+
+- (NSInteger)numberOfGapsBetweenLabelsOnLineGraph:(nonnull BEMSimpleLineGraphView *)graph {
+    return 2;
+}
+
+int numGraphPoints;
+
+- (NSInteger)numberOfPointsInLineGraph:(BEMSimpleLineGraphView *)graph {
+    numGraphPoints = (games.count < 15) ? (int)games.count : 15;
+    _graphNameDisplay.text = [NSString stringWithFormat:@"Fanstasy Points: (Last %d games)",numGraphPoints];
+    return numGraphPoints;
+}
+
+- (CGFloat)lineGraph:(BEMSimpleLineGraphView *)graph valueForPointAtIndex:(NSInteger)index {
+    return (CGFloat)[games[numGraphPoints-index-1][2] intValue];
+}
+
+- (NSString *)lineGraph:(BEMSimpleLineGraphView *)graph labelOnXAxisForIndex:(NSInteger)index {
+    return (NSString *)games[numGraphPoints-index-1][0];
+}
+
+- (CGFloat)baseValueForYAxisOnLineGraph:(nonnull BEMSimpleLineGraphView *)graph {
+    return 0;
+}
+
+- (CGFloat)incrementValueForYAxisOnLineGraph:(nonnull BEMSimpleLineGraphView *)graph {
+    return 40;
+}
+
+- (CGFloat)maxValueForLineGraph:(BEMSimpleLineGraphView *)graph {
+    return 40;
+}
+
+- (CGFloat)minValueForLineGraph:(nonnull BEMSimpleLineGraphView *)graph {
+    return 0;
+}
+
 #pragma mark - Scroll Views
 
--(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (scrollView.tag == 1) {
         for (UIScrollView *sV in scrollViewsP) [sV setContentOffset:CGPointMake(scrollView.contentOffset.x, 0) animated:NO];
         scrollDistanceP = scrollView.contentOffset.x;

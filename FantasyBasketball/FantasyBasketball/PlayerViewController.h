@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class BEMSimpleLineGraphView;
 
 @interface PlayerViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
@@ -44,7 +45,10 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *bottomScrollView;
 
 @property (weak, nonatomic) IBOutlet UITableView *infoTableView;
-@property (weak, nonatomic) IBOutlet UITableView *statsBasicTableView;
+@property (weak, nonatomic) IBOutlet UILabel *graphNameDisplay;
+@property (weak, nonatomic) IBOutlet UIView *graphContainerView;
+@property (strong, nonatomic) IBOutlet BEMSimpleLineGraphView *graphView;
+@property (weak, nonatomic) IBOutlet UITableView *statsBasicTableView; //to remove
 @property (weak, nonatomic) IBOutlet UITableView *gamesBasicTableView;
 
 @property (strong, nonatomic) IBOutlet UITableView *newsTableView;
