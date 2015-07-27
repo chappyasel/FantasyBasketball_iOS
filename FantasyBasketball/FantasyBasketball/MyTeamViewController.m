@@ -10,6 +10,7 @@
 #import "Session.h"
 #import "Player.h"
 #import "TFHpple.h"
+#import "MZFormSheetController.h"
 
 @interface MyTeamViewController ()
 
@@ -384,7 +385,17 @@ NSArray *pickerData;
     session.player = player;
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UIViewController *viewController = (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:@"p"];
-    [self presentViewController:viewController animated:YES completion:nil];
+    MZFormSheetController *formSheet = [[MZFormSheetController alloc] initWithViewController:viewController];
+    formSheet.shouldDismissOnBackgroundViewTap = YES;
+    formSheet.transitionStyle = MZFormSheetTransitionStyleSlideFromBottom;
+    formSheet.shouldCenterVertically = YES;
+    formSheet.cornerRadius = 5.0;
+    formSheet.portraitTopInset = 6.0;
+    formSheet.landscapeTopInset = 6.0;
+    formSheet.presentedFormSheetSize = CGSizeMake(375, 680);
+    [self mz_presentFormSheetController:formSheet animated:YES completionHandler:^(MZFormSheetController *formSheetController) {
+        
+    }];
 }
 
 - (void)linkWithGameLink:(Player *)player {
