@@ -8,8 +8,8 @@
 
 #import "TodayViewController.h"
 #import <NotificationCenter/NotificationCenter.h>
-#import "Session.h"
-#import "Player.h"
+#import "FBSession.h"
+#import "FBPlayer.h"
 #import "TFHpple.h"
 
 @interface TodayViewController () <NCWidgetProviding>
@@ -18,7 +18,7 @@
 
 @implementation TodayViewController
 
-Session *session;
+FBSession *session;
 NSMutableArray *players1;
 NSMutableArray *players2;
 TFHpple *parser;
@@ -28,7 +28,7 @@ int numSlots = 0;
 - (void)viewDidLoad {
     [super viewDidLoad];
     if (!session) {
-        session = [Session sharedInstance];
+        session = [FBSession sharedInstance];
         session.leagueID = 294156;
         session.teamID = 11;
         session.seasonID = 2015;
@@ -119,8 +119,8 @@ int numSlots = 0;
             [data insertObject:@"--" atIndex:22]; //pct
             [data insertObject:@"--" atIndex:23]; //+/-
             [data addObject:@"--"]; //playerID
-            if (i < 13)[players1 addObject:[[Player alloc] initWithData:data]];
-            else [players2 addObject:[[Player alloc] initWithData:data]];
+            if (i < 13)[players1 addObject:[[FBPlayer alloc] initWithData:data]];
+            else [players2 addObject:[[FBPlayer alloc] initWithData:data]];
         }
     }
     NSMutableArray *markForDel1 = [[NSMutableArray alloc] init];
@@ -174,11 +174,11 @@ int numSlots = 0;
         float tot2 = 0;
         if (section == 0) {
             for (int i = 0; i < players1.count; i++) {
-                Player *player = players1[i];
+                FBPlayer *player = players1[i];
                 if (player.isPlaying) tot1 += player.fantasyPoints;
             }
             for (int i = 0; i < players2.count; i++) {
-                Player *player = players2[i];
+                FBPlayer *player = players2[i];
                 if (player.isPlaying) tot2 += player.fantasyPoints;
             }
         }
@@ -212,7 +212,7 @@ int numSlots = 0;
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier];
     if (players1.count-1 >= indexPath.row) {
-        Player *player = players1[indexPath.row];
+        FBPlayer *player = players1[indexPath.row];
         if (player.isPlaying) {
             //NAME
             UILabel *name = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120, 25)];
@@ -238,7 +238,7 @@ int numSlots = 0;
         }
     }
     if (players2.count-1 >= indexPath.row) {
-        Player *player = players2[indexPath.row];
+        FBPlayer *player = players2[indexPath.row];
         if (player.isPlaying) {
             //NAME
             UILabel *name = [[UILabel alloc] initWithFrame:CGRectMake(320-120, 0, 120, 25)];

@@ -14,8 +14,6 @@
 		F93DC6B61AA4D90C00EFFC57 /* TabBarItemMT_S@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F93DC6B21AA4D90C00EFFC57 /* TabBarItemMT_S@2x.png */; };
 		F93DC6B71AA4D90C00EFFC57 /* TabBarItemMU_S@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F93DC6B31AA4D90C00EFFC57 /* TabBarItemMU_S@2x.png */; };
 		F93DC6B81AA4D90C00EFFC57 /* TabBarItemPL_S@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F93DC6B41AA4D90C00EFFC57 /* TabBarItemPL_S@2x.png */; };
-		F954E97A1B65E4D9000F323F /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = F954E9771B65E4D9000F323F /* Player.m */; };
-		F954E97B1B65E4D9000F323F /* Session.m in Sources */ = {isa = PBXBuildFile; fileRef = F954E9791B65E4D9000F323F /* Session.m */; };
 		F954E9821B65E501000F323F /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = F954E97D1B65E501000F323F /* TFHpple.m */; };
 		F954E9831B65E501000F323F /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = F954E97F1B65E501000F323F /* TFHppleElement.m */; };
 		F954E9841B65E501000F323F /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = F954E9811B65E501000F323F /* XPathQuery.m */; };
@@ -58,6 +56,8 @@
 		F9DB2EEB1B669DCA00B7AC82 /* MZFormSheetTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = F9DB2EE11B669DCA00B7AC82 /* MZFormSheetTransition.m */; };
 		F9DB2EEC1B669DCA00B7AC82 /* UIImage+Additional.m in Sources */ = {isa = PBXBuildFile; fileRef = F9DB2EE41B669DCA00B7AC82 /* UIImage+Additional.m */; };
 		F9DB2EED1B669DCA00B7AC82 /* UIViewController+TargetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9DB2EE61B669DCA00B7AC82 /* UIViewController+TargetViewController.m */; };
+		F9F8185D1B6ABA0700EE70E7 /* FBPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F8185A1B6ABA0700EE70E7 /* FBPlayer.m */; };
+		F9F8185E1B6ABA0700EE70E7 /* FBSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F8185C1B6ABA0700EE70E7 /* FBSession.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,10 +96,6 @@
 		F93DC6B21AA4D90C00EFFC57 /* TabBarItemMT_S@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TabBarItemMT_S@2x.png"; path = "FantasyBasketball/Images/TabBarItemMT_S@2x.png"; sourceTree = "<group>"; };
 		F93DC6B31AA4D90C00EFFC57 /* TabBarItemMU_S@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TabBarItemMU_S@2x.png"; path = "FantasyBasketball/Images/TabBarItemMU_S@2x.png"; sourceTree = "<group>"; };
 		F93DC6B41AA4D90C00EFFC57 /* TabBarItemPL_S@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TabBarItemPL_S@2x.png"; path = "FantasyBasketball/Images/TabBarItemPL_S@2x.png"; sourceTree = "<group>"; };
-		F954E9761B65E4D9000F323F /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Player.h; path = Classes/Player.h; sourceTree = "<group>"; };
-		F954E9771B65E4D9000F323F /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Player.m; path = Classes/Player.m; sourceTree = "<group>"; };
-		F954E9781B65E4D9000F323F /* Session.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Session.h; path = Classes/Session.h; sourceTree = "<group>"; };
-		F954E9791B65E4D9000F323F /* Session.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Session.m; path = Classes/Session.m; sourceTree = "<group>"; };
 		F954E97C1B65E501000F323F /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TFHpple.h; path = "Third Party/Hpple/TFHpple.h"; sourceTree = SOURCE_ROOT; };
 		F954E97D1B65E501000F323F /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TFHpple.m; path = "Third Party/Hpple/TFHpple.m"; sourceTree = SOURCE_ROOT; };
 		F954E97E1B65E501000F323F /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TFHppleElement.h; path = "Third Party/Hpple/TFHppleElement.h"; sourceTree = SOURCE_ROOT; };
@@ -172,6 +168,10 @@
 		F9DB2EE51B669DCA00B7AC82 /* UIViewController+TargetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+TargetViewController.h"; path = "Third Party/MZFormSheetController/UIViewController+TargetViewController.h"; sourceTree = "<group>"; };
 		F9DB2EE61B669DCA00B7AC82 /* UIViewController+TargetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+TargetViewController.m"; path = "Third Party/MZFormSheetController/UIViewController+TargetViewController.m"; sourceTree = "<group>"; };
 		F9DB2EF11B66A25E00B7AC82 /* FanstasyBaskeyballPrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FanstasyBaskeyballPrefixHeader.pch; sourceTree = "<group>"; };
+		F9F818591B6ABA0700EE70E7 /* FBPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBPlayer.h; path = Classes/FBPlayer.h; sourceTree = "<group>"; };
+		F9F8185A1B6ABA0700EE70E7 /* FBPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBPlayer.m; path = Classes/FBPlayer.m; sourceTree = "<group>"; };
+		F9F8185B1B6ABA0700EE70E7 /* FBSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBSession.h; path = Classes/FBSession.h; sourceTree = "<group>"; };
+		F9F8185C1B6ABA0700EE70E7 /* FBSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBSession.m; path = Classes/FBSession.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -459,10 +459,10 @@
 		F9E4AE241B655122006CFDE4 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				F954E9761B65E4D9000F323F /* Player.h */,
-				F954E9771B65E4D9000F323F /* Player.m */,
-				F954E9781B65E4D9000F323F /* Session.h */,
-				F954E9791B65E4D9000F323F /* Session.m */,
+				F9F818591B6ABA0700EE70E7 /* FBPlayer.h */,
+				F9F8185A1B6ABA0700EE70E7 /* FBPlayer.m */,
+				F9F8185B1B6ABA0700EE70E7 /* FBSession.h */,
+				F9F8185C1B6ABA0700EE70E7 /* FBSession.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -641,14 +641,15 @@
 				F954E9931B65E52C000F323F /* BEMPermanentPopupView.m in Sources */,
 				F96590B91A677441005384D1 /* PlayersViewController.m in Sources */,
 				F9DB2EE91B669DCA00B7AC82 /* MZFormSheetController.m in Sources */,
+				F9F8185D1B6ABA0700EE70E7 /* FBPlayer.m in Sources */,
 				F954E9821B65E501000F323F /* TFHpple.m in Sources */,
 				F933F7711A6B5414009E24D8 /* MatchupViewController.m in Sources */,
 				F933F76E1A6B2585009E24D8 /* DailyLeadersViewController.m in Sources */,
 				F97063801A6C98B800A50A43 /* PlayerViewController.m in Sources */,
 				F9DB2EE81B669DCA00B7AC82 /* MZFormSheetBackgroundWindowViewController.m in Sources */,
 				F954E9911B65E52C000F323F /* BEMCircle.m in Sources */,
-				F954E97B1B65E4D9000F323F /* Session.m in Sources */,
 				F9D7023C1A9F678000AAEB18 /* PlayerCell.m in Sources */,
+				F9F8185E1B6ABA0700EE70E7 /* FBSession.m in Sources */,
 				F954E9831B65E501000F323F /* TFHppleElement.m in Sources */,
 				F9DB2EEB1B669DCA00B7AC82 /* MZFormSheetTransition.m in Sources */,
 				F96590B61A6773E8005384D1 /* MyTeamViewController.m in Sources */,
@@ -656,7 +657,6 @@
 				F954E9941B65E52C000F323F /* BEMSimpleLineGraphView.m in Sources */,
 				F9DB2EEA1B669DCA00B7AC82 /* MZFormSheetSegue.m in Sources */,
 				F9DB2EED1B669DCA00B7AC82 /* UIViewController+TargetViewController.m in Sources */,
-				F954E97A1B65E4D9000F323F /* Player.m in Sources */,
 				F965908E1A676DB2005384D1 /* main.m in Sources */,
 				F954E9901B65E52C000F323F /* BEMAverageLine.m in Sources */,
 				F9908DFF1AA250F0008DF9D8 /* MatchupPlayerCell.m in Sources */,

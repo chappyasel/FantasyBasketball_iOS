@@ -14,7 +14,7 @@
 
 //CellType: MyTeamViewController, PlayersViewController, DailyLeadersViewController
 
-- (instancetype) initWithPlayer:(Player *)pl view:(UIViewController<UIScrollViewDelegate> *)superview scrollDistance:(float)dist {
+- (instancetype) initWithPlayer:(FBPlayer *)pl view:(UIViewController<UIScrollViewDelegate> *)superview scrollDistance:(float)dist {
     if (self = [super initWithFrame:CGRectMake(0, 0, 414, 40)]) {
         NSString *playerType = [NSString stringWithFormat:@"%@",superview.class];
         self.player = pl;

@@ -7,8 +7,8 @@
 //
 
 #import "MatchupViewController.h"
-#import "Session.h"
-#import "Player.h"
+#import "FBSession.h"
+#import "FBPlayer.h"
 #import "TFHpple.h"
 
 @interface MatchupViewController ()
@@ -17,7 +17,7 @@
 
 @implementation MatchupViewController
 
-Session *session;
+FBSession *session;
 bool handleError;
 
 UINavigationBar *barMU;
@@ -217,12 +217,12 @@ NSTimer *updateTimer;
             [data insertObject:@"--" atIndex:23]; //pct
             [data insertObject:@"--" atIndex:24]; //+/-
             [data addObject:[[element objectForKey:@"id"] substringFromIndex:4]];
-            if (i < 13)[playersMU1 addObject:[[Player alloc] initWithData:data]];
-            else [playersMU2 addObject:[[Player alloc] initWithData:data]];
+            if (i < 13)[playersMU1 addObject:[[FBPlayer alloc] initWithData:data]];
+            else [playersMU2 addObject:[[FBPlayer alloc] initWithData:data]];
         }
     }
-    for (Player *player in playersMU1) if(player.isStarting) numStartersMU1 ++;
-    for (Player *player in playersMU2) if(player.isStarting) numStartersMU2 ++;
+    for (FBPlayer *player in playersMU1) if(player.isStarting) numStartersMU1 ++;
+    for (FBPlayer *player in playersMU2) if(player.isStarting) numStartersMU2 ++;
 }
 
 #pragma mark - Table View
@@ -253,11 +253,11 @@ NSTimer *updateTimer;
     float tot2 = 0;
     if (section == 0) {
         for (int i = 0; i < numStartersMU1; i++) {
-            Player *player = playersMU1[i];
+            FBPlayer *player = playersMU1[i];
             if (player.isPlaying) tot1 += player.fantasyPoints;
         }
         for (int i = 0; i < numStartersMU2; i++) {
-            Player *player = playersMU2[i];
+            FBPlayer *player = playersMU2[i];
             if (player.isPlaying) tot2 += player.fantasyPoints;
         }
     }
@@ -275,8 +275,8 @@ NSTimer *updateTimer;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Player *rightPlayer;
-    Player *leftPlayer;
+    FBPlayer *rightPlayer;
+    FBPlayer *leftPlayer;
     if (playersMU1.count-1 >= indexPath.row+indexPath.section*numStartersMU1)
         leftPlayer = playersMU1[indexPath.row+indexPath.section*numStartersMU1];
     if (playersMU2.count-1 >= indexPath.row+indexPath.section*numStartersMU2)
@@ -301,14 +301,14 @@ NSTimer *updateTimer;
 
 #pragma mark - MatchupPlayerCell delegate
 
-- (void)linkWithPlayer:(Player *)player {
+- (void)linkWithPlayer:(FBPlayer *)player {
     session.player = player;
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UIViewController *viewController = (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:@"p"];
     [self presentViewController:viewController animated:YES completion:nil];
 }
 
-- (void)linkWithGameLink:(Player *)player {
+- (void)linkWithGameLink:(FBPlayer *)player {
     session.link = [player gameLink];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UIViewController *viewController = (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:@"w"];

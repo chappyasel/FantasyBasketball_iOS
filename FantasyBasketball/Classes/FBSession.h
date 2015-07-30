@@ -7,18 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Player.h"
+#import "FBPlayer.h"
 
-@interface Session : NSObject
+@interface FBSession : NSObject
 
 @property int leagueID;
 @property int teamID;
 @property int seasonID;
 @property int scoringPeriodID; //all session variables set in AppDelegate.m
 
-@property Player *player;
+@property FBPlayer *player;
 @property NSString *link;
 
-+ (Session *)sharedInstance;
++ (FBSession *)sharedInstance;
 
 @end

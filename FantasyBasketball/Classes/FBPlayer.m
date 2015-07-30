@@ -1,14 +1,14 @@
 //
-//  Player.m
+//  FBPlayer.m
 //  FantasyBasketball
 //
 //  Created by Chappy Asel on 1/15/15.
 //  Copyright (c) 2015 CD. All rights reserved.
 //
 
-#import "Player.h"
+#import "FBPlayer.h"
 
-@implementation Player
+@implementation FBPlayer
 
 - (instancetype)initWithData:(NSArray *)data {
     if (self = [super init]) {

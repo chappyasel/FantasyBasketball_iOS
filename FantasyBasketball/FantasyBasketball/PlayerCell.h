@@ -7,21 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Player.h"
+#import "FBPlayer.h"
 
 @protocol PlayerCellDelegate <NSObject>
 
-- (void)linkWithPlayer:(Player *)player;
-- (void)linkWithGameLink:(Player *)player;
+- (void)linkWithPlayer:(FBPlayer *)player;
+- (void)linkWithGameLink:(FBPlayer *)player;
 
 @end
 
 @interface PlayerCell : UITableViewCell
 
 @property (nonatomic, weak) id <PlayerCellDelegate> delegate;
-@property (nonatomic) Player *player;
+@property (nonatomic) FBPlayer *player;
 
-- (instancetype) initWithPlayer:(Player *)pl view:(UIViewController<UIScrollViewDelegate> *)superview scrollDistance:(float)dist;
+- (instancetype) initWithPlayer:(FBPlayer *)pl view:(UIViewController<UIScrollViewDelegate> *)superview scrollDistance:(float)dist;
 
 - (void)setScrollDistance:(float)dist;
 

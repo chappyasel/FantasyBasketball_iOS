@@ -6,15 +6,15 @@
 //  Copyright (c) 2015 CD. All rights reserved.
 //
 
-#import "Session.h"
+#import "FBSession.h"
 
-@implementation Session
+@implementation FBSession
 
-+ (Session *)sharedInstance {
-    static Session *_sharedInstance = nil;
++ (FBSession *)sharedInstance {
+    static FBSession *_sharedInstance = nil;
     static dispatch_once_t oncePredicate;
     dispatch_once(&oncePredicate, ^{
-        _sharedInstance = [[Session alloc] init];
+        _sharedInstance = [[FBSession alloc] init];
     });
     return _sharedInstance;
 }

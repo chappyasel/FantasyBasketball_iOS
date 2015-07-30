@@ -7,7 +7,7 @@
 //
 
 #import "MoreViewController.h"
-#import "Session.h"
+#import "FBSession.h"
 
 @interface MoreViewController ()
 
@@ -15,11 +15,11 @@
 
 @implementation MoreViewController
 
-Session *session;
+FBSession *session;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    session = [Session sharedInstance];
+    session = [FBSession sharedInstance];
     _leagueInput.placeholder = [NSString stringWithFormat:@"%d",session.leagueID];
     _teamInput.placeholder = [NSString stringWithFormat:@"%d",session.teamID];
     _seasonInput.placeholder = [NSString stringWithFormat:@"%d",session.seasonID];

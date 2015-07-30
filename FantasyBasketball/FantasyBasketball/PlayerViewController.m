@@ -7,8 +7,8 @@
 //
 
 #import "PlayerViewController.h"
-#import "Session.h"
-#import "Player.h"
+#import "FBSession.h"
+#import "FBPlayer.h"
 #import "TFHpple.h"
 #import "BEMSimpleLineGraphView.h"
 
@@ -22,8 +22,8 @@
 @implementation PlayerViewController
 
 bool handleError;
-Session *session;
-Player *player;
+FBSession *session;
+FBPlayer *player;
 TFHpple *parser;
 
 NSMutableArray *scrollViewsP;

@@ -7,8 +7,8 @@
 //
 
 #import "PlayersViewController.h"
-#import "Session.h"
-#import "Player.h"
+#import "FBSession.h"
+#import "FBPlayer.h"
 #import "TFHpple.h"
 
 @interface PlayersViewController ()
@@ -17,7 +17,7 @@
 
 @implementation PlayersViewController
 
-Session *session;
+FBSession *session;
 UINavigationBar *bar;
 NSArray *sortChoices;
 NSString *sort;
@@ -31,7 +31,7 @@ NSMutableArray *scrollViewsPL;
 TFHpple *parser;
 float scrollDistancePL;
 
-Session *session;
+FBSession *session;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -159,7 +159,7 @@ Session *session;
             [data insertObject:@"--" atIndex:9]; //gs
             [data insertObject:@"--" atIndex:10]; //min
             [data addObject:[[element objectForKey:@"id"] substringFromIndex:4]];
-            [playersPL addObject:[[Player alloc] initWithData:data]];
+            [playersPL addObject:[[FBPlayer alloc] initWithData:data]];
         }
     }
 }
@@ -235,7 +235,7 @@ Session *session;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PlayerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Identifier"];
-    Player *player = playersPL[indexPath.row];
+    FBPlayer *player = playersPL[indexPath.row];
     cell = [[PlayerCell alloc] initWithPlayer:player view:self scrollDistance:scrollDistancePL];
     cell.delegate = self;
     return cell;
@@ -374,14 +374,14 @@ NSArray *pickerData3;
 
 #pragma mark - PlayerCell delegate
 
-- (void)linkWithPlayer:(Player *)player {
+- (void)linkWithPlayer:(FBPlayer *)player {
     session.player = player;
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UIViewController *viewController = (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:@"p"];
     [self presentViewController:viewController animated:YES completion:nil];
 }
 
-- (void)linkWithGameLink:(Player *)player {
+- (void)linkWithGameLink:(FBPlayer *)player {
     session.link = [player gameLink];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UIViewController *viewController = (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:@"w"];

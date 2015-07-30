@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Player.h"
+#import "FBPlayer.h"
 #import <WebKit/WebKit.h>
 
 @protocol MatchupPlayerCellDelegate <NSObject>
 
-- (void)linkWithPlayer:(Player *)player;
-- (void)linkWithGameLink:(Player *)player;
+- (void)linkWithPlayer:(FBPlayer *)player;
+- (void)linkWithGameLink:(FBPlayer *)player;
 
 @end
 
@@ -21,11 +21,11 @@
 
 @property (nonatomic, weak) id <MatchupPlayerCellDelegate> delegate;
 @property (nonatomic) int index;
-@property (nonatomic) Player *rightPlayer;
-@property (nonatomic) Player *leftPlayer;
+@property (nonatomic) FBPlayer *rightPlayer;
+@property (nonatomic) FBPlayer *leftPlayer;
 
-- (instancetype) initWithRightPlayer:(Player *)rP leftPlayer:(Player *)lP view:(UIViewController *)superview expanded:(bool)expanded;
+- (instancetype) initWithRightPlayer:(FBPlayer *)rP leftPlayer:(FBPlayer *)lP view:(UIViewController *)superview expanded:(bool)expanded;
 
-- (void)updateWithRightPlayer:(Player *)rP leftPlayer:(Player *)lP;
+- (void)updateWithRightPlayer:(FBPlayer *)rP leftPlayer:(FBPlayer *)lP;
 
 @end

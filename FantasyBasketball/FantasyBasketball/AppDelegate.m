@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "Session.h"
+#import "FBSession.h"
 #import "TFHpple.h"
 
 @interface AppDelegate ()
@@ -16,10 +16,10 @@
 
 @implementation AppDelegate
 
-Session *session;
+FBSession *session;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    session = [Session sharedInstance];
+    session = [FBSession sharedInstance];
     session.leagueID = 294156;
     session.teamID = 11;
     session.seasonID = 2015;

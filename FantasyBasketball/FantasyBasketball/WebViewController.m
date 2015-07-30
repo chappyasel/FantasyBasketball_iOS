@@ -7,7 +7,7 @@
 //
 
 #import "WebViewController.h"
-#import "Session.h"
+#import "FBSession.h"
 
 @interface WebViewController ()
 
@@ -17,7 +17,7 @@
 
 UINavigationBar *barWV;
 UIBarButtonItem *refreshButton;
-Session *session;
+FBSession *session;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
