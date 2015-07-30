@@ -17,7 +17,7 @@
     UILabel *leftPointsView;
 }
 
-- (instancetype) initWithRightPlayer:(Player *)rP leftPlayer:(Player *)lP view:(UIViewController *)superview expanded:(bool)expanded {
+- (instancetype) initWithRightPlayer:(FBPlayer *)rP leftPlayer:(FBPlayer *)lP view:(UIViewController *)superview expanded:(bool)expanded {
     if (self = [super initWithFrame:CGRectMake(0, 0, 414, 152.7)]) {
         self.rightPlayer = rP;
         self.leftPlayer = lP;
@@ -118,7 +118,7 @@
     return self;
 }
 
-- (void)updateWithRightPlayer:(Player *)rP leftPlayer:(Player *)lP {
+- (void)updateWithRightPlayer:(FBPlayer *)rP leftPlayer:(FBPlayer *)lP {
     self.rightPlayer = rP;
     self.leftPlayer = lP;
     if (self.rightPlayer.isPlaying) rightSubnameView.text = [NSString stringWithFormat:@"%@ %@, %@",self.rightPlayer.status,self.rightPlayer.score,self.rightPlayer.opponent];

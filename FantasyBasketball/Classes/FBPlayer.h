@@ -1,5 +1,5 @@
 //
-//  Player.h
+//  FBPlayer.h
 //  FantasyBasketball
 //
 //  Created by Chappy Asel on 1/15/15.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Player : NSObject
+@interface FBPlayer : NSObject
 
 @property bool isStarting; //(0) //MT only
 

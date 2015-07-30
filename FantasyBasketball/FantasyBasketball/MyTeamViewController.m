@@ -7,8 +7,8 @@
 //
 
 #import "MyTeamViewController.h"
-#import "Session.h"
-#import "Player.h"
+#import "FBSession.h"
+#import "FBPlayer.h"
 #import "TFHpple.h"
 #import "MZFormSheetController.h"
 
@@ -18,7 +18,7 @@
 
 @implementation MyTeamViewController
 
-Session *session;
+FBSession *session;
 UINavigationBar *bar;
 UIBarButtonItem *refreshButton;
 NSMutableArray *playersMT;
@@ -141,10 +141,10 @@ NSString *scoringPeriodMT = @"today";
             [data insertObject:@"--" atIndex:10]; //min
             if (data.count != 25) [data insertObject:@"--" atIndex:21]; //tot
             [data addObject:[[element objectForKey:@"id"] substringFromIndex:4]];
-            [playersMT addObject:[[Player alloc] initWithData:data]];
+            [playersMT addObject:[[FBPlayer alloc] initWithData:data]];
         }
     }
-    for (Player *player in playersMT) if(player.isStarting) numStarters ++;
+    for (FBPlayer *player in playersMT) if(player.isStarting) numStarters ++;
 }
 
 #pragma mark - Table View
@@ -236,7 +236,7 @@ NSString *scoringPeriodMT = @"today";
     float arr[11] = {0,0,0,0,0,0,0,0,0,0,0};
     if (section == 0) {
         for (int i = 0; i < numStarters; i++) {
-            Player *player = playersMT[i];
+            FBPlayer *player = playersMT[i];
             if (player.isPlaying) {
                 float arr2[11] = {player.fantasyPoints,player.fgm,player.fga,player.ftm,player.fta,player.rebounds,player.assists,player.blocks,player.steals,player.turnovers,player.points};
                 for (int s = 0; s < 11; s++) arr[s] += arr2[s];
@@ -245,7 +245,7 @@ NSString *scoringPeriodMT = @"today";
     }
     else {
         for (int i = numStarters; i < 13; i++) {
-            Player *player = playersMT[i];
+            FBPlayer *player = playersMT[i];
             if (player.isPlaying) {
                 float arr2[11] = {player.fantasyPoints,player.fgm,player.fga,player.ftm,player.fta,player.rebounds,player.assists,player.blocks,player.steals,player.turnovers,player.points};
                 for (int s = 0; s < 11; s++) arr[s] += arr2[s];
@@ -264,7 +264,7 @@ NSString *scoringPeriodMT = @"today";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PlayerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Identifier"];
-    Player *player = playersMT[indexPath.row+indexPath.section*numStarters];
+    FBPlayer *player = playersMT[indexPath.row+indexPath.section*numStarters];
     cell = [[PlayerCell alloc] initWithPlayer:player view:self scrollDistance:scrollDistanceMT];
     cell.delegate = self;
     return cell;
@@ -381,7 +381,7 @@ NSArray *pickerData;
 
 #pragma mark - PlayerCell delegate
 
-- (void)linkWithPlayer:(Player *)player {
+- (void)linkWithPlayer:(FBPlayer *)player {
     session.player = player;
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UIViewController *viewController = (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:@"p"];
@@ -398,7 +398,7 @@ NSArray *pickerData;
     }];
 }
 
-- (void)linkWithGameLink:(Player *)player {
+- (void)linkWithGameLink:(FBPlayer *)player {
     session.link = [player gameLink];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UIViewController *viewController = (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:@"w"];

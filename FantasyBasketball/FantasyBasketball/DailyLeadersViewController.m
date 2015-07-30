@@ -7,8 +7,8 @@
 //
 
 #import "DailyLeadersViewController.h"
-#import "Session.h"
-#import "Player.h"
+#import "FBSession.h"
+#import "FBPlayer.h"
 #import "TFHpple.h"
 
 @interface DailyLeadersViewController ()
@@ -17,7 +17,7 @@
 
 @implementation DailyLeadersViewController
 
-Session *session;
+FBSession *session;
 UINavigationBar *bar;
 UIBarButtonItem *refreshButton;
 NSMutableArray *playersDL;
@@ -26,8 +26,6 @@ TFHpple *parser;
 float scrollDistanceDL;
 int scoringDay;
 int team;
-
-Session *session;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -169,7 +167,7 @@ NSTimer *updateTimer;
             [data insertObject:@"--" atIndex:23]; //pct
             [data insertObject:@"--" atIndex:24]; //+/-
             [data addObject:[[element objectForKey:@"id"] substringFromIndex:4]];
-            [playersDL addObject:[[Player alloc] initWithData:data]];
+            [playersDL addObject:[[FBPlayer alloc] initWithData:data]];
         }
     }
 }
@@ -226,7 +224,7 @@ NSTimer *updateTimer;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PlayerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Identifier"];
-    Player *player = playersDL[indexPath.row];
+    FBPlayer *player = playersDL[indexPath.row];
     cell = [[PlayerCell alloc] initWithPlayer:player view:self scrollDistance:scrollDistanceDL];
     cell.delegate = self;
     return cell;
@@ -333,14 +331,14 @@ NSArray *pickerData2;
 
 #pragma mark - PlayerCell delegate
 
-- (void)linkWithPlayer:(Player *)player {
+- (void)linkWithPlayer:(FBPlayer *)player {
     session.player = player;
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UIViewController *viewController = (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:@"p"];
     [self presentViewController:viewController animated:YES completion:nil];
 }
 
-- (void)linkWithGameLink:(Player *)player {
+- (void)linkWithGameLink:(FBPlayer *)player {
     session.link = [player gameLink];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UIViewController *viewController = (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:@"w"];
