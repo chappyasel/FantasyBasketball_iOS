@@ -190,35 +190,35 @@ NSTimer *updateTimer;
     for (int i = 0; i < nodes.count; i++) {
         TFHppleElement *element = nodes[i];
         if ([element objectForKey:@"id"]) {
-            NSMutableArray *data = [[NSMutableArray alloc] initWithCapacity:22];
+            NSMutableArray *dict = [[NSMutableArray alloc] initWithCapacity:22];
             for (TFHppleElement *stat in element.children) {
                 if (![stat.content isEqualToString:@""]) {
                     if ([[stat objectForKey:@"class"] isEqualToString:@"playertablePlayerName"]) {
-                        [data addObject: [stat.children[0] content]];
-                        [data addObject: [stat.children[1] content]];
-                        if (stat.children.count == 4) [data addObject: [stat.children[2] content]];
-                        else [data addObject: @""];
+                        [dict addObject: [stat.children[0] content]];
+                        [dict addObject: [stat.children[1] content]];
+                        if (stat.children.count == 4) [dict addObject: [stat.children[2] content]];
+                        else [dict addObject: @""];
                     }
                     else if ([[stat objectForKey:@"class"] isEqualToString:@"gameStatusDiv"]) {
-                        [data addObject: stat.content];
-                        [data addObject: [[[stat childrenWithTagName:@"a"] firstObject] objectForKey:@"href"]];
+                        [dict addObject: stat.content];
+                        [dict addObject: [[[stat childrenWithTagName:@"a"] firstObject] objectForKey:@"href"]];
                     }
-                    else [data addObject: stat.content];
+                    else [dict addObject: stat.content];
                 }
             }
-            if (data.count == 17) { //not playing
-                [data insertObject:@"--" atIndex:5];
-                [data insertObject:@"--" atIndex:6];
-                [data insertObject:@"--" atIndex:7];
+            if (dict.count == 17) { //not playing
+                [dict insertObject:@"--" atIndex:5];
+                [dict insertObject:@"--" atIndex:6];
+                [dict insertObject:@"--" atIndex:7];
             }
-            [data insertObject:@"--" atIndex:4]; //type
-            [data insertObject:@"--" atIndex:9]; //gs
-            [data insertObject:@"--" atIndex:21]; //tot
-            [data insertObject:@"--" atIndex:23]; //pct
-            [data insertObject:@"--" atIndex:24]; //+/-
-            [data addObject:[[element objectForKey:@"id"] substringFromIndex:4]];
-            if (i < 13)[playersMU1 addObject:[[FBPlayer alloc] initWithData:data]];
-            else [playersMU2 addObject:[[FBPlayer alloc] initWithData:data]];
+            [dict insertObject:@"--" atIndex:4]; //type
+            [dict insertObject:@"--" atIndex:9]; //gs
+            [dict insertObject:@"--" atIndex:21]; //tot
+            [dict insertObject:@"--" atIndex:23]; //pct
+            [dict insertObject:@"--" atIndex:24]; //+/-
+            //[dict setObject:[[element objectForKey:@"id"] substringFromIndex:4] forKey:@"playerID"];
+            if (i < 13)[playersMU1 addObject:[[FBPlayer alloc] initWithData:dict]];
+            else [playersMU2 addObject:[[FBPlayer alloc] initWithData:dict]];
         }
     }
     for (FBPlayer *player in playersMU1) if(player.isStarting) numStartersMU1 ++;

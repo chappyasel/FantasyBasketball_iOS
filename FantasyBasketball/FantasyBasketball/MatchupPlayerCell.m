@@ -33,7 +33,7 @@
             if (self.leftPlayer.isPlaying) leftSubnameView.text = [NSString stringWithFormat:@"%@, %@ %@",self.leftPlayer.opponent,self.leftPlayer.status,self.leftPlayer.score];
             else leftSubnameView.text = @"-";
             [self addSubview:leftSubnameView];
-            if (self.leftPlayer.gameInProgress || self.leftPlayer.gameEnded) {
+            if (self.leftPlayer.gameState != FBGameStateHasntStarted) {
                 //STATS
                 leftSubname2View = [[UILabel alloc] initWithFrame:CGRectMake(10, 32, 150, 20)];
                 leftSubname2View.textColor = [UIColor grayColor];
@@ -80,7 +80,7 @@
             if (self.rightPlayer.isPlaying) rightSubnameView.text = [NSString stringWithFormat:@"%@ %@, %@",self.rightPlayer.status,self.rightPlayer.score,self.rightPlayer.opponent];
             else rightSubnameView.text = @"-";
             [self addSubview:rightSubnameView];
-            if (self.rightPlayer.gameInProgress || self.rightPlayer.gameEnded) {
+            if (self.rightPlayer.gameState != FBGameStateHasntStarted) {
                 //STATS
                 rightSubname2View = [[UILabel alloc] initWithFrame:CGRectMake(414-160, 32, 150, 20)];
                 rightSubname2View.textColor = [UIColor grayColor];
@@ -125,8 +125,8 @@
     else rightSubnameView.text = @"-";
     if (self.leftPlayer.isPlaying) leftSubnameView.text = [NSString stringWithFormat:@"%@, %@ %@",self.leftPlayer.opponent,self.leftPlayer.status,self.leftPlayer.score];
     else leftSubnameView.text = @"-";
-    if (self.rightPlayer.gameInProgress || self.rightPlayer.gameEnded) rightSubname2View.text = [NSString stringWithFormat:@"%.0f/%.0f, %.0f pts, %.0f reb, %.0f ast",self.rightPlayer.fgm,self.rightPlayer.fga,self.rightPlayer.points,self.rightPlayer.rebounds,self.rightPlayer.assists];
-    if (self.leftPlayer.gameInProgress || self.leftPlayer.gameEnded) leftSubname2View.text = [NSString stringWithFormat:@"%.0f/%.0f, %.0f pts, %.0f reb, %.0f ast",self.leftPlayer.fgm,self.leftPlayer.fga,self.leftPlayer.points,self.leftPlayer.rebounds,self.leftPlayer.assists];
+    if (self.rightPlayer.gameState != FBGameStateHasntStarted) rightSubname2View.text = [NSString stringWithFormat:@"%.0f/%.0f, %.0f pts, %.0f reb, %.0f ast",self.rightPlayer.fgm,self.rightPlayer.fga,self.rightPlayer.points,self.rightPlayer.rebounds,self.rightPlayer.assists];
+    if (self.leftPlayer.gameState != FBGameStateHasntStarted) leftSubname2View.text = [NSString stringWithFormat:@"%.0f/%.0f, %.0f pts, %.0f reb, %.0f ast",self.leftPlayer.fgm,self.leftPlayer.fga,self.leftPlayer.points,self.leftPlayer.rebounds,self.leftPlayer.assists];
     if (!self.rightPlayer.isPlaying) rightPointsView.text = @"-";
     else if (![rightPointsView.text isEqualToString:[NSString stringWithFormat:@"%.0f",self.rightPlayer.fantasyPoints]]) {
         rightPointsView.text = [NSString stringWithFormat:@"%.0f",self.rightPlayer.fantasyPoints];

@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, FBGameState) {
+    FBGameStateHasntStarted = 0,
+    FBGameStateInProgress,
+    FBGameStateEnded,
+};
+
 @interface FBPlayer : NSObject
 
 @property bool isStarting; //(0) //MT only
@@ -22,8 +28,7 @@
 
 @property bool isPlaying; //(6)
 @property bool isHome; //(5)
-@property bool gameInProgress; //(6)
-@property bool gameEnded; //(6)
+@property FBGameState gameState; //(6)
 @property NSString *opponent; //(5)
 @property NSString *score; //(6)
 @property NSString *status; //(6)
@@ -47,6 +52,9 @@
 @property float totalFantasyPoints; //(21) //FA Only
 @property float fantasyPoints; //(22)
 
+@property float prk;
+@property float adp;
+
 @property float percentOwned; //(23) //Not for DL
 @property float plusMinus; //(24) //Not for DL
 
@@ -54,6 +62,8 @@
 
 //29 fields total
 
-- (instancetype)initWithData:(NSArray *)data;
+- (instancetype)initWithData: (NSArray *) data;
+
+- (instancetype)initWithDictionary:(NSDictionary *)dict;
 
 @end
