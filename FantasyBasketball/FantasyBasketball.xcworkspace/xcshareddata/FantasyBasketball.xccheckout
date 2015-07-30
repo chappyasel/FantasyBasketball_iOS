@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>1C60D2CF-9C1B-4DFF-B9C8-155921207320</string>
+	<key>IDESourceControlProjectName</key>
+	<string>FantasyBasketball</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>346CEEFAA93EE67934C50A5D112DA636BE546280</key>
+		<string>https://github.com/ChappyA12/FantasyBasketball_iOS.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>FantasyBasketball/FantasyBasketball.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>346CEEFAA93EE67934C50A5D112DA636BE546280</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/ChappyA12/FantasyBasketball_iOS.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>346CEEFAA93EE67934C50A5D112DA636BE546280</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>346CEEFAA93EE67934C50A5D112DA636BE546280</string>
+			<key>IDESourceControlWCCName</key>
+			<string>FantasyBasketball_iOS</string>
+		</dict>
+	</array>
+</dict>
+</plist>
