@@ -33,14 +33,7 @@ bool expanded = NO;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"Matchup";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Menu"
-                                                                             style:UIBarButtonItemStylePlain
-                                                                            target:self
-                                                                            action:@selector(presentLeftMenuViewController:)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
-                                                                                           target:self
-                                                                                           action:@selector(refreshButtonPressed:)];
+    [self loadNavBar];
     handleError = NO;
     cells = [[NSMutableArray alloc] init];
     if (handleError) return;
@@ -49,8 +42,15 @@ bool expanded = NO;
     [self refreshScores];
 }
 
-- (void)viewWillAppear:(BOOL)animated{
-    //[[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
+- (void)loadNavBar {
+    self.title = @"Matchup";
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Menu"
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:@selector(presentLeftMenuViewController:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
+                                                                                           target:self
+                                                                                           action:@selector(refreshButtonPressed:)];
 }
 
 - (void)refreshScores {

@@ -25,6 +25,7 @@
 		F95F53DB1B6C02CA00CFF253 /* MT.png in Resources */ = {isa = PBXBuildFile; fileRef = F95F53D71B6C02CA00CFF253 /* MT.png */; };
 		F95F53DC1B6C02CA00CFF253 /* MU.png in Resources */ = {isa = PBXBuildFile; fileRef = F95F53D81B6C02CA00CFF253 /* MU.png */; };
 		F95F53DD1B6C02CA00CFF253 /* PL.png in Resources */ = {isa = PBXBuildFile; fileRef = F95F53D91B6C02CA00CFF253 /* PL.png */; };
+		F95F53E01B6C0FDE00CFF253 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F95F53DF1B6C0FDE00CFF253 /* SettingsViewController.m */; };
 		F965908E1A676DB2005384D1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F965908D1A676DB2005384D1 /* main.m */; };
 		F96590911A676DB2005384D1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F96590901A676DB2005384D1 /* AppDelegate.m */; };
 		F965909A1A676DB3005384D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F96590981A676DB3005384D1 /* Main.storyboard */; };
@@ -33,7 +34,6 @@
 		F96590AB1A676DB3005384D1 /* FantasyBasketballTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F96590AA1A676DB3005384D1 /* FantasyBasketballTests.m */; };
 		F96590B61A6773E8005384D1 /* MyTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F96590B51A6773E8005384D1 /* MyTeamViewController.m */; };
 		F96590B91A677441005384D1 /* PlayersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F96590B81A677441005384D1 /* PlayersViewController.m */; };
-		F96590BC1A67745D005384D1 /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F96590BB1A67745D005384D1 /* MoreViewController.m */; };
 		F96590CB1A67872E005384D1 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F96590CA1A67872E005384D1 /* libxml2.dylib */; };
 		F97063801A6C98B800A50A43 /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F970637F1A6C98B800A50A43 /* PlayerViewController.m */; };
 		F97063831A6C98D700A50A43 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F97063821A6C98D700A50A43 /* WebViewController.m */; };
@@ -113,6 +113,8 @@
 		F95F53D71B6C02CA00CFF253 /* MT.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MT.png; path = FantasyBasketball/Images/MT.png; sourceTree = "<group>"; };
 		F95F53D81B6C02CA00CFF253 /* MU.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MU.png; path = FantasyBasketball/Images/MU.png; sourceTree = "<group>"; };
 		F95F53D91B6C02CA00CFF253 /* PL.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PL.png; path = FantasyBasketball/Images/PL.png; sourceTree = "<group>"; };
+		F95F53DE1B6C0FDE00CFF253 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		F95F53DF1B6C0FDE00CFF253 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		F96590881A676DB2005384D1 /* FantasyBasketball.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FantasyBasketball.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F965908C1A676DB2005384D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F965908D1A676DB2005384D1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -128,8 +130,6 @@
 		F96590B51A6773E8005384D1 /* MyTeamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTeamViewController.m; sourceTree = "<group>"; };
 		F96590B71A677441005384D1 /* PlayersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayersViewController.h; sourceTree = "<group>"; };
 		F96590B81A677441005384D1 /* PlayersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayersViewController.m; sourceTree = "<group>"; };
-		F96590BA1A67745D005384D1 /* MoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreViewController.h; sourceTree = "<group>"; };
-		F96590BB1A67745D005384D1 /* MoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreViewController.m; sourceTree = "<group>"; };
 		F96590CA1A67872E005384D1 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		F970637E1A6C98B800A50A43 /* PlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerViewController.h; sourceTree = "<group>"; };
 		F970637F1A6C98B800A50A43 /* PlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerViewController.m; sourceTree = "<group>"; };
@@ -329,11 +329,11 @@
 		F97303DC1B655A8C00193A1D /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F97303E11B655ACD00193A1D /* Settings */,
 				F97303DD1B655AA500193A1D /* Matchup */,
 				F97303DE1B655AAE00193A1D /* My Team */,
 				F97303DF1B655AB800193A1D /* Players */,
 				F97303E01B655AC300193A1D /* Daily Leaders */,
-				F97303E11B655ACD00193A1D /* More */,
 				F97303E21B655AD300193A1D /* Individual Player */,
 				F97303E31B655ADC00193A1D /* Wep Page */,
 				F95F53D31B6BFECA00CFF253 /* LeftSideMenuViewController.h */,
@@ -378,13 +378,13 @@
 			name = "Daily Leaders";
 			sourceTree = "<group>";
 		};
-		F97303E11B655ACD00193A1D /* More */ = {
+		F97303E11B655ACD00193A1D /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				F96590BA1A67745D005384D1 /* MoreViewController.h */,
-				F96590BB1A67745D005384D1 /* MoreViewController.m */,
+				F95F53DE1B6C0FDE00CFF253 /* SettingsViewController.h */,
+				F95F53DF1B6C0FDE00CFF253 /* SettingsViewController.m */,
 			);
-			name = More;
+			name = Settings;
 			sourceTree = "<group>";
 		};
 		F97303E21B655AD300193A1D /* Individual Player */ = {
@@ -649,11 +649,11 @@
 				F9DB2EED1B669DCA00B7AC82 /* UIViewController+TargetViewController.m in Sources */,
 				F965908E1A676DB2005384D1 /* main.m in Sources */,
 				F954E9901B65E52C000F323F /* BEMAverageLine.m in Sources */,
+				F95F53E01B6C0FDE00CFF253 /* SettingsViewController.m in Sources */,
 				F9908DFF1AA250F0008DF9D8 /* MatchupPlayerCell.m in Sources */,
 				F9DB2EEC1B669DCA00B7AC82 /* UIImage+Additional.m in Sources */,
 				F9DB2EE71B669DCA00B7AC82 /* MZFormSheetBackgroundWindow.m in Sources */,
 				F954E9921B65E52C000F323F /* BEMLine.m in Sources */,
-				F96590BC1A67745D005384D1 /* MoreViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

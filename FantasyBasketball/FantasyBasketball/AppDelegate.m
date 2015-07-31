@@ -53,7 +53,7 @@ FBSession *session;
     session.scoringPeriodID = (int)[self daysBetweenDate:refDate andDate:[NSDate date]];
     */
     //RESIDEMENU INIT
-    RESideMenu *sideMenuViewController = [[RESideMenu alloc] initWithContentViewController:[[MatchupViewController alloc] init]
+    RESideMenu *sideMenuViewController = [[RESideMenu alloc] initWithContentViewController:[[UINavigationController alloc] initWithRootViewController:[[MatchupViewController alloc] init]]
                                                                     leftMenuViewController:[[LeftSideMenuViewController alloc] init]
                                                                    rightMenuViewController:nil];
     sideMenuViewController.backgroundImage = [UIImage imageNamed:@"StadiumBlur.jpg"];

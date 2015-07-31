@@ -1,24 +1,25 @@
 //
-//  MoreViewController.m
+//  SettingsViewController.m
 //  FantasyBasketball
 //
 //  Created by Chappy Asel on 1/14/15.
 //  Copyright (c) 2015 CD. All rights reserved.
 //
 
-#import "MoreViewController.h"
+#import "SettingsViewController.h"
 #import "FBSession.h"
 
-@interface MoreViewController ()
+@interface SettingsViewController ()
 
 @end
 
-@implementation MoreViewController
+@implementation SettingsViewController
 
 FBSession *session;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self loadNavBar];
     session = [FBSession sharedInstance];
     _leagueInput.placeholder = [NSString stringWithFormat:@"%d",session.leagueID];
     _teamInput.placeholder = [NSString stringWithFormat:@"%d",session.teamID];
@@ -29,6 +30,14 @@ FBSession *session;
     _seasonInput.delegate = self;
     _scoringIDInput.delegate = self;
     [self loadKeyboardDismissBar];
+}
+
+- (void)loadNavBar {
+    self.title = @"Settings";
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Menu"
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:@selector(presentLeftMenuViewController:)];
 }
 
 - (void)loadKeyboardDismissBar {
