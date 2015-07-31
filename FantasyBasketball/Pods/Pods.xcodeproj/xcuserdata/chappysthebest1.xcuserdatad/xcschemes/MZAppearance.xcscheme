@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "58BB14FC79671199B98A114A"
-               BuildableName = "libPods-FantasyBasketball.a"
-               BlueprintName = "Pods-FantasyBasketball"
+               BlueprintIdentifier = "FAA87DEE185865D8FBDFBB88"
+               BuildableName = "libMZAppearance.a"
+               BlueprintName = "MZAppearance"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

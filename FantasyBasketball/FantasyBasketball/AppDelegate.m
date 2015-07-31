@@ -9,6 +9,9 @@
 #import "AppDelegate.h"
 #import "FBSession.h"
 #import "TFHpple.h"
+#import "ViewDeckViewController.h"
+#import "MatchupViewController.h"
+#import "LeftSideMenuViewController.h"
 
 @interface AppDelegate ()
 
@@ -49,6 +52,20 @@ FBSession *session;
     NSDate *refDate = [dateFormatter dateFromString:dateString];
     session.scoringPeriodID = (int)[self daysBetweenDate:refDate andDate:[NSDate date]];
     */
+    //RESIDEMENU INIT
+    RESideMenu *sideMenuViewController = [[RESideMenu alloc] initWithContentViewController:[[MatchupViewController alloc] init]
+                                                                    leftMenuViewController:[[LeftSideMenuViewController alloc] init]
+                                                                   rightMenuViewController:nil];
+    sideMenuViewController.backgroundImage = [UIImage imageNamed:@"StadiumBlur.jpg"];
+    sideMenuViewController.menuPreferredStatusBarStyle = 1; // UIStatusBarStyleLightContent
+    sideMenuViewController.delegate = self;
+    sideMenuViewController.contentViewShadowColor = [UIColor blackColor];
+    sideMenuViewController.contentViewShadowOffset = CGSizeMake(0, 0);
+    sideMenuViewController.contentViewShadowOpacity = 0.6;
+    sideMenuViewController.contentViewShadowRadius = 12;
+    sideMenuViewController.contentViewShadowEnabled = YES;
+    self.window.rootViewController = sideMenuViewController;
+    self.window.backgroundColor = [UIColor whiteColor];
     return YES;
 }
 
@@ -81,6 +98,24 @@ FBSession *session;
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark RESideMenu Delegate
+
+- (void)sideMenu:(RESideMenu *)sideMenu willShowMenuViewController:(UIViewController *)menuViewController {
+    //NSLog(@"willShowMenuViewController: %@", NSStringFromClass([menuViewController class]));
+}
+
+- (void)sideMenu:(RESideMenu *)sideMenu didShowMenuViewController:(UIViewController *)menuViewController {
+    //NSLog(@"didShowMenuViewController: %@", NSStringFromClass([menuViewController class]));
+}
+
+- (void)sideMenu:(RESideMenu *)sideMenu willHideMenuViewController:(UIViewController *)menuViewController {
+    //NSLog(@"willHideMenuViewController: %@", NSStringFromClass([menuViewController class]));
+}
+
+- (void)sideMenu:(RESideMenu *)sideMenu didHideMenuViewController:(UIViewController *)menuViewController {
+    //NSLog(@"didHideMenuViewController: %@", NSStringFromClass([menuViewController class]));
 }
 
 @end

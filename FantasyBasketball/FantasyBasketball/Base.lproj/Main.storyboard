@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A204h" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A204h" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8Vi-Ht-GOR">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8135.1"/>
@@ -68,6 +68,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="My Team" image="TabBarItemMT.png" id="acW-dT-cKf"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="picker" destination="TZz-p1-66m" id="DAu-nZ-6gO"/>
                         <outlet property="pickerCancelButton" destination="JBe-Wm-S7l" id="rQl-UV-g2K"/>
@@ -141,6 +142,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Players" image="TabBarItemPL.png" id="cPa-gy-q4n"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="picker" destination="pxs-uz-VIs" id="BJZ-NW-zuY"/>
                         <outlet property="pickerCancelButton" destination="rSL-jO-MuP" id="O31-cD-acU"/>
@@ -191,7 +193,7 @@
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="405" y="808"/>
+            <point key="canvasLocation" x="365" y="808"/>
         </scene>
         <!--Player View Controller-->
         <scene sceneID="nca-nZ-mHv">
@@ -443,8 +445,8 @@
                                     <animations/>
                                 </view>
                                 <animations/>
-                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                <blurEffect style="light"/>
+                                <color key="backgroundColor" red="1" green="0.48017989571621778" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <blurEffect style="extraLight"/>
                             </visualEffectView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Unknown Player Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IZW-qa-jcQ">
                                 <rect key="frame" x="179" y="0.0" width="196" height="32"/>
@@ -509,7 +511,27 @@
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="861.5" y="808"/>
+            <point key="canvasLocation" x="842.5" y="780"/>
+        </scene>
+        <!--Left Side Menu View Controller-->
+        <scene sceneID="JVE-hS-52y">
+            <objects>
+                <viewController id="8Vi-Ht-GOR" customClass="LeftSideMenuViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Yls-4a-UIO"/>
+                        <viewControllerLayoutGuide type="bottom" id="qyu-o7-QIy"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="CpU-pc-jDt">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="d7x-7T-uZN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-146" y="0.0"/>
         </scene>
         <!--Matchup-->
         <scene sceneID="Ayg-Bn-BlX">
@@ -564,6 +586,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Matchup" image="TabBarItemMU.png" id="mYA-Yf-OPO"/>
                     <nil key="simulatedTopBarMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="scoreView" destination="5du-uT-I0K" id="65E-tY-nfb"/>
                         <outlet property="team1Display1" destination="9F6-IP-vHv" id="9tG-Bl-d66"/>
@@ -574,31 +597,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lwj-sn-Yui" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="405" y="0.0"/>
-        </scene>
-        <!--Tab Bar Controller-->
-        <scene sceneID="yl2-sM-qoP">
-            <objects>
-                <tabBarController id="49e-Tb-3d3" sceneMemberID="viewController">
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
-                        <rect key="frame" x="0.0" y="975" width="768" height="49"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                        <animations/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    </tabBar>
-                    <connections>
-                        <segue destination="p6p-mD-aaM" kind="relationship" relationship="viewControllers" id="lA5-tK-JDy"/>
-                        <segue destination="9pv-A4-QxB" kind="relationship" relationship="viewControllers" id="u7Y-xg-7CH"/>
-                        <segue destination="8rJ-Kc-sve" kind="relationship" relationship="viewControllers" id="lzU-1b-eKA"/>
-                        <segue destination="0Qb-KO-Xje" kind="relationship" relationship="viewControllers" id="RBo-qg-D3m"/>
-                        <segue destination="0xg-wa-pkA" kind="relationship" relationship="viewControllers" id="I8b-Lh-HaB"/>
-                    </connections>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-48" y="0.0"/>
+            <point key="canvasLocation" x="365" y="0.0"/>
         </scene>
         <!--More View Controller-->
         <scene sceneID="N4C-50-bgV">
@@ -669,6 +668,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" systemItem="more" id="qjd-m3-8VF"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="leagueInput" destination="VSn-44-qML" id="N9T-jx-ULj"/>
                         <outlet property="scoringIDInput" destination="xTL-KT-kmW" id="XW9-eo-1w2"/>
@@ -740,6 +740,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Daily Leaders" image="TabBarItemDL.png" id="8zC-Yu-dbg"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="picker" destination="je9-U0-RXI" id="sqY-en-SIY"/>
                         <outlet property="pickerCancelButton" destination="xMu-8J-mlK" id="kxN-6a-gqZ"/>
