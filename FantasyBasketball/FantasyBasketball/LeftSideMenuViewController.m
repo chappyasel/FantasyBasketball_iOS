@@ -20,7 +20,7 @@
 {
     [super viewDidLoad];
     self.tableView = ({
-        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, (self.view.frame.size.height - 64 * 5) / 2.0f, self.view.frame.size.width, 64 * 5) style:UITableViewStylePlain];
+        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, (self.view.frame.size.height - 54 * 5) / 2.0f, self.view.frame.size.width, 54 * 5) style:UITableViewStylePlain];
         tableView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
         tableView.delegate = self;
         tableView.dataSource = self;
@@ -61,7 +61,7 @@
 #pragma mark UITableView Datasource
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 64;
+    return 54;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -84,9 +84,9 @@
         cell.selectedBackgroundView = [[UIView alloc] init];
     }
     NSArray *titles = @[@"Settings", @"Matchup", @"My Team", @"Players", @"Daily Leaders"];
-    //NSArray *images = @[@"MU.png", @"MT.png", @"PL.png", @"DL.png", @"MU.png"];
+    NSArray *images = @[@"MU@2x.png", @"MT@2x.png", @"PL@2x.png", @"DL@2x.png", @"MU@2x.png"];
     cell.textLabel.text = titles[indexPath.row];
-    //cell.imageView.image = [UIImage imageNamed:images[indexPath.row]];
+    cell.imageView.image = [UIImage imageNamed:images[indexPath.row]];
     return cell;
 }
 

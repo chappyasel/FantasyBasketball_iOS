@@ -21,10 +21,6 @@
 		F9573F351B6BF3AA00AE4872 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9573F341B6BF3AA00AE4872 /* QuartzCore.framework */; };
 		F95F53D21B6BFE5300CFF253 /* StadiumBlur.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F95F53D11B6BFE5300CFF253 /* StadiumBlur.jpg */; };
 		F95F53D51B6BFECA00CFF253 /* LeftSideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F95F53D41B6BFECA00CFF253 /* LeftSideMenuViewController.m */; };
-		F95F53DA1B6C02CA00CFF253 /* DL.png in Resources */ = {isa = PBXBuildFile; fileRef = F95F53D61B6C02CA00CFF253 /* DL.png */; };
-		F95F53DB1B6C02CA00CFF253 /* MT.png in Resources */ = {isa = PBXBuildFile; fileRef = F95F53D71B6C02CA00CFF253 /* MT.png */; };
-		F95F53DC1B6C02CA00CFF253 /* MU.png in Resources */ = {isa = PBXBuildFile; fileRef = F95F53D81B6C02CA00CFF253 /* MU.png */; };
-		F95F53DD1B6C02CA00CFF253 /* PL.png in Resources */ = {isa = PBXBuildFile; fileRef = F95F53D91B6C02CA00CFF253 /* PL.png */; };
 		F95F53E01B6C0FDE00CFF253 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F95F53DF1B6C0FDE00CFF253 /* SettingsViewController.m */; };
 		F965908E1A676DB2005384D1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F965908D1A676DB2005384D1 /* main.m */; };
 		F96590911A676DB2005384D1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F96590901A676DB2005384D1 /* AppDelegate.m */; };
@@ -35,6 +31,10 @@
 		F96590B61A6773E8005384D1 /* MyTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F96590B51A6773E8005384D1 /* MyTeamViewController.m */; };
 		F96590B91A677441005384D1 /* PlayersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F96590B81A677441005384D1 /* PlayersViewController.m */; };
 		F96590CB1A67872E005384D1 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F96590CA1A67872E005384D1 /* libxml2.dylib */; };
+		F96DAF3B1B6C2E4100648CCF /* DL@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F96DAF371B6C2E4100648CCF /* DL@2x.png */; };
+		F96DAF3C1B6C2E4100648CCF /* MT@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F96DAF381B6C2E4100648CCF /* MT@2x.png */; };
+		F96DAF3D1B6C2E4100648CCF /* MU@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F96DAF391B6C2E4100648CCF /* MU@2x.png */; };
+		F96DAF3E1B6C2E4100648CCF /* PL@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F96DAF3A1B6C2E4100648CCF /* PL@2x.png */; };
 		F97063801A6C98B800A50A43 /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F970637F1A6C98B800A50A43 /* PlayerViewController.m */; };
 		F97063831A6C98D700A50A43 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F97063821A6C98D700A50A43 /* WebViewController.m */; };
 		F976584E1B65E69100ACC050 /* Fantasy Basketball.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = F97658491B65E69100ACC050 /* Fantasy Basketball.entitlements */; };
@@ -109,10 +109,6 @@
 		F95F53D11B6BFE5300CFF253 /* StadiumBlur.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = StadiumBlur.jpg; path = FantasyBasketball/Images/StadiumBlur.jpg; sourceTree = "<group>"; };
 		F95F53D31B6BFECA00CFF253 /* LeftSideMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftSideMenuViewController.h; sourceTree = "<group>"; };
 		F95F53D41B6BFECA00CFF253 /* LeftSideMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftSideMenuViewController.m; sourceTree = "<group>"; };
-		F95F53D61B6C02CA00CFF253 /* DL.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DL.png; path = FantasyBasketball/Images/DL.png; sourceTree = "<group>"; };
-		F95F53D71B6C02CA00CFF253 /* MT.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MT.png; path = FantasyBasketball/Images/MT.png; sourceTree = "<group>"; };
-		F95F53D81B6C02CA00CFF253 /* MU.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MU.png; path = FantasyBasketball/Images/MU.png; sourceTree = "<group>"; };
-		F95F53D91B6C02CA00CFF253 /* PL.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PL.png; path = FantasyBasketball/Images/PL.png; sourceTree = "<group>"; };
 		F95F53DE1B6C0FDE00CFF253 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		F95F53DF1B6C0FDE00CFF253 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		F96590881A676DB2005384D1 /* FantasyBasketball.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FantasyBasketball.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -131,6 +127,10 @@
 		F96590B71A677441005384D1 /* PlayersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayersViewController.h; sourceTree = "<group>"; };
 		F96590B81A677441005384D1 /* PlayersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayersViewController.m; sourceTree = "<group>"; };
 		F96590CA1A67872E005384D1 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		F96DAF371B6C2E4100648CCF /* DL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "DL@2x.png"; path = "FantasyBasketball/Images/DL@2x.png"; sourceTree = "<group>"; };
+		F96DAF381B6C2E4100648CCF /* MT@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "MT@2x.png"; path = "FantasyBasketball/Images/MT@2x.png"; sourceTree = "<group>"; };
+		F96DAF391B6C2E4100648CCF /* MU@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "MU@2x.png"; path = "FantasyBasketball/Images/MU@2x.png"; sourceTree = "<group>"; };
+		F96DAF3A1B6C2E4100648CCF /* PL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "PL@2x.png"; path = "FantasyBasketball/Images/PL@2x.png"; sourceTree = "<group>"; };
 		F970637E1A6C98B800A50A43 /* PlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerViewController.h; sourceTree = "<group>"; };
 		F970637F1A6C98B800A50A43 /* PlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerViewController.m; sourceTree = "<group>"; };
 		F97063811A6C98D600A50A43 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
@@ -408,11 +408,11 @@
 		F9908E021AA26365008DF9D8 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				F96DAF371B6C2E4100648CCF /* DL@2x.png */,
+				F96DAF381B6C2E4100648CCF /* MT@2x.png */,
+				F96DAF391B6C2E4100648CCF /* MU@2x.png */,
+				F96DAF3A1B6C2E4100648CCF /* PL@2x.png */,
 				F95F53D11B6BFE5300CFF253 /* StadiumBlur.jpg */,
-				F95F53D61B6C02CA00CFF253 /* DL.png */,
-				F95F53D71B6C02CA00CFF253 /* MT.png */,
-				F95F53D81B6C02CA00CFF253 /* MU.png */,
-				F95F53D91B6C02CA00CFF253 /* PL.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -563,16 +563,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F95F53DB1B6C02CA00CFF253 /* MT.png in Resources */,
+				F96DAF3B1B6C2E4100648CCF /* DL@2x.png in Resources */,
+				F96DAF3D1B6C2E4100648CCF /* MU@2x.png in Resources */,
+				F96DAF3E1B6C2E4100648CCF /* PL@2x.png in Resources */,
 				F965909A1A676DB3005384D1 /* Main.storyboard in Resources */,
-				F95F53DA1B6C02CA00CFF253 /* DL.png in Resources */,
 				F95F53D21B6BFE5300CFF253 /* StadiumBlur.jpg in Resources */,
+				F96DAF3C1B6C2E4100648CCF /* MT@2x.png in Resources */,
 				F976584E1B65E69100ACC050 /* Fantasy Basketball.entitlements in Resources */,
-				F95F53DC1B6C02CA00CFF253 /* MU.png in Resources */,
 				F97658501B65E69100ACC050 /* MainInterface.storyboard in Resources */,
 				F965909F1A676DB3005384D1 /* LaunchScreen.xib in Resources */,
 				F976584F1B65E69100ACC050 /* Info.plist in Resources */,
-				F95F53DD1B6C02CA00CFF253 /* PL.png in Resources */,
 				F965909C1A676DB3005384D1 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
