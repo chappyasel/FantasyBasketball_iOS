@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MatchupPlayerCell.h"
+#import "RESideMenu.h"
 
 @interface MatchupViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, MatchupPlayerCellDelegate>
 

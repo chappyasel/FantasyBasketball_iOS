@@ -35,23 +35,20 @@ int team;
 }
 
 - (void)loadNavBar {
-    bar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
-    if (self.view.frame.size.height < 500) bar.frame = CGRectMake(0, 0, self.view.frame.size.width, 44);
-    UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@"Daily Leaders"];
-    refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshButtonPressed:)];
-    navItem.rightBarButtonItem = refreshButton;
-    UIBarButtonItem *bi2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(fadeIn:)];
-    navItem.leftBarButtonItem = bi2;
-    bar.items = [NSArray arrayWithObject:navItem];
-    [self.view addSubview:bar];
+    self.title = @"Daily Leaders";
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Menu"
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:@selector(presentLeftMenuViewController:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
+                                                                                           target:self
+                                                                                           action:@selector(fadeIn:)];
 }
 
 - (void)loadTableView {
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
     scrollViewsDL = [[NSMutableArray alloc] init];
     _tableView.contentInset = UIEdgeInsetsMake(64, 0, 47, 0);
-    _tableView.contentOffset = CGPointMake(0, 0); //CORECTLY DISPLAYS HEADER
-    if (self.view.frame.size.height < 500) _tableView.contentInset = UIEdgeInsetsMake(44, 0, 47, 0);
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.showsHorizontalScrollIndicator = NO;

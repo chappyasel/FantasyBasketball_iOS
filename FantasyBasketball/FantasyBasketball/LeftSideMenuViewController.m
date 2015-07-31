@@ -8,13 +8,19 @@
 
 #import "LeftSideMenuViewController.h"
 
+#import "MatchupViewController.h"
+#import "MyTeamViewController.h"
+#import "PlayersViewController.h"
+#import "DailyLeadersViewController.h"
+#import "MoreViewController.h"
+
 @implementation LeftSideMenuViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.tableView = ({
-        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, (self.view.frame.size.height - 54 * 5) / 2.0f, self.view.frame.size.width, 54 * 5) style:UITableViewStylePlain];
+        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, (self.view.frame.size.height - 64 * 5) / 2.0f, self.view.frame.size.width, 64 * 5) style:UITableViewStylePlain];
         tableView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
         tableView.delegate = self;
         tableView.dataSource = self;
@@ -28,39 +34,47 @@
     [self.view addSubview:self.tableView];
 }
 
-#pragma mark -
 #pragma mark UITableView Delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSInteger x = indexPath.row;
+    int i = (int)indexPath.row;
+    if (i == 0) {
+        [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:[[MatchupViewController alloc] init]] animated:YES];
+    }
+    else if (i == 1) {
+        [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:[[MyTeamViewController alloc] init]] animated:YES];
+    }
+    else if (i == 2) {
+        [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:[[PlayersViewController alloc] init]] animated:YES];
+    }
+    else if (i == 3) {
+        [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:[[DailyLeadersViewController alloc] init]] animated:YES];
+    }
+    else if (i == 4) {
+        [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:[[MoreViewController alloc] init]] animated:YES];
+    }
+    [self.sideMenuViewController hideMenuViewController];
 }
 
-#pragma mark -
 #pragma mark UITableView Datasource
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 54;
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 64;
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectionIndex
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectionIndex {
     return 5;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"Cell";
-    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         cell.backgroundColor = [UIColor clearColor];
@@ -69,12 +83,10 @@
         cell.textLabel.highlightedTextColor = [UIColor lightGrayColor];
         cell.selectedBackgroundView = [[UIView alloc] init];
     }
-    
-    NSArray *titles = @[@"Home", @"Calendar", @"Profile", @"Settings", @"Log Out"];
-    NSArray *images = @[@"IconHome", @"IconCalendar", @"IconProfile", @"IconSettings", @"IconEmpty"];
+    NSArray *titles = @[@"Matchup", @"My Team", @"Players", @"Daily Leaders", @"More"];
+    //NSArray *images = @[@"MU.png", @"MT.png", @"PL.png", @"DL.png", @"MU.png"];
     cell.textLabel.text = titles[indexPath.row];
-    cell.imageView.image = [UIImage imageNamed:images[indexPath.row]];
-    
+    //cell.imageView.image = [UIImage imageNamed:images[indexPath.row]];
     return cell;
 }
 

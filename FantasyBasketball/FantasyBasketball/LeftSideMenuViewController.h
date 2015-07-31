@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RESideMenu.h"
 
 @interface LeftSideMenuViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
