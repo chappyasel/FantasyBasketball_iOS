@@ -74,14 +74,14 @@ bool needsLoadGamesButton = YES;
     scrollViewsP = [[NSMutableArray alloc] init];
     if (parser.data != nil) {
         dispatch_async(dispatch_get_main_queue(), ^{
-        [self performSelectorInBackground:@selector(loadGameLogTableView) withObject:nil];
-        [self performSelectorInBackground:@selector(loadGraphView) withObject:nil];
-        [self performSelectorInBackground:@selector(loadInfoTableView) withObject:nil];
-        [self performSelectorInBackground:@selector(loadStatsBasicTableView) withObject:nil];
-        [self performSelectorInBackground:@selector(loadRotoworldTableView) withObject:nil];
-        [self performSelectorInBackground:@selector(loadStatsScrollView) withObject:nil];
-        [self performSelectorInBackground:@selector(loadNewsLogTableView) withObject:nil];
-        [self performSelectorInBackground:@selector(moreGames:) withObject:nil];
+            [self performSelector:@selector(loadGameLogTableView) withObject:nil];
+            [self performSelector:@selector(loadGraphView) withObject:nil];
+            [self performSelector:@selector(loadInfoTableView) withObject:nil];
+            [self performSelector:@selector(loadStatsBasicTableView) withObject:nil];
+            [self performSelector:@selector(loadRotoworldTableView) withObject:nil];
+            [self performSelector:@selector(loadStatsScrollView) withObject:nil];
+            [self performSelector:@selector(loadNewsLogTableView) withObject:nil];
+            [self performSelector:@selector(moreGames:) withObject:nil];
         });
     }
     else NSLog(@"Player not found.");

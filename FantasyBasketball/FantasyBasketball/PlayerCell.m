@@ -91,7 +91,7 @@
             UILabel *stats1 = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 140, 25)];
             stats1.text = [NSString stringWithFormat:@"%@: %@",self.player.opponent, self.player.status];
             [scrollView addSubview:stats1];
-            if (![playerType isEqual:@"PlayersViewController"] && (self.player.gameInProgress || self.player.gameEnded)) {
+            if (![playerType isEqual:@"PlayersViewController"] && (self.player.gameState == FBGameStateInProgress || self.player.gameState == FBGameStateEnded)) {
                 UILabel *stats2 = [[UILabel alloc] initWithFrame:CGRectMake(10, 20, 140, 20)];
                 stats2.font = [subName.font fontWithSize:11];
                 stats2.textColor = [UIColor grayColor];

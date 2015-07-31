@@ -114,34 +114,34 @@ NSString *scoringPeriodMT = @"today";
     for (int i = 0; i < nodes.count; i++) {
         TFHppleElement *element = nodes[i];
         if ([element objectForKey:@"id"]) {
-            NSMutableArray *data = [[NSMutableArray alloc] initWithCapacity:22];
-            for (TFHppleElement *stat in element.children) {
-                if (![stat.content isEqualToString:@""]) {
-                    if ([[stat objectForKey:@"class"] isEqualToString:@"playertablePlayerName"]) {
-                        [data addObject: [stat.children[0] content]];
-                        [data addObject: [stat.children[1] content]];
-                        if (stat.children.count == 4) [data addObject: [stat.children[2] content]];
-                        else [data addObject: @""];
-                    }
-                    else if ([[stat objectForKey:@"class"] isEqualToString:@"gameStatusDiv"]) {
-                        [data addObject: stat.content];
-                        [data addObject: [[[stat childrenWithTagName:@"a"] firstObject] objectForKey:@"href"]];
-                    }
-                    else [data addObject: stat.content];
-                }
+            NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+            NSArray <TFHppleElement *> *children = element.children;
+            [dict setObject:children[0].content forKey:@"isStarting"];
+            [dict setObject:[children[1].children[0] content] forKey:@"firstName+lastName"];
+            [dict setObject:[children[1].children[1] content] forKey:@"team+position"];
+            if (children[1].children.count == 4) [dict setObject:[children[1].children[2] content] forKey:@"injury"];
+            int offset = 0;
+            if (children.count == 21) {
+                [dict setObject:children[3].content forKey:@"isHome+opponent"];
+                [dict setObject:children[4].content forKey:@"isPlaying+gameState+score+status"];
+                [dict setObject:[[[children[4] childrenWithTagName:@"a"] firstObject] objectForKey:@"href"] forKey:@"gameLink"];
+                offset = 3;
             }
-            [data insertObject:@"--" atIndex:4]; //type
-            if (data.count == 18 || data.count == 19) { //not playing
-                [data insertObject:@"--" atIndex:5];
-                [data insertObject:@"--" atIndex:6];
-                [data insertObject:@"--" atIndex:7];
-            }
-            [data insertObject:@"--" atIndex:8]; //gp
-            [data insertObject:@"--" atIndex:9]; //gs
-            [data insertObject:@"--" atIndex:10]; //min
-            if (data.count != 25) [data insertObject:@"--" atIndex:21]; //tot
-            [data addObject:[[element objectForKey:@"id"] substringFromIndex:4]];
-            [playersMT addObject:[[FBPlayer alloc] initWithData:data]];
+            [dict setObject:children[3+offset].content forKey:@"fgm"];
+            [dict setObject:children[4+offset].content forKey:@"fga"];
+            [dict setObject:children[5+offset].content forKey:@"ftm"];
+            [dict setObject:children[6+offset].content forKey:@"fta"];
+            [dict setObject:children[7+offset].content forKey:@"rebounds"];
+            [dict setObject:children[8+offset].content forKey:@"assists"];
+            [dict setObject:children[9+offset].content forKey:@"steals"];
+            [dict setObject:children[10+offset].content forKey:@"blocks"];
+            [dict setObject:children[11+offset].content forKey:@"turnovers"];
+            [dict setObject:children[12+offset].content forKey:@"points"];
+            [dict setObject:children[14+offset].content forKey:@"totalFantasyPoints"];
+            [dict setObject:children[15+offset].content forKey:@"fantasyPoints"];
+            [dict setObject:children[17+offset].content forKey:@"percentOwned"];
+            [dict setObject:children[18+offset].content forKey:@"plusMinus"];
+            [playersMT addObject:[[FBPlayer alloc] initWithDictionary:dict]];
         }
     }
     for (FBPlayer *player in playersMT) if(player.isStarting) numStarters ++;

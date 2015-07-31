@@ -224,7 +224,7 @@ int numSlots = 0;
             subName.font = [subName.font fontWithSize:10];
             subName.lineBreakMode = NSLineBreakByTruncatingHead;
             subName.textColor = [UIColor lightTextColor];
-            if (player.gameInProgress || player.gameEnded) subName.text = [NSString stringWithFormat:@"%@, %@ %@: %.0f + %.0f",player.opponent,player.score,player.status, player.points-(player.fta-player.ftm)-(player.fga-player.fgm), player.rebounds+player.assists+player.blocks+player.steals-player.turnovers];
+            if (player.gameState != FBGameStateHasntStarted) subName.text = [NSString stringWithFormat:@"%@, %@ %@: %.0f + %.0f",player.opponent,player.score,player.status, player.points-(player.fta-player.ftm)-(player.fga-player.fgm), player.rebounds+player.assists+player.blocks+player.steals-player.turnovers];
             else subName.text = [NSString stringWithFormat:@"%@, %@",player.opponent,player.status];
             [cell addSubview:subName];
             //Points
@@ -252,7 +252,7 @@ int numSlots = 0;
             subName.lineBreakMode = NSLineBreakByTruncatingTail;
             subName.textColor = [UIColor lightTextColor];
             subName.textAlignment = NSTextAlignmentRight;
-            if (player.gameInProgress || player.gameEnded) subName.text = [NSString stringWithFormat:@"%.0f + %.0f :%@ %@, %@", player.points-(player.fta-player.ftm)-(player.fga-player.fgm), player.rebounds+player.assists+player.blocks+player.steals-player.turnovers,player.status,player.score, player.opponent];
+            if (player.gameState != FBGameStateHasntStarted) subName.text = [NSString stringWithFormat:@"%.0f + %.0f :%@ %@, %@", player.points-(player.fta-player.ftm)-(player.fga-player.fgm), player.rebounds+player.assists+player.blocks+player.steals-player.turnovers,player.status,player.score, player.opponent];
             else subName.text = [NSString stringWithFormat:@"%@, %@",player.status,player.opponent];
             [cell addSubview:subName];
             //Points
