@@ -9,17 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "FBPlayer.h"
 #import <WebKit/WebKit.h>
-
-@protocol MatchupPlayerCellDelegate <NSObject>
-
-- (void)linkWithPlayer:(FBPlayer *)player;
-- (void)linkWithGameLink:(FBPlayer *)player;
-
-@end
+#import "PlayerCell.h"
 
 @interface MatchupPlayerCell : UITableViewCell
 
-@property (nonatomic, weak) id <MatchupPlayerCellDelegate> delegate;
+@property (nonatomic, weak) id <PlayerCellDelegate> delegate;
 @property (nonatomic) int index;
 @property (nonatomic) FBPlayer *rightPlayer;
 @property (nonatomic) FBPlayer *leftPlayer;

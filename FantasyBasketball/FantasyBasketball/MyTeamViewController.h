@@ -10,8 +10,6 @@
 #import "PlayerCell.h"
 #import "FBPickerView.h"
 
-@interface MyTeamViewController : FBViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, FBPickerViewDelegate, PlayerCellDelegate>
-
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@interface MyTeamViewController : FBViewController <UIScrollViewDelegate, FBPickerViewDelegate>
 
 @end

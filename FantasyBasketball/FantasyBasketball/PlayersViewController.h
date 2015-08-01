@@ -9,13 +9,6 @@
 #import "FBViewController.h"
 #import "PlayerCell.h"
 
-@interface PlayersViewController : FBViewController <UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UISearchBarDelegate, PlayerCellDelegate>
-
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
-
-@property (weak, nonatomic) IBOutlet UIView *pickerView;
-@property (weak, nonatomic) IBOutlet UIPickerView *picker;
-@property (weak, nonatomic) IBOutlet UIButton *pickerCancelButton;
-@property (weak, nonatomic) IBOutlet UIButton *pickerDoneButton;
+@interface PlayersViewController : FBViewController <UISearchBarDelegate>
 
 @end

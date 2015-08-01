@@ -59,12 +59,4 @@ FBSession *session;
     else if (textField == _scoringIDInput) session.scoringPeriodID = [textField.text intValue];
 }
 
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-// Get the new view controller using [segue destinationViewController].
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
-}
-
 @end

@@ -7,17 +7,12 @@
 //
 
 #import "MyTeamViewController.h"
-#import "FBSession.h"
-#import "FBPlayer.h"
-#import "TFHpple.h"
-#import "MZFormSheetController.h"
 
 @interface MyTeamViewController ()
 @end
 
 @implementation MyTeamViewController
 
-FBSession *session;
 TFHpple *parser;
 NSMutableArray *playersMT;
 int numStarters = 0;
@@ -29,49 +24,30 @@ NSString *scoringPeriodMT = @"today";   //span of stats
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self loadNavBar];
-    scoringDay = session.scoringPeriodID;
+    scoringDay = self.session.scoringPeriodID;
     [self loadplayersMT];
     [self loadTableView];
     [self loadDatePickerData];
-}
-
-- (void)loadNavBar {
     NSString *XpathQueryString = @"//h3[@class='team-name']";
     NSArray *nodes = [parser searchWithXPathQuery:XpathQueryString];
     NSString *teamName = [[nodes firstObject] content];
     if (teamName) self.title = teamName;
     else self.title = @"My Team";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Menu"
-                                                                             style:UIBarButtonItemStylePlain
-                                                                            target:self
-                                                                            action:@selector(presentLeftMenuViewController:)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
-                                                                                           target:self
-                                                                                           action:@selector(fadeIn:)];
 }
 
 - (void)loadTableView {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
-                                              style:UITableViewStylePlain];
     scrollViewsMT = [[NSMutableArray alloc] init];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.showsHorizontalScrollIndicator = NO;
-    _tableView.showsVerticalScrollIndicator = NO;
-    [self.view addSubview:_tableView];
-    [_tableView reloadData];
 }
 
 - (IBAction)refreshButtonPressed:(UIButton *)sender {
     [self loadplayersMT];
     scrollViewsMT = [[NSMutableArray alloc] init];
-    [_tableView reloadData];
+    [self.tableView reloadData];
 }
 
 - (void)loadplayersMT {
     numStarters = 0;
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/clubhouse?leagueId=%d&teamId=%d&seasonId=%d&version=%@&scoringPeriodMTId=%d",session.leagueID,session.teamID,session.seasonID,scoringPeriodMT,scoringDay]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/clubhouse?leagueId=%d&teamId=%d&seasonId=%d&version=%@&scoringPeriodMTId=%d",self.session.leagueID,self.session.teamID,self.session.seasonID,scoringPeriodMT,scoringDay]];
     NSData *html = [NSData dataWithContentsOfURL:url];
     parser = [TFHpple hppleWithHTMLData:html];
     NSString *XpathQueryString = @"//table[@class='playerTableTable tableBody']/tr";
@@ -140,7 +116,7 @@ NSString *scoringPeriodMT = @"today";   //span of stats
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *cell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _tableView.frame.size.width, 40)];
+    UIView *cell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 40)];
     cell.backgroundColor = [UIColor lightGrayColor];
     //NAME
     UILabel *name = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 130, 40)];
@@ -153,7 +129,7 @@ NSString *scoringPeriodMT = @"today";   //span of stats
     div.backgroundColor = [UIColor lightGrayColor];
     [cell addSubview:div];
     //STATS SCROLLVIEW
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(130, 0, _tableView.frame.size.width-130, 40)];
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(130, 0, self.tableView.frame.size.width-130, 40)];
     [scrollView setContentSize:CGSizeMake(13*50+150, 40)];
     [scrollView setShowsHorizontalScrollIndicator:NO];
     [scrollView setShowsVerticalScrollIndicator:NO];
@@ -181,14 +157,14 @@ NSString *scoringPeriodMT = @"today";   //span of stats
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    UIView *cell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _tableView.frame.size.width, 40)];
+    UIView *cell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 40)];
     cell.backgroundColor = [UIColor lightGrayColor];
     //Divider
     UILabel *div = [[UILabel alloc] initWithFrame:CGRectMake(129, 0, 1, 40)];
     div.backgroundColor = [UIColor lightGrayColor];
     [cell addSubview:div];
     //STATS SCROLLVIEW
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(130, 0, _tableView.frame.size.width-130, 40)];
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(130, 0, self.tableView.frame.size.width-130, 40)];
     [scrollView setContentSize:CGSizeMake(13*50+150, 40)];
     [scrollView setShowsHorizontalScrollIndicator:NO];
     [scrollView setShowsVerticalScrollIndicator:NO];
@@ -246,7 +222,7 @@ NSString *scoringPeriodMT = @"today";   //span of stats
     }
 }
 
-#pragma mark - Date Picker
+#pragma mark - FBPickerView
 
 NSArray *pickerData;
 
@@ -272,9 +248,10 @@ NSArray *pickerData;
     FBPickerView *picker = [FBPickerView loadViewFromNib];
     picker.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     picker.delegate = self;
+    [picker resetData];
     [picker setData:pickerData[0] ForColumn:0];
     [picker setData:pickerData[1] ForColumn:1];
-    [picker selectIndex:-(session.scoringPeriodID-scoringDay)+6 inColumn:0];
+    [picker selectIndex:-(self.session.scoringPeriodID-scoringDay)+6 inColumn:0];
     [picker selectIndex:(int)[[NSArray arrayWithObjects:@"today", @"last7", @"last15", @"last30", @"currSeason", @"lastSeason", @"projections",nil] indexOfObject:scoringPeriodMT] inColumn:1];
     [picker setAlpha:0.0];
     [self.view addSubview:picker];
@@ -283,22 +260,12 @@ NSArray *pickerData;
     } completion: nil];
 }
 
--(void)fadeOutWithPickerView: (FBPickerView *) pickerView {
-    [pickerView setAlpha:1.0];
-    [UIView animateWithDuration:0.1 animations:^{
-        [pickerView setAlpha:0.0];
-    } completion:^(BOOL finished) {
-        [pickerView removeFromSuperview];
-        self.navigationItem.rightBarButtonItem.enabled = YES;
-    }];
-}
-
 #pragma mark - FBPickerView delegate methods
 
 - (void)doneButtonPressedInPickerView:(FBPickerView *)pickerView {
     int data1 = [pickerView selectedIndexForColumn:0];
     int data2 = [pickerView selectedIndexForColumn:1];
-    scoringDay = session.scoringPeriodID-6+data1;
+    scoringDay = self.session.scoringPeriodID-6+data1;
     if (data2 == 0) scoringPeriodMT = @"today";
     else if (data2 == 1) scoringPeriodMT = @"last7";
     else if (data2 == 2) scoringPeriodMT = @"last15";
@@ -309,53 +276,12 @@ NSArray *pickerData;
     //if (data2 == 0 && data1 == 3) refreshButton.enabled = YES;
     //else refreshButton.enabled = NO;
     [self loadplayersMT];
-    [_tableView reloadData];
+    [self.tableView reloadData];
     [self fadeOutWithPickerView:pickerView];
 }
 
 - (void)cancelButtonPressedInPickerView:(FBPickerView *)pickerView {
     [self fadeOutWithPickerView:pickerView];
-}
-
-#pragma mark - PlayerCell delegate
-
-- (void)linkWithPlayer:(FBPlayer *)player {
-    session.player = player;
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UIViewController *viewController = (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:@"p"];
-    MZFormSheetController *formSheet = [[MZFormSheetController alloc] initWithViewController:viewController];
-    formSheet.shouldDismissOnBackgroundViewTap = YES;
-    formSheet.transitionStyle = MZFormSheetTransitionStyleSlideFromBottom;
-    formSheet.shouldCenterVertically = YES;
-    formSheet.cornerRadius = 5.0;
-    formSheet.portraitTopInset = 6.0;
-    formSheet.landscapeTopInset = 6.0;
-    formSheet.presentedFormSheetSize = CGSizeMake(375, 680);
-    [self mz_presentFormSheetController:formSheet animated:YES completionHandler:^(MZFormSheetController *formSheetController) {
-        
-    }];
-}
-
-- (void)linkWithGameLink:(FBPlayer *)player {
-    session.link = [player gameLink];
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UIViewController *viewController = (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:@"w"];
-    //[self addChildViewController:viewController];
-    //[self presentViewController:viewController animated:YES completion:nil];
-    viewController.modalPresentationStyle=UIModalPresentationFormSheet;
-    viewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    [self presentViewController:viewController animated:YES completion:^{
-        viewController.view.superview.frame = CGRectMake(0, 0, 310, 500);
-        viewController.view.superview.center = self.view.center;
-    }];
-}
-
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-// Get the new view controller using [segue destinationViewController].
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-
 }
 
 @end

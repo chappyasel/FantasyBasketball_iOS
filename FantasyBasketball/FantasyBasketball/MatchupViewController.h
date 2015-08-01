@@ -9,10 +9,9 @@
 #import "FBViewController.h"
 #import "MatchupPlayerCell.h"
 
-@interface MatchupViewController : FBViewController <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, MatchupPlayerCellDelegate>
+@interface MatchupViewController : FBViewController <UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *scoreView;
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UISwitch *autorefreshSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *team1Display1;
 @property (weak, nonatomic) IBOutlet UILabel *team1Display2;

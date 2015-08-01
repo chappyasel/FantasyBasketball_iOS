@@ -7,9 +7,6 @@
 //
 
 #import "MatchupViewController.h"
-#import "FBSession.h"
-#import "FBPlayer.h"
-#import "TFHpple.h"
 
 @interface MatchupViewController ()
 
@@ -17,7 +14,6 @@
 
 @implementation MatchupViewController
 
-FBSession *session;
 TFHpple *parserMU;
 
 bool handleError;
@@ -32,24 +28,13 @@ NSMutableArray *cells;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self loadNavBar];
+    self.title = @"Matchup";
     handleError = NO;
     cells = [[NSMutableArray alloc] init];
     [self loadplayersMU];
     if (handleError) return;
     [self loadTableView];
     [self refreshScores];
-}
-
-- (void)loadNavBar {
-    self.title = @"Matchup";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Menu"
-                                                                             style:UIBarButtonItemStylePlain
-                                                                            target:self
-                                                                            action:@selector(presentLeftMenuViewController:)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
-                                                                                           target:self
-                                                                                           action:@selector(refreshButtonPressed:)];
 }
 
 - (void)refreshScores {
@@ -65,16 +50,9 @@ NSMutableArray *cells;
 }
 
 - (void)loadTableView {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.separatorInset = UIEdgeInsetsMake(15, 0, 0, 15);
-    _tableView.contentOffset = CGPointMake(0, 0);
-    _tableView.showsHorizontalScrollIndicator = NO;
-    _tableView.showsVerticalScrollIndicator = NO;
+    self.tableView.separatorInset = UIEdgeInsetsMake(15, 0, 0, 15);
+    self.tableView.contentOffset = CGPointMake(0, 0);
     [self loadTableHeaderView];
-    [self.view addSubview:_tableView];
-    [_tableView reloadData];
 }
 
 - (void)loadTableHeaderView {
@@ -89,7 +67,7 @@ NSMutableArray *cells;
     updateTimer = [[NSTimer alloc] initWithFireDate:[NSDate date] interval:2 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
     [headerView addSubview:label];
     [headerView addSubview:self.autorefreshSwitch];
-    _tableView.tableHeaderView = headerView;
+    self.tableView.tableHeaderView = headerView;
 }
 
 - (void)autorefreshStateChanged:(UISwitch *)sender{
@@ -112,13 +90,13 @@ NSTimer *updateTimer;
 
 - (IBAction)refreshButtonPressed:(UIButton *)sender {
     [self loadplayersMU];
-    [_tableView reloadData];
+    [self.tableView reloadData];
     [self refreshScores];
 }
 
 - (void)loadplayersMU {
     numStartersMU1 = 0, numStartersMU2 = 0;
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/boxscorefull?leagueId=%d&teamId=%d&scoringPeriodId=%d&seasonId=%d&view=scoringperiod&version=full",session.leagueID,session.teamID,session.scoringPeriodID,session.seasonID]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/boxscorefull?leagueId=%d&teamId=%d&scoringPeriodId=%d&seasonId=%d&view=scoringperiod&version=full",self.session.leagueID,self.session.teamID,self.session.scoringPeriodID,self.session.seasonID]];
     NSError *error;
     NSData *html = [NSData dataWithContentsOfURL:url options:NSDataReadingMapped error:&error];
     if (error) NSLog(@"Matchup error: %@",error);
@@ -250,28 +228,38 @@ NSTimer *updateTimer;
     return cell;
 }
 
-#pragma mark - MatchupPlayerCell delegate
+#pragma mark - FBPickerView
 
-- (void)linkWithPlayer:(FBPlayer *)player {
-    session.player = player;
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UIViewController *viewController = (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:@"p"];
-    [self presentViewController:viewController animated:YES completion:nil];
+NSArray *pickerData;
+
+-(void)loadDatePickerData {
+    pickerData = [[NSArray alloc] initWithObjects: [[NSArray alloc] initWithObjects: @"No PickerView Data", nil], nil];
 }
 
-- (void)linkWithGameLink:(FBPlayer *)player {
-    session.link = [player gameLink];
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UIViewController *viewController = (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:@"w"];
-    [self presentViewController:viewController animated:YES completion:nil];
+-(void) fadeIn:(UIButton *)sender {
+    [self loadDatePickerData];
+    self.navigationItem.rightBarButtonItem.enabled = NO;
+    FBPickerView *picker = [FBPickerView loadViewFromNib];
+    picker.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    picker.delegate = self;
+    [picker resetData];
+    [picker setData:pickerData[0] ForColumn:0];
+    [picker selectIndex:0 inColumn:0];
+    [picker setAlpha:0.0];
+    [self.view addSubview:picker];
+    [UIView animateWithDuration:0.1 animations:^{
+        [picker setAlpha:1.0];
+    } completion: nil];
 }
 
-#pragma mark - Navigation
+#pragma mark - FBPickerView delegate methods
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-// Get the new view controller using [segue destinationViewController].
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
+- (void)doneButtonPressedInPickerView:(FBPickerView *)pickerView {
+    [self fadeOutWithPickerView:pickerView];
+}
+
+- (void)cancelButtonPressedInPickerView:(FBPickerView *)pickerView {
+    [self fadeOutWithPickerView:pickerView];
 }
 
 @end

@@ -6,9 +6,10 @@
 //  Copyright (c) 2015 CD. All rights reserved.
 //
 
-#import "FBViewController.h"
+#import <UIKit/UIKit.h>
+#import "RESideMenu.h"
 
-@interface SettingsViewController : FBViewController <UITextFieldDelegate>
+@interface SettingsViewController : UIViewController <UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *leagueInput;
 @property (strong, nonatomic) IBOutlet UITextField *teamInput;
