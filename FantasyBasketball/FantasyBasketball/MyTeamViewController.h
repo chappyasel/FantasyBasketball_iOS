@@ -6,12 +6,11 @@
 //  Copyright (c) 2015 CD. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "FBViewController.h"
 #import "PlayerCell.h"
-#import "RESideMenu.h"
 #import "FBPickerView.h"
 
-@interface MyTeamViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, FBPickerViewDelegate, PlayerCellDelegate>
+@interface MyTeamViewController : FBViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, FBPickerViewDelegate, PlayerCellDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 

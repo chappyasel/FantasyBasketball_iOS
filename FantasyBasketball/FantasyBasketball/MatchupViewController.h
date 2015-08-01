@@ -6,11 +6,10 @@
 //  Copyright (c) 2015 CD. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "FBViewController.h"
 #import "MatchupPlayerCell.h"
-#import "RESideMenu.h"
 
-@interface MatchupViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, MatchupPlayerCellDelegate>
+@interface MatchupViewController : FBViewController <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, MatchupPlayerCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *scoreView;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;

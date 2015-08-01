@@ -18,26 +18,25 @@
 @implementation MatchupViewController
 
 FBSession *session;
+TFHpple *parserMU;
+
 bool handleError;
 
-UINavigationBar *barMU;
 NSMutableArray *playersMU1;
+int numStartersMU1 = 0;
 NSMutableArray *playersMU2;
+int numStartersMU2 = 0;
 NSMutableArray *scoresMU1;
 NSMutableArray *scoresMU2;
 NSMutableArray *cells;
-TFHpple *parserMU;
-int numStartersMU1 = 0;
-int numStartersMU2 = 0;
-bool expanded = NO;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadNavBar];
     handleError = NO;
     cells = [[NSMutableArray alloc] init];
-    if (handleError) return;
     [self loadplayersMU];
+    if (handleError) return;
     [self loadTableView];
     [self refreshScores];
 }
@@ -70,7 +69,7 @@ bool expanded = NO;
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorInset = UIEdgeInsetsMake(15, 0, 0, 15);
-    _tableView.contentOffset = CGPointMake(0, 0); //CORRECTLY DISPLAYS HEADER
+    _tableView.contentOffset = CGPointMake(0, 0);
     _tableView.showsHorizontalScrollIndicator = NO;
     _tableView.showsVerticalScrollIndicator = NO;
     [self loadTableHeaderView];
@@ -110,46 +109,6 @@ NSTimer *updateTimer;
 - (void)timerFired:(NSTimer *)timer {
     [self refreshButtonPressed:nil];
 }
-
-/*
-- (void)orientationChanged:(NSNotification *)notification{
-    [self adjustViewsForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
-}
-
-- (void) adjustViewsForOrientation:(UIInterfaceOrientation) orientation {
-    switch (orientation) {
-        case UIInterfaceOrientationPortrait: case UIInterfaceOrientationPortraitUpsideDown: {
-            [barMU setFrame:CGRectMake(0, 0, 414, 120)];
-            _scoreView.frame = barMU.frame;
-            _tableView.contentInset = UIEdgeInsetsMake(120, 0, 0, 0);
-            _tableView.frame = CGRectMake(0, 0, 414, 687);
-            _team1Display1.frame = CGRectMake(23, 18, 180, 50);
-            _team1Display2.frame = CGRectMake(38, 64, 150, 50);
-            _team2Display1.frame = CGRectMake(211, 18, 180, 50);
-            _team2Display2.frame = CGRectMake(226, 64, 150, 50);
-            _team1Display1.font = [UIFont boldSystemFontOfSize:45];
-            _team1Display2.font = [UIFont boldSystemFontOfSize:19];
-            _team2Display1.font = [UIFont boldSystemFontOfSize:45];
-            _team2Display2.font = [UIFont boldSystemFontOfSize:19];
-        } break;
-        case UIInterfaceOrientationLandscapeLeft: case UIInterfaceOrientationLandscapeRight: {
-            [barMU setFrame:CGRectMake(0, 0, 736-414, 414-47)];
-            _scoreView.frame = barMU.frame;
-            _tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
-            _tableView.frame = CGRectMake(736-414, 0, 414, 414-(736-687));
-            _team1Display1.frame = CGRectMake(16, 115, 140, 65);
-            _team1Display2.frame = CGRectMake(16, 188, 140, 65);
-            _team2Display1.frame = CGRectMake(167, 115, 140, 65);
-            _team2Display2.frame = CGRectMake(167, 188, 140, 65);
-            _team1Display1.font = [UIFont boldSystemFontOfSize:60];
-            _team1Display2.font = [UIFont boldSystemFontOfSize:22];
-            _team2Display1.font = [UIFont boldSystemFontOfSize:60];
-            _team2Display2.font = [UIFont boldSystemFontOfSize:22];
-        } break;
-        case UIInterfaceOrientationUnknown: break;
-    }
-}
-*/
 
 - (IBAction)refreshButtonPressed:(UIButton *)sender {
     [self loadplayersMU];
@@ -230,8 +189,7 @@ NSTimer *updateTimer;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (!expanded) return 52.7;
-    else return 569;
+    return 52.7;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
@@ -277,7 +235,7 @@ NSTimer *updateTimer;
     if (cells.count >= indexPath.row+indexPath.section*numStartersMU1+1) {
         MatchupPlayerCell *cell = cells[indexPath.row+indexPath.section*numStartersMU1];
         if (!cell) {
-            cell = [[MatchupPlayerCell alloc] initWithRightPlayer:rightPlayer leftPlayer:leftPlayer view:self expanded:expanded];
+            cell = [[MatchupPlayerCell alloc] initWithRightPlayer:rightPlayer leftPlayer:leftPlayer view:self expanded:NO];
             cell.delegate = self;
             cell.index = (int)indexPath.row;
             [cells addObject:cell];
@@ -285,7 +243,7 @@ NSTimer *updateTimer;
         else [cell updateWithRightPlayer:rightPlayer leftPlayer:leftPlayer];
         return cell;
     }
-    MatchupPlayerCell *cell = [[MatchupPlayerCell alloc] initWithRightPlayer:rightPlayer leftPlayer:leftPlayer view:self expanded:expanded];
+    MatchupPlayerCell *cell = [[MatchupPlayerCell alloc] initWithRightPlayer:rightPlayer leftPlayer:leftPlayer view:self expanded:NO];
     cell.delegate = self;
     cell.index = (int)indexPath.row;
     [cells addObject:cell];

@@ -13,40 +13,35 @@
 #import "MZFormSheetController.h"
 
 @interface MyTeamViewController ()
-
 @end
 
 @implementation MyTeamViewController
 
 FBSession *session;
-UINavigationBar *bar;
-UIBarButtonItem *refreshButton;
-NSMutableArray *playersMT;
-NSMutableArray *scrollViewsMT;
 TFHpple *parser;
+NSMutableArray *playersMT;
 int numStarters = 0;
+NSMutableArray *scrollViewsMT;
 float scrollDistanceMT;
-int scoringDay;
-NSString *scoringPeriodMT = @"today";
+
+int scoringDay;                         //time of stats
+NSString *scoringPeriodMT = @"today";   //span of stats
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self loadNavBar];
     scoringDay = session.scoringPeriodID;
     [self loadplayersMT];
-}
-
-- (void)viewWillAppear:(BOOL)animated{
-    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
     [self loadTableView];
-    [self loadNavBar];
     [self loadDatePickerData];
 }
 
 - (void)loadNavBar {
-    //NSString *XpathQueryString = @"//h3[@class='team-name']";
-    //NSArray *nodes = [parser searchWithXPathQuery:XpathQueryString];
-    //UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:[[nodes firstObject] content]];
-    self.title = @"My Team";
+    NSString *XpathQueryString = @"//h3[@class='team-name']";
+    NSArray *nodes = [parser searchWithXPathQuery:XpathQueryString];
+    NSString *teamName = [[nodes firstObject] content];
+    if (teamName) self.title = teamName;
+    else self.title = @"My Team";
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Menu"
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
@@ -57,7 +52,8 @@ NSString *scoringPeriodMT = @"today";
 }
 
 - (void)loadTableView {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
+                                              style:UITableViewStylePlain];
     scrollViewsMT = [[NSMutableArray alloc] init];
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -65,30 +61,6 @@ NSString *scoringPeriodMT = @"today";
     _tableView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_tableView];
     [_tableView reloadData];
-}
-
-- (void)orientationChanged:(NSNotification *)notification{
-    [self adjustViewsForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
-}
-
-- (void) adjustViewsForOrientation:(UIInterfaceOrientation) orientation {
-    switch (orientation) {
-        case UIInterfaceOrientationPortrait: case UIInterfaceOrientationPortraitUpsideDown: {
-            [bar setFrame:CGRectMake(0, 0, 414, 64)];
-            _tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
-            _tableView.frame = CGRectMake(0, 0, 414, 687);
-            
-        } break;
-        case UIInterfaceOrientationLandscapeLeft: case UIInterfaceOrientationLandscapeRight: {
-            [bar setFrame:CGRectMake(0, 0, 736, 44)];
-            _tableView.contentInset = UIEdgeInsetsMake(44, 0, 0, 0);
-            _tableView.frame = CGRectMake(0, 0, 736, 414-(736-687));
-        } break;
-        case UIInterfaceOrientationUnknown: break;
-    }
-    for (UIScrollView *sV in scrollViewsMT) {
-        sV.frame = CGRectMake(130, 0, _tableView.frame.size.width-130, 40);
-    }
 }
 
 - (IBAction)refreshButtonPressed:(UIButton *)sender {
@@ -334,8 +306,8 @@ NSArray *pickerData;
     else if (data2 == 4) scoringPeriodMT = @"currSeason";
     else if (data2 == 5) scoringPeriodMT = @"lastSeason";
     else  scoringPeriodMT = @"projections";
-    if (data2 == 0 && data1 == 3) refreshButton.enabled = YES;
-    else refreshButton.enabled = NO;
+    //if (data2 == 0 && data1 == 3) refreshButton.enabled = YES;
+    //else refreshButton.enabled = NO;
     [self loadplayersMT];
     [_tableView reloadData];
     [self fadeOutWithPickerView:pickerView];

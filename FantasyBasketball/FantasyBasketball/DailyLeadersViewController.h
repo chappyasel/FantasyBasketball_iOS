@@ -6,11 +6,10 @@
 //  Copyright (c) 2015 CD. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "FBViewController.h"
 #import "PlayerCell.h"
-#import "RESideMenu.h"
 
-@interface DailyLeadersViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, PlayerCellDelegate>
+@interface DailyLeadersViewController : FBViewController <UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, PlayerCellDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UISwitch *autorefreshSwitch;

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		62F83CE2C126DEFEF597543B /* libPods-FantasyBasketball.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EB74AB10145C6C0AE2BFA13 /* libPods-FantasyBasketball.a */; };
+		F904F3A71B6C665600B7BD37 /* FBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F904F3A61B6C665600B7BD37 /* FBViewController.m */; };
 		F933F76E1A6B2585009E24D8 /* DailyLeadersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F933F76D1A6B2585009E24D8 /* DailyLeadersViewController.m */; };
 		F933F7711A6B5414009E24D8 /* MatchupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F933F7701A6B5414009E24D8 /* MatchupViewController.m */; };
 		F954E9821B65E501000F323F /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = F954E97D1B65E501000F323F /* TFHpple.m */; };
@@ -87,6 +88,8 @@
 		7A065097D2C2A9E707E3B632 /* Pods-FantasyBasketball.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FantasyBasketball.release.xcconfig"; path = "Pods/Target Support Files/Pods-FantasyBasketball/Pods-FantasyBasketball.release.xcconfig"; sourceTree = "<group>"; };
 		7EB74AB10145C6C0AE2BFA13 /* libPods-FantasyBasketball.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FantasyBasketball.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F90461E01A6C2A29008A2C8E /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		F904F3A51B6C665600B7BD37 /* FBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBViewController.h; sourceTree = "<group>"; };
+		F904F3A61B6C665600B7BD37 /* FBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBViewController.m; sourceTree = "<group>"; };
 		F933F76C1A6B2585009E24D8 /* DailyLeadersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DailyLeadersViewController.h; sourceTree = "<group>"; };
 		F933F76D1A6B2585009E24D8 /* DailyLeadersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DailyLeadersViewController.m; sourceTree = "<group>"; };
 		F933F76F1A6B5414009E24D8 /* MatchupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchupViewController.h; sourceTree = "<group>"; };
@@ -334,6 +337,8 @@
 		F97303DC1B655A8C00193A1D /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F904F3A51B6C665600B7BD37 /* FBViewController.h */,
+				F904F3A61B6C665600B7BD37 /* FBViewController.m */,
 				F97303E11B655ACD00193A1D /* Settings */,
 				F97303DD1B655AA500193A1D /* Matchup */,
 				F97303DE1B655AAE00193A1D /* My Team */,
@@ -653,6 +658,7 @@
 				F9DB2EEB1B669DCA00B7AC82 /* MZFormSheetTransition.m in Sources */,
 				F96590B61A6773E8005384D1 /* MyTeamViewController.m in Sources */,
 				F97658511B65E69100ACC050 /* TodayViewController.m in Sources */,
+				F904F3A71B6C665600B7BD37 /* FBViewController.m in Sources */,
 				F954E9941B65E52C000F323F /* BEMSimpleLineGraphView.m in Sources */,
 				F9DB2EEA1B669DCA00B7AC82 /* MZFormSheetSegue.m in Sources */,
 				F95F53D51B6BFECA00CFF253 /* LeftSideMenuViewController.m in Sources */,
