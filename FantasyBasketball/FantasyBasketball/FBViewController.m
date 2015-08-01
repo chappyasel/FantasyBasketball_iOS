@@ -58,6 +58,16 @@
     }];
 }
 
+#pragma mark - tableView dataSource
+
+- (NSInteger) tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 0;
+}
+
+- (UITableViewCell *) tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    return nil;
+}
+
 #pragma mark - PlayerCell delegate
 
 - (void)linkWithPlayer:(FBPlayer *)player {
@@ -80,6 +90,16 @@
     viewController.modalPresentationStyle = UIModalPresentationFormSheet;
     viewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self presentViewController:viewController animated:YES completion:nil];
+}
+
+#pragma mark - FBPickerView delegate
+
+- (void)doneButtonPressedInPickerView:(FBPickerView *)pickerView {
+    
+}
+
+- (void)cancelButtonPressedInPickerView:(FBPickerView *)pickerView {
+    
 }
 
 #pragma mark - Navigation

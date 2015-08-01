@@ -104,14 +104,17 @@
         bottomBorder.backgroundColor = [UIColor colorWithWhite:1.0 alpha:1.0].CGColor;
         [view.layer addSublayer:bottomBorder];
         //PROFILE PHOTO
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(40, 0, 120, 120)];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(36, 0, 128, 128)];
         imageView.layer.cornerRadius = 60;
+        /*
         imageView.layer.borderWidth = 1;
         imageView.layer.borderColor = [UIColor whiteColor].CGColor;
-        imageView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.4]; //temporary
+        */
+        imageView.image = [UIImage imageNamed:@"basketball@2x"];
+        imageView.alpha = 0.6;
         [view addSubview:imageView];
         //NAME
-        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 120, 200, 30)];
+        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 125, 200, 30)];
         NSString *XpathQueryString = @"//h3[@class='team-name']";
         NSArray <TFHppleElement *> *nodes = [parser searchWithXPathQuery:XpathQueryString];
         nameLabel.text = nodes.firstObject.content;
@@ -120,7 +123,7 @@
         nameLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:19];
         [view addSubview:nameLabel];
         //LEAGUE
-        UILabel *leagueLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 145, 200, 20)];
+        UILabel *leagueLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 150, 200, 20)];
         XpathQueryString = @"//div[@class='games-univ-mod3']/ul";
         nodes = [parser searchWithXPathQuery:XpathQueryString];
         leagueLabel.text = nodes.firstObject.content;
@@ -129,7 +132,7 @@
         leagueLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:15];
         [view addSubview:leagueLabel];
         //RECORD
-        UILabel *recordLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 165, 200, 20)];
+        UILabel *recordLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 170, 200, 20)];
         XpathQueryString = @"//div[@class='games-univ-mod4']";
         nodes = [parser searchWithXPathQuery:XpathQueryString];
         recordLabel.text = [nodes.firstObject.content substringWithRange:NSMakeRange(8, nodes.firstObject.content.length-16)];
