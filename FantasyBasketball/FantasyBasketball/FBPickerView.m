@@ -17,6 +17,10 @@
 //An array containing arrays of strings
 NSMutableArray <NSArray <NSString *> *> *data;
 
+- (void) resetData {
+    data = [[NSMutableArray alloc] init];
+}
+
 - (void)setData: (NSArray *) array ForColumn: (int) col {
     if (!data) data = [[NSMutableArray alloc] init];
     data[col] = array;

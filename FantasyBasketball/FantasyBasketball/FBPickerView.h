@@ -26,10 +26,12 @@
 
 +(FBPickerView *)loadViewFromNib;
 
-- (void) setData: (NSArray *) array ForColumn: (int) col;
+- (void)resetData;
 
-- (int) selectedIndexForColumn: (int) col;
+- (void)setData: (NSArray *) array ForColumn: (int) col;
 
-- (void) selectIndex: (int) index inColumn: (int) col;
+- (int)selectedIndexForColumn: (int) col;
+
+- (void)selectIndex: (int) index inColumn: (int) col;
 
 @end

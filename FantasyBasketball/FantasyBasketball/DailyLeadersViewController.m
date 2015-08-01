@@ -7,9 +7,6 @@
 //
 
 #import "DailyLeadersViewController.h"
-#import "FBSession.h"
-#import "FBPlayer.h"
-#import "TFHpple.h"
 
 @interface DailyLeadersViewController ()
 
@@ -17,9 +14,6 @@
 
 @implementation DailyLeadersViewController
 
-FBSession *session;
-UINavigationBar *bar;
-UIBarButtonItem *refreshButton;
 NSMutableArray *playersDL;
 NSMutableArray *scrollViewsDL;
 TFHpple *parser;
@@ -29,33 +23,14 @@ int team;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    scoringDay = session.scoringPeriodID;
+    self.title = @"Daily Leaders";
+    scoringDay = self.session.scoringPeriodID;
     team = -1; //All defualt
     [self loadplayersDL];
 }
 
-- (void)loadNavBar {
-    self.title = @"Daily Leaders";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Menu"
-                                                                             style:UIBarButtonItemStylePlain
-                                                                            target:self
-                                                                            action:@selector(presentLeftMenuViewController:)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
-                                                                                           target:self
-                                                                                           action:@selector(fadeIn:)];
-}
-
 - (void)loadTableView {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
-    scrollViewsDL = [[NSMutableArray alloc] init];
-    _tableView.contentInset = UIEdgeInsetsMake(64, 0, 47, 0);
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.showsHorizontalScrollIndicator = NO;
-    _tableView.showsVerticalScrollIndicator = NO;
     [self loadTableHeaderView];
-    [self.view addSubview:_tableView];
-    [_tableView reloadData];
 }
 
 - (void)loadTableHeaderView {
@@ -70,7 +45,7 @@ int team;
     updateTimer = [[NSTimer alloc] initWithFireDate:[NSDate date] interval:2 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
     [headerView addSubview:label];
     [headerView addSubview:self.autorefreshSwitch];
-    _tableView.tableHeaderView = headerView;
+    self.tableView.tableHeaderView = headerView;
 }
 
 - (void)autorefreshStateChanged:(UISwitch *)sender{
@@ -91,43 +66,18 @@ NSTimer *updateTimer;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
     [self loadTableView];
-    [self loadNavBar];
-    [self loadDatePicker];
-}
-
-- (void)orientationChanged:(NSNotification *)notification{
-    [self adjustViewsForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
-}
-
-- (void) adjustViewsForOrientation:(UIInterfaceOrientation) orientation {
-    switch (orientation) {
-        case UIInterfaceOrientationPortrait: case UIInterfaceOrientationPortraitUpsideDown: {
-            [bar setFrame:CGRectMake(0, 0, 414, 64)];
-            _tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
-            _tableView.frame = CGRectMake(0, 0, 414, 687);
-        } break;
-        case UIInterfaceOrientationLandscapeLeft: case UIInterfaceOrientationLandscapeRight: {
-            [bar setFrame:CGRectMake(0, 0, 736, 44)];
-            _tableView.contentInset = UIEdgeInsetsMake(44, 0, 0, 0);
-            _tableView.frame = CGRectMake(0, 0, 736, 414-(736-687));
-        } break;
-        case UIInterfaceOrientationUnknown: break;
-    }
-    for (UIScrollView *sV in scrollViewsDL) {
-        sV.frame = CGRectMake(180, 0, _tableView.frame.size.width-180, 40);
-    }
+    [self loadDatePickerData];
 }
 
 - (IBAction)refreshButtonPressed:(UIButton *)sender {
     [self loadplayersDL];
     scrollViewsDL = [[NSMutableArray alloc] init];
-    [_tableView reloadData];
+    [self.tableView reloadData];
 }
 
 - (void)loadplayersDL {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/leaders?leagueId=%d&teamId=%d&scoringPeriodId=%d&startIndex=0&proTeamId=%d",session.leagueID,session.teamID,scoringDay,team]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/leaders?leagueId=%d&teamId=%d&scoringPeriodId=%d&startIndex=0&proTeamId=%d",self.session.leagueID,self.session.teamID,scoringDay,team]];
     NSData *html = [NSData dataWithContentsOfURL:url];
     parser = [TFHpple hppleWithHTMLData:html];
     NSString *XpathQueryString = @"//table[@class='playerTableTable tableBody']/tr";
@@ -184,7 +134,7 @@ NSTimer *updateTimer;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *cell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _tableView.frame.size.width, 40)];
+    UIView *cell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 40)];
     cell.backgroundColor = [UIColor lightGrayColor];
     //NAME
     UILabel *name = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 180, 40)];
@@ -192,7 +142,7 @@ NSTimer *updateTimer;
     name.font = [UIFont boldSystemFontOfSize:17];
     [cell addSubview:name];
     //STATS SCROLLVIEW
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(180, 0, _tableView.frame.size.width-130, 40)];
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(180, 0, self.tableView.frame.size.width-130, 40)];
     [scrollView setContentSize:CGSizeMake(13*50+150, 40)];
     [scrollView setShowsHorizontalScrollIndicator:NO];
     [scrollView setShowsVerticalScrollIndicator:NO];
@@ -237,117 +187,59 @@ NSTimer *updateTimer;
     }
 }
 
-#pragma mark - Date Picker
+#pragma mark - FBPickerView
 
-NSMutableArray *pickerData;
-NSArray *pickerData2;
+NSMutableArray <NSMutableArray <NSString *> *> *pickerData;
 
--(void)loadDatePicker {
-    _pickerView.hidden = YES;
-    [self.view sendSubviewToBack:_pickerView];
-    _picker.dataSource = self;
-    _picker.delegate = self;
-    pickerData = [[NSMutableArray alloc] initWithCapacity:session.scoringPeriodID];
+- (void)loadDatePickerData {
+    pickerData = [[NSMutableArray alloc] initWithCapacity:2];
+    pickerData[0] = [[NSMutableArray alloc] initWithCapacity:self.session.scoringPeriodID];
     NSDate *date = [NSDate date];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"E, MMM d"];
-    for (int i = 0; i < session.scoringPeriodID; i++) pickerData[i] = @"";
-    for (int i = 1; i < session.scoringPeriodID; i++) { //days before
+    for (int i = 0; i < self.session.scoringPeriodID; i++) pickerData[0][i] = @"";
+    for (int i = 1; i < self.session.scoringPeriodID; i++) { //days before
         date = [NSDate dateWithTimeIntervalSinceNow:-86400*i];
-        pickerData[session.scoringPeriodID-1-i] = [formatter stringFromDate:date];
+        pickerData[0][self.session.scoringPeriodID-1-i] = [formatter stringFromDate:date];
     }
-    pickerData[session.scoringPeriodID-1] = @"Today";
-    pickerData2 = [[NSArray alloc] initWithObjects:@"All", @"FA", @"Atl", @"Bkn", @"Bos", @"Cha", @"Chi", @"Cle", @"Dal", @"Den", @"Det", @"GS", @"Hou", @"Ind", @"LAC", @"LAL", @"Mem", @"Mia", @"Mil", @"Min", @"Nor", @"NY", @"OKC", @"Orl", @"Phi", @"Pho", @"Por", @"SA", @"Sac", @"Tor", @"Uta", @"Wsh", nil];
-    [self.picker selectRow:session.scoringPeriodID-1 inComponent:0 animated:NO];
+    pickerData[0][self.session.scoringPeriodID-1] = @"Today";
+    pickerData[1] = [[NSMutableArray alloc] initWithObjects:@"All", @"FA", @"Atl", @"Bkn", @"Bos", @"Cha", @"Chi", @"Cle", @"Dal", @"Den", @"Det", @"GS", @"Hou", @"Ind", @"LAC", @"LAL", @"Mem", @"Mia", @"Mil", @"Min", @"Nor", @"NY", @"OKC", @"Orl", @"Phi", @"Pho", @"Por", @"SA", @"Sac", @"Tor", @"Uta", @"Wsh", nil];
 }
 
--(void) fadeIn:(UIButton *)sender{
-    [_pickerView setAlpha:0.0];
-    _pickerView.hidden = NO;
-    [self.view bringSubviewToFront:_pickerView];
-    [UIView animateWithDuration:0.2 animations:^{
-        [_pickerView setAlpha:1.0];
+- (void)fadeIn:(UIButton *)sender {
+    self.navigationItem.rightBarButtonItem.enabled = NO;
+    FBPickerView *picker = [FBPickerView loadViewFromNib];
+    picker.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    picker.delegate = self;
+    [picker resetData];
+    [picker setData:pickerData[0] ForColumn:0];
+    [picker setData:pickerData[1] ForColumn:1];
+    [picker selectIndex:self.session.scoringPeriodID-1 inColumn:0];
+    [picker selectIndex:0 inColumn:1];
+    [picker setAlpha:0.0];
+    [self.view addSubview:picker];
+    [UIView animateWithDuration:0.1 animations:^{
+        [picker setAlpha:1.0];
     } completion: nil];
 }
 
--(void) fadeOut:(UIButton *)sender{
-    if (sender) { //done button, do action
-        int data1 = (int)[_picker selectedRowInComponent:0];
-        int data2 = (int)[_picker selectedRowInComponent:1];
-        scoringDay = data1+1;
-        int indexs[32] = {-1, 0, 1, 17, 2, 30, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 29, 14, 15, 16, 3, 18, 25, 19, 20, 21, 22, 24, 23, 28, 26, 27};
-        team = indexs[data2];
-        if (scoringDay == session.scoringPeriodID) refreshButton.enabled = YES;
-        else refreshButton.enabled = NO;
-        [self loadplayersDL];
-        [_tableView reloadData];
-    }
-    [_pickerView setAlpha:1.0];
-    [UIView animateWithDuration:0.2 animations:^{
-        [_pickerView setAlpha:0.0];
-    } completion:^(BOOL finished) {
-        [self.view sendSubviewToBack:_pickerView];
-        _pickerView.hidden = YES;
-    }];
+#pragma mark - FBPickerView delegate methods
+
+- (void)doneButtonPressedInPickerView:(FBPickerView *)pickerView {
+    int data1 = (int)[pickerView selectedIndexForColumn:0];
+    int data2 = (int)[pickerView selectedIndexForColumn:1];
+    scoringDay = data1+1;
+    int indexs[32] = {-1, 0, 1, 17, 2, 30, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 29, 14, 15, 16, 3, 18, 25, 19, 20, 21, 22, 24, 23, 28, 26, 27};
+    team = indexs[data2];
+    //if (scoringDay == self.session.scoringPeriodID) refreshButton.enabled = YES;
+    //else refreshButton.enabled = NO;
+    [self loadplayersDL];
+    [self.tableView reloadData];
+    [self fadeOutWithPickerView:pickerView];
 }
 
-- (IBAction)cancelButtonPressed:(UIButton *)sender {
-    [self fadeOut:nil];
-}
-
-- (IBAction)doneButtonPressed:(UIButton *)sender {
-    [self fadeOut:sender];
-}
-
-#pragma mark - Date picker methods
-
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-}
-
-- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
-    return pickerView.frame.size.width/2;
-}
-
-- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
-    return 40;
-}
-
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    if (component == 0) return pickerData[row];
-    else return pickerData2[row];
-}
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    if (component == 0) return session.scoringPeriodID;
-    else return 32;
-}
-
--(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    return 2; //day, team
-}
-
-#pragma mark - PlayerCell delegate
-
-- (void)linkWithPlayer:(FBPlayer *)player {
-    session.player = player;
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UIViewController *viewController = (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:@"p"];
-    [self presentViewController:viewController animated:YES completion:nil];
-}
-
-- (void)linkWithGameLink:(FBPlayer *)player {
-    session.link = [player gameLink];
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UIViewController *viewController = (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:@"w"];
-    [self presentViewController:viewController animated:YES completion:nil];
-}
-
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-// Get the new view controller using [segue destinationViewController].
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
+- (void)cancelButtonPressedInPickerView:(FBPickerView *)pickerView {
+    [self fadeOutWithPickerView:pickerView];
 }
 
 @end
