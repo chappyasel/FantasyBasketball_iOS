@@ -8,14 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "PlayerCell.h"
+#import "RESideMenu.h"
+#import "FBPickerView.h"
 
-@interface MyTeamViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, PlayerCellDelegate>
+@interface MyTeamViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, FBPickerViewDelegate, PlayerCellDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
-
-@property (weak, nonatomic) IBOutlet UIView *pickerView;
-@property (weak, nonatomic) IBOutlet UIPickerView *picker;
-@property (weak, nonatomic) IBOutlet UIButton *pickerCancelButton;
-@property (weak, nonatomic) IBOutlet UIButton *pickerDoneButton;
 
 @end

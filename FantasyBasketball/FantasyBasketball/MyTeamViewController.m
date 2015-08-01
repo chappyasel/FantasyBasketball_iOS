@@ -39,29 +39,26 @@ NSString *scoringPeriodMT = @"today";
     [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
     [self loadTableView];
     [self loadNavBar];
-    [self loadDatePicker];
+    [self loadDatePickerData];
 }
 
 - (void)loadNavBar {
-    bar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
-    if (self.view.frame.size.height < 500) bar.frame = CGRectMake(0, 0, self.view.frame.size.width, 44);
-    NSString *XpathQueryString = @"//h3[@class='team-name']";
-    NSArray *nodes = [parser searchWithXPathQuery:XpathQueryString];
-    UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:[[nodes firstObject] content]];
-    navItem.title = [NSString stringWithFormat:@"My Team"];
-    refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshButtonPressed:)];
-    navItem.rightBarButtonItem = refreshButton;
-    UIBarButtonItem *bi2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(fadeIn:)];
-    navItem.leftBarButtonItem = bi2;
-    bar.items = [NSArray arrayWithObject:navItem];
-    [self.view addSubview:bar];
+    //NSString *XpathQueryString = @"//h3[@class='team-name']";
+    //NSArray *nodes = [parser searchWithXPathQuery:XpathQueryString];
+    //UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:[[nodes firstObject] content]];
+    self.title = @"My Team";
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Menu"
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:@selector(presentLeftMenuViewController:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
+                                                                                           target:self
+                                                                                           action:@selector(fadeIn:)];
 }
 
 - (void)loadTableView {
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
     scrollViewsMT = [[NSMutableArray alloc] init];
-    _tableView.contentInset = UIEdgeInsetsMake(64, 0, 47, 0);
-    if (self.view.frame.size.height < 500) _tableView.contentInset = UIEdgeInsetsMake(44, 0, 47, 0);
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.showsHorizontalScrollIndicator = NO;
@@ -80,15 +77,12 @@ NSString *scoringPeriodMT = @"today";
             [bar setFrame:CGRectMake(0, 0, 414, 64)];
             _tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
             _tableView.frame = CGRectMake(0, 0, 414, 687);
-            _pickerView.frame = CGRectMake(0, 64, 414, 623);
             
         } break;
         case UIInterfaceOrientationLandscapeLeft: case UIInterfaceOrientationLandscapeRight: {
             [bar setFrame:CGRectMake(0, 0, 736, 44)];
             _tableView.contentInset = UIEdgeInsetsMake(44, 0, 0, 0);
             _tableView.frame = CGRectMake(0, 0, 736, 414-(736-687));
-            _pickerView.frame = CGRectMake(0, 44, 736, 414-44-(736-687));
-            //_picker.frame = CGRectMake(0, 414-44-(736-687)-180, 736, 180);
         } break;
         case UIInterfaceOrientationUnknown: break;
     }
@@ -284,99 +278,71 @@ NSString *scoringPeriodMT = @"today";
 
 NSArray *pickerData;
 
--(void)loadDatePicker {
-    _pickerView.hidden = YES;
-    [self.view sendSubviewToBack:_pickerView];
-    _picker.dataSource = self;
-    _picker.delegate = self;
+-(void)loadDatePickerData {
     pickerData = [[NSMutableArray alloc] initWithObjects:
-                  [[NSMutableArray alloc] initWithObjects: @"-", @"-", @"-", @"-", @"-", @"-", @"Today", @"-", @"-", @"-", @"-", @"-", @"-", nil],
+                  [[NSMutableArray alloc] initWithObjects: @"-", @"-", @"-", @"-", @"-", @"Yesterday", @"Today", @"Tomorrow", @"-", @"-", @"-", @"-", @"-", nil],
                   [[NSMutableArray alloc]initWithObjects: @"Today", @"Last 7", @"Last 15", @"Last 30", @"Season", @"Last Season", @"Projections", nil], nil];
     NSDate *date = [NSDate date];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"E, MMM d"];
-    for (int i = 1; i < 7; i++) { //days before
+    for (int i = 1; i < 6; i++) { //days before
         date = [NSDate dateWithTimeIntervalSinceNow:-86400*i];
-        pickerData[0][6-i] = [formatter stringFromDate:date];
+        pickerData[0][5-i] = [formatter stringFromDate:date];
     }
-    for (int i = 1; i < 7; i++) { //days after
+    for (int i = 2; i < 7; i++) { //days after
         date = [NSDate dateWithTimeIntervalSinceNow:86400*i];
         pickerData[0][6+i] = [formatter stringFromDate:date];
     }
-    [self.picker selectRow:6 inComponent:0 animated:NO];
 }
 
--(void) fadeIn:(UIButton *)sender{
-    [_pickerView setAlpha:0.0];
-    _pickerView.hidden = NO;
-    [self.view bringSubviewToFront:_pickerView];
-    [UIView animateWithDuration:0.2 animations:^{
-        [_pickerView setAlpha:1.0];
+-(void) fadeIn:(UIButton *)sender {
+    self.navigationItem.rightBarButtonItem.enabled = NO;
+    FBPickerView *picker = [FBPickerView loadViewFromNib];
+    picker.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    picker.delegate = self;
+    [picker setData:pickerData[0] ForColumn:0];
+    [picker setData:pickerData[1] ForColumn:1];
+    [picker selectIndex:-(session.scoringPeriodID-scoringDay)+6 inColumn:0];
+    [picker selectIndex:(int)[[NSArray arrayWithObjects:@"today", @"last7", @"last15", @"last30", @"currSeason", @"lastSeason", @"projections",nil] indexOfObject:scoringPeriodMT] inColumn:1];
+    [picker setAlpha:0.0];
+    [self.view addSubview:picker];
+    [UIView animateWithDuration:0.1 animations:^{
+        [picker setAlpha:1.0];
     } completion: nil];
 }
 
--(void) fadeOut:(UIButton *)sender{
-    if (sender) { //done button, do action
-        int data1 = (int)[_picker selectedRowInComponent:0];
-        int data2 = (int)[_picker selectedRowInComponent:1];
-        scoringDay = session.scoringPeriodID-6+data1;
-        if (data2 == 0) scoringPeriodMT = @"today";
-        else if (data2 == 1) scoringPeriodMT = @"last7";
-        else if (data2 == 2) scoringPeriodMT = @"last15";
-        else if (data2 == 3) scoringPeriodMT = @"last30";
-        else if (data2 == 4) scoringPeriodMT = @"currSeason";
-        else if (data2 == 5) scoringPeriodMT = @"lastSeason";
-        else  scoringPeriodMT = @"projections";
-        if (data2 == 0 && data1 == 3) refreshButton.enabled = YES;
-        else refreshButton.enabled = NO;
-        [self loadplayersMT];
-        [_tableView reloadData];
-    }
-    [_pickerView setAlpha:1.0];
-    [UIView animateWithDuration:0.2 animations:^{
-        [_pickerView setAlpha:0.0];
+-(void)fadeOutWithPickerView: (FBPickerView *) pickerView {
+    [pickerView setAlpha:1.0];
+    [UIView animateWithDuration:0.1 animations:^{
+        [pickerView setAlpha:0.0];
     } completion:^(BOOL finished) {
-        [self.view sendSubviewToBack:_pickerView];
-        _pickerView.hidden = YES;
+        [pickerView removeFromSuperview];
+        self.navigationItem.rightBarButtonItem.enabled = YES;
     }];
 }
 
-- (IBAction)cancelButtonPressed:(UIButton *)sender {
-    [self fadeOut:nil];
+#pragma mark - FBPickerView delegate methods
+
+- (void)doneButtonPressedInPickerView:(FBPickerView *)pickerView {
+    int data1 = [pickerView selectedIndexForColumn:0];
+    int data2 = [pickerView selectedIndexForColumn:1];
+    scoringDay = session.scoringPeriodID-6+data1;
+    if (data2 == 0) scoringPeriodMT = @"today";
+    else if (data2 == 1) scoringPeriodMT = @"last7";
+    else if (data2 == 2) scoringPeriodMT = @"last15";
+    else if (data2 == 3) scoringPeriodMT = @"last30";
+    else if (data2 == 4) scoringPeriodMT = @"currSeason";
+    else if (data2 == 5) scoringPeriodMT = @"lastSeason";
+    else  scoringPeriodMT = @"projections";
+    if (data2 == 0 && data1 == 3) refreshButton.enabled = YES;
+    else refreshButton.enabled = NO;
+    [self loadplayersMT];
+    [_tableView reloadData];
+    [self fadeOutWithPickerView:pickerView];
 }
 
-- (IBAction)doneButtonPressed:(UIButton *)sender {
-    [self fadeOut:sender];
-}
-
-#pragma mark - Date picker methods
-
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    
-}
-
-- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
-    if (component == 0) return 207;
-    if (component == 1) return 207;
-    return 0;
-}
-
-- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
-    return 40;
-}
-
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    return pickerData[component][row];
-}
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    if (component == 0) return 13; //date (6 before, 6 after)
-    if (component == 1) return 7; //time
-    return 0;
-}
-
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    return 2;
+- (void)cancelButtonPressedInPickerView:(FBPickerView *)pickerView {
+    [self fadeOutWithPickerView:pickerView];
 }
 
 #pragma mark - PlayerCell delegate

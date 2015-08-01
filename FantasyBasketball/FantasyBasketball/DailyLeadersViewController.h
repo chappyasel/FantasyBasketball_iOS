@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PlayerCell.h"
+#import "RESideMenu.h"
 
 @interface DailyLeadersViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, PlayerCellDelegate>
 

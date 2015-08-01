@@ -33,30 +33,24 @@ bool expanded = NO;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self loadNavBar];
     handleError = NO;
     cells = [[NSMutableArray alloc] init];
     if (handleError) return;
     [self loadplayersMU];
     [self loadTableView];
-    [self loadNavBar];
     [self refreshScores];
 }
 
-- (void)viewWillAppear:(BOOL)animated{
-    //[[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)    name:UIDeviceOrientationDidChangeNotification  object:nil];
-}
-
 - (void)loadNavBar {
-    //NAV
-    barMU = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 414, 120)];
-    [barMU addSubview:_scoreView];
-    UINavigationItem *navItem = [[UINavigationItem alloc] init];
-    UIBarButtonItem *bi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshButtonPressed:)];
-    navItem.rightBarButtonItem = bi;
-    //UIBarButtonItem *bi2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(refreshButtonPressed:)];
-    //navItem.leftBarButtonItem = bi2;
-    barMU.items = [NSArray arrayWithObject:navItem];
-    [self.view addSubview:barMU];
+    self.title = @"Matchup";
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Menu"
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:@selector(presentLeftMenuViewController:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
+                                                                                           target:self
+                                                                                           action:@selector(refreshButtonPressed:)];
 }
 
 - (void)refreshScores {
@@ -76,7 +70,6 @@ bool expanded = NO;
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorInset = UIEdgeInsetsMake(15, 0, 0, 15);
-    _tableView.contentInset = UIEdgeInsetsMake(120, 0, 47, 0);
     _tableView.contentOffset = CGPointMake(0, 0); //CORRECTLY DISPLAYS HEADER
     _tableView.showsHorizontalScrollIndicator = NO;
     _tableView.showsVerticalScrollIndicator = NO;

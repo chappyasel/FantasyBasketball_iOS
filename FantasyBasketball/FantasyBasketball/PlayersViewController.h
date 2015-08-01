@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PlayerCell.h"
+#import "RESideMenu.h"
 
 @interface PlayersViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UISearchBarDelegate, PlayerCellDelegate>
 
