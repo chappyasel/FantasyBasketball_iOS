@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		62F83CE2C126DEFEF597543B /* libPods-FantasyBasketball.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EB74AB10145C6C0AE2BFA13 /* libPods-FantasyBasketball.a */; };
 		F904F3A71B6C665600B7BD37 /* FBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F904F3A61B6C665600B7BD37 /* FBViewController.m */; };
+		F904F3AC1B6C8E7B00B7BD37 /* MA@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F904F3A81B6C8E7B00B7BD37 /* MA@2x.png */; };
+		F904F3AD1B6C8E7B00B7BD37 /* MY@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F904F3A91B6C8E7B00B7BD37 /* MY@2x.png */; };
+		F904F3AE1B6C8E7B00B7BD37 /* PL@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F904F3AA1B6C8E7B00B7BD37 /* PL@2x.png */; };
+		F904F3AF1B6C8E7B00B7BD37 /* SE@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F904F3AB1B6C8E7B00B7BD37 /* SE@2x.png */; };
+		F904F3B21B6C8E8100B7BD37 /* DL@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F904F3B01B6C8E8100B7BD37 /* DL@2x.png */; };
+		F904F3B31B6C8E8100B7BD37 /* GR@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F904F3B11B6C8E8100B7BD37 /* GR@2x.png */; };
 		F933F76E1A6B2585009E24D8 /* DailyLeadersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F933F76D1A6B2585009E24D8 /* DailyLeadersViewController.m */; };
 		F933F7711A6B5414009E24D8 /* MatchupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F933F7701A6B5414009E24D8 /* MatchupViewController.m */; };
 		F954E9821B65E501000F323F /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = F954E97D1B65E501000F323F /* TFHpple.m */; };
@@ -32,10 +38,6 @@
 		F96590B61A6773E8005384D1 /* MyTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F96590B51A6773E8005384D1 /* MyTeamViewController.m */; };
 		F96590B91A677441005384D1 /* PlayersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F96590B81A677441005384D1 /* PlayersViewController.m */; };
 		F96590CB1A67872E005384D1 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F96590CA1A67872E005384D1 /* libxml2.dylib */; };
-		F96DAF3B1B6C2E4100648CCF /* DL@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F96DAF371B6C2E4100648CCF /* DL@2x.png */; };
-		F96DAF3C1B6C2E4100648CCF /* MT@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F96DAF381B6C2E4100648CCF /* MT@2x.png */; };
-		F96DAF3D1B6C2E4100648CCF /* MU@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F96DAF391B6C2E4100648CCF /* MU@2x.png */; };
-		F96DAF3E1B6C2E4100648CCF /* PL@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F96DAF3A1B6C2E4100648CCF /* PL@2x.png */; };
 		F96DAF441B6C2F2B00648CCF /* FBPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F96DAF431B6C2F2B00648CCF /* FBPickerView.m */; };
 		F96DAF461B6C2F5200648CCF /* FBPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F96DAF451B6C2F5200648CCF /* FBPickerView.xib */; };
 		F97063801A6C98B800A50A43 /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F970637F1A6C98B800A50A43 /* PlayerViewController.m */; };
@@ -90,6 +92,12 @@
 		F90461E01A6C2A29008A2C8E /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		F904F3A51B6C665600B7BD37 /* FBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBViewController.h; sourceTree = "<group>"; };
 		F904F3A61B6C665600B7BD37 /* FBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBViewController.m; sourceTree = "<group>"; };
+		F904F3A81B6C8E7B00B7BD37 /* MA@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "MA@2x.png"; path = "FantasyBasketball/Images/MA@2x.png"; sourceTree = "<group>"; };
+		F904F3A91B6C8E7B00B7BD37 /* MY@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "MY@2x.png"; path = "FantasyBasketball/Images/MY@2x.png"; sourceTree = "<group>"; };
+		F904F3AA1B6C8E7B00B7BD37 /* PL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "PL@2x.png"; path = "FantasyBasketball/Images/PL@2x.png"; sourceTree = "<group>"; };
+		F904F3AB1B6C8E7B00B7BD37 /* SE@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SE@2x.png"; path = "FantasyBasketball/Images/SE@2x.png"; sourceTree = "<group>"; };
+		F904F3B01B6C8E8100B7BD37 /* DL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "DL@2x.png"; path = "FantasyBasketball/Images/DL@2x.png"; sourceTree = "<group>"; };
+		F904F3B11B6C8E8100B7BD37 /* GR@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "GR@2x.png"; path = "FantasyBasketball/Images/GR@2x.png"; sourceTree = "<group>"; };
 		F933F76C1A6B2585009E24D8 /* DailyLeadersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DailyLeadersViewController.h; sourceTree = "<group>"; };
 		F933F76D1A6B2585009E24D8 /* DailyLeadersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DailyLeadersViewController.m; sourceTree = "<group>"; };
 		F933F76F1A6B5414009E24D8 /* MatchupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchupViewController.h; sourceTree = "<group>"; };
@@ -132,10 +140,6 @@
 		F96590B71A677441005384D1 /* PlayersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayersViewController.h; sourceTree = "<group>"; };
 		F96590B81A677441005384D1 /* PlayersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayersViewController.m; sourceTree = "<group>"; };
 		F96590CA1A67872E005384D1 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
-		F96DAF371B6C2E4100648CCF /* DL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "DL@2x.png"; path = "FantasyBasketball/Images/DL@2x.png"; sourceTree = "<group>"; };
-		F96DAF381B6C2E4100648CCF /* MT@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "MT@2x.png"; path = "FantasyBasketball/Images/MT@2x.png"; sourceTree = "<group>"; };
-		F96DAF391B6C2E4100648CCF /* MU@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "MU@2x.png"; path = "FantasyBasketball/Images/MU@2x.png"; sourceTree = "<group>"; };
-		F96DAF3A1B6C2E4100648CCF /* PL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "PL@2x.png"; path = "FantasyBasketball/Images/PL@2x.png"; sourceTree = "<group>"; };
 		F96DAF421B6C2F2B00648CCF /* FBPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBPickerView.h; path = FantasyBasketball/FBPickerView.h; sourceTree = "<group>"; };
 		F96DAF431B6C2F2B00648CCF /* FBPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBPickerView.m; path = FantasyBasketball/FBPickerView.m; sourceTree = "<group>"; };
 		F96DAF451B6C2F5200648CCF /* FBPickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FBPickerView.xib; path = FantasyBasketball/FBPickerView.xib; sourceTree = "<group>"; };
@@ -234,6 +238,15 @@
 			);
 			name = "FB - Widget";
 			path = "Fantasy Basketball";
+			sourceTree = "<group>";
+		};
+		F904F3B41B6C8FA600B7BD37 /* Left Menu */ = {
+			isa = PBXGroup;
+			children = (
+				F95F53D31B6BFECA00CFF253 /* LeftSideMenuViewController.h */,
+				F95F53D41B6BFECA00CFF253 /* LeftSideMenuViewController.m */,
+			);
+			name = "Left Menu";
 			sourceTree = "<group>";
 		};
 		F954E9851B65E507000F323F /* BEMLineGraph */ = {
@@ -346,8 +359,7 @@
 				F97303E01B655AC300193A1D /* Daily Leaders */,
 				F97303E21B655AD300193A1D /* Individual Player */,
 				F97303E31B655ADC00193A1D /* Wep Page */,
-				F95F53D31B6BFECA00CFF253 /* LeftSideMenuViewController.h */,
-				F95F53D41B6BFECA00CFF253 /* LeftSideMenuViewController.m */,
+				F904F3B41B6C8FA600B7BD37 /* Left Menu */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -418,10 +430,12 @@
 		F9908E021AA26365008DF9D8 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				F96DAF371B6C2E4100648CCF /* DL@2x.png */,
-				F96DAF381B6C2E4100648CCF /* MT@2x.png */,
-				F96DAF391B6C2E4100648CCF /* MU@2x.png */,
-				F96DAF3A1B6C2E4100648CCF /* PL@2x.png */,
+				F904F3B01B6C8E8100B7BD37 /* DL@2x.png */,
+				F904F3B11B6C8E8100B7BD37 /* GR@2x.png */,
+				F904F3A81B6C8E7B00B7BD37 /* MA@2x.png */,
+				F904F3A91B6C8E7B00B7BD37 /* MY@2x.png */,
+				F904F3AA1B6C8E7B00B7BD37 /* PL@2x.png */,
+				F904F3AB1B6C8E7B00B7BD37 /* SE@2x.png */,
 				F95F53D11B6BFE5300CFF253 /* StadiumBlur.jpg */,
 			);
 			name = Images;
@@ -576,15 +590,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F96DAF3B1B6C2E4100648CCF /* DL@2x.png in Resources */,
-				F96DAF3D1B6C2E4100648CCF /* MU@2x.png in Resources */,
-				F96DAF3E1B6C2E4100648CCF /* PL@2x.png in Resources */,
+				F904F3B21B6C8E8100B7BD37 /* DL@2x.png in Resources */,
 				F965909A1A676DB3005384D1 /* Main.storyboard in Resources */,
 				F96DAF461B6C2F5200648CCF /* FBPickerView.xib in Resources */,
+				F904F3B31B6C8E8100B7BD37 /* GR@2x.png in Resources */,
 				F95F53D21B6BFE5300CFF253 /* StadiumBlur.jpg in Resources */,
-				F96DAF3C1B6C2E4100648CCF /* MT@2x.png in Resources */,
 				F976584E1B65E69100ACC050 /* Fantasy Basketball.entitlements in Resources */,
 				F97658501B65E69100ACC050 /* MainInterface.storyboard in Resources */,
+				F904F3AC1B6C8E7B00B7BD37 /* MA@2x.png in Resources */,
+				F904F3AF1B6C8E7B00B7BD37 /* SE@2x.png in Resources */,
+				F904F3AD1B6C8E7B00B7BD37 /* MY@2x.png in Resources */,
+				F904F3AE1B6C8E7B00B7BD37 /* PL@2x.png in Resources */,
 				F965909F1A676DB3005384D1 /* LaunchScreen.xib in Resources */,
 				F976584F1B65E69100ACC050 /* Info.plist in Resources */,
 				F965909C1A676DB3005384D1 /* Images.xcassets in Resources */,
