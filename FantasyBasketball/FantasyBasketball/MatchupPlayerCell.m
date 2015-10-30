@@ -18,6 +18,7 @@
 }
 
 - (instancetype) initWithRightPlayer:(FBPlayer *)rP leftPlayer:(FBPlayer *)lP view:(UIViewController *)superview expanded:(bool)expanded {
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     if (self = [super initWithFrame:CGRectMake(0, 0, 414, 152.7)]) {
         self.rightPlayer = rP;
         self.leftPlayer = lP;
@@ -38,12 +39,40 @@
                 leftSubname2View = [[UILabel alloc] initWithFrame:CGRectMake(10, 32, 150, 20)];
                 leftSubname2View.textColor = [UIColor grayColor];
                 leftSubname2View.font = [leftSubname2View.font fontWithSize:11];
-                leftSubname2View.text = [NSString stringWithFormat:@"%.0f/%.0f, %.0f pts, %.0f reb, %.0f ast",self.leftPlayer.fgm,self.leftPlayer.fga,self.leftPlayer.points,self.leftPlayer.rebounds,self.leftPlayer.assists];
+                int stat1 = 0;
+                int stat2 = 0;
+                NSString *stat1t = @"";
+                NSString *stat2t = @""; //pick largest stats of: reb, ast, blk, stl
+                if ((int)self.leftPlayer.steals > (int)self.leftPlayer.blocks) { //ast stl
+                    stat1 = self.leftPlayer.assists;
+                    stat1t = @"ast";
+                    stat2 = self.leftPlayer.steals;
+                    stat2t = @"stl";
+                }
+                if ((int)self.leftPlayer.blocks > (int)self.leftPlayer.assists) { //reb blk
+                    stat1 = self.leftPlayer.rebounds;
+                    stat1t = @"reb";
+                    stat2 = self.leftPlayer.blocks;
+                    stat2t = @"blk";
+                }
+                if ((int)self.leftPlayer.steals > (int)self.leftPlayer.assists) { //reb stl
+                    stat1 = self.leftPlayer.rebounds;
+                    stat1t = @"reb";
+                    stat2 = self.leftPlayer.steals;
+                    stat2t = @"stl";
+                }
+                else { //reb ast
+                    stat1 = self.leftPlayer.rebounds;
+                    stat1t = @"reb";
+                    stat2 = self.leftPlayer.assists;
+                    stat2t = @"ast";
+                }
+                leftSubname2View.text = [NSString stringWithFormat:@"%.0f/%.0f, %.0f pts, %d %@, %d %@",self.leftPlayer.fgm,self.leftPlayer.fga,self.leftPlayer.points,stat1,stat1t,stat2,stat2t];
                 [self addSubview:leftSubname2View];
             }
             //Points
             leftPointsView = [[UILabel alloc] initWithFrame:CGRectMake(207-50, 0, 50, 52.7)];
-            if (!self.leftPlayer.isPlaying) leftPointsView.text = @"-";
+            if (!self.leftPlayer.isPlaying || self.leftPlayer.gameState == FBGameStateHasntStarted) leftPointsView.text = @"-";
             else leftPointsView.text = [NSString stringWithFormat:@"%.0f",self.leftPlayer.fantasyPoints];
             leftPointsView.textAlignment = NSTextAlignmentCenter;
             leftPointsView.font = [UIFont boldSystemFontOfSize:19];
@@ -86,12 +115,40 @@
                 rightSubname2View.textColor = [UIColor grayColor];
                 rightSubname2View.font = [rightSubname2View.font fontWithSize:11];
                 rightSubname2View.textAlignment = NSTextAlignmentRight;
-                rightSubname2View.text = [NSString stringWithFormat:@"%.0f/%.0f, %.0f pts, %.0f reb, %.0f ast",self.rightPlayer.fgm,self.rightPlayer.fga,self.rightPlayer.points,self.rightPlayer.rebounds,self.rightPlayer.assists];
+                int stat1 = 0;
+                int stat2 = 0;
+                NSString *stat1t = @"";
+                NSString *stat2t = @""; //pick largest stats of: reb, ast, blk, stl
+                if ((int)self.rightPlayer.steals > (int)self.rightPlayer.blocks) { //ast stl
+                    stat1 = self.rightPlayer.assists;
+                    stat1t = @"ast";
+                    stat2 = self.rightPlayer.steals;
+                    stat2t = @"stl";
+                }
+                if ((int)self.rightPlayer.blocks > (int)self.rightPlayer.assists) { //reb blk
+                    stat1 = self.rightPlayer.rebounds;
+                    stat1t = @"reb";
+                    stat2 = self.rightPlayer.blocks;
+                    stat2t = @"blk";
+                }
+                if ((int)self.rightPlayer.steals > (int)self.rightPlayer.assists) { //reb stl
+                    stat1 = self.rightPlayer.rebounds;
+                    stat1t = @"reb";
+                    stat2 = self.rightPlayer.steals;
+                    stat2t = @"stl";
+                }
+                else { //reb ast
+                    stat1 = self.rightPlayer.rebounds;
+                    stat1t = @"reb";
+                    stat2 = self.rightPlayer.assists;
+                    stat2t = @"ast";
+                }
+                rightSubname2View.text = [NSString stringWithFormat:@"%.0f/%.0f, %.0f pts, %d %@, %d %@",self.rightPlayer.fgm,self.rightPlayer.fga,self.rightPlayer.points,stat1,stat1t,stat2,stat2t];
                 [self addSubview:rightSubname2View];
             }
             //Points
             rightPointsView = [[UILabel alloc] initWithFrame:CGRectMake(207, 0, 50, 52.7)];
-            if (!self.rightPlayer.isPlaying) rightPointsView.text = @"-";
+            if (!self.rightPlayer.isPlaying || self.rightPlayer.gameState == FBGameStateHasntStarted) rightPointsView.text = @"-";
             else rightPointsView.text = [NSString stringWithFormat:@"%.0f",self.rightPlayer.fantasyPoints];
             rightPointsView.textAlignment = NSTextAlignmentCenter;
             rightPointsView.font = [UIFont boldSystemFontOfSize:19];
@@ -125,14 +182,74 @@
     else rightSubnameView.text = @"-";
     if (self.leftPlayer.isPlaying) leftSubnameView.text = [NSString stringWithFormat:@"%@, %@ %@",self.leftPlayer.opponent,self.leftPlayer.status,self.leftPlayer.score];
     else leftSubnameView.text = @"-";
-    if (self.rightPlayer.gameState != FBGameStateHasntStarted) rightSubname2View.text = [NSString stringWithFormat:@"%.0f/%.0f, %.0f pts, %.0f reb, %.0f ast",self.rightPlayer.fgm,self.rightPlayer.fga,self.rightPlayer.points,self.rightPlayer.rebounds,self.rightPlayer.assists];
-    if (self.leftPlayer.gameState != FBGameStateHasntStarted) leftSubname2View.text = [NSString stringWithFormat:@"%.0f/%.0f, %.0f pts, %.0f reb, %.0f ast",self.leftPlayer.fgm,self.leftPlayer.fga,self.leftPlayer.points,self.leftPlayer.rebounds,self.leftPlayer.assists];
-    if (!self.rightPlayer.isPlaying) rightPointsView.text = @"-";
+    if (self.rightPlayer.gameState != FBGameStateHasntStarted) {
+        int stat1 = 0;
+        int stat2 = 0;
+        NSString *stat1t = @"";
+        NSString *stat2t = @""; //pick largest stats of: reb, ast, blk, stl
+        if ((int)self.rightPlayer.steals > (int)self.rightPlayer.blocks) { //ast stl
+            stat1 = self.rightPlayer.assists;
+            stat1t = @"ast";
+            stat2 = self.rightPlayer.steals;
+            stat2t = @"stl";
+        }
+        if ((int)self.rightPlayer.blocks > (int)self.rightPlayer.assists) { //reb blk
+            stat1 = self.rightPlayer.rebounds;
+            stat1t = @"reb";
+            stat2 = self.rightPlayer.blocks;
+            stat2t = @"blk";
+        }
+        if ((int)self.rightPlayer.steals > (int)self.rightPlayer.assists) { //reb stl
+            stat1 = self.rightPlayer.rebounds;
+            stat1t = @"reb";
+            stat2 = self.rightPlayer.steals;
+            stat2t = @"stl";
+        }
+        else { //reb ast
+            stat1 = self.rightPlayer.rebounds;
+            stat1t = @"reb";
+            stat2 = self.rightPlayer.assists;
+            stat2t = @"ast";
+        }
+        rightSubname2View.text = [NSString stringWithFormat:@"%.0f/%.0f, %.0f pts, %d %@, %d %@",self.rightPlayer.fgm,self.rightPlayer.fga,self.rightPlayer.points,stat1,stat1t,stat2,stat2t];
+    }
+    if (self.leftPlayer.gameState != FBGameStateHasntStarted) {
+        int stat1 = 0;
+        int stat2 = 0;
+        NSString *stat1t = @"";
+        NSString *stat2t = @""; //pick largest stats of: reb, ast, blk, stl
+        if ((int)self.leftPlayer.steals > (int)self.leftPlayer.blocks) { //ast stl
+            stat1 = self.leftPlayer.assists;
+            stat1t = @"ast";
+            stat2 = self.leftPlayer.steals;
+            stat2t = @"stl";
+        }
+        if ((int)self.leftPlayer.blocks > (int)self.leftPlayer.assists) { //reb blk
+            stat1 = self.leftPlayer.rebounds;
+            stat1t = @"reb";
+            stat2 = self.leftPlayer.blocks;
+            stat2t = @"blk";
+        }
+        if ((int)self.leftPlayer.steals > (int)self.leftPlayer.assists) { //reb stl
+            stat1 = self.leftPlayer.rebounds;
+            stat1t = @"reb";
+            stat2 = self.leftPlayer.steals;
+            stat2t = @"stl";
+        }
+        else { //reb ast
+            stat1 = self.leftPlayer.rebounds;
+            stat1t = @"reb";
+            stat2 = self.leftPlayer.assists;
+            stat2t = @"ast";
+        }
+        leftSubname2View.text = [NSString stringWithFormat:@"%.0f/%.0f, %.0f pts, %d %@, %d %@",self.leftPlayer.fgm,self.leftPlayer.fga,self.leftPlayer.points,stat1,stat1t,stat2,stat2t];
+    }
+    if (!self.rightPlayer.isPlaying || self.rightPlayer.gameState == FBGameStateHasntStarted) rightPointsView.text = @"-";
     else if (![rightPointsView.text isEqualToString:[NSString stringWithFormat:@"%.0f",self.rightPlayer.fantasyPoints]]) {
         rightPointsView.text = [NSString stringWithFormat:@"%.0f",self.rightPlayer.fantasyPoints];
         [self highlightRightScore];
     }
-    if (!self.leftPlayer.isPlaying) leftPointsView.text = @"-";
+    if (!self.leftPlayer.isPlaying || self.leftPlayer.gameState == FBGameStateHasntStarted) leftPointsView.text = @"-";
     else if (![leftPointsView.text isEqualToString:[NSString stringWithFormat:@"%.0f",self.leftPlayer.fantasyPoints]]) {
         leftPointsView.text = [NSString stringWithFormat:@"%.0f",self.leftPlayer.fantasyPoints];
         [self highlightLeftScore];

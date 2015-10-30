@@ -23,9 +23,9 @@ FBSession *session;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     session = [FBSession sharedInstance];
-    session.leagueID = 294156;
-    session.teamID = 11;
-    session.seasonID = 2015;
+    session.leagueID = 186088;
+    session.teamID = 1;
+    session.seasonID = 2016;
     //OLD SCORINGPERIODID METHOD
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/clubhouse?leagueId=%d&teamId=%d&seasonId=%d",session.leagueID,session.teamID,session.seasonID]];
     NSError *error;

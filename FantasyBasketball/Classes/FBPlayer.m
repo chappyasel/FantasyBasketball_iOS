@@ -131,6 +131,7 @@
         _type = dict[@"type"];
         if ([_type containsString:@"WA ("]) _type = [NSString stringWithFormat:@"WA-%@",[_type substringWithRange:NSMakeRange(4, 2)]];
         _opponent = dict[@"isHome+opponent"];
+        if ([_opponent isEqualToString:@""]) _opponent = nil;
         if (_opponent) {
             _isPlaying = YES;
             NSString *status = dict[@"isPlaying+gameState+score+status"];

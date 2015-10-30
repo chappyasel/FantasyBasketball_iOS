@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "FBPlayer.h"
 
-@interface FBSession : NSObject
+@interface FBSession : NSObject //default session set in appdelegate.m
 
 @property int leagueID;
 @property int teamID;
