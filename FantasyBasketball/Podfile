@@ -4,6 +4,7 @@ platform :ios, '8.1'
 target 'FantasyBasketball' do
     pod 'MZAppearance'
     pod 'RESideMenu', '~> 4.0.7'
+    pod 'ZFDragableModalTransition'
 end
 
 target 'FantasyBasketballTests' do

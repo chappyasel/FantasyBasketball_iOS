@@ -10,6 +10,8 @@
 
 @interface FBViewController ()
 
+@property (nonatomic, strong) ZFModalTransitionAnimator *animator;
+
 @end
 
 @implementation FBViewController
@@ -72,16 +74,18 @@
 
 - (void)linkWithPlayer:(FBPlayer *)player {
     _session.player = player;
-    UIViewController *viewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"p"];
-    MZFormSheetController *formSheet = [[MZFormSheetController alloc] initWithViewController:viewController];
-    formSheet.shouldDismissOnBackgroundViewTap = YES;
-    formSheet.transitionStyle = MZFormSheetTransitionStyleSlideFromBottom;
-    formSheet.shouldCenterVertically = YES;
-    formSheet.cornerRadius = 5.0;
-    formSheet.portraitTopInset = 6.0;
-    formSheet.landscapeTopInset = 6.0;
-    formSheet.presentedFormSheetSize = CGSizeMake(375, 680);
-    [self mz_presentFormSheetController:formSheet animated:YES completionHandler:nil];
+    PlayerViewController *modalVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"p"];
+    modalVC.modalPresentationStyle = UIModalPresentationCustom;
+    self.animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:modalVC];
+    self.animator.dragable = YES;
+    self.animator.bounces = YES;
+    self.animator.behindViewAlpha = 0.6;
+    self.animator.behindViewScale = 0.95;
+    self.animator.transitionDuration = 0.5;
+    self.animator.direction = ZFModalTransitonDirectionBottom;
+    //[self.animator setContentScrollView:modalVC.tableView];
+    modalVC.transitioningDelegate = self.animator;
+    [self presentViewController:modalVC animated:YES completion:nil];
 }
 
 - (void)linkWithGameLink:(FBPlayer *)player {

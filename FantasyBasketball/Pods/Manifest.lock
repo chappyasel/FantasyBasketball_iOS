@@ -1,13 +1,16 @@
 PODS:
   - MZAppearance (1.1.5)
   - RESideMenu (4.0.7)
+  - ZFDragableModalTransition (0.5.1)
 
 DEPENDENCIES:
   - MZAppearance
   - RESideMenu (~> 4.0.7)
+  - ZFDragableModalTransition
 
 SPEC CHECKSUMS:
   MZAppearance: 6e9dc64e42074c0a19812a327f590746c3283bab
   RESideMenu: f24c508404b49c667344c54aba7e590883533958
+  ZFDragableModalTransition: 048189eda437f91944ce6d5151618b8bf770196d
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.39.0

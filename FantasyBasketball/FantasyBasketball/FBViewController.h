@@ -14,6 +14,8 @@
 #import "TFHpple.h"
 #import "RESideMenu.h"
 #import "PlayerCell.h"
+#import "ZFModalTransitionAnimator.h"
+#import "PlayerViewController.h"
 
 @interface FBViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, FBPickerViewDelegate, PlayerCellDelegate>
 

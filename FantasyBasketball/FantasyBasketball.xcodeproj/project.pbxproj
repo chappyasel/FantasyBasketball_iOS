@@ -523,6 +523,7 @@
 				F96590861A676DB2005384D1 /* Resources */,
 				F90461F01A6C2A2A008A2C8E /* Embed App Extensions */,
 				993FB9C4574F915447329B5C /* Copy Pods Resources */,
+				F4F18DA0C9BD944DEF6F6AEE /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -562,6 +563,7 @@
 				TargetAttributes = {
 					F96590871A676DB2005384D1 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = AE4TCQ8Z49;
 					};
 					F96590A31A676DB3005384D1 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -649,6 +651,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FantasyBasketball/Pods-FantasyBasketball-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F4F18DA0C9BD944DEF6F6AEE /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FantasyBasketball/Pods-FantasyBasketball-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -814,6 +831,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "/Users/chappysthebest1/Desktop/Github Repos/FantasyBasketball_iOS/FantasyBasketball/FantasyBasketball/FanstasyBaskeyballPrefixHeader.pch";
 				HEADER_SEARCH_PATHS = (
@@ -835,6 +853,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "/Users/chappysthebest1/Desktop/Github Repos/FantasyBasketball_iOS/FantasyBasketball/FantasyBasketball/FanstasyBaskeyballPrefixHeader.pch";
 				HEADER_SEARCH_PATHS = (

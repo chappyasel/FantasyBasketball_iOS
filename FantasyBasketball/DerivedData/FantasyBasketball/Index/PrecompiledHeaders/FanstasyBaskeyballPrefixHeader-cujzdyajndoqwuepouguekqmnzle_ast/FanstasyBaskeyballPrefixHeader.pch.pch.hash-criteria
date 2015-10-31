@@ -1,0 +1,44 @@
+-x
+objective-c
+-arch
+arm64
+-fretain-comments-from-system-headers
+-std=gnu99
+-fobjc-arc
+-fmodules
+-gmodules
+-fmodules-cache-path=/Users/chappysthebest1/Desktop/Github Repos/FantasyBasketball_iOS/FantasyBasketball/DerivedData/ModuleCache
+-fbuild-session-file=/Users/chappysthebest1/Desktop/Github Repos/FantasyBasketball_iOS/FantasyBasketball/DerivedData/ModuleCache/Session.modulevalidation
+-fpascal-strings
+-O0
+-DDEBUG=1
+-DCOCOAPODS=1
+-DOBJC_OLD_DISPATCH_PROTOTYPES=0
+-isysroot
+/Applications/Xcode-beta.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.2.sdk
+-miphoneos-version-min=8.1
+-g
+-fembed-bitcode-marker
+-iquote
+-iquote
+-I/Users/chappysthebest1/Desktop/Github Repos/FantasyBasketball_iOS/FantasyBasketball/DerivedData/FantasyBasketball/Build/Products/Debug-iphoneos/include
+-I/Users/chappysthebest1/Desktop/Github Repos/FantasyBasketball_iOS/FantasyBasketball/Pods/Headers/Public
+-I/Users/chappysthebest1/Desktop/Github Repos/FantasyBasketball_iOS/FantasyBasketball/Pods/Headers/Public/MZAppearance
+-I/Users/chappysthebest1/Desktop/Github Repos/FantasyBasketball_iOS/FantasyBasketball/Pods/Headers/Public/RESideMenu
+-I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include
+-I/Applications/Xcode-beta.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.2.sdk/usr/include/libxml2
+-F/Users/chappysthebest1/Desktop/Github Repos/FantasyBasketball_iOS/FantasyBasketball/DerivedData/FantasyBasketball/Build/Products/Debug-iphoneos
+-ferror-limit=10
+-working-directory=/Users/chappysthebest1/Desktop/Github Repos/FantasyBasketball_iOS/FantasyBasketball
+-Xclang
+-detailed-preprocessing-record
+-isystem
+/Users/chappysthebest1/Desktop/Github Repos/FantasyBasketball_iOS/FantasyBasketball/Pods/Headers/Public
+-isystem
+/Users/chappysthebest1/Desktop/Github Repos/FantasyBasketball_iOS/FantasyBasketball/Pods/Headers/Public/MZAppearance
+-isystem
+/Users/chappysthebest1/Desktop/Github Repos/FantasyBasketball_iOS/FantasyBasketball/Pods/Headers/Public/RESideMenu
+aarch64-apple-darwin15.0.0
+"4.2.1 Compatible Apple LLVM 7.0.0 (clang-700.1.78)"
+SDK_PRODUCT_BUILD_VERSION=13C5055d
+13C5055d

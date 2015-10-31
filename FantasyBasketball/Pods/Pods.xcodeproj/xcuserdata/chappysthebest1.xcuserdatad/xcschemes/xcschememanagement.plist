@@ -19,30 +19,30 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>ZFDragableModalTransition.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>117A8A38442A00783D20757C</key>
+		<key>1DAC2FF166EBB39D93C76C245CCD170C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>2965E38DCEBC6E89D5362BA6561D3FBD</key>
+		<key>5E5CC2C5AA836474BCE71ABA0980071E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>750A7B21A25DEA7580B4987F6B0D6685</key>
+		<key>A4115F51C5E0AD5DE0BCFCA9E2AAF662</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A33433C799D9742A0723B4F54DD35E42</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>BC150553BD28F4E0A0FD4699</key>
+		<key>ADDEFF645EFD66C76C1A621155B14F10</key>
 		<dict>
 			<key>primary</key>
 			<true/>
