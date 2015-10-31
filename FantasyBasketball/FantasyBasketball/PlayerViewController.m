@@ -77,11 +77,11 @@ bool needsLoadGamesButton = YES;
             [self performSelector:@selector(loadGameLogTableView) withObject:nil];
             [self performSelector:@selector(loadGraphView) withObject:nil];
             [self performSelector:@selector(loadInfoTableView) withObject:nil];
-            [self performSelector:@selector(loadStatsBasicTableView) withObject:nil];
+            //[self performSelector:@selector(loadStatsBasicTableView) withObject:nil];
             [self performSelector:@selector(loadRotoworldTableView) withObject:nil];
-            [self performSelector:@selector(loadStatsScrollView) withObject:nil];
-            [self performSelector:@selector(loadNewsLogTableView) withObject:nil];
-            [self performSelector:@selector(moreGames:) withObject:nil];
+            //[self performSelector:@selector(loadStatsScrollView) withObject:nil];
+            //[self performSelector:@selector(loadNewsLogTableView) withObject:nil];
+            //[self performSelector:@selector(moreGames:) withObject:nil];
         });
     }
     else NSLog(@"Player not found.");
@@ -331,7 +331,7 @@ bool gameLogIsBasic = YES;
     TFHppleElement *table = nil;
     for (TFHppleElement *tble in tables) {
         if([[tble content] containsString:@"OPPSCOREMIN"]) { table = tble; break; } }
-    NSMutableArray *rawGames = [[NSMutableArray alloc] initWithCapacity:5];
+    NSMutableArray *rawGames = [[NSMutableArray alloc] init];
     if (table) { //error checking
         for (TFHppleElement *gameT in table.children) {
             if (![[gameT objectForKey:@"class"] isEqual:@"colhead"] &&
@@ -345,7 +345,7 @@ bool gameLogIsBasic = YES;
                 if ([[gameT.children.firstObject content] containsString:@"REGULAR SEASON STATS"]) break; //end of reg season
         }
     }
-    games = [[NSMutableArray alloc] initWithCapacity:5];
+    games = [[NSMutableArray alloc] init];
     for (NSMutableArray *rawGame in rawGames) {
         if (rawGame.count > 16) {
             NSArray *fg = [rawGame[4] componentsSeparatedByString:@"-"];
@@ -604,22 +604,24 @@ bool gameLogIsBasic = YES;
             }
             else {
                 NSMutableArray *game = games[indexPath.row];
-                for (int i = 0; i < 8; i++) {
-                    UILabel *stats;
-                    if (i == 0) stats = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 65, 40)];
-                    else if (i == 1 || i == 2) stats = [[UILabel alloc] initWithFrame:CGRectMake(i*50+15, 0, 50, 40)];
-                    else stats = [[UILabel alloc] initWithFrame:CGRectMake(42*i-126+165, 0, 42, 40)];
-                    if (i==0)      stats.text = [NSString stringWithFormat:@"%@",[[game[0] componentsSeparatedByString:@" "] lastObject]];
-                    else if (i==1) stats.text = [NSString stringWithFormat:@"%@",game[2]];
-                    else if (i==2) stats.text = [NSString stringWithFormat:@"%@",game[3]];
-                    else if (i==3) stats.text = [NSString stringWithFormat:@"%@",game[10]];
-                    else if (i==4) stats.text = [NSString stringWithFormat:@"%@",game[11]];
-                    else if (i==5) stats.text = [NSString stringWithFormat:@"%@",game[12]];
-                    else if (i==6) stats.text = [NSString stringWithFormat:@"%@",game[13]];
-                    else           stats.text = [NSString stringWithFormat:@"%@",game[16]];
-                    stats.font = [UIFont systemFontOfSize:17];
-                    stats.textAlignment = NSTextAlignmentCenter;
-                    [cell addSubview:stats];
+                if (game) {
+                    for (int i = 0; i < 8; i++) {
+                        UILabel *stats;
+                        if (i == 0) stats = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 65, 40)];
+                        else if (i == 1 || i == 2) stats = [[UILabel alloc] initWithFrame:CGRectMake(i*50+15, 0, 50, 40)];
+                        else stats = [[UILabel alloc] initWithFrame:CGRectMake(42*i-126+165, 0, 42, 40)];
+                        if (i==0)      stats.text = [NSString stringWithFormat:@"%@",[[game[0] componentsSeparatedByString:@" "] lastObject]];
+                        else if (i==1) stats.text = [NSString stringWithFormat:@"%@",game[2]];
+                        else if (i==2) stats.text = [NSString stringWithFormat:@"%@",game[3]];
+                        else if (i==3) stats.text = [NSString stringWithFormat:@"%@",game[10]];
+                        else if (i==4) stats.text = [NSString stringWithFormat:@"%@",game[11]];
+                        else if (i==5) stats.text = [NSString stringWithFormat:@"%@",game[12]];
+                        else if (i==6) stats.text = [NSString stringWithFormat:@"%@",game[13]];
+                        else           stats.text = [NSString stringWithFormat:@"%@",game[16]];
+                        stats.font = [UIFont systemFontOfSize:17];
+                        stats.textAlignment = NSTextAlignmentCenter;
+                        [cell addSubview:stats];
+                    }
                 }
             }
             return cell;
@@ -674,22 +676,24 @@ bool gameLogIsBasic = YES;
         cell = nil;
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier];
         NSMutableArray *game = games[indexPath.row];
-        for (int i = 0; i < 8; i++) {
-            UILabel *stats;
-            if (i == 0) stats = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 65, 40)];
-            else if (i == 1 || i == 2) stats = [[UILabel alloc] initWithFrame:CGRectMake(i*50+15, 0, 50, 40)];
-            else stats = [[UILabel alloc] initWithFrame:CGRectMake(42*i-126+165, 0, 42, 40)];
-            if (i==0)      stats.text = [NSString stringWithFormat:@"%@",[[game[0] componentsSeparatedByString:@" "] lastObject]];
-            else if (i==1) stats.text = [NSString stringWithFormat:@"%@",game[2]];
-            else if (i==2) stats.text = [NSString stringWithFormat:@"%@",game[3]];
-            else if (i==3) stats.text = [NSString stringWithFormat:@"%@",game[10]];
-            else if (i==4) stats.text = [NSString stringWithFormat:@"%@",game[11]];
-            else if (i==5) stats.text = [NSString stringWithFormat:@"%@",game[12]];
-            else if (i==6) stats.text = [NSString stringWithFormat:@"%@",game[13]];
-            else           stats.text = [NSString stringWithFormat:@"%@",game[16]];
-            stats.font = [UIFont systemFontOfSize:17];
-            stats.textAlignment = NSTextAlignmentCenter;
-            [cell addSubview:stats];
+        if (game!= nil) {
+            for (int i = 0; i < 8; i++) {
+                UILabel *stats;
+                if (i == 0) stats = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 65, 40)];
+                else if (i == 1 || i == 2) stats = [[UILabel alloc] initWithFrame:CGRectMake(i*50+15, 0, 50, 40)];
+                else stats = [[UILabel alloc] initWithFrame:CGRectMake(42*i-126+165, 0, 42, 40)];
+                if (i==0)      stats.text = [NSString stringWithFormat:@"%@",[[game[0] componentsSeparatedByString:@" "] lastObject]];
+                else if (i==1) stats.text = [NSString stringWithFormat:@"%@",game[2]];
+                else if (i==2) stats.text = [NSString stringWithFormat:@"%@",game[3]];
+                else if (i==3) stats.text = [NSString stringWithFormat:@"%@",game[10]];
+                else if (i==4) stats.text = [NSString stringWithFormat:@"%@",game[11]];
+                else if (i==5) stats.text = [NSString stringWithFormat:@"%@",game[12]];
+                else if (i==6) stats.text = [NSString stringWithFormat:@"%@",game[13]];
+                else           stats.text = [NSString stringWithFormat:@"%@",game[16]];
+                stats.font = [UIFont systemFontOfSize:17];
+                stats.textAlignment = NSTextAlignmentCenter;
+                [cell addSubview:stats];
+            }
         }
         return cell;
     }
