@@ -26,6 +26,7 @@ FBSession *session;
     session.leagueID = 186088;
     session.teamID = 1;
     session.seasonID = 2016;
+    
     //OLD SCORINGPERIODID METHOD
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/clubhouse?leagueId=%d&teamId=%d&seasonId=%d",session.leagueID,session.teamID,session.seasonID]];
     NSError *error;
@@ -45,6 +46,7 @@ FBSession *session;
         }
     }
     if (session.scoringPeriodID == 0) NSLog(@"scoringPeriodID is 0, probable error");
+    
     /* //POSSIBLE NEW METHOD
     NSString *dateString = @"03-Sep-14";
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -52,7 +54,8 @@ FBSession *session;
     NSDate *refDate = [dateFormatter dateFromString:dateString];
     session.scoringPeriodID = (int)[self daysBetweenDate:refDate andDate:[NSDate date]];
     */
-    //RESIDEMENU INIT
+    
+    //RESideMenu init
     RESideMenu *sideMenuViewController = [[RESideMenu alloc] initWithContentViewController:[[UINavigationController alloc] initWithRootViewController:[[MatchupViewController alloc] init]]
                                                                     leftMenuViewController:[[LeftSideMenuViewController alloc] init]
                                                                    rightMenuViewController:nil];

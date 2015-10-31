@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FBPickerView.h"
+#import "FBSession.h"
 #import "RESideMenu.h"
 
-@interface SettingsViewController : UIViewController <UITextFieldDelegate>
+@interface SettingsViewController : UIViewController <UITextFieldDelegate, FBPickerViewDelegate>
+
+@property (strong, nonatomic) FBSession *session;
 
 @property (strong, nonatomic) IBOutlet UITextField *leagueInput;
 @property (strong, nonatomic) IBOutlet UITextField *teamInput;
