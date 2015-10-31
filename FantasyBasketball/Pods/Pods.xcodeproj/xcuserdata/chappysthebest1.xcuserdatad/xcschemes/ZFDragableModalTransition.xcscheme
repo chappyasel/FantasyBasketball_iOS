@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DCF0EFB22AD5B659EF371DA8"
-               BuildableName = "libRESideMenu.a"
-               BlueprintName = "RESideMenu"
+               BlueprintIdentifier = "A70AAC54D63A24C54AEE3C24"
+               BuildableName = "libZFDragableModalTransition.a"
+               BlueprintName = "ZFDragableModalTransition"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
