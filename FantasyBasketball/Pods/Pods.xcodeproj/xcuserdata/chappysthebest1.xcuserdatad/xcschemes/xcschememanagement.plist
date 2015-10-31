@@ -2,24 +2,47 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>MZAppearance.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-FantasyBasketball.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>RESideMenu.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>ZFDragableModalTransition.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>2965E38DCEBC6E89D5362BA6561D3FBD</key>
+		<key>1DAC2FF166EBB39D93C76C245CCD170C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5D69EA752E552548B0967C4704131299</key>
+		<key>5E5CC2C5AA836474BCE71ABA0980071E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A311EEB2380C4FBE3FD2B508890C20BF</key>
+		<key>A4115F51C5E0AD5DE0BCFCA9E2AAF662</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B58B8543BD310E4453F282D83A5D1155</key>
+		<key>ADDEFF645EFD66C76C1A621155B14F10</key>
 		<dict>
 			<key>primary</key>
 			<true/>

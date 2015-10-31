@@ -13,19 +13,11 @@
             buildForProfiling = "YES"
             buildForArchiving = "YES">
             <BuildableReference
-<<<<<<< HEAD
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '9116E4DB885A6EF2B25D603D'
+               BlueprintIdentifier = '551707F3F12BE16D8DAADBF7'
                BlueprintName = 'RESideMenu'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libRESideMenu.a'>
-=======
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DCF0EFB22AD5B659EF371DA8"
-               BuildableName = "libRESideMenu.a"
-               BlueprintName = "RESideMenu"
-               ReferencedContainer = "container:Pods.xcodeproj">
->>>>>>> origin/master
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

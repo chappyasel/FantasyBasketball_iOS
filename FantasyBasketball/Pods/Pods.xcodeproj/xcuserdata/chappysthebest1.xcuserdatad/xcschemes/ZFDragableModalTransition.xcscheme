@@ -7,7 +7,6 @@
       buildImplicitDependencies = "YES">
       <BuildActionEntries>
          <BuildActionEntry
-<<<<<<< HEAD
             buildForAnalyzing = "YES"
             buildForTesting = "YES"
             buildForRunning = "YES"
@@ -15,23 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '1E2E6D0E85DBF6E6B64ED415'
+               BlueprintIdentifier = '8BAFF36A1683C368AD1030A6'
                BlueprintName = 'ZFDragableModalTransition'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libZFDragableModalTransition.a'>
-=======
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A70AAC54D63A24C54AEE3C24"
-               BuildableName = "libZFDragableModalTransition.a"
-               BlueprintName = "ZFDragableModalTransition"
-               ReferencedContainer = "container:Pods.xcodeproj">
->>>>>>> origin/master
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -43,46 +29,26 @@
       buildConfiguration = "Debug">
       <AdditionalOptions>
       </AdditionalOptions>
-<<<<<<< HEAD
-=======
-      <Testables>
-      </Testables>
->>>>>>> origin/master
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
-<<<<<<< HEAD
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       buildConfiguration = "Debug"
-=======
-      buildConfiguration = "Debug"
-      ignoresPersistentStateOnLaunch = "NO"
-      debugDocumentVersioning = "YES"
-      debugServiceExtension = "internal"
->>>>>>> origin/master
       allowLocationSimulation = "YES">
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
-<<<<<<< HEAD
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES"
       buildConfiguration = "Release"
       shouldUseLaunchSchemeArgsEnv = "YES">
-=======
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      savedToolIdentifier = ""
-      useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Release"
-      debugDocumentVersioning = "YES">
->>>>>>> origin/master
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
