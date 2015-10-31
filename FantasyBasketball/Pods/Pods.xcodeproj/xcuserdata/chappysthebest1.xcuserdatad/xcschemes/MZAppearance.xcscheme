@@ -13,11 +13,19 @@
             buildForProfiling = "YES"
             buildForArchiving = "YES">
             <BuildableReference
+<<<<<<< HEAD
                BuildableIdentifier = 'primary'
                BlueprintIdentifier = '062E9CAF9AAF743B765E58DA'
                BlueprintName = 'MZAppearance'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libMZAppearance.a'>
+=======
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "945C4C8EC9F23D633F7C82D9"
+               BuildableName = "libMZAppearance.a"
+               BlueprintName = "MZAppearance"
+               ReferencedContainer = "container:Pods.xcodeproj">
+>>>>>>> origin/master
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

@@ -13,11 +13,19 @@
             buildForProfiling = "YES"
             buildForArchiving = "YES">
             <BuildableReference
+<<<<<<< HEAD
                BuildableIdentifier = 'primary'
                BlueprintIdentifier = '7E6FE7ADD03DEE7F6A5ED7DE'
                BlueprintName = 'Pods-FantasyBasketball'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libPods-FantasyBasketball.a'>
+=======
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "466155A043A1D1221717C000"
+               BuildableName = "libPods-FantasyBasketball.a"
+               BlueprintName = "Pods-FantasyBasketball"
+               ReferencedContainer = "container:Pods.xcodeproj">
+>>>>>>> origin/master
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

@@ -5,7 +5,11 @@ PODS:
 
 DEPENDENCIES:
   - MZAppearance
+<<<<<<< HEAD
   - RESideMenu (~> 4.0.7)
+=======
+  - RESideMenu
+>>>>>>> origin/master
   - ZFDragableModalTransition
 
 SPEC CHECKSUMS:
