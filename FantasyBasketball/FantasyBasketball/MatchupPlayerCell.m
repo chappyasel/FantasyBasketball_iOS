@@ -43,28 +43,30 @@
                 int stat2 = 0;
                 NSString *stat1t = @"";
                 NSString *stat2t = @""; //pick largest stats of: reb, ast, blk, stl
-                if ((int)self.leftPlayer.steals > (int)self.leftPlayer.blocks) { //ast stl
-                    stat1 = self.leftPlayer.assists;
-                    stat1t = @"ast";
-                    stat2 = self.leftPlayer.steals;
-                    stat2t = @"stl";
+                if ((int)self.leftPlayer.blocks >= (int)self.leftPlayer.assists ||
+                    (int)self.leftPlayer.steals > (int)self.leftPlayer.assists ||
+                    (int)self.leftPlayer.steals > (int)self.leftPlayer.rebounds) {
+                    if ((int)self.leftPlayer.rebounds >= (int)self.leftPlayer.assists) {
+                        stat1 = self.leftPlayer.rebounds;
+                        stat1t = @"reb";
+                    }
+                    else {
+                        stat1 = self.leftPlayer.assists;
+                        stat1t = @"ast";
+                    }
+                    if ((int)self.leftPlayer.blocks >= (int)self.leftPlayer.steals) {
+                        stat2 = self.leftPlayer.blocks;
+                        stat2t = @"blk";
+                    }
+                    else {
+                        stat2 = self.leftPlayer.steals;
+                        stat2t = @"stl";
+                    }
                 }
-                if ((int)self.leftPlayer.blocks > (int)self.leftPlayer.assists) { //reb blk
+                else {
                     stat1 = self.leftPlayer.rebounds;
                     stat1t = @"reb";
-                    stat2 = self.leftPlayer.blocks;
-                    stat2t = @"blk";
-                }
-                if ((int)self.leftPlayer.steals > (int)self.leftPlayer.assists) { //reb stl
-                    stat1 = self.leftPlayer.rebounds;
-                    stat1t = @"reb";
-                    stat2 = self.leftPlayer.steals;
-                    stat2t = @"stl";
-                }
-                else { //reb ast
-                    stat1 = self.leftPlayer.rebounds;
-                    stat1t = @"reb";
-                    stat2 = self.leftPlayer.assists;
+                    stat2 = self.rightPlayer.assists;
                     stat2t = @"ast";
                 }
                 leftSubname2View.text = [NSString stringWithFormat:@"%.0f/%.0f, %.0f pts, %d %@, %d %@",self.leftPlayer.fgm,self.leftPlayer.fga,self.leftPlayer.points,stat1,stat1t,stat2,stat2t];
@@ -119,25 +121,27 @@
                 int stat2 = 0;
                 NSString *stat1t = @"";
                 NSString *stat2t = @""; //pick largest stats of: reb, ast, blk, stl
-                if ((int)self.rightPlayer.steals > (int)self.rightPlayer.blocks) { //ast stl
-                    stat1 = self.rightPlayer.assists;
-                    stat1t = @"ast";
-                    stat2 = self.rightPlayer.steals;
-                    stat2t = @"stl";
+                if ((int)self.rightPlayer.blocks >= (int)self.rightPlayer.assists ||
+                    (int)self.rightPlayer.steals > (int)self.rightPlayer.assists ||
+                    (int)self.rightPlayer.steals > (int)self.rightPlayer.rebounds) {
+                    if ((int)self.rightPlayer.rebounds >= (int)self.rightPlayer.assists) {
+                        stat1 = self.rightPlayer.rebounds;
+                        stat1t = @"reb";
+                    }
+                    else {
+                        stat1 = self.rightPlayer.assists;
+                        stat1t = @"ast";
+                    }
+                    if ((int)self.rightPlayer.blocks >= (int)self.rightPlayer.steals) {
+                        stat2 = self.rightPlayer.blocks;
+                        stat2t = @"blk";
+                    }
+                    else {
+                        stat2 = self.rightPlayer.steals;
+                        stat2t = @"stl";
+                    }
                 }
-                if ((int)self.rightPlayer.blocks > (int)self.rightPlayer.assists) { //reb blk
-                    stat1 = self.rightPlayer.rebounds;
-                    stat1t = @"reb";
-                    stat2 = self.rightPlayer.blocks;
-                    stat2t = @"blk";
-                }
-                if ((int)self.rightPlayer.steals > (int)self.rightPlayer.assists) { //reb stl
-                    stat1 = self.rightPlayer.rebounds;
-                    stat1t = @"reb";
-                    stat2 = self.rightPlayer.steals;
-                    stat2t = @"stl";
-                }
-                else { //reb ast
+                else {
                     stat1 = self.rightPlayer.rebounds;
                     stat1t = @"reb";
                     stat2 = self.rightPlayer.assists;
@@ -187,25 +191,27 @@
         int stat2 = 0;
         NSString *stat1t = @"";
         NSString *stat2t = @""; //pick largest stats of: reb, ast, blk, stl
-        if ((int)self.rightPlayer.steals > (int)self.rightPlayer.blocks) { //ast stl
-            stat1 = self.rightPlayer.assists;
-            stat1t = @"ast";
-            stat2 = self.rightPlayer.steals;
-            stat2t = @"stl";
+        if ((int)self.rightPlayer.blocks >= (int)self.rightPlayer.assists ||
+            (int)self.rightPlayer.steals > (int)self.rightPlayer.assists ||
+            (int)self.rightPlayer.steals > (int)self.rightPlayer.rebounds) {
+            if ((int)self.rightPlayer.rebounds >= (int)self.rightPlayer.assists) {
+                stat1 = self.rightPlayer.rebounds;
+                stat1t = @"reb";
+            }
+            else {
+                stat1 = self.rightPlayer.assists;
+                stat1t = @"ast";
+            }
+            if ((int)self.rightPlayer.blocks >= (int)self.rightPlayer.steals) {
+                stat2 = self.rightPlayer.blocks;
+                stat2t = @"blk";
+            }
+            else {
+                stat2 = self.rightPlayer.steals;
+                stat2t = @"stl";
+            }
         }
-        if ((int)self.rightPlayer.blocks > (int)self.rightPlayer.assists) { //reb blk
-            stat1 = self.rightPlayer.rebounds;
-            stat1t = @"reb";
-            stat2 = self.rightPlayer.blocks;
-            stat2t = @"blk";
-        }
-        if ((int)self.rightPlayer.steals > (int)self.rightPlayer.assists) { //reb stl
-            stat1 = self.rightPlayer.rebounds;
-            stat1t = @"reb";
-            stat2 = self.rightPlayer.steals;
-            stat2t = @"stl";
-        }
-        else { //reb ast
+        else {
             stat1 = self.rightPlayer.rebounds;
             stat1t = @"reb";
             stat2 = self.rightPlayer.assists;
@@ -218,28 +224,30 @@
         int stat2 = 0;
         NSString *stat1t = @"";
         NSString *stat2t = @""; //pick largest stats of: reb, ast, blk, stl
-        if ((int)self.leftPlayer.steals > (int)self.leftPlayer.blocks) { //ast stl
-            stat1 = self.leftPlayer.assists;
-            stat1t = @"ast";
-            stat2 = self.leftPlayer.steals;
-            stat2t = @"stl";
+        if ((int)self.leftPlayer.blocks >= (int)self.leftPlayer.assists ||
+            (int)self.leftPlayer.steals > (int)self.leftPlayer.assists ||
+            (int)self.leftPlayer.steals > (int)self.leftPlayer.rebounds) {
+            if ((int)self.leftPlayer.rebounds >= (int)self.leftPlayer.assists) {
+                stat1 = self.leftPlayer.rebounds;
+                stat1t = @"reb";
+            }
+            else {
+                stat1 = self.leftPlayer.assists;
+                stat1t = @"ast";
+            }
+            if ((int)self.leftPlayer.blocks >= (int)self.leftPlayer.steals) {
+                stat2 = self.leftPlayer.blocks;
+                stat2t = @"blk";
+            }
+            else {
+                stat2 = self.leftPlayer.steals;
+                stat2t = @"stl";
+            }
         }
-        if ((int)self.leftPlayer.blocks > (int)self.leftPlayer.assists) { //reb blk
+        else {
             stat1 = self.leftPlayer.rebounds;
             stat1t = @"reb";
-            stat2 = self.leftPlayer.blocks;
-            stat2t = @"blk";
-        }
-        if ((int)self.leftPlayer.steals > (int)self.leftPlayer.assists) { //reb stl
-            stat1 = self.leftPlayer.rebounds;
-            stat1t = @"reb";
-            stat2 = self.leftPlayer.steals;
-            stat2t = @"stl";
-        }
-        else { //reb ast
-            stat1 = self.leftPlayer.rebounds;
-            stat1t = @"reb";
-            stat2 = self.leftPlayer.assists;
+            stat2 = self.rightPlayer.assists;
             stat2t = @"ast";
         }
         leftSubname2View.text = [NSString stringWithFormat:@"%.0f/%.0f, %.0f pts, %d %@, %d %@",self.leftPlayer.fgm,self.leftPlayer.fga,self.leftPlayer.points,stat1,stat1t,stat2,stat2t];

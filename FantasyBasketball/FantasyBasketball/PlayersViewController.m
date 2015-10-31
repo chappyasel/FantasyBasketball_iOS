@@ -30,26 +30,27 @@ float scrollDistancePL;
     [super viewDidLoad];
     self.title = @"Find Players";
     sortChoices = [[NSArray alloc] initWithObjects: //FPTS, TOT, OWN, +/-, ...
-                   @"AAAAARgAAAAHAQAMc3RhdFNlYXNvbklkAwAAB98BAAhjYXRlZ29yeQMAAAACAQAJZGlyZWN0aW9uA/////8BAAZjb2x1bW4D/////gEAC3NwbGl0VHlwZUlkAwAAAAABABBzdGF0U291cmNlVHlwZUlkAwAAAAABAAtzdGF0UXVlcnlJZAMAAAABA",
-                   @"AAAAARgAAAAHAQAMc3RhdFNlYXNvbklkAwAAB98BAAhjYXRlZ29yeQMAAAACAQAJZGlyZWN0aW9uA/////8BAAZjb2x1bW4D/////QEAC3NwbGl0VHlwZUlkAwAAAAABABBzdGF0U291cmNlVHlwZUlkAwAAAAABAAtzdGF0UXVlcnlJZAMAAAABA",
-                   @"AAAAARgAAAADAQAIY2F0ZWdvcnkDAAAAAwEABmNvbHVtbgMAAAAHAQAJZGlyZWN0aW9uA/////8&r=92279210",
-                   @"AAAAARgAAAADAQAIY2F0ZWdvcnkDAAAAAwEABmNvbHVtbgMAAAAIAQAJZGlyZWN0aW9uA/////8&r=42660452",
-                   @"AAAAARgAAAAIAQAMc3RhdFNlYXNvbklkAwAAB98BAAhjYXRlZ29yeQMAAAABAQAJZGlyZWN0aW9uA/////8BAAZjb2x1bW4DAAAADQEAC3NwbGl0VHlwZUlkAwAAAAABABBzdGF0U291cmNlVHlwZUlkAwAAAAABAAtzb3J0QXZlcmFnZQkBAQALc3RhdFF1ZXJ5SWQDAAAAAQ",
-                   @"AAAAARgAAAAIAQAMc3RhdFNlYXNvbklkAwAAB98BAAhjYXRlZ29yeQMAAAABAQAJZGlyZWN0aW9uA/////8BAAZjb2x1bW4DAAAADgEAC3NwbGl0VHlwZUlkAwAAAAABABBzdGF0U291cmNlVHlwZUlkAwAAAAABAAtzb3J0QXZlcmFnZQkBAQALc3RhdFF1ZXJ5SWQDAAAAAQ",
-                   @"AAAAARgAAAAIAQAMc3RhdFNlYXNvbklkAwAAB98BAAhjYXRlZ29yeQMAAAABAQAJZGlyZWN0aW9uA/////8BAAZjb2x1bW4DAAAADwEAC3NwbGl0VHlwZUlkAwAAAAABABBzdGF0U291cmNlVHlwZUlkAwAAAAABAAtzb3J0QXZlcmFnZQkBAQALc3RhdFF1ZXJ5SWQDAAAAAQ",
-                   @"AAAAARgAAAAIAQAMc3RhdFNlYXNvbklkAwAAB98BAAhjYXRlZ29yeQMAAAABAQAJZGlyZWN0aW9uA/////8BAAZjb2x1bW4DAAAAEAEAC3NwbGl0VHlwZUlkAwAAAAABABBzdGF0U291cmNlVHlwZUlkAwAAAAABAAtzb3J0QXZlcmFnZQkBAQALc3RhdFF1ZXJ5SWQDAAAAAQ",
-                   @"AAAAARgAAAAIAQAMc3RhdFNlYXNvbklkAwAAB98BAAhjYXRlZ29yeQMAAAABAQAJZGlyZWN0aW9uA/////8BAAZjb2x1bW4DAAAABgEAC3NwbGl0VHlwZUlkAwAAAAABABBzdGF0U291cmNlVHlwZUlkAwAAAAABAAtzb3J0QXZlcmFnZQkBAQALc3RhdFF1ZXJ5SWQDAAAAAQ",
-                   @"AAAAARgAAAAIAQAMc3RhdFNlYXNvbklkAwAAB98BAAhjYXRlZ29yeQMAAAABAQAJZGlyZWN0aW9uA/////8BAAZjb2x1bW4DAAAAAwEAC3NwbGl0VHlwZUlkAwAAAAABABBzdGF0U291cmNlVHlwZUlkAwAAAAABAAtzb3J0QXZlcmFnZQkBAQALc3RhdFF1ZXJ5SWQDAAAAAQ",
-                   @"AAAAARgAAAAIAQAMc3RhdFNlYXNvbklkAwAAB98BAAhjYXRlZ29yeQMAAAABAQAJZGlyZWN0aW9uA/////8BAAZjb2x1bW4DAAAAAQEAC3NwbGl0VHlwZUlkAwAAAAABABBzdGF0U291cmNlVHlwZUlkAwAAAAABAAtzb3J0QXZlcmFnZQkBAQALc3RhdFF1ZXJ5SWQDAAAAAQ",
-                   @"AAAAARgAAAAIAQAMc3RhdFNlYXNvbklkAwAAB98BAAhjYXRlZ29yeQMAAAABAQAJZGlyZWN0aW9uA/////8BAAZjb2x1bW4DAAAAAgEAC3NwbGl0VHlwZUlkAwAAAAABABBzdGF0U291cmNlVHlwZUlkAwAAAAABAAtzb3J0QXZlcmFnZQkBAQALc3RhdFF1ZXJ5SWQDAAAAAQ",
-                   @"AAAAARgAAAAIAQAMc3RhdFNlYXNvbklkAwAAB98BAAhjYXRlZ29yeQMAAAABAQAJZGlyZWN0aW9uA/////8BAAZjb2x1bW4DAAAACwEAC3NwbGl0VHlwZUlkAwAAAAABABBzdGF0U291cmNlVHlwZUlkAwAAAAABAAtzb3J0QXZlcmFnZQkBAQALc3RhdFF1ZXJ5SWQDAAAAAQ",
-                   @"AAAAARgAAAAIAQAMc3RhdFNlYXNvbklkAwAAB98BAAhjYXRlZ29yeQMAAAABAQAJZGlyZWN0aW9uA/////8BAAZjb2x1bW4DAAAAAAEAC3NwbGl0VHlwZUlkAwAAAAABABBzdGF0U291cmNlVHlwZUlkAwAAAAABAAtzb3J0QXZlcmFnZQkBAQALc3RhdFF1ZXJ5SWQDAAAAAQ", nil];
+                   @"AAAAARgAAAAHAQAMc3RhdFNlYXNvbklkAwAAB%2BABAAhjYXRlZ29yeQMAAAACAQAJZGlyZWN0aW9uA%2F%2F%2F%2F%2F8BAAZjb2x1bW4D%2F%2F%2F%2F%2FgEAC3NwbGl0VHlwZUlkAwAAAAABABBzdGF0U291cmNlVHlwZUlkAwAAAAABAAtzdGF0UXVlcnlJZAMAAAAB", //FPTS
+                   @"AAAAARgAAAAHAQAMc3RhdFNlYXNvbklkAwAAB%2BABAAhjYXRlZ29yeQMAAAACAQAJZGlyZWN0aW9uA%2F%2F%2F%2F%2F8BAAZjb2x1bW4D%2F%2F%2F%2F%2FQEAC3NwbGl0VHlwZUlkAwAAAAABABBzdGF0U291cmNlVHlwZUlkAwAAAAABAAtzdGF0UXVlcnlJZAMAAAAB&r=7692735", //TOT
+                   @"AAAAARgAAAADAQAIY2F0ZWdvcnkDAAAAAwEABmNvbHVtbgMAAAAHAQAJZGlyZWN0aW9uA%2F%2F%2F%2F%2F8%3D&r=30813114", //OWN
+                   @"AAAAARgAAAADAQAIY2F0ZWdvcnkDAAAAAwEABmNvbHVtbgMAAAAIAQAJZGlyZWN0aW9uA%2F%2F%2F%2F%2F8%3D&r=96697743", //+/-
+                   @"AAAAARgAAAAIAQAMc3RhdFNlYXNvbklkAwAAB%2BABAAhjYXRlZ29yeQMAAAABAQAJZGlyZWN0aW9uA%2F%2F%2F%2F%2F8BAAZjb2x1bW4DAAAADQEAC3NwbGl0VHlwZUlkAwAAAAABABBzdGF0U291cmNlVHlwZUlkAwAAAAABAAtzb3J0QXZlcmFnZQkBAQALc3RhdFF1ZXJ5SWQDAAAAAQ%3D%3D&r=32599089", //FGM
+                   @"AAAAARgAAAAIAQAMc3RhdFNlYXNvbklkAwAAB%2BABAAhjYXRlZ29yeQMAAAABAQAJZGlyZWN0aW9uA%2F%2F%2F%2F%2F8BAAZjb2x1bW4DAAAADgEAC3NwbGl0VHlwZUlkAwAAAAABABBzdGF0U291cmNlVHlwZUlkAwAAAAABAAtzb3J0QXZlcmFnZQkBAQALc3RhdFF1ZXJ5SWQDAAAAAQ%3D%3D&r=1234527", //FGA
+                   @"AAAAARgAAAAIAQAMc3RhdFNlYXNvbklkAwAAB%2BABAAhjYXRlZ29yeQMAAAABAQAJZGlyZWN0aW9uA%2F%2F%2F%2F%2F8BAAZjb2x1bW4DAAAADwEAC3NwbGl0VHlwZUlkAwAAAAABABBzdGF0U291cmNlVHlwZUlkAwAAAAABAAtzb3J0QXZlcmFnZQkBAQALc3RhdFF1ZXJ5SWQDAAAAAQ%3D%3D&r=46481326", //FTM
+                   @"AAAAARgAAAAIAQAMc3RhdFNlYXNvbklkAwAAB%2BABAAhjYXRlZ29yeQMAAAABAQAJZGlyZWN0aW9uA%2F%2F%2F%2F%2F8BAAZjb2x1bW4DAAAAEAEAC3NwbGl0VHlwZUlkAwAAAAABABBzdGF0U291cmNlVHlwZUlkAwAAAAABAAtzb3J0QXZlcmFnZQkBAQALc3RhdFF1ZXJ5SWQDAAAAAQ%3D%3D&r=75772049", //FTA
+                   @"AAAAARgAAAAIAQAMc3RhdFNlYXNvbklkAwAAB%2BABAAhjYXRlZ29yeQMAAAABAQAJZGlyZWN0aW9uA%2F%2F%2F%2F%2F8BAAZjb2x1bW4DAAAABgEAC3NwbGl0VHlwZUlkAwAAAAABABBzdGF0U291cmNlVHlwZUlkAwAAAAABAAtzb3J0QXZlcmFnZQkBAQALc3RhdFF1ZXJ5SWQDAAAAAQ%3D%3D&r=29305171", //REB
+                   @"AAAAARgAAAAIAQAMc3RhdFNlYXNvbklkAwAAB%2BABAAhjYXRlZ29yeQMAAAABAQAJZGlyZWN0aW9uA%2F%2F%2F%2F%2F8BAAZjb2x1bW4DAAAAAwEAC3NwbGl0VHlwZUlkAwAAAAABABBzdGF0U291cmNlVHlwZUlkAwAAAAABAAtzb3J0QXZlcmFnZQkBAQALc3RhdFF1ZXJ5SWQDAAAAAQ%3D%3D&r=16601350", //AST
+                   @"AAAAARgAAAAIAQAMc3RhdFNlYXNvbklkAwAAB%2BABAAhjYXRlZ29yeQMAAAABAQAJZGlyZWN0aW9uA%2F%2F%2F%2F%2F8BAAZjb2x1bW4DAAAAAQEAC3NwbGl0VHlwZUlkAwAAAAABABBzdGF0U291cmNlVHlwZUlkAwAAAAABAAtzb3J0QXZlcmFnZQkBAQALc3RhdFF1ZXJ5SWQDAAAAAQ%3D%3D&r=93827578", //BLK
+                   @"AAAAARgAAAAIAQAMc3RhdFNlYXNvbklkAwAAB%2BABAAhjYXRlZ29yeQMAAAABAQAJZGlyZWN0aW9uA%2F%2F%2F%2F%2F8BAAZjb2x1bW4DAAAAAgEAC3NwbGl0VHlwZUlkAwAAAAABABBzdGF0U291cmNlVHlwZUlkAwAAAAABAAtzb3J0QXZlcmFnZQkBAQALc3RhdFF1ZXJ5SWQDAAAAAQ%3D%3D&r=63854691", //STL
+                   @"AAAAARgAAAAIAQAMc3RhdFNlYXNvbklkAwAAB%2BABAAhjYXRlZ29yeQMAAAABAQAJZGlyZWN0aW9uA%2F%2F%2F%2F%2F8BAAZjb2x1bW4DAAAACwEAC3NwbGl0VHlwZUlkAwAAAAABABBzdGF0U291cmNlVHlwZUlkAwAAAAABAAtzb3J0QXZlcmFnZQkBAQALc3RhdFF1ZXJ5SWQDAAAAAQ%3D%3D&r=67940983", //TO
+                   @"AAAAARgAAAAIAQAMc3RhdFNlYXNvbklkAwAAB%2BABAAhjYXRlZ29yeQMAAAABAQAJZGlyZWN0aW9uA%2F%2F%2F%2F%2F8BAAZjb2x1bW4DAAAAAAEAC3NwbGl0VHlwZUlkAwAAAAABABBzdGF0U291cmNlVHlwZUlkAwAAAAABAAtzb3J0QXZlcmFnZQkBAQALc3RhdFF1ZXJ5SWQDAAAAAQ%3D%3D&r=36360871", /*PTS*/ nil];
     sort = sortChoices[3];
     sortIndex = 3; //+/- sort
     availability = 1; //Available
     scoringPeriodPL = @"last15";
     searchText = @"null";
     team = -1;
+    scrollViewsPL = [[NSMutableArray alloc] init];
     [self loadplayersPL];
 }
 
@@ -82,33 +83,30 @@ float scrollDistancePL;
     for (int i = 0; i < nodes.count; i++) {
         TFHppleElement *element = nodes[i];
         if ([element objectForKey:@"id"]) {
-            NSMutableArray *data = [[NSMutableArray alloc] initWithCapacity:15];
-            for (TFHppleElement *stat in element.children) {
-                if (![stat.content isEqualToString:@""]) {
-                    if ([[stat objectForKey:@"class"] isEqualToString:@"playertablePlayerName"]) {
-                        [data addObject: [stat.children[0] content]];
-                        [data addObject: [stat.children[1] content]];
-                        if (stat.children.count == 4) [data addObject: [stat.children[2] content]];
-                        else [data addObject: @""];
-                    }
-                    else if ([[stat objectForKey:@"class"] isEqualToString:@"gameStatusDiv"]) {
-                        [data addObject: stat.content];
-                        [data addObject: [[[stat childrenWithTagName:@"a"] firstObject] objectForKey:@"href"]];
-                    }
-                    else [data addObject: stat.content];
-                }
-            }
-            [data insertObject:@"--" atIndex:0]; //pos
-            if (data.count == 19) { //not playing
-                [data insertObject:@"--" atIndex:5];
-                [data insertObject:@"--" atIndex:6];
-                [data insertObject:@"--" atIndex:7];
-            }
-            [data insertObject:@"--" atIndex:8]; //gp
-            [data insertObject:@"--" atIndex:9]; //gs
-            [data insertObject:@"--" atIndex:10]; //min
-            [data addObject:[[element objectForKey:@"id"] substringFromIndex:4]];
-            [playersPL addObject:[[FBPlayer alloc] initWithData:data]];
+            NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+            NSArray <TFHppleElement *> *children = element.children;
+            [dict setObject:[children[0].children[0] content] forKey:@"firstName+lastName"];
+            [dict setObject:[children[0].children[1] content] forKey:@"team+position"];
+            if (children[1].children.count == 4) [dict setObject:[children[0].children[2] content] forKey:@"injury"];
+            [dict setObject:children[2].content forKey:@"type"];
+            [dict setObject:children[5].content forKey:@"isHome+opponent"];
+            [dict setObject:children[6].content forKey:@"isPlaying+gameState+score+status"];
+            if (![dict[@"isPlaying+gameState+score+status"] isEqualToString:@""]) [dict setObject: [[[children[6] childrenWithTagName:@"a"] firstObject] objectForKey:@"href"] forKey:@"gameLink"];
+            [dict setObject:children[8].content forKey:@"fgm"];
+            [dict setObject:children[9].content forKey:@"fga"];
+            [dict setObject:children[10].content forKey:@"ftm"];
+            [dict setObject:children[11].content forKey:@"fta"];
+            [dict setObject:children[12].content forKey:@"rebounds"];
+            [dict setObject:children[13].content forKey:@"assists"];
+            [dict setObject:children[14].content forKey:@"steals"];
+            [dict setObject:children[15].content forKey:@"blocks"];
+            [dict setObject:children[16].content forKey:@"turnovers"];
+            [dict setObject:children[17].content forKey:@"points"];
+            [dict setObject:children[19].content forKey:@"totalFantasyPoints"];
+            [dict setObject:children[20].content forKey:@"fantasyPoints"];
+            [dict setObject:children[22].content forKey:@"percentOwned"];
+            [dict setObject:children[23].content forKey:@"plusMinus"];
+            [playersPL addObject:[[FBPlayer alloc] initWithDictionary:dict]];
         }
     }
 }

@@ -119,8 +119,8 @@ int numSlots = 0;
             [data insertObject:@"--" atIndex:22]; //pct
             [data insertObject:@"--" atIndex:23]; //+/-
             [data addObject:@"--"]; //playerID
-            if (i < 13)[players1 addObject:[[FBPlayer alloc] initWithData:data]];
-            else [players2 addObject:[[FBPlayer alloc] initWithData:data]];
+            //if (i < 13)[players1 addObject:[[FBPlayer alloc] initWithData:data]]; //NEED TO USE INITWITHDICTIONARY
+            //else [players2 addObject:[[FBPlayer alloc] initWithData:data]];
         }
     }
     NSMutableArray *markForDel1 = [[NSMutableArray alloc] init];

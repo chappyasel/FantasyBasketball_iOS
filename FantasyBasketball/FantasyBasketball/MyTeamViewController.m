@@ -47,7 +47,7 @@ NSString *scoringPeriodMT = @"today";   //span of stats
 
 - (void)loadplayersMT {
     numStarters = 0;
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/clubhouse?leagueId=%d&teamId=%d&seasonId=%d&version=%@&scoringPeriodMTId=%d",self.session.leagueID,self.session.teamID,self.session.seasonID,scoringPeriodMT,scoringDay]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/clubhouse?leagueId=%d&teamId=%d&seasonId=%d&version=%@&scoringPeriod=%d",self.session.leagueID,self.session.teamID,self.session.seasonID,scoringPeriodMT,scoringDay]];
     NSData *html = [NSData dataWithContentsOfURL:url];
     parser = [TFHpple hppleWithHTMLData:html];
     NSString *XpathQueryString = @"//table[@class='playerTableTable tableBody']/tr";
@@ -62,27 +62,22 @@ NSString *scoringPeriodMT = @"today";   //span of stats
             [dict setObject:[children[1].children[0] content] forKey:@"firstName+lastName"];
             [dict setObject:[children[1].children[1] content] forKey:@"team+position"];
             if (children[1].children.count == 4) [dict setObject:[children[1].children[2] content] forKey:@"injury"];
-            int offset = 0;
-            if (children.count == 21) {
-                [dict setObject:children[3].content forKey:@"isHome+opponent"];
-                [dict setObject:children[4].content forKey:@"isPlaying+gameState+score+status"];
-                [dict setObject:[[[children[4] childrenWithTagName:@"a"] firstObject] objectForKey:@"href"] forKey:@"gameLink"];
-                offset = 3;
-            }
-            [dict setObject:children[3+offset].content forKey:@"fgm"];
-            [dict setObject:children[4+offset].content forKey:@"fga"];
-            [dict setObject:children[5+offset].content forKey:@"ftm"];
-            [dict setObject:children[6+offset].content forKey:@"fta"];
-            [dict setObject:children[7+offset].content forKey:@"rebounds"];
-            [dict setObject:children[8+offset].content forKey:@"assists"];
-            [dict setObject:children[9+offset].content forKey:@"steals"];
-            [dict setObject:children[10+offset].content forKey:@"blocks"];
-            [dict setObject:children[11+offset].content forKey:@"turnovers"];
-            [dict setObject:children[12+offset].content forKey:@"points"];
-            [dict setObject:children[14+offset].content forKey:@"totalFantasyPoints"];
-            [dict setObject:children[15+offset].content forKey:@"fantasyPoints"];
-            [dict setObject:children[17+offset].content forKey:@"percentOwned"];
-            [dict setObject:children[18+offset].content forKey:@"plusMinus"];
+            [dict setObject:children[3].content forKey:@"isHome+opponent"];
+            [dict setObject:children[4].content forKey:@"isPlaying+gameState+score+status"];
+            if (![dict[@"isPlaying+gameState+score+status"] isEqualToString:@""]) [dict setObject: [[[children[4] childrenWithTagName:@"a"] firstObject] objectForKey:@"href"] forKey:@"gameLink"];
+            [dict setObject:children[6].content forKey:@"fgm"];
+            [dict setObject:children[7].content forKey:@"fga"];
+            [dict setObject:children[8].content forKey:@"ftm"];
+            [dict setObject:children[9].content forKey:@"fta"];
+            [dict setObject:children[10].content forKey:@"rebounds"];
+            [dict setObject:children[11].content forKey:@"assists"];
+            [dict setObject:children[12].content forKey:@"steals"];
+            [dict setObject:children[13].content forKey:@"blocks"];
+            [dict setObject:children[14].content forKey:@"turnovers"];
+            [dict setObject:children[15].content forKey:@"points"];
+            [dict setObject:children[16].content forKey:@"fantasyPoints"];
+            [dict setObject:children[18].content forKey:@"percentOwned"];
+            [dict setObject:children[19].content forKey:@"plusMinus"];
             [playersMT addObject:[[FBPlayer alloc] initWithDictionary:dict]];
         }
     }

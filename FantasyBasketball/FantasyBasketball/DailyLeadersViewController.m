@@ -26,6 +26,7 @@ int team;
     self.title = @"Daily Leaders";
     scoringDay = self.session.scoringPeriodID;
     team = -1; //All defualt
+    scrollViewsDL = [[NSMutableArray alloc] init];
     [self loadplayersDL];
 }
 
@@ -86,35 +87,28 @@ NSTimer *updateTimer;
     for (int i = 0; i < nodes.count; i++) {
         TFHppleElement *element = nodes[i];
         if ([element objectForKey:@"id"]) {
-            NSMutableArray *data = [[NSMutableArray alloc] initWithCapacity:15];
-            for (TFHppleElement *stat in element.children) {
-                if (![stat.content isEqualToString:@""]) {
-                    if ([[stat objectForKey:@"class"] isEqualToString:@"playertablePlayerName"]) {
-                        [data addObject: [stat.children[0] content]];
-                        [data addObject: [stat.children[1] content]];
-                        if (stat.children.count == 4) [data addObject: [stat.children[2] content]];
-                        else [data addObject: @""];
-                    }
-                    else if ([[stat objectForKey:@"class"] isEqualToString:@"gameStatusDiv"]) {
-                        [data addObject: stat.content];
-                        [data addObject: [[[stat childrenWithTagName:@"a"] firstObject] objectForKey:@"href"]];
-                    }
-                    else [data addObject: stat.content];
-                }
-            }
-            if (data.count == 16) { //not playing
-                [data insertObject:@"--" atIndex:5];
-                [data insertObject:@"--" atIndex:6];
-                [data insertObject:@"--" atIndex:7];
-            }
-            [data insertObject:@"--" atIndex:0]; //pos
-            [data insertObject:@"--" atIndex:8]; //gp
-            [data insertObject:@"--" atIndex:9]; //gs
-            [data insertObject:@"--" atIndex:21]; //tot
-            [data insertObject:@"--" atIndex:23]; //pct
-            [data insertObject:@"--" atIndex:24]; //+/-
-            [data addObject:[[element objectForKey:@"id"] substringFromIndex:4]];
-            [playersDL addObject:[[FBPlayer alloc] initWithData:data]];
+            NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+            NSArray <TFHppleElement *> *children = element.children;
+            [dict setObject:[children[0].children[0] content] forKey:@"firstName+lastName"];
+            [dict setObject:[children[0].children[1] content] forKey:@"team+position"];
+            if (children[0].children.count == 4) [dict setObject:[children[0].children[2] content] forKey:@"injury"];
+            [dict setObject:children[2].content forKey:@"type"];
+            [dict setObject:children[5].content forKey:@"isHome+opponent"];
+            [dict setObject:children[6].content forKey:@"isPlaying+gameState+score+status"];
+            if (![dict[@"isPlaying+gameState+score+status"] isEqualToString:@""]) [dict setObject: [[[children[6] childrenWithTagName:@"a"] firstObject] objectForKey:@"href"] forKey:@"gameLink"];
+            [dict setObject:children[8].content forKey:@"min"];
+            [dict setObject:children[9].content forKey:@"fgm"];
+            [dict setObject:children[10].content forKey:@"fga"];
+            [dict setObject:children[11].content forKey:@"ftm"];
+            [dict setObject:children[12].content forKey:@"fta"];
+            [dict setObject:children[13].content forKey:@"rebounds"];
+            [dict setObject:children[14].content forKey:@"assists"];
+            [dict setObject:children[15].content forKey:@"steals"];
+            [dict setObject:children[16].content forKey:@"blocks"];
+            [dict setObject:children[17].content forKey:@"turnovers"];
+            [dict setObject:children[18].content forKey:@"points"];
+            [dict setObject:children[20].content forKey:@"fantasyPoints"];
+            [playersDL addObject:[[FBPlayer alloc] initWithDictionary:dict]];
         }
     }
 }

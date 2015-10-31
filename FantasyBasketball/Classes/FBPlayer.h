@@ -16,53 +16,51 @@ typedef NS_ENUM(NSInteger, FBGameState) {
 
 @interface FBPlayer : NSObject
 
-@property bool isStarting; //(0) //MT only
+@property bool isStarting;
 
-@property NSString *firstName; //(1)
-@property NSString *lastName; //(1)
-@property NSString *team; //(2)
-@property NSString *position; //(2)
-@property NSString *injury; //(3)
+@property NSString *firstName;
+@property NSString *lastName;
+@property NSString *team;
+@property NSString *position;
+@property NSString *injury;
 
-@property NSString *type; //(4) //Not MT, MU (FA...)
+@property NSString *type; //(FA...)
 
-@property bool isPlaying; //(6)
-@property bool isHome; //(5)
-@property FBGameState gameState; //(6)
-@property NSString *opponent; //(5)
-@property NSString *score; //(6)
-@property NSString *status; //(6)
-@property NSString *gameLink; //(7)
+@property bool isPlaying;
+@property bool isHome;
+@property FBGameState gameState;
+@property NSString *opponent;
+@property NSString *score;
+@property NSString *status;
+@property NSString *gameLink;
 
-@property float gp;  //(8) //MU only
-@property float gs;  //(9) //None
-@property float min; //(10) //DL, MU only
+@property float gp;
+@property float gs;
+@property float min;
 
-@property float fgm; //(11)
-@property float fga; //(12)
-@property float ftm; //(13)
-@property float fta; //(14)
-@property float rebounds; //(15)
-@property float assists; //(16)
-@property float steals; //(17)
-@property float blocks; //(18)
-@property float turnovers; //(19)
-@property float points; //(20)
+@property float fgm;
+@property float fga;
+@property float ftm;
+@property float fta;
+@property float rebounds;
+@property float assists;
+@property float steals;
+@property float blocks;
+@property float turnovers;
+@property float points;
 
-@property float totalFantasyPoints; //(21) //FA Only
-@property float fantasyPoints; //(22)
+@property float totalFantasyPoints;
+@property float fantasyPoints;
 
-@property float prk;
-@property float adp;
+@property float prk; //positional rank
+@property float adp; //avg draft position
 
-@property float percentOwned; //(23) //Not for DL
-@property float plusMinus; //(24) //Not for DL
+@property float percentOwned;
+@property float plusMinus;
 
-@property int playerID; //(25)
+@property int playerID;
 
 //29 fields total
-
-- (instancetype)initWithData: (NSArray *) data;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
 
