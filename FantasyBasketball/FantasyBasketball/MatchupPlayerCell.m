@@ -74,8 +74,10 @@
             }
             //Points
             leftPointsView = [[UILabel alloc] initWithFrame:CGRectMake(207-50, 0, 50, 52.7)];
-            if (!self.leftPlayer.isPlaying || self.leftPlayer.gameState == FBGameStateHasntStarted) leftPointsView.text = @"-";
+            if (!self.leftPlayer.isPlaying) leftPointsView.text = @"-";
             else leftPointsView.text = [NSString stringWithFormat:@"%.0f",self.leftPlayer.fantasyPoints];
+            if (self.leftPlayer.gameState == FBGameStateHasntStarted) leftPointsView.textColor = [UIColor lightGrayColor];
+            else leftPointsView.textColor = [UIColor blackColor];
             leftPointsView.textAlignment = NSTextAlignmentCenter;
             leftPointsView.font = [UIFont boldSystemFontOfSize:19];
             [self addSubview:leftPointsView];
@@ -154,6 +156,8 @@
             rightPointsView = [[UILabel alloc] initWithFrame:CGRectMake(207, 0, 50, 52.7)];
             if (!self.rightPlayer.isPlaying || self.rightPlayer.gameState == FBGameStateHasntStarted) rightPointsView.text = @"-";
             else rightPointsView.text = [NSString stringWithFormat:@"%.0f",self.rightPlayer.fantasyPoints];
+            if (self.rightPlayer.gameState == FBGameStateHasntStarted) rightPointsView.textColor = [UIColor lightGrayColor];
+            else rightPointsView.textColor = [UIColor blackColor];
             rightPointsView.textAlignment = NSTextAlignmentCenter;
             rightPointsView.font = [UIFont boldSystemFontOfSize:19];
             [self addSubview:rightPointsView];
@@ -252,16 +256,20 @@
         }
         leftSubname2View.text = [NSString stringWithFormat:@"%.0f/%.0f, %.0f pts, %d %@, %d %@",self.leftPlayer.fgm,self.leftPlayer.fga,self.leftPlayer.points,stat1,stat1t,stat2,stat2t];
     }
-    if (!self.rightPlayer.isPlaying || self.rightPlayer.gameState == FBGameStateHasntStarted) rightPointsView.text = @"-";
+    if (!self.rightPlayer.isPlaying) rightPointsView.text = @"-";
     else if (![rightPointsView.text isEqualToString:[NSString stringWithFormat:@"%.0f",self.rightPlayer.fantasyPoints]]) {
         rightPointsView.text = [NSString stringWithFormat:@"%.0f",self.rightPlayer.fantasyPoints];
         [self highlightRightScore];
     }
-    if (!self.leftPlayer.isPlaying || self.leftPlayer.gameState == FBGameStateHasntStarted) leftPointsView.text = @"-";
+    if (!self.leftPlayer.isPlaying) leftPointsView.text = @"-";
     else if (![leftPointsView.text isEqualToString:[NSString stringWithFormat:@"%.0f",self.leftPlayer.fantasyPoints]]) {
         leftPointsView.text = [NSString stringWithFormat:@"%.0f",self.leftPlayer.fantasyPoints];
         [self highlightLeftScore];
     }
+    if (self.rightPlayer.gameState == FBGameStateHasntStarted) rightPointsView.textColor = [UIColor lightGrayColor];
+    else rightPointsView.textColor = [UIColor blackColor];
+    if (self.leftPlayer.gameState == FBGameStateHasntStarted) leftPointsView.textColor = [UIColor lightGrayColor];
+    else leftPointsView.textColor = [UIColor blackColor];
 }
 
 - (void)highlightLeftScore {

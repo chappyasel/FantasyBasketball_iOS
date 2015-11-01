@@ -52,7 +52,7 @@ bool needsLoadGamesButton = YES;
     
     self.darkBackground.alpha = 0.0;
     [UIView animateWithDuration:0.3 animations:^(void) {
-        self.darkBackground.alpha = 0.8;
+        self.darkBackground.alpha = 0.85;
     }];
 }
 
@@ -157,11 +157,13 @@ bool needsLoadGamesButton = YES;
     UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[link objectForKey:@"src"]]]];
     _playerImageView.image = image;
     //team image
-    UIImageView *teamImage = [[UIImageView alloc] initWithFrame:CGRectMake(-10, 110, 100, 100*(1/1.25))];
+    UIImageView *teamImage = [[UIImageView alloc] initWithFrame:CGRectMake(-45, 130, 160, 160*(1/1.25))];
     teamImage.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://a2.espncdn.com/prod/assets/clubhouses/2010/nba/teamlogos/%@.png",player.team]]]];
     teamImage.contentMode = UIViewContentModeScaleAspectFit;
+    teamImage.alpha = 0.25;
     [self.view addSubview:teamImage];
     [self.view sendSubviewToBack:teamImage];
+    [self.view sendSubviewToBack:self.darkBackground];
 } //REMOVE UI CHANGES
 
 - (void)loadPlayerRanks {
