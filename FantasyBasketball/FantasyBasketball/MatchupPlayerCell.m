@@ -14,7 +14,9 @@
     UILabel *rightSubname2View;
     UILabel *leftSubname2View;
     UILabel *rightPointsView;
+    UIView *rightPointsBackground;
     UILabel *leftPointsView;
+    UIView *leftPointsBackground;
 }
 
 - (instancetype) initWithRightPlayer:(FBPlayer *)rP leftPlayer:(FBPlayer *)lP view:(UIViewController *)superview expanded:(bool)expanded {
@@ -66,7 +68,7 @@
                 else {
                     stat1 = self.leftPlayer.rebounds;
                     stat1t = @"reb";
-                    stat2 = self.rightPlayer.assists;
+                    stat2 = self.leftPlayer.assists;
                     stat2t = @"ast";
                 }
                 leftSubname2View.text = [NSString stringWithFormat:@"%.0f/%.0f, %.0f pts, %d %@, %d %@",self.leftPlayer.fgm,self.leftPlayer.fga,self.leftPlayer.points,stat1,stat1t,stat2,stat2t];
@@ -74,12 +76,16 @@
             }
             //Points
             leftPointsView = [[UILabel alloc] initWithFrame:CGRectMake(207-50, 0, 50, 52.7)];
+            leftPointsBackground = [[UIView alloc] initWithFrame:leftPointsView.frame];
+            leftPointsBackground.backgroundColor = [UIColor colorWithRed:0/255.0 green:150/255.0 blue:255/255.0 alpha:1];
+            leftPointsBackground.alpha = 0.0;
             if (!self.leftPlayer.isPlaying) leftPointsView.text = @"-";
             else leftPointsView.text = [NSString stringWithFormat:@"%.0f",self.leftPlayer.fantasyPoints];
             if (self.leftPlayer.gameState == FBGameStateHasntStarted) leftPointsView.textColor = [UIColor lightGrayColor];
             else leftPointsView.textColor = [UIColor blackColor];
             leftPointsView.textAlignment = NSTextAlignmentCenter;
             leftPointsView.font = [UIFont boldSystemFontOfSize:19];
+            [self addSubview:leftPointsBackground];
             [self addSubview:leftPointsView];
             //Link
             UIButton *link = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 207-50, 52.7)];
@@ -154,12 +160,16 @@
             }
             //Points
             rightPointsView = [[UILabel alloc] initWithFrame:CGRectMake(207, 0, 50, 52.7)];
-            if (!self.rightPlayer.isPlaying || self.rightPlayer.gameState == FBGameStateHasntStarted) rightPointsView.text = @"-";
+            rightPointsBackground = [[UIView alloc] initWithFrame:rightPointsView.frame];
+            rightPointsBackground.backgroundColor = [UIColor colorWithRed:0/255.0 green:150/255.0 blue:255/255.0 alpha:1];
+            rightPointsBackground.alpha = 0.0;
+            if (!self.rightPlayer.isPlaying) rightPointsView.text = @"-";
             else rightPointsView.text = [NSString stringWithFormat:@"%.0f",self.rightPlayer.fantasyPoints];
             if (self.rightPlayer.gameState == FBGameStateHasntStarted) rightPointsView.textColor = [UIColor lightGrayColor];
             else rightPointsView.textColor = [UIColor blackColor];
             rightPointsView.textAlignment = NSTextAlignmentCenter;
             rightPointsView.font = [UIFont boldSystemFontOfSize:19];
+            [self addSubview:rightPointsBackground];
             [self addSubview:rightPointsView];
             //Link
             UIButton *link = [[UIButton alloc] initWithFrame:CGRectMake(208+50, 0, 207-50, 52.7)];
@@ -251,7 +261,7 @@
         else {
             stat1 = self.leftPlayer.rebounds;
             stat1t = @"reb";
-            stat2 = self.rightPlayer.assists;
+            stat2 = self.leftPlayer.assists;
             stat2t = @"ast";
         }
         leftSubname2View.text = [NSString stringWithFormat:@"%.0f/%.0f, %.0f pts, %d %@, %d %@",self.leftPlayer.fgm,self.leftPlayer.fga,self.leftPlayer.points,stat1,stat1t,stat2,stat2t];
@@ -273,18 +283,26 @@
 }
 
 - (void)highlightLeftScore {
-    leftPointsView.backgroundColor = [UIColor colorWithRed:0/255.0 green:150/255.0 blue:255/255.0 alpha:1];
+    leftPointsBackground.alpha = 1.0;
     [self performSelector:@selector(unhighlightLeftScore) withObject:nil afterDelay:1.5];
 }
 
-- (void)unhighlightLeftScore { leftPointsView.backgroundColor = [UIColor whiteColor]; };
+- (void)unhighlightLeftScore {
+    [UIView animateWithDuration:2.0 animations:^{
+        leftPointsBackground.alpha = 0.0;
+    }];
+};
 
 - (void)highlightRightScore {
-    rightPointsView.backgroundColor = [UIColor colorWithRed:0/255.0 green:150/255.0 blue:255/255.0 alpha:1];
+    rightPointsBackground.alpha = 1.0;
     [self performSelector:@selector(unhighlightRightScore) withObject:nil afterDelay:1.5];
 }
 
-- (void)unhighlightRightScore { rightPointsView.backgroundColor = [UIColor whiteColor]; };
+- (void)unhighlightRightScore {
+    [UIView animateWithDuration:2.0 animations:^{
+        rightPointsBackground.alpha = 0.0;
+    }];
+};
 
 - (void)linkGameLinkPressed:(UIButton *)sender {
     if (sender.tag == 0) [self.delegate linkWithGameLink:self.leftPlayer];
