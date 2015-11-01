@@ -36,8 +36,8 @@ bool playerNotLoaded = YES;
 bool needsLoadGamesButton = YES;
 
 - (void)viewDidLoad {
-    handleError = NO;
     [super viewDidLoad];
+    handleError = NO;
     [self loadScrollView];
     needsLoadGamesButton = YES;
     player = session.player;
@@ -45,29 +45,28 @@ bool needsLoadGamesButton = YES;
     self.imageOperationQueue = [[NSOperationQueue alloc]init];
     self.imageOperationQueue.maxConcurrentOperationCount = 4;
     self.imageCache = [[NSCache alloc] init];
-    _loadViewBG = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
-    _loadViewBG.frame = CGRectMake(0, 0, 375, 680);
-    [self.view addSubview:_loadViewBG];
-    [self.view bringSubviewToFront:_loadViewIndicator];
-    _loadViewIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
-    _loadViewIndicator.center = _loadViewBG.center;
-    _loadViewIndicator.color = [UIColor lightGrayColor];
-    [self.view addSubview:_loadViewIndicator];
-    [_loadViewIndicator startAnimating];
     playerNotLoaded = YES;
+    
+    self.darkBackground.alpha = 0.0;
+    [UIView animateWithDuration:0.3 animations:^(void) {
+        self.darkBackground.alpha = 0.8;
+    }];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     if (playerNotLoaded) {
         [super viewDidAppear:animated];
         [self loadScrollView];
         [self loadOverview];
         [self loadPlayer];
-        [_loadViewIndicator stopAnimating];
-        [_loadViewBG removeFromSuperview];
         [self performSelector:@selector(contLoading) withObject:nil afterDelay:0];
         playerNotLoaded = NO;
     }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    NSLog(@"PING");
 }
 
 - (void)contLoading {

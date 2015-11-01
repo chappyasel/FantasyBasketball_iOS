@@ -11,6 +11,8 @@
 
 @interface PlayerViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
+@property (weak, nonatomic) IBOutlet UIView *darkBackground;
+
 @property (weak, nonatomic) IBOutlet UIImageView *playerImageView;
 @property (weak, nonatomic) IBOutlet UIView *playerImageBG;
 
@@ -55,10 +57,5 @@
 @property (strong, nonatomic) IBOutlet UITableView *gameTableView;
 @property (strong, nonatomic) IBOutlet UIScrollView *statsScrollView;
 @property (strong, nonatomic) IBOutlet UITableView *rotoworldTableView;
-
-//load
-
-@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loadViewIndicator;
-@property (strong, nonatomic) IBOutlet UIVisualEffectView *loadViewBG;
 
 @end

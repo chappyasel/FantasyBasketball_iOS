@@ -79,11 +79,11 @@
     self.animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:modalVC];
     self.animator.dragable = YES;
     self.animator.bounces = YES;
-    self.animator.behindViewAlpha = 0.6;
-    self.animator.behindViewScale = 0.95;
+    self.animator.behindViewAlpha = 0.8;
+    self.animator.behindViewScale = 0.9;
     self.animator.transitionDuration = 0.5;
     self.animator.direction = ZFModalTransitonDirectionBottom;
-    //[self.animator setContentScrollView:modalVC.tableView];
+    [self.animator setContentScrollView:modalVC.bottomScrollView];
     modalVC.transitioningDelegate = self.animator;
     [self presentViewController:modalVC animated:YES completion:nil];
 }
