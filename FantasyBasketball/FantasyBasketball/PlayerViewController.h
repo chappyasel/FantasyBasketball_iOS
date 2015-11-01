@@ -11,6 +11,8 @@
 
 @interface PlayerViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
+//header
+
 @property (weak, nonatomic) IBOutlet UIView *darkBackground;
 
 @property (weak, nonatomic) IBOutlet UIImageView *playerImageView;
@@ -19,17 +21,13 @@
 @property (weak, nonatomic) IBOutlet UILabel *playerNameDisplay;
 @property (weak, nonatomic) IBOutlet UILabel *playerTeamDisplay;
 
-@property (strong, nonatomic) IBOutletCollection(UILabel) NSArray *statSlot1Header;
-@property (strong, nonatomic) IBOutletCollection(UILabel) NSArray *statSlot2Header;
-@property (strong, nonatomic) IBOutletCollection(UILabel) NSArray *statSlot3Header;
-
-@property (weak, nonatomic) IBOutlet UILabel *seasonDisplay1;
-@property (weak, nonatomic) IBOutlet UILabel *seasonDisplay2;
-@property (weak, nonatomic) IBOutlet UILabel *seasonDisplay3;
-
-@property (weak, nonatomic) IBOutlet UILabel *careerDisplay1;
-@property (weak, nonatomic) IBOutlet UILabel *careerDisplay2;
-@property (weak, nonatomic) IBOutlet UILabel *careerDisplay3;
+@property (weak, nonatomic) IBOutlet UILabel *headerStat1;
+@property (weak, nonatomic) IBOutlet UILabel *headerStat2;
+@property (weak, nonatomic) IBOutlet UILabel *headerStat3;
+@property (weak, nonatomic) IBOutlet UILabel *headerStat4;
+@property (weak, nonatomic) IBOutlet UILabel *headerStat5;
+@property (weak, nonatomic) IBOutlet UILabel *headerStat6;
+@property (weak, nonatomic) IBOutlet UILabel *headerOwnerLabel;
 
 //nav bar
 

@@ -28,10 +28,13 @@ TFHpple *parser;
 
 NSMutableArray *scrollViewsP;
 float scrollDistanceP;
+
+NSMutableArray *ranks; // @[type, prk15, prk2016, prk, adp, own, +/-]
 NSMutableArray *info;
 NSMutableArray *games;
 NSMutableArray *news;
 NSMutableArray *rotoworld;
+
 bool playerNotLoaded = YES;
 bool needsLoadGamesButton = YES;
 
@@ -60,61 +63,40 @@ bool needsLoadGamesButton = YES;
         [self loadScrollView];
         [self loadOverview];
         [self loadPlayer];
-        [self performSelector:@selector(contLoading) withObject:nil afterDelay:0];
+        [self contLoading];
         playerNotLoaded = NO;
     }
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    NSLog(@"PING");
 }
 
 - (void)contLoading {
     scrollViewsP = [[NSMutableArray alloc] init];
     if (parser.data != nil) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self performSelector:@selector(loadGameLogTableView) withObject:nil];
-            [self performSelector:@selector(loadGraphView) withObject:nil];
-            [self performSelector:@selector(loadInfoTableView) withObject:nil];
-            //[self performSelector:@selector(loadStatsBasicTableView) withObject:nil];
-            [self performSelector:@selector(loadRotoworldTableView) withObject:nil];
-            //[self performSelector:@selector(loadStatsScrollView) withObject:nil];
-            //[self performSelector:@selector(loadNewsLogTableView) withObject:nil];
-            //[self performSelector:@selector(moreGames:) withObject:nil];
+        [self loadGameLogTableView];
+        dispatch_queue_t myQueue = dispatch_queue_create("My Queue",NULL);
+        dispatch_async(myQueue, ^{
+            [self loadPlayerRanks];
+            [self loadInfoWithCompletionBlock:^{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [_infoTableView reloadData];
+                });
+            }];
+            [self loadRotoworldWithCompletionBlock:^{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [_rotoworldTableView reloadData];
+                });
+            }];
+            [self loadGamesWithParser:parser CompletionBlock:^{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self loadGameLogTableView];
+                    [self loadGraphView];
+                });
+            }];
         });
     }
     else NSLog(@"Player not found.");
 }
 
-- (void)loadScrollView { //and its contents (tables...)
-    //tab 1: Current game, Full stats, recent games overview, last rotowire, own%, news
-    _gameTableView = [[UITableView alloc] initWithFrame:CGRectMake(375, 0, 375, 420)];
-    _rotoworldTableView = [[UITableView alloc] initWithFrame:CGRectMake(375*2, 0, 375, 420)];
-    _statsScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(375*3, 0, 375, 420)];
-    _newsTableView = [[UITableView alloc] initWithFrame:CGRectMake(375*4, 0, 375, 420)];
-    //_gameTableView.contentInset = UIEdgeInsetsMake(40, 0, 0, 0);
-    //_newsTableView.contentInset = UIEdgeInsetsMake(40, 0, 0, 0);
-    //_statsScrollView.contentInset = UIEdgeInsetsMake(40, 0, 0, 0);
-    //_rotoworldTableView.contentInset = UIEdgeInsetsMake(40, 0, 0, 0);
-    [_bottomScrollView addSubview:_newsTableView];
-    [_bottomScrollView addSubview:_gameTableView];
-    [_bottomScrollView addSubview:_statsScrollView];
-    [_bottomScrollView addSubview:_rotoworldTableView];
-    _bottomScrollView.contentSize = CGSizeMake(375*5, 420);
-    _bottomScrollView.delegate = self;
-    [self.view bringSubviewToFront:_titleView];
-}
-
-- (void)loadOverview {
-    _infoTableView.delegate = self;
-    _infoTableView.dataSource = self;
-    _statsBasicTableView.delegate = self;
-    _statsBasicTableView.dataSource = self;
-    _gamesBasicTableView.delegate = self;
-    _gamesBasicTableView.dataSource = self;
-    _gamesBasicTableView.userInteractionEnabled = NO;
-    _statsBasicTableView.userInteractionEnabled = NO;
-}
+#pragma mark - data loading
 
 - (void)loadPlayer {
     bool playerFound = NO;
@@ -150,24 +132,26 @@ bool needsLoadGamesButton = YES;
     _playerNameDisplay.text = [[[parser searchWithXPathQuery:@"//div[@class='mod-content']/h1"] firstObject] content];
     _playerTeamDisplay.text = [[[parser searchWithXPathQuery:@"//ul[@class='general-info']/li[@class='last']/a"] firstObject] content];
     //stats
-    NSArray *seasonStats = [[[parser searchWithXPathQuery:@"//table[@class='header-stats']/tr"] firstObject] children];
-    if (seasonStats.count > 2) {
-        _seasonDisplay1.text = [seasonStats[0] content];
-        _seasonDisplay2.text = [seasonStats[1] content];
-        _seasonDisplay3.text = [seasonStats[2] content];
-    }
-    NSArray *careerStats = [[[parser searchWithXPathQuery:@"//table[@class='header-stats']/tr[@class='career']"] firstObject] children];
-    if (careerStats.count > 2) {
-        _careerDisplay1.text = [careerStats[0] content];
-        _careerDisplay2.text = [careerStats[1] content];
-        _careerDisplay3.text = [careerStats[2] content];
-    }
-    NSArray *statNames = [[[parser searchWithXPathQuery:@"//table[@class='header-stats']/thead"] firstObject] children];
-    if (statNames.count > 2) {
-        for (UILabel *label in _statSlot1Header) label.text = [statNames[0] content];
-        for (UILabel *label in _statSlot2Header) label.text = [statNames[1] content];
-        for (UILabel *label in _statSlot3Header) label.text = [statNames[2] content];
-    }
+    /*
+     NSArray *seasonStats = [[[parser searchWithXPathQuery:@"//table[@class='header-stats']/tr"] firstObject] children];
+     if (seasonStats.count > 2) {
+     _seasonDisplay1.text = [seasonStats[0] content];
+     _seasonDisplay2.text = [seasonStats[1] content];
+     _seasonDisplay3.text = [seasonStats[2] content];
+     }
+     NSArray *careerStats = [[[parser searchWithXPathQuery:@"//table[@class='header-stats']/tr[@class='career']"] firstObject] children];
+     if (careerStats.count > 2) {
+     _careerDisplay1.text = [careerStats[0] content];
+     _careerDisplay2.text = [careerStats[1] content];
+     _careerDisplay3.text = [careerStats[2] content];
+     }
+     NSArray *statNames = [[[parser searchWithXPathQuery:@"//table[@class='header-stats']/thead"] firstObject] children];
+     if (statNames.count > 2) {
+     for (UILabel *label in _statSlot1Header) label.text = [statNames[0] content];
+     for (UILabel *label in _statSlot2Header) label.text = [statNames[1] content];
+     for (UILabel *label in _statSlot3Header) label.text = [statNames[2] content];
+     }
+     */
     //player image
     TFHppleElement *link = [[parser searchWithXPathQuery:@"//div[@class='main-headshot']/img"] firstObject];
     UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[link objectForKey:@"src"]]]];
@@ -178,60 +162,62 @@ bool needsLoadGamesButton = YES;
     teamImage.contentMode = UIViewContentModeScaleAspectFit;
     [self.view addSubview:teamImage];
     [self.view sendSubviewToBack:teamImage];
+} //REMOVE UI CHANGES
+
+- (void)loadPlayerRanks {
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/freeagency?leagueId=%d&seasonId=%d&context=freeagency&version=%@&avail=-1&search=%@&view=research",session.leagueID,session.seasonID,@"null",player.lastName]];
+    NSData *html = [NSData dataWithContentsOfURL:url];
+    TFHpple *parserR = [TFHpple hppleWithHTMLData:html];
+    NSString *XpathQueryString = @"//table[@class='playerTableTable tableBody']/tr";
+    NSArray *nodes = [parserR searchWithXPathQuery:XpathQueryString];
+    ranks = [[NSMutableArray alloc] init];
+    for (int i = 0; i < nodes.count; i++) {
+        TFHppleElement *element = nodes[i];
+        if ([element objectForKey:@"id"]) {
+            NSArray <TFHppleElement *> *children = element.children;
+            if ([children[0].content containsString:player.firstName]) {
+                [ranks addObject:children[2].content];
+                [ranks addObject:children[9].content];
+                [ranks addObject:children[11].content];
+                [ranks addObject:children[13].content];
+                [ranks addObject:children[14].content];
+                [ranks addObject:children[15].content];
+                [ranks addObject:children[16].content];
+                break;
+            }
+        }
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.headerStat1.text = ranks[1];
+        self.headerStat2.text = ranks[2];
+        self.headerStat3.text = ranks[3];
+        self.headerStat4.text = ranks[4];
+        self.headerStat5.text = [NSString stringWithFormat:@"%@%%",ranks[5]];
+        if ([ranks[6] intValue] > 0) {
+            self.headerStat6.text = [NSString stringWithFormat:@"%@",ranks[6]];
+            self.headerStat6.textColor = [UIColor colorWithRed:0/255.0f green:190/255.0f blue:0/255.0f alpha:1.0f]; //green
+        }
+        else if ([ranks[6] intValue] == 0) self.headerStat6.text = @"0.0";
+        else {
+            self.headerStat6.text = [NSString stringWithFormat:@"%@",ranks[6]];
+            self.headerStat6.textColor = [UIColor colorWithRed:240/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f]; //red
+        }
+        if ([ranks[0] isEqualToString:@"FA"]) {
+            self.headerOwnerLabel.text = @"FA";
+            self.headerOwnerLabel.textColor = [UIColor colorWithRed:0/255.0f green:190/255.0f blue:0/255.0f alpha:1.0f]; //green
+        }
+        else if ([ranks[0] containsString:@"WA ("]) {
+            self.headerOwnerLabel.text = [NSString stringWithFormat:@"%@",ranks[0]];
+            self.headerOwnerLabel.textColor = [UIColor colorWithRed:200/255.0f green:200/255.0f blue:40/255.0f alpha:1.0f]; //yellow
+        }
+        else {
+            self.headerOwnerLabel.text = [NSString stringWithFormat:@"Owned (%@)",ranks[0]];
+            self.headerOwnerLabel.textColor = [UIColor whiteColor];
+        }
+    });
 }
 
-- (void)loadGameLogTableView {
-    if (handleError) return;
-    _gameTableView.delegate = self;
-    _gameTableView.dataSource = self;
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 375, 40)];
-    UISegmentedControl *segControl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(50, 5.5, 314, 29)];
-    segControl.tintColor = [UIColor lightGrayColor];
-    [segControl insertSegmentWithTitle:@"Simple" atIndex:0 animated:NO];
-    [segControl insertSegmentWithTitle:@"Detail" atIndex:1 animated:NO];
-    [segControl setSelectedSegmentIndex:0];
-    [segControl addTarget:self action:@selector(changeGameLogStyle:) forControlEvents:UIControlEventValueChanged];
-    [headerView addSubview:segControl];
-    _gameTableView.tableHeaderView = headerView;
-    //game log
-    [self parseGamesWithParser:parser];
-    [_gameTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
-}
-
-- (void)loadGraphView {
-    _graphView = [[BEMSimpleLineGraphView alloc] initWithFrame:CGRectMake(0, 0, _graphContainerView.frame.size.width, _graphContainerView.frame.size.height)];
-    _graphView.delegate = self;
-    _graphView.dataSource = self;
-    _graphView.enableBezierCurve = YES;
-    _graphView.averageLine.enableAverageLine = YES;
-    _graphView.averageLine.width = 1;
-    _graphView.averageLine.alpha = 0.6;
-    _graphView.averageLine.color = [UIColor grayColor];
-    _graphView.colorLine = [UIColor lightGrayColor];
-    _graphView.colorPoint = [UIColor lightGrayColor];
-    _graphView.colorTop = [UIColor whiteColor];
-    _graphView.colorBottom = [UIColor lightGrayColor];
-    _graphView.colorBackgroundXaxis = [UIColor whiteColor];
-    _graphView.alphaBottom = 0.15;
-    _graphView.enableYAxisLabel = YES;
-    _graphView.enablePopUpReport = YES;
-    _graphView.widthLine = 2.0;
-    _graphView.alwaysDisplayDots = YES;
-    _graphView.autoScaleYAxis = YES;
-    _graphView.animationGraphEntranceTime = 1.0;
-    
-    [_graphContainerView addSubview:_graphView];
-}
-
-bool gameLogIsBasic = YES;
-
-- (void)changeGameLogStyle: (UISegmentedControl *)sender {
-    if (sender.selectedSegmentIndex == 0) gameLogIsBasic = YES;
-    else gameLogIsBasic = NO;
-    [_gameTableView reloadData];
-}
-
-- (void)loadInfoTableView {
+- (void)loadInfoWithCompletionBlock:(void (^)(void)) completed {
     _infoTableView.pagingEnabled = YES;
     _infoTableView.showsVerticalScrollIndicator = NO;
     info = [[NSMutableArray alloc] init];
@@ -261,18 +247,10 @@ bool gameLogIsBasic = YES;
             }
         }
     }
-    [_infoTableView reloadData];
-}
+    completed();
+} //[_infoTableView reloadData];
 
-- (void)loadStatsBasicTableView {
-    [_statsBasicTableView reloadData];
-}
-
-- (void)loadStatsScrollView {
-    
-}
-
-- (void)loadRotoworldTableView {
+- (void)loadRotoworldWithCompletionBlock:(void (^)(void)) completed {
     _rotoworldTableView.delegate = self;
     _rotoworldTableView.dataSource = self;
     rotoworld = [[NSMutableArray alloc] init];
@@ -321,10 +299,39 @@ bool gameLogIsBasic = YES;
         }
     }
     [rotoworld insertObject:rotoPeice atIndex:0];
-    [_rotoworldTableView reloadData];
-}
+    completed();
+} //[_rotoworldTableView reloadData];
 
-- (void)parseGamesWithParser: (TFHpple *)parse {
+- (void)loadNewsWithCompletionBlock:(void (^)(void)) completed {
+    _newsTableView.delegate = self;
+    _newsTableView.dataSource = self;
+    //news
+    news = [[NSMutableArray alloc] init];
+    NSArray *newsRaw = [parser searchWithXPathQuery:@"//div[@id='default-tab']/ol/li"];
+    for (TFHppleElement *element in newsRaw) {
+        NSMutableDictionary *newsPeice = [[NSMutableDictionary alloc] init];
+        for (TFHppleElement *part in element.children) {
+            if ([[part tagName] isEqual:@"p"]) { //contents
+                [newsPeice setObject:part.content forKey:@"text"];
+            }
+            else if ([[part tagName] isEqual:@"h3"]) { //link, title
+                if ([[[part childrenWithTagName:@"a"] firstObject] objectForKey:@"href"]) [newsPeice setObject:[[[part childrenWithTagName:@"a"] firstObject] objectForKey:@"href"] forKey:@"link"];
+                [newsPeice setObject:[part content] forKey:@"title"];
+            }
+            else if ([[part tagName] isEqual:@"a"]) { //image
+                TFHppleElement *i = [[part childrenWithTagName:@"img"] firstObject];
+                if ([i objectForKey:@"src"]) [newsPeice setObject:[i objectForKey:@"src"] forKey:@"image"];
+            }
+            else if ([[part tagName] isEqual:@"cite"]) { //time
+                [newsPeice setObject:[part content] forKey:@"time"];
+            }
+        }
+        if (newsPeice.count > 0) [news addObject:newsPeice];
+    }
+    completed();
+} //[_newsTableView reloadData];
+
+- (void)loadGamesWithParser: (TFHpple *)parse CompletionBlock:(void (^)(void)) completed {
     //game log
     NSArray *tables = [parse searchWithXPathQuery:@"//div/table[@class='tablehead']"];
     TFHppleElement *table = nil;
@@ -372,12 +379,10 @@ bool gameLogIsBasic = YES;
             [games addObject:game];
         }
     }
-    [_gamesBasicTableView reloadData];
-    [_gameTableView reloadData];
-    [_graphView reloadGraph];
-}
+    completed();
+} //[self loadGameLogTableView], [self loadGraphView];
 
-- (void)moreGames:(UIButton *)sender {
+- (void)loadMoreGames:(UIButton *)sender {
     needsLoadGamesButton = NO;
     NSArray *results = [parser searchWithXPathQuery:@"//div[@class='mod-content']/p[@class='footer']/a"];
     NSString *link = @"";
@@ -385,37 +390,96 @@ bool gameLogIsBasic = YES;
     NSString *url = [NSString stringWithFormat:@"http://espn.go.com%@",link];
     NSData *html = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
     TFHpple *parser2 = [TFHpple hppleWithHTMLData:html];
-    [self parseGamesWithParser:parser2];
+    [self loadGamesWithParser:parser2 CompletionBlock:^{
+        [_gameTableView reloadData];
+    }];
 }
 
-- (void)loadNewsLogTableView {
-    _newsTableView.delegate = self;
-    _newsTableView.dataSource = self;
-    //news
-    news = [[NSMutableArray alloc] init];
-    NSArray *newsRaw = [parser searchWithXPathQuery:@"//div[@id='default-tab']/ol/li"];
-    for (TFHppleElement *element in newsRaw) {
-        NSMutableDictionary *newsPeice = [[NSMutableDictionary alloc] init];
-        for (TFHppleElement *part in element.children) {
-            if ([[part tagName] isEqual:@"p"]) { //contents
-                [newsPeice setObject:part.content forKey:@"text"];
-            }
-            else if ([[part tagName] isEqual:@"h3"]) { //link, title
-                if ([[[part childrenWithTagName:@"a"] firstObject] objectForKey:@"href"]) [newsPeice setObject:[[[part childrenWithTagName:@"a"] firstObject] objectForKey:@"href"] forKey:@"link"];
-                [newsPeice setObject:[part content] forKey:@"title"];
-            }
-            else if ([[part tagName] isEqual:@"a"]) { //image
-                TFHppleElement *i = [[part childrenWithTagName:@"img"] firstObject];
-                if ([i objectForKey:@"src"]) [newsPeice setObject:[i objectForKey:@"src"] forKey:@"image"];
-            }
-            else if ([[part tagName] isEqual:@"cite"]) { //time
-                [newsPeice setObject:[part content] forKey:@"time"];
-            }
-        }
-        if (newsPeice.count > 0) [news addObject:newsPeice];
-    }
-    [_newsTableView reloadData];
+#pragma mark - UI loading
+
+- (void)loadScrollView { //and its contents (tables...)
+    //tab 1: Current game, Full stats, recent games overview, last rotowire, own%, news
+    float width = (float)self.view.frame.size.width;
+    _gameTableView = [[UITableView alloc] initWithFrame:CGRectMake(width, 0, width, 420)];
+    _rotoworldTableView = [[UITableView alloc] initWithFrame:CGRectMake(width*2, 0, width, 420)];
+    _statsScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(width*3, 0, width, 420)];
+    _newsTableView = [[UITableView alloc] initWithFrame:CGRectMake(width*4, 0, width, 420)];
+    //_gameTableView.contentInset = UIEdgeInsetsMake(40, 0, 0, 0);
+    //_newsTableView.contentInset = UIEdgeInsetsMake(40, 0, 0, 0);
+    //_statsScrollView.contentInset = UIEdgeInsetsMake(40, 0, 0, 0);
+    //_rotoworldTableView.contentInset = UIEdgeInsetsMake(40, 0, 0, 0);
+    [_bottomScrollView addSubview:_newsTableView];
+    [_bottomScrollView addSubview:_gameTableView];
+    [_bottomScrollView addSubview:_statsScrollView];
+    [_bottomScrollView addSubview:_rotoworldTableView];
+    _bottomScrollView.contentSize = CGSizeMake(width*5, 420);
+    _bottomScrollView.delegate = self;
+    [self.view bringSubviewToFront:_titleView];
 }
+
+- (void)loadOverview {
+    _infoTableView.delegate = self;
+    _infoTableView.dataSource = self;
+    _statsBasicTableView.delegate = self;
+    _statsBasicTableView.dataSource = self;
+    _gamesBasicTableView.delegate = self;
+    _gamesBasicTableView.dataSource = self;
+    _gamesBasicTableView.userInteractionEnabled = NO;
+    _statsBasicTableView.userInteractionEnabled = NO;
+}
+
+- (void)loadGameLogTableView {
+    if (handleError) return;
+    _gameTableView.delegate = self;
+    _gameTableView.dataSource = self;
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 375, 40)];
+    UISegmentedControl *segControl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(50, 5.5, 314, 29)];
+    segControl.tintColor = [UIColor lightGrayColor];
+    [segControl insertSegmentWithTitle:@"Simple" atIndex:0 animated:NO];
+    [segControl insertSegmentWithTitle:@"Detail" atIndex:1 animated:NO];
+    [segControl setSelectedSegmentIndex:0];
+    [segControl addTarget:self action:@selector(changeGameLogStyle:) forControlEvents:UIControlEventValueChanged];
+    [headerView addSubview:segControl];
+    _gameTableView.tableHeaderView = headerView;
+    //[_gameTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    
+    [_gamesBasicTableView reloadData];
+    [_gameTableView reloadData];
+    [_graphView reloadGraph];
+}
+
+- (void)loadGraphView {
+    _graphView = [[BEMSimpleLineGraphView alloc] initWithFrame:CGRectMake(0, 0, _graphContainerView.frame.size.width, _graphContainerView.frame.size.height)];
+    _graphView.delegate = self;
+    _graphView.dataSource = self;
+    _graphView.enableBezierCurve = YES;
+    _graphView.averageLine.enableAverageLine = YES;
+    _graphView.averageLine.width = 1;
+    _graphView.averageLine.alpha = 0.6;
+    _graphView.averageLine.color = [UIColor grayColor];
+    _graphView.colorLine = [UIColor lightGrayColor];
+    _graphView.colorPoint = [UIColor lightGrayColor];
+    _graphView.colorTop = [UIColor whiteColor];
+    _graphView.colorBottom = [UIColor lightGrayColor];
+    _graphView.colorBackgroundXaxis = [UIColor whiteColor];
+    _graphView.alphaBottom = 0.15;
+    _graphView.enableYAxisLabel = YES;
+    _graphView.enablePopUpReport = YES;
+    _graphView.widthLine = 2.0;
+    _graphView.alwaysDisplayDots = YES;
+    _graphView.autoScaleYAxis = YES;
+    _graphView.animationGraphEntranceTime = 1.0;
+    
+    [_graphContainerView addSubview:_graphView];
+}
+
+bool gameLogIsBasic = YES;
+
+- (void)changeGameLogStyle: (UISegmentedControl *)sender {
+    if (sender.selectedSegmentIndex == 0) gameLogIsBasic = YES;
+    else gameLogIsBasic = NO;
+    [_gameTableView reloadData];
+} //?
 
 #pragma mark - Table View Delegate Methods
 
@@ -451,7 +515,7 @@ bool gameLogIsBasic = YES;
         NSString *text = [NSString stringWithFormat:@"%@ %@",[rotoworld[indexPath.row] objectForKey:@"report"],[rotoworld[indexPath.row] objectForKey:@"impact"]];
         UIFont *font = [UIFont systemFontOfSize:15];
         NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:@ {NSFontAttributeName: font}];
-        CGRect rect = [attributedText boundingRectWithSize:(CGSize){375-20.0, CGFLOAT_MAX} options:NSStringDrawingUsesLineFragmentOrigin context:nil];
+        CGRect rect = [attributedText boundingRectWithSize:(CGSize){self.view.frame.size.width-20.0, CGFLOAT_MAX} options:NSStringDrawingUsesLineFragmentOrigin context:nil];
         return (CGFloat)rect.size.height+30;
     }
     return 120;
@@ -554,12 +618,13 @@ bool gameLogIsBasic = YES;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    float width = self.view.frame.size.width;
     if (tableView == _infoTableView) {
         static NSString *MyIdentifier = @"MyIdentifier";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
         cell = nil;
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier];
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 375-15, 30)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, width-15, 30)];
         label.text = info[indexPath.row];
         label.font = [UIFont systemFontOfSize:15];
         [cell addSubview:label];
@@ -595,9 +660,9 @@ bool gameLogIsBasic = YES;
             float height = 30.0;
             if (needsLoadGamesButton) height = 40.0;
             if (indexPath.row == games.count && needsLoadGamesButton) { //last row
-                UIButton *more = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 375, 40)];
+                UIButton *more = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, width, 40)];
                 [more setTitle:@"Load More Games" forState:UIControlStateNormal];
-                [more addTarget:self action:@selector(moreGames:) forControlEvents:UIControlEventTouchUpInside];
+                [more addTarget:self action:@selector(loadMoreGames:) forControlEvents:UIControlEventTouchUpInside];
                 [more setTitleColor:[UIColor colorWithRed:0 green:0.478431 blue:1.0 alpha:1.0] forState:UIControlStateNormal];
                 [cell addSubview:more];
             }
@@ -633,9 +698,9 @@ bool gameLogIsBasic = YES;
             float height = 30.0;
             if (needsLoadGamesButton) height = 40.0;
             if (indexPath.row == games.count && needsLoadGamesButton) { //last row
-                UIButton *more = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 375, 40)];
+                UIButton *more = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, width, 40)];
                 [more setTitle:@"Load More Games" forState:UIControlStateNormal];
-                [more addTarget:self action:@selector(moreGames:) forControlEvents:UIControlEventTouchUpInside];
+                [more addTarget:self action:@selector(loadMoreGames:) forControlEvents:UIControlEventTouchUpInside];
                 [more setTitleColor:[UIColor colorWithRed:0 green:0.478431 blue:1.0 alpha:1.0] forState:UIControlStateNormal];
                 [cell addSubview:more];
             }
@@ -704,17 +769,19 @@ bool gameLogIsBasic = YES;
         NSMutableDictionary *rotoPeice = rotoworld[indexPath.row];
         float height = [self tableView:_rotoworldTableView heightForRowAtIndexPath:indexPath];
         //start
-        UILabel *text = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 375-20, height-25)];
+        UILabel *text = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, width-20, height-25)];
         text.text = [NSString stringWithFormat:@"%@ %@",[rotoPeice objectForKey:@"report"],[rotoPeice objectForKey:@"impact"]];
         text.font = [UIFont systemFontOfSize:15];
         text.numberOfLines = (int)(text.frame.size.height/text.font.lineHeight);
         [cell addSubview:text];
+        /*
         UILabel *extra = [[UILabel alloc] initWithFrame:CGRectMake(10, height-20, 205, 15)];
         extra.text = [NSString stringWithFormat:@"%@ %@",[rotoPeice objectForKey:@"source"],[rotoPeice objectForKey:@"related"]];
         extra.textColor = [UIColor lightGrayColor];
         extra.font = [UIFont systemFontOfSize:13];
         [cell addSubview:extra];
-        UILabel *time = [[UILabel alloc] initWithFrame:CGRectMake(225, height-20, 140, 15)];
+        */
+         UILabel *time = [[UILabel alloc] initWithFrame:CGRectMake(width-155, height-20, 140, 15)];
         time.text = [rotoPeice objectForKey:@"date"];
         time.textColor = [UIColor lightGrayColor];
         time.font = [UIFont systemFontOfSize:13];
@@ -755,17 +822,17 @@ bool gameLogIsBasic = YES;
             //image.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:]]];
             [cell addSubview:image];
         }
-        UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 375-10, 20)];
+        UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, width-10, 20)];
         title.text = [newsPeice objectForKey:@"title"];
         if (![newsPeice objectForKey:@"title"]) title.text = @"Rotowire Player Update";
         title.font = [UIFont boldSystemFontOfSize:16];
         [cell addSubview:title];
-        UILabel *text = [[UILabel alloc] initWithFrame:CGRectMake(10+x, 15, 375-20-x, 90)];
+        UILabel *text = [[UILabel alloc] initWithFrame:CGRectMake(10+x, 15, width-20-x, 90)];
         text.text = [newsPeice objectForKey:@"text"];
         text.numberOfLines = 4;
         text.font = [UIFont systemFontOfSize:15];
         [cell addSubview:text];
-        UILabel *time = [[UILabel alloc] initWithFrame:CGRectMake(110, 100, 375-120, 15)];
+        UILabel *time = [[UILabel alloc] initWithFrame:CGRectMake(110, 100, width-120, 15)];
         time.text = [newsPeice objectForKey:@"time"];
         time.textColor = [UIColor lightGrayColor];
         time.font = [UIFont systemFontOfSize:12];
@@ -842,7 +909,7 @@ int numGraphPoints;
         scrollDistanceP = scrollView.contentOffset.x;
     }
     else if (scrollView == _bottomScrollView){
-        float dist = scrollView.contentOffset.x/375;
+        float dist = scrollView.contentOffset.x/self.view.frame.size.width;
         if (dist <= 1.0) { //between 1,2
             _scrollIndicator.frame = CGRectMake(_tabButton1.frame.origin.x+(_tabButton2.frame.origin.x-_tabButton1.frame.origin.x)*dist, 37, _tabButton1.frame.size.width+(_tabButton2.frame.size.width-_tabButton1.frame.size.width)*dist, 3);
         }
@@ -859,29 +926,23 @@ int numGraphPoints;
 }
 
 - (IBAction)tab1Pressed:(UIButton *)sender {
-    [_bottomScrollView scrollRectToVisible:CGRectMake(0, 0, 375, 1) animated:YES];
+    [_bottomScrollView scrollRectToVisible:CGRectMake(0, 0, self.view.frame.size.width, 1) animated:YES];
 }
 
 - (IBAction)tab2Pressed:(UIButton *)sender {
-    [_bottomScrollView scrollRectToVisible:CGRectMake(375, 0, 375, 1) animated:YES];
+    [_bottomScrollView scrollRectToVisible:CGRectMake(self.view.frame.size.width, 0, self.view.frame.size.width, 1) animated:YES];
 }
 
 - (IBAction)tab3Pressed:(UIButton *)sender {
-    [_bottomScrollView scrollRectToVisible:CGRectMake(375*2, 0, 375, 1) animated:YES];
+    [_bottomScrollView scrollRectToVisible:CGRectMake(self.view.frame.size.width*2, 0, self.view.frame.size.width, 1) animated:YES];
 }
 
 - (IBAction)tab4Pressed:(UIButton *)sender {
-    [_bottomScrollView scrollRectToVisible:CGRectMake(375*3, 0, 375, 1) animated:YES];
+    [_bottomScrollView scrollRectToVisible:CGRectMake(self.view.frame.size.width*3, 0, self.view.frame.size.width, 1) animated:YES];
 }
 
 - (IBAction)tab5Pressed:(UIButton *)sender {
-    [_bottomScrollView scrollRectToVisible:CGRectMake(375*4, 0, 375, 1) animated:YES];
-}
-
-#pragma mark - Swipe Gesture
-
-- (IBAction)UserDidSwipe:(UISwipeGestureRecognizer *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [_bottomScrollView scrollRectToVisible:CGRectMake(self.view.frame.size.width*4, 0, self.view.frame.size.width, 1) animated:YES];
 }
 
 #pragma mark - Navigation
