@@ -60,6 +60,10 @@ FBSession *session;
                                                                     leftMenuViewController:[[LeftSideMenuViewController alloc] init]
                                                                    rightMenuViewController:nil];
     sideMenuViewController.backgroundImage = [UIImage imageNamed:@"StadiumBlur.jpg"];
+    sideMenuViewController.scaleBackgroundImageView = NO;
+    sideMenuViewController.scaleContentView = YES;
+    sideMenuViewController.scaleMenuView = YES;
+    sideMenuViewController.contentViewScaleValue = 0.8;
     sideMenuViewController.menuPreferredStatusBarStyle = 1; // UIStatusBarStyleLightContent
     sideMenuViewController.delegate = self;
     sideMenuViewController.contentViewShadowColor = [UIColor blackColor];

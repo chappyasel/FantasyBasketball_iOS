@@ -22,9 +22,6 @@
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
                                                                             action:@selector(presentLeftMenuViewController:)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
-                                                                                           target:self
-                                                                                           action:@selector(fadeIn:)];
     self.session = [FBSession sharedInstance];
     self.leagueInput.placeholder = [NSString stringWithFormat:@"%d",self.session.leagueID];
     self.teamInput.placeholder = [NSString stringWithFormat:@"%d",self.session.teamID];

@@ -286,7 +286,7 @@
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7om-3h-hr1">
                                         <rect key="frame" x="5" y="115" width="200" height="25"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -307,9 +307,6 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="6EX-4Z-Efg" appends="YES" id="g2C-Z4-ONz"/>
-                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="JF7-ty-6XX"/>
                     <nil key="simulatedStatusBarMetrics"/>
@@ -341,11 +338,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P4O-fq-jEM" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="right" id="6EX-4Z-Efg">
-                    <connections>
-                        <action selector="UserDidSwipe:" destination="eTN-lO-gO6" id="NLS-yz-C8M"/>
-                    </connections>
-                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="862" y="808"/>
         </scene>
