@@ -39,7 +39,7 @@ int team;
 
 - (void)loadTableHeaderView {
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 414, 40)];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 100, 30)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 110, 30)];
     label.text = @"Auto-refresh:";
     label.textAlignment = NSTextAlignmentRight;
     label.textColor = [UIColor lightGrayColor];
@@ -50,6 +50,7 @@ int team;
     [headerView addSubview:label];
     [headerView addSubview:self.autorefreshSwitch];
     self.tableView.tableHeaderView = headerView;
+    [self.tableView setContentOffset:CGPointMake(0,40)];
 }
 
 - (void)autorefreshStateChanged:(UISwitch *)sender{

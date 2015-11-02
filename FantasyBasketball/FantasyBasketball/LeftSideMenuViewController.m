@@ -49,27 +49,29 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     int i = (int)indexPath.row;
+    UIViewController *vc;
     if (i == 1) {
-        [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:
-            [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"s"]] animated:YES];
+        vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"s"];
     }
     else if (i == 2) {
-        [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:
-            [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"mu"]] animated:YES];
+        vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"mu"];
     }
     else if (i == 3) {
-        [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:
-            [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"mt"]] animated:YES];
+        vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"mt"];
     }
     else if (i == 4) {
-        [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:
-            [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"pl"]] animated:YES];
+        vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"pl"];
     }
     else if (i == 5) {
-        [self.sideMenuViewController setContentViewController:[[UINavigationController alloc] initWithRootViewController:
-            [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"dl"]] animated:YES];
+        vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"dl"];
     }
     else return;
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:vc];
+    navController.navigationBar.barTintColor = [UIColor colorWithRed:192/255.0 green:77/255.0 blue:25/255.0 alpha:1.0];
+    navController.navigationBar.tintColor = [UIColor whiteColor];
+    navController.navigationBar.translucent = NO;
+    [navController.navigationBar setTitleTextAttributes: @{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    [self.sideMenuViewController setContentViewController:navController animated:YES];
     [self.sideMenuViewController hideMenuViewController];
 }
 
