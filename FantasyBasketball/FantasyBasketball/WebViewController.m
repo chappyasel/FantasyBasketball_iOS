@@ -20,13 +20,12 @@ UIBarButtonItem *refreshButton;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self loadNavBar];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+- (void)viewWillAppear:(BOOL)animated {
+    [self loadNavBar];
     [_webDisplay loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.link]]];
-    _webDisplay.clipsToBounds = NO;
+    _webDisplay.scrollView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
 }
 
 - (void) adjustViewsForOrientation:(UIInterfaceOrientation) orientation {
@@ -64,12 +63,6 @@ UIBarButtonItem *refreshButton;
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     NSLog(@"MEMORY WARNING");
-}
-
-#pragma mark - Swipe Gesture
-
-- (IBAction)UserDidSwipe:(UISwipeGestureRecognizer *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Navigation

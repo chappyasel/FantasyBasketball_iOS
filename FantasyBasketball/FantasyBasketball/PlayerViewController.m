@@ -11,8 +11,11 @@
 #import "TFHpple.h"
 #import "BEMSimpleLineGraphView.h"
 #import "WebViewController.h"
+#import "ZFModalTransitionAnimator.h"
 
 @interface PlayerViewController () <BEMSimpleLineGraphDataSource, BEMSimpleLineGraphDelegate>
+
+@property (nonatomic, strong) ZFModalTransitionAnimator *animator;
 
 @property (nonatomic, strong) NSOperationQueue *imageOperationQueue;
 @property (nonatomic, strong) NSCache *imageCache;
@@ -71,15 +74,20 @@ bool needsLoadGamesButton = YES;
                     [_infoTableView reloadData];
                 });
             }];
+            [self loadGamesWithParser:parser CompletionBlock:^{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self setupGameLogTableView];
+                    [self setupGraphView];
+                });
+            }];
             [self loadRotoworldWithCompletionBlock:^{
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [_rotoworldTableView reloadData];
                 });
             }];
-            [self loadGamesWithParser:parser CompletionBlock:^{
+            [self loadNewsWithCompletionBlock:^{
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [self setupGameLogTableView];
-                    [self setupGraphView];
+                    [_newsTableView reloadData];
                 });
             }];
         }];
@@ -149,17 +157,14 @@ bool needsLoadGamesButton = YES;
 }
 
 - (void)loadInfoWithCompletionBlock:(void (^)(void)) completed {
-    _infoTableView.pagingEnabled = YES;
-    _infoTableView.showsVerticalScrollIndicator = NO;
     info = [[NSMutableArray alloc] init];
     NSArray *infoRaw = [parser searchWithXPathQuery:@"//div[@class='player-bio']/ul"];
     for (TFHppleElement *e in infoRaw) {
         if ([[e objectForKey:@"class"] isEqualToString:@"general-info"]) {
-            NSString *final;
-            for (TFHppleElement *c in e.children)
-                if (![[c objectForKey:@"class"] isEqualToString:@"last"])
-                    final = [NSString stringWithFormat:@"%@ %@",final,c.content];
+            NSString *final = [e.firstChild.content stringByReplacingOccurrencesOfString:@" " withString:@"   "];
+            final = [NSString stringWithFormat:@"%@   %@",final,((TFHppleElement *)e.children[1]).content];
             final = [final stringByReplacingOccurrencesOfString:@"(null) " withString:@""];
+            final = [final stringByReplacingOccurrencesOfString:@", " withString:@"   "];
             [info addObject:final];
         }
         else if ([[e objectForKey:@"class"] isEqualToString:@"player-metadata floatleft"]) {
@@ -499,15 +504,15 @@ bool gameLogIsBasic = YES;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (tableView == _gameTableView) return 40;
-    if (tableView == _gamesBasicTableView ||
-        tableView == _statsBasicTableView) return 40;
+    if (tableView == _gamesBasicTableView) return 25;
+    if (tableView == _statsBasicTableView) return 40;
     return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (tableView == _infoTableView) return 30;
-    if (tableView == _statsBasicTableView ||
-        tableView == _gamesBasicTableView) return 40;
+    if (tableView == _infoTableView) return 25;
+    if (tableView == _statsBasicTableView) return 40;
+    if (tableView == _gamesBasicTableView) return 30;
     if (tableView == _gameTableView && needsLoadGamesButton) return 40;
     if (tableView == _gameTableView) return 30;
     if (tableView == _rotoworldTableView) {
@@ -572,16 +577,16 @@ bool gameLogIsBasic = YES;
     if (tableView == _gamesBasicTableView) {
         UIView *cell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _gameTableView.frame.size.width, 40)];
         cell.backgroundColor = [UIColor lightGrayColor];
-        //   165   |      210
-        //65 50 50 | 42 42 42 42 42
+        float width = cell.frame.size.width;
         NSString *arr[8] = {@"DATE", @"FPTS", @"MIN", @"REB", @"AST", @"BLK", @"STL", @"PTS"};
         for (int i = 0; i < 8; i++) {
             UILabel *stats;
-            if (i == 0) stats = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 65, 40)];
-            else if (i == 1 || i == 2) stats = [[UILabel alloc] initWithFrame:CGRectMake(i*50+15, 0, 50, 40)];
-            else stats = [[UILabel alloc] initWithFrame:CGRectMake(42*i-126+165, 0, 42, 40)];
+            if (i==0) stats = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width*.17, 25)];
+            else if (i==1 || i==2) stats = [[UILabel alloc] initWithFrame:CGRectMake((i-1)*width*.14+width*.17, 0, width*.14, 25)];
+            else stats = [[UILabel alloc] initWithFrame:CGRectMake((i-3)*width*.11+width*.45, 0, width*.11, 25)];
             stats.text = [NSString stringWithFormat:@"%@",arr[i]];
-            stats.font = [UIFont boldSystemFontOfSize:17];
+            stats.font = [UIFont boldSystemFontOfSize:14];
+            stats.textColor = [UIColor darkGrayColor];
             stats.textAlignment = NSTextAlignmentCenter;
             [cell addSubview:stats];
         }
@@ -623,9 +628,30 @@ bool gameLogIsBasic = YES;
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
         cell = nil;
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier];
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, width-15, 30)];
-        label.text = info[indexPath.row];
-        label.font = [UIFont systemFontOfSize:15];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, width-15, 25)];
+        
+        NSString *text = info[indexPath.row];
+        NSDictionary *attrs = @{ NSFontAttributeName:[UIFont systemFontOfSize:16],
+                                 NSForegroundColorAttributeName:[UIColor darkGrayColor] };
+        NSDictionary *subAttrs = @{ NSFontAttributeName:[UIFont boldSystemFontOfSize:16],
+                                    NSForegroundColorAttributeName:[UIColor darkGrayColor] };
+        NSRange range1 = NSMakeRange(0, 0);
+        NSRange range2 = NSMakeRange(0, 0);
+        if (indexPath.row == 1) {
+            range1 = [text rangeOfString:@"Born:"];
+        }
+        else if (indexPath.row == 2) {
+            range1 = [text rangeOfString:@"Drafted:"];
+        }
+        else if (indexPath.row == 3) {
+            range1 = [text rangeOfString:@"College:"];
+            range2 = [text rangeOfString:@"Experience:"];
+        }
+        NSMutableAttributedString *attributedText =[[NSMutableAttributedString alloc] initWithString:text attributes:attrs];
+        if (!range1.length == 0) [attributedText setAttributes:subAttrs range:range1];
+        if (!range2.length == 0) [attributedText setAttributes:subAttrs range:range2];
+        [label setAttributedText:attributedText];
+        
         [cell addSubview:label];
         return cell;
     }
@@ -732,8 +758,6 @@ bool gameLogIsBasic = YES;
     else if (tableView == _gamesBasicTableView) {
         //       0    1    2    3   4   5   6   7   8   9  10  11  12  13  14 15 16
         //game: date game fpts min fgm fga 3pm 3pa ftm fta reb ast blk stl pf to pts
-        //   165   |      210
-        //65 50 50 | 42 42 42 42 42
         static NSString *MyIdentifier = @"MyIdentifier";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
         cell = nil;
@@ -742,9 +766,9 @@ bool gameLogIsBasic = YES;
         if (game!= nil) {
             for (int i = 0; i < 8; i++) {
                 UILabel *stats;
-                if (i == 0) stats = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 65, 40)];
-                else if (i == 1 || i == 2) stats = [[UILabel alloc] initWithFrame:CGRectMake(i*50+15, 0, 50, 40)];
-                else stats = [[UILabel alloc] initWithFrame:CGRectMake(42*i-126+165, 0, 42, 40)];
+                if (i==0) stats = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width*.17, 30)];
+                else if (i==1 || i==2) stats = [[UILabel alloc] initWithFrame:CGRectMake((i-1)*width*.14+width*.17, 0, width*.14, 30)];
+                else stats = [[UILabel alloc] initWithFrame:CGRectMake((i-3)*width*.11+width*.45, 0, width*.11, 30)];
                 if (i==0)      stats.text = [NSString stringWithFormat:@"%@",[[game[0] componentsSeparatedByString:@" "] lastObject]];
                 else if (i==1) stats.text = [NSString stringWithFormat:@"%@",game[2]];
                 else if (i==2) stats.text = [NSString stringWithFormat:@"%@",game[3]];
@@ -847,10 +871,19 @@ bool gameLogIsBasic = YES;
     if (tableView == _newsTableView) {
         NSMutableDictionary *newsPeice = news[indexPath.row];
         if ([newsPeice objectForKey:@"link"]) {
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            WebViewController *viewController = (WebViewController *)[storyboard instantiateViewControllerWithIdentifier:@"w"];
-            viewController.link = [newsPeice objectForKey:@"link"];
-            [self presentViewController:viewController animated:YES completion:nil];
+            PlayerViewController *modalVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"p"];
+            modalVC.modalPresentationStyle = UIModalPresentationCustom;
+            modalVC.player = [newsPeice objectForKey:@"link"];
+            self.animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:modalVC];
+            self.animator.dragable = YES;
+            self.animator.bounces = YES;
+            self.animator.behindViewAlpha = 0.8;
+            self.animator.behindViewScale = 0.9;
+            self.animator.transitionDuration = 0.3;
+            self.animator.direction = ZFModalTransitonDirectionBottom;
+            [self.animator setContentScrollView:modalVC.bottomScrollView];
+            modalVC.transitioningDelegate = self.animator;
+            [self presentViewController:modalVC animated:YES completion:nil];
         }
         else {
             [self tab3Pressed:nil];
