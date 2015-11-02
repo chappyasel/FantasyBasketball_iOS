@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FBPlayer.h"
+
 @class BEMSimpleLineGraphView;
 
 @interface PlayerViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, UIGestureRecognizerDelegate>
+
+@property FBPlayer *player;
 
 //header
 

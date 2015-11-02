@@ -15,6 +15,8 @@
 #import "PlayerCell.h"
 #import "ZFModalTransitionAnimator.h"
 #import "PlayerViewController.h"
+#import "WebViewController.h"
+#import "AppDelegate.h"
 
 @interface FBViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, FBPickerViewDelegate, PlayerCellDelegate>
 

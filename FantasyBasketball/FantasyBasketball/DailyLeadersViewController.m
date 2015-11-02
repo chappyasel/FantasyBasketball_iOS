@@ -24,7 +24,10 @@ int team;
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"Daily Leaders";
-    scoringDay = self.session.scoringPeriodID;
+    
+    
+    
+    scoringDay = self.session.scoringPeriodID.intValue;
     team = -1; //All defualt
     scrollViewsDL = [[NSMutableArray alloc] init];
     [self loadplayersDL];
@@ -78,7 +81,7 @@ NSTimer *updateTimer;
 }
 
 - (void)loadplayersDL {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/leaders?leagueId=%d&teamId=%d&scoringPeriodId=%d&startIndex=0&proTeamId=%d",self.session.leagueID,self.session.teamID,scoringDay,team]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/leaders?leagueId=%@&teamId=%@&scoringPeriodId=%d&startIndex=0&proTeamId=%d",self.session.leagueID,self.session.teamID,scoringDay,team]];
     NSData *html = [NSData dataWithContentsOfURL:url];
     parser = [TFHpple hppleWithHTMLData:html];
     NSString *XpathQueryString = @"//table[@class='playerTableTable tableBody']/tr";
@@ -187,16 +190,16 @@ NSMutableArray <NSMutableArray <NSString *> *> *pickerData;
 
 - (void)loadDatePickerData {
     pickerData = [[NSMutableArray alloc] initWithCapacity:2];
-    pickerData[0] = [[NSMutableArray alloc] initWithCapacity:self.session.scoringPeriodID];
+    pickerData[0] = [[NSMutableArray alloc] init];
     NSDate *date = [NSDate date];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"E, MMM d"];
-    for (int i = 0; i < self.session.scoringPeriodID; i++) pickerData[0][i] = @"";
-    for (int i = 1; i < self.session.scoringPeriodID; i++) { //days before
+    for (int i = 0; i < self.session.scoringPeriodID.intValue; i++) pickerData[0][i] = @"";
+    for (int i = 1; i < self.session.scoringPeriodID.intValue; i++) { //days before
         date = [NSDate dateWithTimeIntervalSinceNow:-86400*i];
-        pickerData[0][self.session.scoringPeriodID-1-i] = [formatter stringFromDate:date];
+        pickerData[0][self.session.scoringPeriodID.intValue-1-i] = [formatter stringFromDate:date];
     }
-    pickerData[0][self.session.scoringPeriodID-1] = @"Today";
+    pickerData[0][self.session.scoringPeriodID.intValue-1] = @"Today";
     pickerData[1] = [[NSMutableArray alloc] initWithObjects:@"All", @"FA", @"Atl", @"Bkn", @"Bos", @"Cha", @"Chi", @"Cle", @"Dal", @"Den", @"Det", @"GS", @"Hou", @"Ind", @"LAC", @"LAL", @"Mem", @"Mia", @"Mil", @"Min", @"Nor", @"NY", @"OKC", @"Orl", @"Phi", @"Pho", @"Por", @"SA", @"Sac", @"Tor", @"Uta", @"Wsh", nil];
 }
 
@@ -208,7 +211,7 @@ NSMutableArray <NSMutableArray <NSString *> *> *pickerData;
     [picker resetData];
     [picker setData:pickerData[0] ForColumn:0];
     [picker setData:pickerData[1] ForColumn:1];
-    [picker selectIndex:self.session.scoringPeriodID-1 inColumn:0];
+    [picker selectIndex:self.session.scoringPeriodID.intValue-1 inColumn:0];
     [picker selectIndex:0 inColumn:1];
     [picker setAlpha:0.0];
     [self.view addSubview:picker];

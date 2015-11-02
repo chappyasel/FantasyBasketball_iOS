@@ -48,12 +48,14 @@
 		F97658501B65E69100ACC050 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F976584B1B65E69100ACC050 /* MainInterface.storyboard */; };
 		F97658511B65E69100ACC050 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F976584D1B65E69100ACC050 /* TodayViewController.m */; };
 		F9908DFF1AA250F0008DF9D8 /* MatchupPlayerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9908DFE1AA250F0008DF9D8 /* MatchupPlayerCell.m */; };
+		F991B1821BE6D0E0008A4EA6 /* FBCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F991B1801BE6D0E0008A4EA6 /* FBCoreDataModel.xcdatamodeld */; };
+		F991B1871BE6D1D5008A4EA6 /* FBSession+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F991B1841BE6D1D5008A4EA6 /* FBSession+CoreDataProperties.m */; };
+		F991B1881BE6D1D5008A4EA6 /* FBSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F991B1861BE6D1D5008A4EA6 /* FBSession.m */; };
 		F9947F6A1B66A44E008F9B70 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9947F691B66A44E008F9B70 /* CoreGraphics.framework */; };
 		F9947F6C1B66A456008F9B70 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9947F6B1B66A456008F9B70 /* UIKit.framework */; };
 		F9947F6E1B66A45F008F9B70 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9947F6D1B66A45F008F9B70 /* Foundation.framework */; };
 		F9D7023C1A9F678000AAEB18 /* PlayerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D7023B1A9F678000AAEB18 /* PlayerCell.m */; };
 		F9F8185D1B6ABA0700EE70E7 /* FBPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F8185A1B6ABA0700EE70E7 /* FBPlayer.m */; };
-		F9F8185E1B6ABA0700EE70E7 /* FBSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F8185C1B6ABA0700EE70E7 /* FBSession.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -149,6 +151,11 @@
 		F976584D1B65E69100ACC050 /* TodayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TodayViewController.m; path = "FB - Widget/TodayViewController.m"; sourceTree = SOURCE_ROOT; };
 		F9908DFD1AA250F0008DF9D8 /* MatchupPlayerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MatchupPlayerCell.h; path = FantasyBasketball/MatchupPlayerCell.h; sourceTree = "<group>"; };
 		F9908DFE1AA250F0008DF9D8 /* MatchupPlayerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MatchupPlayerCell.m; path = FantasyBasketball/MatchupPlayerCell.m; sourceTree = "<group>"; };
+		F991B1811BE6D0E0008A4EA6 /* FBCoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FBCoreDataModel.xcdatamodel; sourceTree = "<group>"; };
+		F991B1831BE6D1D5008A4EA6 /* FBSession+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "FBSession+CoreDataProperties.h"; path = "Classes/FBSession+CoreDataProperties.h"; sourceTree = "<group>"; };
+		F991B1841BE6D1D5008A4EA6 /* FBSession+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "FBSession+CoreDataProperties.m"; path = "Classes/FBSession+CoreDataProperties.m"; sourceTree = "<group>"; };
+		F991B1851BE6D1D5008A4EA6 /* FBSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBSession.h; path = Classes/FBSession.h; sourceTree = "<group>"; };
+		F991B1861BE6D1D5008A4EA6 /* FBSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBSession.m; path = Classes/FBSession.m; sourceTree = "<group>"; };
 		F9947F691B66A44E008F9B70 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		F9947F6B1B66A456008F9B70 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F9947F6D1B66A45F008F9B70 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -157,8 +164,6 @@
 		F9DB2EF11B66A25E00B7AC82 /* FanstasyBaskeyballPrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FanstasyBaskeyballPrefixHeader.pch; sourceTree = "<group>"; };
 		F9F818591B6ABA0700EE70E7 /* FBPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBPlayer.h; path = Classes/FBPlayer.h; sourceTree = "<group>"; };
 		F9F8185A1B6ABA0700EE70E7 /* FBPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBPlayer.m; path = Classes/FBPlayer.m; sourceTree = "<group>"; };
-		F9F8185B1B6ABA0700EE70E7 /* FBSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBSession.h; path = Classes/FBSession.h; sourceTree = "<group>"; };
-		F9F8185C1B6ABA0700EE70E7 /* FBSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBSession.m; path = Classes/FBSession.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -278,6 +283,7 @@
 				F96590981A676DB3005384D1 /* Main.storyboard */,
 				F965908F1A676DB2005384D1 /* AppDelegate.h */,
 				F96590901A676DB2005384D1 /* AppDelegate.m */,
+				F991B1801BE6D0E0008A4EA6 /* FBCoreDataModel.xcdatamodeld */,
 				F965909B1A676DB3005384D1 /* Images.xcassets */,
 				F965909D1A676DB3005384D1 /* LaunchScreen.xib */,
 				F965908B1A676DB2005384D1 /* Supporting Files */,
@@ -441,8 +447,10 @@
 			children = (
 				F9F818591B6ABA0700EE70E7 /* FBPlayer.h */,
 				F9F8185A1B6ABA0700EE70E7 /* FBPlayer.m */,
-				F9F8185B1B6ABA0700EE70E7 /* FBSession.h */,
-				F9F8185C1B6ABA0700EE70E7 /* FBSession.m */,
+				F991B1851BE6D1D5008A4EA6 /* FBSession.h */,
+				F991B1861BE6D1D5008A4EA6 /* FBSession.m */,
+				F991B1831BE6D1D5008A4EA6 /* FBSession+CoreDataProperties.h */,
+				F991B1841BE6D1D5008A4EA6 /* FBSession+CoreDataProperties.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -635,6 +643,7 @@
 				F954E9841B65E501000F323F /* XPathQuery.m in Sources */,
 				F954E9931B65E52C000F323F /* BEMPermanentPopupView.m in Sources */,
 				F96590B91A677441005384D1 /* PlayersViewController.m in Sources */,
+				F991B1881BE6D1D5008A4EA6 /* FBSession.m in Sources */,
 				F9F8185D1B6ABA0700EE70E7 /* FBPlayer.m in Sources */,
 				F954E9821B65E501000F323F /* TFHpple.m in Sources */,
 				F933F7711A6B5414009E24D8 /* MatchupViewController.m in Sources */,
@@ -643,13 +652,14 @@
 				F97063801A6C98B800A50A43 /* PlayerViewController.m in Sources */,
 				F954E9911B65E52C000F323F /* BEMCircle.m in Sources */,
 				F9D7023C1A9F678000AAEB18 /* PlayerCell.m in Sources */,
-				F9F8185E1B6ABA0700EE70E7 /* FBSession.m in Sources */,
 				F954E9831B65E501000F323F /* TFHppleElement.m in Sources */,
 				F96590B61A6773E8005384D1 /* MyTeamViewController.m in Sources */,
 				F97658511B65E69100ACC050 /* TodayViewController.m in Sources */,
 				F904F3A71B6C665600B7BD37 /* FBViewController.m in Sources */,
 				F954E9941B65E52C000F323F /* BEMSimpleLineGraphView.m in Sources */,
+				F991B1871BE6D1D5008A4EA6 /* FBSession+CoreDataProperties.m in Sources */,
 				F95F53D51B6BFECA00CFF253 /* LeftSideMenuViewController.m in Sources */,
+				F991B1821BE6D0E0008A4EA6 /* FBCoreDataModel.xcdatamodeld in Sources */,
 				F965908E1A676DB2005384D1 /* main.m in Sources */,
 				F954E9901B65E52C000F323F /* BEMAverageLine.m in Sources */,
 				F95F53E01B6C0FDE00CFF253 /* SettingsViewController.m in Sources */,
@@ -884,6 +894,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		F991B1801BE6D0E0008A4EA6 /* FBCoreDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F991B1811BE6D0E0008A4EA6 /* FBCoreDataModel.xcdatamodel */,
+			);
+			currentVersion = F991B1811BE6D0E0008A4EA6 /* FBCoreDataModel.xcdatamodel */;
+			path = FBCoreDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = F96590801A676DB2005384D1 /* Project object */;
 }

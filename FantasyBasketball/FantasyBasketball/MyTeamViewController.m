@@ -24,7 +24,7 @@ NSString *scoringPeriodMT = @"today";   //span of stats
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    scoringDay = self.session.scoringPeriodID;
+    scoringDay = self.session.scoringPeriodID.intValue;
     [self loadplayersMT];
     [self loadTableView];
     [self loadDatePickerData];
@@ -47,7 +47,7 @@ NSString *scoringPeriodMT = @"today";   //span of stats
 
 - (void)loadplayersMT {
     numStarters = 0;
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/clubhouse?leagueId=%d&teamId=%d&seasonId=%d&version=%@&scoringPeriod=%d",self.session.leagueID,self.session.teamID,self.session.seasonID,scoringPeriodMT,scoringDay]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/clubhouse?leagueId=%@&teamId=%@&seasonId=%@&version=%@&scoringPeriod=%d",self.session.leagueID,self.session.teamID,self.session.seasonID,scoringPeriodMT,scoringDay]];
     NSData *html = [NSData dataWithContentsOfURL:url];
     parser = [TFHpple hppleWithHTMLData:html];
     NSString *XpathQueryString = @"//table[@class='playerTableTable tableBody']/tr";
@@ -246,7 +246,7 @@ NSArray *pickerData;
     [picker resetData];
     [picker setData:pickerData[0] ForColumn:0];
     [picker setData:pickerData[1] ForColumn:1];
-    [picker selectIndex:-(self.session.scoringPeriodID-scoringDay)+6 inColumn:0];
+    [picker selectIndex:-(self.session.scoringPeriodID.intValue-scoringDay)+6 inColumn:0];
     [picker selectIndex:(int)[[NSArray arrayWithObjects:@"today", @"last7", @"last15", @"last30", @"currSeason", @"lastSeason", @"projections",nil] indexOfObject:scoringPeriodMT] inColumn:1];
     [picker setAlpha:0.0];
     [self.view addSubview:picker];
@@ -260,7 +260,7 @@ NSArray *pickerData;
 - (void)doneButtonPressedInPickerView:(FBPickerView *)pickerView {
     int data1 = [pickerView selectedIndexForColumn:0];
     int data2 = [pickerView selectedIndexForColumn:1];
-    scoringDay = self.session.scoringPeriodID-6+data1;
+    scoringDay = self.session.scoringPeriodID.intValue-6+data1;
     if (data2 == 0) scoringPeriodMT = @"today";
     else if (data2 == 1) scoringPeriodMT = @"last7";
     else if (data2 == 2) scoringPeriodMT = @"last15";

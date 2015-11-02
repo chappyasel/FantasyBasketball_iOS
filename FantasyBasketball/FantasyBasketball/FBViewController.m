@@ -18,6 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.session = [FBSession fetchCurrentSession];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Menu"
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
@@ -26,7 +27,6 @@
                                                                                            target:self
                                                                                            action:@selector(fadeIn:)];
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
-    self.session = [FBSession sharedInstance];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.showsHorizontalScrollIndicator = NO;
@@ -73,9 +73,9 @@
 #pragma mark - PlayerCell delegate
 
 - (void)linkWithPlayer:(FBPlayer *)player {
-    _session.player = player;
     PlayerViewController *modalVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"p"];
     modalVC.modalPresentationStyle = UIModalPresentationCustom;
+    modalVC.player = player;
     self.animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:modalVC];
     self.animator.dragable = YES;
     self.animator.bounces = YES;
@@ -89,10 +89,10 @@
 }
 
 - (void)linkWithGameLink:(FBPlayer *)player {
-    _session.link = [player gameLink];
-    UIViewController *viewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"w"];
+    WebViewController *viewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"w"];
     viewController.modalPresentationStyle = UIModalPresentationFormSheet;
     viewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    viewController.link = player.gameLink;
     [self presentViewController:viewController animated:YES completion:nil];
 }
 

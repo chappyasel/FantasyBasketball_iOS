@@ -8,9 +8,9 @@
 
 #import "PlayerViewController.h"
 #import "FBSession.h"
-#import "FBPlayer.h"
 #import "TFHpple.h"
 #import "BEMSimpleLineGraphView.h"
+#import "WebViewController.h"
 
 @interface PlayerViewController () <BEMSimpleLineGraphDataSource, BEMSimpleLineGraphDelegate>
 
@@ -22,8 +22,6 @@
 @implementation PlayerViewController
 
 bool handleError;
-FBSession *session;
-FBPlayer *player;
 TFHpple *parser;
 
 NSMutableArray *scrollViewsP;
@@ -43,7 +41,6 @@ bool needsLoadGamesButton = YES;
     handleError = NO;
     [self loadScrollView];
     needsLoadGamesButton = YES;
-    player = session.player;
     gameLogIsBasic = YES;
     self.imageOperationQueue = [[NSOperationQueue alloc]init];
     self.imageOperationQueue.maxConcurrentOperationCount = 4;
@@ -100,7 +97,7 @@ bool needsLoadGamesButton = YES;
 
 - (void)loadPlayer {
     bool playerFound = NO;
-    NSString *url = [NSString stringWithFormat:@"http://espn.go.com/nba/players/_/search/%@",[player.lastName stringByReplacingOccurrencesOfString:@" " withString:@"_"]];
+    NSString *url = [NSString stringWithFormat:@"http://espn.go.com/nba/players/_/search/%@",[self.player.lastName stringByReplacingOccurrencesOfString:@" " withString:@"_"]];
     NSData *html = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
     parser = [TFHpple hppleWithHTMLData:html];
     if ([[[[parser searchWithXPathQuery:@"//h1[@class='h2']"] firstObject] content] containsString:@"NBA Player Search -"]) { //couldnt find player first try
@@ -108,7 +105,7 @@ bool needsLoadGamesButton = YES;
         for (TFHppleElement *p in [parser searchWithXPathQuery:@"//table[@class='tablehead']/tr"]) {
             if (![[p objectForKey:@"class"] isEqual:@"stathead"] && ![[p objectForKey:@"class"] isEqual:@"colhead"]) {
                 NSArray *name = [p.firstChild.firstChild.content componentsSeparatedByString:@", "];
-                if ([name[1] containsString:player.firstName]) { //player found
+                if ([name[1] containsString:self.player.firstName]) { //player found
                     parser = [TFHpple hppleWithHTMLData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[p.firstChild.firstChild objectForKey:@"href"]]]];
                     NSLog(@"Found player");
                     playerFound = YES;
@@ -158,7 +155,7 @@ bool needsLoadGamesButton = YES;
     _playerImageView.image = image;
     //team image
     UIImageView *teamImage = [[UIImageView alloc] initWithFrame:CGRectMake(-45, 130, 160, 160*(1/1.25))];
-    teamImage.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://a2.espncdn.com/prod/assets/clubhouses/2010/nba/teamlogos/%@.png",player.team]]]];
+    teamImage.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://a2.espncdn.com/prod/assets/clubhouses/2010/nba/teamlogos/%@.png",self.player.team]]]];
     teamImage.contentMode = UIViewContentModeScaleAspectFit;
     teamImage.alpha = 0.25;
     [self.view addSubview:teamImage];
@@ -167,7 +164,8 @@ bool needsLoadGamesButton = YES;
 } //REMOVE UI CHANGES
 
 - (void)loadPlayerRanks {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/freeagency?leagueId=%d&seasonId=%d&context=freeagency&version=%@&avail=-1&search=%@&view=research",session.leagueID,session.seasonID,@"null",player.lastName]];
+    FBSession *session = [FBSession fetchCurrentSession];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/freeagency?leagueId=%@&seasonId=%@&context=freeagency&version=%@&avail=-1&search=%@&view=research",session.leagueID,session.seasonID,@"null",self.player.lastName]];
     NSData *html = [NSData dataWithContentsOfURL:url];
     TFHpple *parserR = [TFHpple hppleWithHTMLData:html];
     NSString *XpathQueryString = @"//table[@class='playerTableTable tableBody']/tr";
@@ -177,7 +175,7 @@ bool needsLoadGamesButton = YES;
         TFHppleElement *element = nodes[i];
         if ([element objectForKey:@"id"]) {
             NSArray <TFHppleElement *> *children = element.children;
-            if ([children[0].content containsString:player.firstName]) {
+            if ([children[0].content containsString:self.player.firstName]) {
                 [ranks addObject:children[2].content];
                 [ranks addObject:children[9].content];
                 [ranks addObject:children[11].content];
@@ -256,7 +254,7 @@ bool needsLoadGamesButton = YES;
     _rotoworldTableView.delegate = self;
     _rotoworldTableView.dataSource = self;
     rotoworld = [[NSMutableArray alloc] init];
-    TFHpple *statParser = [[TFHpple alloc] initWithHTMLData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.rotoworld.com/content/playersearch.aspx?searchname=%@,%@&sport=nba",player.lastName,player.firstName]]]];
+    TFHpple *statParser = [[TFHpple alloc] initWithHTMLData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.rotoworld.com/content/playersearch.aspx?searchname=%@,%@&sport=nba",self.player.lastName,self.player.firstName]]]];
     NSString *rotoworldLink = [[[statParser searchWithXPathQuery:@"//div[@class='moreplayernews']/a"] firstObject] objectForKey:@"href"];
     TFHpple *rotoParser = [[TFHpple alloc] initWithHTMLData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.rotoworld.com%@",rotoworldLink]]]];
     NSArray *data = [rotoParser searchWithXPathQuery:@"//div[@class='RW_pn']/div[@class='pb']/div[@style='width:460px; float:left;']"];
@@ -850,9 +848,9 @@ bool gameLogIsBasic = YES;
     if (tableView == _newsTableView) {
         NSMutableDictionary *newsPeice = news[indexPath.row];
         if ([newsPeice objectForKey:@"link"]) {
-            session.link = [newsPeice objectForKey:@"link"];
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            UIViewController *viewController = (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:@"w"];
+            WebViewController *viewController = (WebViewController *)[storyboard instantiateViewControllerWithIdentifier:@"w"];
+            viewController.link = [newsPeice objectForKey:@"link"];
             [self presentViewController:viewController animated:YES completion:nil];
         }
         else {

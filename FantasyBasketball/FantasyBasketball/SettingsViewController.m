@@ -11,6 +11,9 @@
 
 @interface SettingsViewController ()
 
+@property NSMutableArray <FBSession *> *sessions;
+@property (strong, nonatomic) FBSession *selectedSession;
+
 @end
 
 @implementation SettingsViewController
@@ -22,11 +25,15 @@
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
                                                                             action:@selector(presentLeftMenuViewController:)];
-    self.session = [FBSession sharedInstance];
-    self.leagueInput.placeholder = [NSString stringWithFormat:@"%d",self.session.leagueID];
-    self.teamInput.placeholder = [NSString stringWithFormat:@"%d",self.session.teamID];
-    self.seasonInput.placeholder = [NSString stringWithFormat:@"%d",self.session.seasonID];
-    self.scoringIDInput.placeholder = [NSString stringWithFormat:@"%d",self.session.scoringPeriodID];
+    [self fetchSessions];
+    for (FBSession *s in self.sessions) {
+        if (s.isSelected == YES) self.selectedSession = s;
+        break;
+    }
+    self.leagueInput.placeholder = [NSString stringWithFormat:@"%@",self.selectedSession.leagueID];
+    self.teamInput.placeholder = [NSString stringWithFormat:@"%@",self.selectedSession.teamID];
+    self.seasonInput.placeholder = [NSString stringWithFormat:@"%@",self.selectedSession.seasonID];
+    self.scoringIDInput.placeholder = [NSString stringWithFormat:@"%@",self.selectedSession.scoringPeriodID];
     self.leagueInput.delegate = self;
     self.teamInput.delegate = self;
     self.seasonInput.delegate = self;
@@ -36,6 +43,18 @@
     [self.view addSubview:view];
     [self loadViews];
     [self loadKeyboardDismissBar];
+}
+
+- (void)fetchSessions {
+    NSManagedObjectContext *context = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"FBSession" inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    NSError *error;
+    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+    if (error) NSLog(@"%@",error);
+    if (fetchedObjects.count == 0) NSLog(@"FETCHED OBJECTS ERROR");
+    self.sessions = [[NSMutableArray alloc] initWithArray:fetchedObjects];
 }
 
 - (void)loadViews {
@@ -48,8 +67,8 @@
     self.scoringIDInput = [[UITextField alloc] initWithFrame:CGRectMake(100, 150, 150, 30)];
     NSMutableArray <UITextField *> *textFields = [[NSMutableArray alloc] initWithArray:
                                                   @[self.leagueInput,self.teamInput,self.seasonInput, self.scoringIDInput]];
-    NSArray *placeholders = @[[NSString stringWithFormat:@"%d",self.session.leagueID], [NSString stringWithFormat:@"%d",self.session.teamID],
-                              [NSString stringWithFormat:@"%d",self.session.seasonID], [NSString stringWithFormat:@"%d",self.session.scoringPeriodID]];
+    NSArray *placeholders = @[[NSString stringWithFormat:@"%@",self.selectedSession.leagueID], [NSString stringWithFormat:@"%@",self.selectedSession.teamID],
+                              [NSString stringWithFormat:@"%@",self.selectedSession.seasonID], [NSString stringWithFormat:@"%@",self.selectedSession.scoringPeriodID]];
     for (int i = 0; i < 4; i++) {
         textFields[i].placeholder = placeholders[i];
         textFields[i].delegate = self;
@@ -79,10 +98,10 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     if (![textField.text isEqualToString:@""]) {
-        if (textField == self.leagueInput) self.session.leagueID = [textField.text intValue];
-        else if (textField == self.teamInput) self.session.teamID = [textField.text intValue];
-        else if (textField == self.seasonInput) self.session.seasonID = [textField.text intValue];
-        else if (textField == self.scoringIDInput) self.session.scoringPeriodID = [textField.text intValue];
+        if (textField == self.leagueInput) self.selectedSession.leagueID = [NSNumber numberWithInt:[textField.text intValue]];
+        else if (textField == self.teamInput) self.selectedSession.teamID = [NSNumber numberWithInt:[textField.text intValue]];
+        else if (textField == self.seasonInput) self.selectedSession.seasonID = [NSNumber numberWithInt:[textField.text intValue]];
+        else if (textField == self.scoringIDInput) self.selectedSession.scoringPeriodID = [NSNumber numberWithInt:[textField.text intValue]];
     }
 }
 

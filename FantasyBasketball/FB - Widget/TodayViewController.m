@@ -18,6 +18,8 @@
 
 @implementation TodayViewController
 
+/*
+
 FBSession *session;
 NSMutableArray *players1;
 NSMutableArray *players2;
@@ -274,5 +276,6 @@ int numSlots = 0;
     [self refreshButtonPressed:nil];
     completionHandler(NCUpdateResultNewData);
 }
+*/
 
 @end

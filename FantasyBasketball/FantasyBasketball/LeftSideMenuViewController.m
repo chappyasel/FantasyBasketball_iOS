@@ -90,8 +90,8 @@
     cell.textLabel.text = titles[indexPath.row];
     cell.imageView.image = [UIImage imageNamed:images[indexPath.row]];
     if (indexPath.row == 0) {
-        FBSession *session = [FBSession sharedInstance];
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/clubhouse?leagueId=%d&teamId=%d&seasonId=%d",session.leagueID,session.teamID,session.seasonID]];
+        FBSession *session = [FBSession fetchCurrentSession];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/clubhouse?leagueId=%@&teamId=%@&seasonId=%@",session.leagueID,session.teamID,session.seasonID]];
         NSError *error;
         NSData *html = [NSData dataWithContentsOfURL:url options:NSDataReadingMappedIfSafe error:&error];
         if (error) NSLog(@"%@",error);

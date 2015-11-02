@@ -1,24 +1,23 @@
 //
-//  Session.h
+//  FBSession.h
 //  FantasyBasketball
 //
-//  Created by Chappy Asel on 1/14/15.
-//  Copyright (c) 2015 CD. All rights reserved.
+//  Created by Chappy Asel on 11/1/15.
+//  Copyright © 2015 CD. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 #import "FBPlayer.h"
 
-@interface FBSession : NSObject //default session set in appdelegate.m
+NS_ASSUME_NONNULL_BEGIN
 
-@property int leagueID;
-@property int teamID;
-@property int seasonID;
-@property int scoringPeriodID; //all session variables set in AppDelegate.m
+@interface FBSession : NSManagedObject
 
-@property FBPlayer *player;
-@property NSString *link;
-
-+ (FBSession *)sharedInstance;
++ (FBSession *)fetchCurrentSession;
 
 @end
+
+NS_ASSUME_NONNULL_END
+
+#import "FBSession+CoreDataProperties.h"

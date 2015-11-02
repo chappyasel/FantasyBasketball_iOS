@@ -17,7 +17,6 @@
 
 UINavigationBar *barWV;
 UIBarButtonItem *refreshButton;
-FBSession *session;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -26,8 +25,7 @@ FBSession *session;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    NSString *link = session.link;
-    [_webDisplay loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:link]]];
+    [_webDisplay loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.link]]];
     _webDisplay.clipsToBounds = NO;
 }
 

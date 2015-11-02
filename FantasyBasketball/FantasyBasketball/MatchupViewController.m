@@ -96,7 +96,7 @@ NSTimer *updateTimer;
 
 - (void)loadplayersMU {
     numStartersMU1 = 0, numStartersMU2 = 0;
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/boxscorefull?leagueId=%d&teamId=%d&scoringPeriodId=%d&seasonId=%d&view=scoringperiod&version=full",self.session.leagueID,self.session.teamID,self.session.scoringPeriodID,self.session.seasonID]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/boxscorefull?leagueId=%@&teamId=%@&scoringPeriodId=%@&seasonId=%@&view=scoringperiod&version=full",self.session.leagueID,self.session.teamID,self.session.scoringPeriodID,self.session.seasonID]];
     NSError *error;
     NSData *html = [NSData dataWithContentsOfURL:url options:NSDataReadingMapped error:&error];
     if (error) NSLog(@"Matchup error: %@",error);

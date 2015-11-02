@@ -10,6 +10,8 @@
 
 @interface WebViewController : UIViewController <UIWebViewDelegate, UIGestureRecognizerDelegate>
 
+@property NSString *link;
+
 @property (weak, nonatomic) IBOutlet UIWebView *webDisplay;
 
 @end

@@ -6,6 +6,7 @@ Utilizes:
   -BEMLineGraph
   -ZFDragableModalTransition
   -RESideMenu
+  -Core Data
 
 ###Player info view
 <img src="./Screenshots/Player.png" alt="Drawing" width="200 px"/>
