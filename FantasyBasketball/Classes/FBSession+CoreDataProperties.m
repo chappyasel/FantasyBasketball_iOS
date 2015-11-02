@@ -14,7 +14,8 @@
 @implementation FBSession (CoreDataProperties)
 
 @dynamic isSelected;
-@dynamic priority;
+
+@dynamic name;
 
 @dynamic leagueID;
 @dynamic teamID;

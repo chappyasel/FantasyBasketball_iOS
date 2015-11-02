@@ -42,10 +42,10 @@
     else if (result.count == 0) {
         NSManagedObjectContext *context = [self managedObjectContext];
         FBSession *session = [NSEntityDescription insertNewObjectForEntityForName:@"FBSession" inManagedObjectContext:context];
+        session.name = @"Chap Squad";
         session.leagueID = [NSNumber numberWithInt: 186088];
         session.teamID = [NSNumber numberWithInt: 1];
         session.seasonID = [NSNumber numberWithInt: 2016];
-        session.priority = [NSNumber numberWithInt: 1];
         session.isSelected = YES;
         [result addObject:session];
     }

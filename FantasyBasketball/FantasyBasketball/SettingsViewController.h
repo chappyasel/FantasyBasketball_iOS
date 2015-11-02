@@ -7,17 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "FBPickerView.h"
 #import "FBSession.h"
 #import "RESideMenu.h"
 #import "AppDelegate.h"
+#import "SessionViewController.h"
+#import "ZFModalTransitionAnimator.h"
 
-@interface SettingsViewController : UIViewController <UITextFieldDelegate, FBPickerViewDelegate>
+@interface SettingsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, SessionViewControllerDelegate>
 
-@property (strong, nonatomic) IBOutlet UITextField *leagueInput;
-@property (strong, nonatomic) IBOutlet UITextField *teamInput;
-@property (strong, nonatomic) IBOutlet UITextField *seasonInput;
-@property (strong, nonatomic) IBOutlet UITextField *scoringIDInput;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+@property (weak, nonatomic) IBOutlet UIButton *addButton;
 
 @end

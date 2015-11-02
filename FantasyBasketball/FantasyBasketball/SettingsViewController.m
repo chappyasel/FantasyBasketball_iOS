@@ -7,12 +7,12 @@
 //
 
 #import "SettingsViewController.h"
-#import "FBSession.h"
 
 @interface SettingsViewController ()
 
+@property (nonatomic, strong) ZFModalTransitionAnimator *animator;
+
 @property NSMutableArray <FBSession *> *sessions;
-@property (strong, nonatomic) FBSession *selectedSession;
 
 @end
 
@@ -26,23 +26,8 @@
                                                                             target:self
                                                                             action:@selector(presentLeftMenuViewController:)];
     [self fetchSessions];
-    for (FBSession *s in self.sessions) {
-        if (s.isSelected == YES) self.selectedSession = s;
-        break;
-    }
-    self.leagueInput.placeholder = [NSString stringWithFormat:@"%@",self.selectedSession.leagueID];
-    self.teamInput.placeholder = [NSString stringWithFormat:@"%@",self.selectedSession.teamID];
-    self.seasonInput.placeholder = [NSString stringWithFormat:@"%@",self.selectedSession.seasonID];
-    self.scoringIDInput.placeholder = [NSString stringWithFormat:@"%@",self.selectedSession.scoringPeriodID];
-    self.leagueInput.delegate = self;
-    self.teamInput.delegate = self;
-    self.seasonInput.delegate = self;
-    self.scoringIDInput.delegate = self;
-    UIView *view = [[UIView alloc] initWithFrame:self.view.frame];
-    view.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:view];
-    [self loadViews];
-    [self loadKeyboardDismissBar];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
 }
 
 - (void)fetchSessions {
@@ -57,78 +42,116 @@
     self.sessions = [[NSMutableArray alloc] initWithArray:fetchedObjects];
 }
 
-- (void)loadViews {
-    UIView *container = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 250, 200)];
-    container.center = CGPointMake(self.view.center.x, self.view.center.y-100);
-    NSArray *labels = @[@"League:",@"Team:",@"Season:",@"ScoringID:"];
-    self.leagueInput = [[UITextField alloc] initWithFrame:CGRectMake(100, 0, 150, 30)];
-    self.teamInput = [[UITextField alloc] initWithFrame:CGRectMake(100, 50, 150, 30)];
-    self.seasonInput = [[UITextField alloc] initWithFrame:CGRectMake(100, 100, 150, 30)];
-    self.scoringIDInput = [[UITextField alloc] initWithFrame:CGRectMake(100, 150, 150, 30)];
-    NSMutableArray <UITextField *> *textFields = [[NSMutableArray alloc] initWithArray:
-                                                  @[self.leagueInput,self.teamInput,self.seasonInput, self.scoringIDInput]];
-    NSArray *placeholders = @[[NSString stringWithFormat:@"%@",self.selectedSession.leagueID], [NSString stringWithFormat:@"%@",self.selectedSession.teamID],
-                              [NSString stringWithFormat:@"%@",self.selectedSession.seasonID], [NSString stringWithFormat:@"%@",self.selectedSession.scoringPeriodID]];
-    for (int i = 0; i < 4; i++) {
-        textFields[i].placeholder = placeholders[i];
-        textFields[i].delegate = self;
-        textFields[i].keyboardType = UIKeyboardTypeNumberPad;
-        textFields[i].borderStyle = UITextBorderStyleRoundedRect;
-        [container addSubview:textFields[i]];
-        UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 50*i, 90, 30)];
-        label1.text = labels[i];
-        label1.textAlignment = NSTextAlignmentRight;
-        label1.textColor = [UIColor lightGrayColor];
-        [container addSubview:label1];
+- (IBAction)newButtonPressed:(UIButton *)sender {
+    if (self.sessions.count > 10) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Maximum Teams"
+                                                        message:@"Sorry, this app only allows you to store 10 teams for the purpose of memory management. Please delete a league to add a new league."
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
     }
-    [self.view addSubview:container];
-}
-
-- (void)loadKeyboardDismissBar {
-    NSArray *textFields = [[NSArray alloc] initWithObjects:self.leagueInput, self.teamInput, self.seasonInput, self.scoringIDInput, nil];
-    for (UITextField *field in textFields) {
-        UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:field action:@selector(resignFirstResponder)];
-        UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 414, 44)];
-        toolbar.items = [NSArray arrayWithObject:barButton];
-        field.inputAccessoryView = toolbar;
+    else {
+        NSManagedObjectContext *context = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+        FBSession *session = [NSEntityDescription insertNewObjectForEntityForName:@"FBSession" inManagedObjectContext:context];
+        session.isSelected = NO;
+        [self.sessions addObject:session];
+        SessionViewController *modalVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"ss"];
+        modalVC.modalPresentationStyle = UIModalPresentationCustom;
+        modalVC.session = session;
+        modalVC.delegate = self;
+        self.animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:modalVC];
+        self.animator.dragable = NO;
+        self.animator.bounces = YES;
+        self.animator.behindViewAlpha = 0.8;
+        self.animator.behindViewScale = 0.9;
+        self.animator.transitionDuration = 0.5;
+        self.animator.direction = ZFModalTransitonDirectionBottom;
+        modalVC.transitioningDelegate = self.animator;
+        [self presentViewController:modalVC animated:YES completion:nil];
     }
 }
 
-#pragma mark - Text Field
-
-- (void)textFieldDidEndEditing:(UITextField *)textField {
-    if (![textField.text isEqualToString:@""]) {
-        if (textField == self.leagueInput) self.selectedSession.leagueID = [NSNumber numberWithInt:[textField.text intValue]];
-        else if (textField == self.teamInput) self.selectedSession.teamID = [NSNumber numberWithInt:[textField.text intValue]];
-        else if (textField == self.seasonInput) self.selectedSession.seasonID = [NSNumber numberWithInt:[textField.text intValue]];
-        else if (textField == self.scoringIDInput) self.selectedSession.scoringPeriodID = [NSNumber numberWithInt:[textField.text intValue]];
+- (IBAction)deleteButtonPressed:(UIButton *)sender {
+    if (self.sessions.count == 1) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Cannot Delete"
+                                                        message:@"You can not delete the final team. There must be at least one team."
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+    else {
+        FBSession *session = self.sessions[sender.tag];
+        [self.sessions removeObject:session];
+        NSManagedObjectContext *context = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+        [context deleteObject:session];
+        [context save:nil];
+        [self.tableView reloadData];
     }
 }
 
-#pragma mark - FBPickerView delegate
+#pragma mark - tableView dataSource
 
--(void) fadeIn:(UIButton *)sender {
-    
+- (NSInteger) tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.sessions.count;
 }
 
--(void)fadeOutWithPickerView: (FBPickerView *) pickerView {
-    [pickerView setAlpha:1.0];
-    [UIView animateWithDuration:0.1 animations:^{
-        [pickerView setAlpha:0.0];
-    } completion:^(BOOL finished) {
-        [pickerView removeFromSuperview];
-        self.navigationItem.rightBarButtonItem.enabled = YES;
-    }];
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
 }
 
-#pragma mark - FBPickerView delegate
-
-- (void)doneButtonPressedInPickerView:(FBPickerView *)pickerView {
-    
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 50;
 }
 
-- (void)cancelButtonPressedInPickerView:(FBPickerView *)pickerView {
-    
+- (UITableViewCell *) tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"c"];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"c"];
+    }
+    FBSession *session = self.sessions[indexPath.row];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@",session.name];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"LeagueID: %@, TeamID: %@",session.leagueID,session.teamID];
+    cell.detailTextLabel.textColor = [UIColor lightGrayColor];
+    if (session.isSelected) {
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:18];
+        cell.detailTextLabel.font = [UIFont boldSystemFontOfSize:14];
+    }
+    else {
+        cell.textLabel.font = [UIFont systemFontOfSize:18];
+        cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
+    }
+    UIButton *deleteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    deleteButton.frame = CGRectMake(self.tableView.frame.size.width-100, 10, 80, 30);
+    [deleteButton setTitle:@"Delete" forState:UIControlStateNormal];
+    deleteButton.titleLabel.font = [UIFont systemFontOfSize:17];
+    [deleteButton addTarget:self action:@selector(deleteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    deleteButton.tag = indexPath.row;
+    [cell addSubview:deleteButton];
+    return cell;
+}
+
+#pragma mark - tableView delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    for (FBSession *session in self.sessions) session.isSelected = NO;
+    self.sessions[indexPath.row].isSelected = YES;
+    NSManagedObjectContext *context = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    [context save:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"SessionChangeNotification"
+                                                        object:nil];
+    [tableView reloadData];
+}
+
+#pragma mark - sessionVC delegate
+
+- (void)sessionVCDidDissapearWithResultSession:(FBSession *)session {
+    NSManagedObjectContext *context = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    NSError *error;
+    [context save:&error];
+    if (error)NSLog(@"%@",error.description);
+    [self.tableView reloadData];
 }
 
 #pragma mark - Navigation

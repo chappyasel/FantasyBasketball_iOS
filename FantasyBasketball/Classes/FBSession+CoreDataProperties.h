@@ -16,7 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface FBSession (CoreDataProperties)
 
 @property bool isSelected;
-@property (nullable, nonatomic, retain) NSNumber *priority;
+
+@property (nullable, nonatomic, retain) NSString *name;
 
 @property (nullable, nonatomic, retain) NSNumber *leagueID;
 @property (nullable, nonatomic, retain) NSNumber *teamID;
