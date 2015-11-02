@@ -33,45 +33,39 @@ NSMutableArray *games;
 NSMutableArray *news;
 NSMutableArray *rotoworld;
 
-bool playerNotLoaded = YES;
 bool needsLoadGamesButton = YES;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     handleError = NO;
-    [self loadScrollView];
     needsLoadGamesButton = YES;
     gameLogIsBasic = YES;
+    scrollViewsP = [[NSMutableArray alloc] init];
     self.imageOperationQueue = [[NSOperationQueue alloc]init];
     self.imageOperationQueue.maxConcurrentOperationCount = 4;
     self.imageCache = [[NSCache alloc] init];
-    playerNotLoaded = YES;
-    
     self.darkBackground.alpha = 0.0;
     [UIView animateWithDuration:0.3 animations:^(void) {
         self.darkBackground.alpha = 0.85;
     }];
+    [self setupScrollView];
+    [self setupOverview];
+    [self setupGameLogTableView];
+    [self beginAsyncLoading];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    if (playerNotLoaded) {
-        [super viewDidAppear:animated];
-        [self loadScrollView];
-        [self loadOverview];
-        [self loadPlayer];
-        [self contLoading];
-        playerNotLoaded = NO;
-    }
-}
-
-- (void)contLoading {
-    scrollViewsP = [[NSMutableArray alloc] init];
-    if (parser.data != nil) {
-        [self loadGameLogTableView];
-        dispatch_queue_t myQueue = dispatch_queue_create("My Queue",NULL);
-        dispatch_async(myQueue, ^{
-            [self loadPlayerRanks];
+- (void)beginAsyncLoading {
+    dispatch_queue_t myQueue = dispatch_queue_create("My Queue",NULL);
+    dispatch_async(myQueue, ^{
+        [self loadParserWebpageWithCompletionBlock:^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self setupPlayerHeader];
+            });
+            [self loadPlayerRanksWithCompletionBlock:^{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self setupPlayerRanksView];
+                });
+            }];
             [self loadInfoWithCompletionBlock:^{
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [_infoTableView reloadData];
@@ -84,22 +78,21 @@ bool needsLoadGamesButton = YES;
             }];
             [self loadGamesWithParser:parser CompletionBlock:^{
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [self loadGameLogTableView];
-                    [self loadGraphView];
+                    [self setupGameLogTableView];
+                    [self setupGraphView];
                 });
             }];
-        });
-    }
-    else NSLog(@"Player not found.");
+        }];
+    });
 }
 
 #pragma mark - data loading
 
-- (void)loadPlayer {
-    bool playerFound = NO;
+- (void)loadParserWebpageWithCompletionBlock:(void (^)(void)) completed {
     NSString *url = [NSString stringWithFormat:@"http://espn.go.com/nba/players/_/search/%@",[self.player.lastName stringByReplacingOccurrencesOfString:@" " withString:@"_"]];
     NSData *html = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
     parser = [TFHpple hppleWithHTMLData:html];
+    bool playerFound = NO;
     if ([[[[parser searchWithXPathQuery:@"//h1[@class='h2']"] firstObject] content] containsString:@"NBA Player Search -"]) { //couldnt find player first try
         NSLog(@"Could not Find player, looking deeper...");
         for (TFHppleElement *p in [parser searchWithXPathQuery:@"//table[@class='tablehead']/tr"]) {
@@ -118,52 +111,17 @@ bool needsLoadGamesButton = YES;
     if (!playerFound) {
         handleError = YES;
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Player Not Found"
-                                                        message:@"The requested player was not found on ESPNs server. This is likely a frontend error."
+                                                        message:@"The requested player was not found on ESPNs server. This is likely an application error."
                                                        delegate:self
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
         [alert show];
         return;
     }
-    //name, team
-    _playerNameDisplay.text = [[[parser searchWithXPathQuery:@"//div[@class='mod-content']/h1"] firstObject] content];
-    _playerTeamDisplay.text = [[[parser searchWithXPathQuery:@"//ul[@class='general-info']/li[@class='last']/a"] firstObject] content];
-    //stats
-    /*
-     NSArray *seasonStats = [[[parser searchWithXPathQuery:@"//table[@class='header-stats']/tr"] firstObject] children];
-     if (seasonStats.count > 2) {
-     _seasonDisplay1.text = [seasonStats[0] content];
-     _seasonDisplay2.text = [seasonStats[1] content];
-     _seasonDisplay3.text = [seasonStats[2] content];
-     }
-     NSArray *careerStats = [[[parser searchWithXPathQuery:@"//table[@class='header-stats']/tr[@class='career']"] firstObject] children];
-     if (careerStats.count > 2) {
-     _careerDisplay1.text = [careerStats[0] content];
-     _careerDisplay2.text = [careerStats[1] content];
-     _careerDisplay3.text = [careerStats[2] content];
-     }
-     NSArray *statNames = [[[parser searchWithXPathQuery:@"//table[@class='header-stats']/thead"] firstObject] children];
-     if (statNames.count > 2) {
-     for (UILabel *label in _statSlot1Header) label.text = [statNames[0] content];
-     for (UILabel *label in _statSlot2Header) label.text = [statNames[1] content];
-     for (UILabel *label in _statSlot3Header) label.text = [statNames[2] content];
-     }
-     */
-    //player image
-    TFHppleElement *link = [[parser searchWithXPathQuery:@"//div[@class='main-headshot']/img"] firstObject];
-    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[link objectForKey:@"src"]]]];
-    _playerImageView.image = image;
-    //team image
-    UIImageView *teamImage = [[UIImageView alloc] initWithFrame:CGRectMake(-45, 130, 160, 160*(1/1.25))];
-    teamImage.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://a2.espncdn.com/prod/assets/clubhouses/2010/nba/teamlogos/%@.png",self.player.team]]]];
-    teamImage.contentMode = UIViewContentModeScaleAspectFit;
-    teamImage.alpha = 0.25;
-    [self.view addSubview:teamImage];
-    [self.view sendSubviewToBack:teamImage];
-    [self.view sendSubviewToBack:self.darkBackground];
-} //REMOVE UI CHANGES
+    completed();
+}
 
-- (void)loadPlayerRanks {
+- (void)loadPlayerRanksWithCompletionBlock:(void (^)(void)) completed {
     FBSession *session = [FBSession fetchCurrentSession];
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/freeagency?leagueId=%@&seasonId=%@&context=freeagency&version=%@&avail=-1&search=%@&view=research",session.leagueID,session.seasonID,@"null",self.player.lastName]];
     NSData *html = [NSData dataWithContentsOfURL:url];
@@ -187,34 +145,7 @@ bool needsLoadGamesButton = YES;
             }
         }
     }
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self.headerStat1.text = ranks[1];
-        self.headerStat2.text = ranks[2];
-        self.headerStat3.text = ranks[3];
-        self.headerStat4.text = ranks[4];
-        self.headerStat5.text = [NSString stringWithFormat:@"%@%%",ranks[5]];
-        if ([ranks[6] intValue] > 0) {
-            self.headerStat6.text = [NSString stringWithFormat:@"%@",ranks[6]];
-            self.headerStat6.textColor = [UIColor colorWithRed:0/255.0f green:190/255.0f blue:0/255.0f alpha:1.0f]; //green
-        }
-        else if ([ranks[6] intValue] == 0) self.headerStat6.text = @"0.0";
-        else {
-            self.headerStat6.text = [NSString stringWithFormat:@"%@",ranks[6]];
-            self.headerStat6.textColor = [UIColor colorWithRed:240/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f]; //red
-        }
-        if ([ranks[0] isEqualToString:@"FA"]) {
-            self.headerOwnerLabel.text = @"FA";
-            self.headerOwnerLabel.textColor = [UIColor colorWithRed:0/255.0f green:190/255.0f blue:0/255.0f alpha:1.0f]; //green
-        }
-        else if ([ranks[0] containsString:@"WA ("]) {
-            self.headerOwnerLabel.text = [NSString stringWithFormat:@"%@",ranks[0]];
-            self.headerOwnerLabel.textColor = [UIColor colorWithRed:200/255.0f green:200/255.0f blue:40/255.0f alpha:1.0f]; //yellow
-        }
-        else {
-            self.headerOwnerLabel.text = [NSString stringWithFormat:@"Owned (%@)",ranks[0]];
-            self.headerOwnerLabel.textColor = [UIColor whiteColor];
-        }
-    });
+    completed();
 }
 
 - (void)loadInfoWithCompletionBlock:(void (^)(void)) completed {
@@ -397,7 +328,7 @@ bool needsLoadGamesButton = YES;
 
 #pragma mark - UI loading
 
-- (void)loadScrollView { //and its contents (tables...)
+- (void)setupScrollView { //and its contents (tables...)
     //tab 1: Current game, Full stats, recent games overview, last rotowire, own%, news
     float width = (float)self.view.frame.size.width;
     _gameTableView = [[UITableView alloc] initWithFrame:CGRectMake(width, 0, width, 420)];
@@ -417,7 +348,7 @@ bool needsLoadGamesButton = YES;
     [self.view bringSubviewToFront:_titleView];
 }
 
-- (void)loadOverview {
+- (void)setupOverview {
     _infoTableView.delegate = self;
     _infoTableView.dataSource = self;
     _statsBasicTableView.delegate = self;
@@ -428,7 +359,46 @@ bool needsLoadGamesButton = YES;
     _statsBasicTableView.userInteractionEnabled = NO;
 }
 
-- (void)loadGameLogTableView {
+- (void)setupPlayerHeader {
+    //name, team
+    _playerNameDisplay.text = [[[parser searchWithXPathQuery:@"//div[@class='mod-content']/h1"] firstObject] content];
+    _playerTeamDisplay.text = [[[parser searchWithXPathQuery:@"//ul[@class='general-info']/li[@class='last']/a"] firstObject] content];
+    //stats
+    /*
+     NSArray *seasonStats = [[[parser searchWithXPathQuery:@"//table[@class='header-stats']/tr"] firstObject] children];
+     if (seasonStats.count > 2) {
+     _seasonDisplay1.text = [seasonStats[0] content];
+     _seasonDisplay2.text = [seasonStats[1] content];
+     _seasonDisplay3.text = [seasonStats[2] content];
+     }
+     NSArray *careerStats = [[[parser searchWithXPathQuery:@"//table[@class='header-stats']/tr[@class='career']"] firstObject] children];
+     if (careerStats.count > 2) {
+     _careerDisplay1.text = [careerStats[0] content];
+     _careerDisplay2.text = [careerStats[1] content];
+     _careerDisplay3.text = [careerStats[2] content];
+     }
+     NSArray *statNames = [[[parser searchWithXPathQuery:@"//table[@class='header-stats']/thead"] firstObject] children];
+     if (statNames.count > 2) {
+     for (UILabel *label in _statSlot1Header) label.text = [statNames[0] content];
+     for (UILabel *label in _statSlot2Header) label.text = [statNames[1] content];
+     for (UILabel *label in _statSlot3Header) label.text = [statNames[2] content];
+     }
+     */
+    //player image
+    TFHppleElement *link = [[parser searchWithXPathQuery:@"//div[@class='main-headshot']/img"] firstObject];
+    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[link objectForKey:@"src"]]]];
+    _playerImageView.image = image;
+    //team image
+    UIImageView *teamImage = [[UIImageView alloc] initWithFrame:CGRectMake(-45, 130, 160, 160*(1/1.25))];
+    teamImage.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://a2.espncdn.com/prod/assets/clubhouses/2010/nba/teamlogos/%@.png",self.player.team]]]];
+    teamImage.contentMode = UIViewContentModeScaleAspectFit;
+    teamImage.alpha = 0.25;
+    [self.view addSubview:teamImage];
+    [self.view sendSubviewToBack:teamImage];
+    [self.view sendSubviewToBack:self.darkBackground];
+}
+
+- (void)setupGameLogTableView {
     if (handleError) return;
     _gameTableView.delegate = self;
     _gameTableView.dataSource = self;
@@ -448,7 +418,36 @@ bool needsLoadGamesButton = YES;
     [_graphView reloadGraph];
 }
 
-- (void)loadGraphView {
+- (void)setupPlayerRanksView {
+    self.headerStat1.text = ranks[1];
+    self.headerStat2.text = ranks[2];
+    self.headerStat3.text = ranks[3];
+    self.headerStat4.text = ranks[4];
+    self.headerStat5.text = [NSString stringWithFormat:@"%@%%",ranks[5]];
+    if ([ranks[6] intValue] > 0) {
+        self.headerStat6.text = [NSString stringWithFormat:@"%@",ranks[6]];
+        self.headerStat6.textColor = [UIColor colorWithRed:0/255.0f green:190/255.0f blue:0/255.0f alpha:1.0f]; //green
+    }
+    else if ([ranks[6] intValue] == 0) self.headerStat6.text = @"0.0";
+    else {
+        self.headerStat6.text = [NSString stringWithFormat:@"%@",ranks[6]];
+        self.headerStat6.textColor = [UIColor colorWithRed:240/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f]; //red
+    }
+    if ([ranks[0] isEqualToString:@"FA"]) {
+        self.headerOwnerLabel.text = @"FA";
+        self.headerOwnerLabel.textColor = [UIColor colorWithRed:0/255.0f green:190/255.0f blue:0/255.0f alpha:1.0f]; //green
+    }
+    else if ([ranks[0] containsString:@"WA ("]) {
+        self.headerOwnerLabel.text = [NSString stringWithFormat:@"%@",ranks[0]];
+        self.headerOwnerLabel.textColor = [UIColor colorWithRed:200/255.0f green:200/255.0f blue:40/255.0f alpha:1.0f]; //yellow
+    }
+    else {
+        self.headerOwnerLabel.text = [NSString stringWithFormat:@"Owned (%@)",ranks[0]];
+        self.headerOwnerLabel.textColor = [UIColor whiteColor];
+    }
+}
+
+- (void)setupGraphView {
     _graphView = [[BEMSimpleLineGraphView alloc] initWithFrame:CGRectMake(0, 0, _graphContainerView.frame.size.width, _graphContainerView.frame.size.height)];
     _graphView.delegate = self;
     _graphView.dataSource = self;

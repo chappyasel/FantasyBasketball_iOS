@@ -89,7 +89,7 @@
                                                                     leftMenuViewController:[[LeftSideMenuViewController alloc] init]
                                                                    rightMenuViewController:nil];
     sideMenuViewController.backgroundImage = [UIImage imageNamed:@"StadiumBlur.jpg"];
-    sideMenuViewController.scaleBackgroundImageView = NO;
+    sideMenuViewController.scaleBackgroundImageView = YES;
     sideMenuViewController.scaleContentView = YES;
     sideMenuViewController.scaleMenuView = YES;
     sideMenuViewController.contentViewScaleValue = 0.8;

@@ -81,7 +81,7 @@
     self.animator.bounces = YES;
     self.animator.behindViewAlpha = 0.8;
     self.animator.behindViewScale = 0.9;
-    self.animator.transitionDuration = 0.5;
+    self.animator.transitionDuration = 0.3;
     self.animator.direction = ZFModalTransitonDirectionBottom;
     [self.animator setContentScrollView:modalVC.bottomScrollView];
     modalVC.transitioningDelegate = self.animator;
