@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'E278355A21F264AF16AA69B8'
-               BlueprintName = 'ZFDragableModalTransition'
+               BlueprintIdentifier = 'D845006713C9C18729F14A5F'
+               BlueprintName = 'JBChartView'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libZFDragableModalTransition.a'>
+               BuildableName = 'libJBChartView.a'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

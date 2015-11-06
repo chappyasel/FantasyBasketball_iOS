@@ -4,6 +4,7 @@ platform :ios, '8.1'
 target 'FantasyBasketball' do
     pod 'RESideMenu'
     pod 'ZFDragableModalTransition'
+    pod 'JBChartView'
 end
 
 target 'FantasyBasketballTests' do

@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>JBChartView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-FantasyBasketball.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,17 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>3F06B267D0131FD033F5F84F47634583</key>
+		<key>383DF1D0756F323FC2957E68F6997C6D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7A7E06ED7070CA2C5AA4E2741A0E52BE</key>
+		<key>9E5B6D094672D2D87810C8ED1C3036E4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7C3D3CDA3CD28E39F212843A8C7C619C</key>
+		<key>B8DAF3B465BD21778AD3C349A1A19758</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EADB141B52DA47FF108810A72217CAD9</key>
 		<dict>
 			<key>primary</key>
 			<true/>

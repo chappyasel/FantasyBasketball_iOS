@@ -37,7 +37,11 @@
 }
 
 +(UIColor *)FBBlueHighlightColor {
-    return [UIColor colorWithRed:0/255.0 green:140/255.0 blue:255/255.0 alpha:1.0];
+    return [UIColor colorWithRed:70/255.0 green:196/255.0 blue:255/255.0 alpha:1.0];
+}
+
++(UIColor *)FBRedHighlightColor {
+    return [UIColor colorWithRed:255/255.0 green:74/255.0 blue:50/255.0 alpha:1.0];
 }
 
 @end

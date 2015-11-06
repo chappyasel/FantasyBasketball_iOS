@@ -18,5 +18,6 @@
 +(UIColor *)FBRedColor;
 
 +(UIColor *)FBBlueHighlightColor;
++(UIColor *)FBRedHighlightColor;
 
 @end

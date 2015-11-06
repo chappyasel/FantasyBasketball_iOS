@@ -10,6 +10,12 @@
 
 @interface MatchupViewController ()
 
+@property JBBarChartView *team1BarChart;
+@property JBBarChartView *team2BarChart;
+
+@property NSArray *team1Scores;
+@property NSArray *team2Scores;
+
 @end
 
 @implementation MatchupViewController
@@ -34,19 +40,71 @@ NSMutableArray *cells;
     [self loadplayersMU];
     if (handleError) return;
     [self loadTableView];
-    [self refreshScores];
+    [self loadBarCharts];
 }
 
-- (void)refreshScores {
+- (void)refreshScoresWithFirstTeamName: (NSString *)firstName {
     if (handleError) return;
-    NSString *XpathQueryString = @"//tr[@style='text-align:right; background:#f2f2e8']/td/span";
-    NSArray *nodes = [parserMU searchWithXPathQuery:XpathQueryString];
-    _team1Display1.text = [nodes[0] content];
-    _team2Display1.text = [nodes[1] content];
-    NSString *XpathQueryString2 = @"//div[@style='font-size:18px; margin-bottom:14px; font-family:Helvetica,sans-serif;']/b";
-    NSArray *nodes2 = [parserMU searchWithXPathQuery:XpathQueryString2];
-    _team1Display2.text = [nodes2[0] content];
-    _team2Display2.text = [nodes2[1] content];
+    NSString *XpathQueryString = @"//tr[@class='tableBody']";
+    NSArray <TFHppleElement *> *nodes = [parserMU searchWithXPathQuery:XpathQueryString];
+    NSString *team1Name = nodes[0].firstChild.content;
+    NSString *team2Name = nodes[1].firstChild.content;
+    int t1;
+    int t2;
+    if ([team1Name containsString:firstName]) {
+        self.team1Display2.text = team1Name;
+        self.team2Display2.text = team2Name;
+        t1 = 0;
+        t2 = 1;
+    }
+    else {
+        self.team1Display2.text = team2Name;
+        self.team2Display2.text = team1Name;
+        t1 = 1;
+        t2 = 0;
+    }
+    self.team1Display1.text = ((TFHppleElement *)nodes[t1].children[10]).content;
+    self.team2Display1.text = ((TFHppleElement *)nodes[t2].children[10]).content;
+    self.team1Scores = @[    @"200",
+                             ((TFHppleElement *)nodes[t1].children[2]).content,
+                             ((TFHppleElement *)nodes[t1].children[3]).content,
+                             ((TFHppleElement *)nodes[t1].children[4]).content,
+                             ((TFHppleElement *)nodes[t1].children[5]).content,
+                             ((TFHppleElement *)nodes[t1].children[6]).content,
+                             ((TFHppleElement *)nodes[t1].children[7]).content,
+                             ((TFHppleElement *)nodes[t1].children[8]).content];
+    
+    self.team2Scores = @[    ((TFHppleElement *)nodes[t2].children[8]).content,
+                             ((TFHppleElement *)nodes[t2].children[7]).content,
+                             ((TFHppleElement *)nodes[t2].children[6]).content,
+                             ((TFHppleElement *)nodes[t2].children[5]).content,
+                             ((TFHppleElement *)nodes[t2].children[4]).content,
+                             ((TFHppleElement *)nodes[t2].children[3]).content,
+                             ((TFHppleElement *)nodes[t2].children[2]).content,
+                             @"200"];
+    [self.team1BarChart reloadData];
+    [self.team2BarChart reloadData];
+}
+
+- (void)loadBarCharts {
+    float width = self.view.frame.size.width/2-15;
+    self.team1BarChart = [[JBBarChartView alloc] init];
+    self.team1BarChart.frame = CGRectMake(-width/8, 0, width, 104);
+    self.team1BarChart.dataSource = self;
+    self.team1BarChart.delegate = self;
+    self.team1BarChart.inverted = YES;
+    [self.scoreView addSubview:self.team1BarChart];
+    [self.scoreView sendSubviewToBack:self.team1BarChart];
+    [self.team1BarChart reloadData];
+    
+    self.team2BarChart = [[JBBarChartView alloc] init];
+    self.team2BarChart.frame = CGRectMake(width+2*15+width/8, 0, width, 104);
+    self.team2BarChart.dataSource = self;
+    self.team2BarChart.delegate = self;
+    self.team2BarChart.inverted = YES;
+    [self.scoreView addSubview:self.team2BarChart];
+    [self.scoreView sendSubviewToBack:self.team2BarChart];
+    [self.team2BarChart reloadData];
 }
 
 - (void)loadTableView {
@@ -94,7 +152,6 @@ NSTimer *updateTimer;
 - (IBAction)refreshButtonPressed:(UIButton *)sender {
     [self loadplayersMU];
     [self.tableView reloadData];
-    [self refreshScores];
 }
 
 - (void)loadplayersMU {
@@ -119,6 +176,9 @@ NSTimer *updateTimer;
         handleError = YES;
         return;
     }
+    //team search
+    TFHppleElement *name = [parserMU searchWithXPathQuery:@"//table[@id='playertable_0']/tr[@class='playerTableBgRowHead tableHead playertableTableHeader']/td"].firstObject;
+    NSString *firstTeamName = [name.content stringByReplacingOccurrencesOfString:@" Box Score" withString:@""];
     handleError = NO;
     for (int i = 0; i < nodes.count; i++) {
         TFHppleElement *element = nodes[i];
@@ -152,6 +212,22 @@ NSTimer *updateTimer;
     }
     for (FBPlayer *player in playersMU1) if(player.isStarting) numStartersMU1 ++;
     for (FBPlayer *player in playersMU2) if(player.isStarting) numStartersMU2 ++;
+    [self refreshScoresWithFirstTeamName: firstTeamName];
+}
+
+#pragma mark - bar charts delegate
+
+- (NSUInteger)numberOfBarsInBarChartView:(JBBarChartView *)barChartView {
+    return 8;
+}
+
+- (CGFloat)barChartView:(JBBarChartView *)barChartView heightForBarViewAtIndex:(NSUInteger)index {
+    if (barChartView == self.team1BarChart) return [self.team1Scores[index] floatValue];
+    return [self.team2Scores[index] floatValue];
+}
+
+- (UIColor *)barChartView:(JBBarChartView *)barChartView colorForBarViewAtIndex:(NSUInteger)index {
+    return [UIColor FBMediumOrangeColor];
 }
 
 #pragma mark - Table View

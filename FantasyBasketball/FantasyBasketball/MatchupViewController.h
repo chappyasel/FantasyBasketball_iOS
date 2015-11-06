@@ -8,8 +8,10 @@
 
 #import "FBViewController.h"
 #import "MatchupPlayerCell.h"
+#import "JBChartView.h"
+#import "JBBarChartView.h"
 
-@interface MatchupViewController : FBViewController <UIScrollViewDelegate>
+@interface MatchupViewController : FBViewController <UIScrollViewDelegate, JBBarChartViewDataSource, JBBarChartViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *scoreView;
 @property (strong, nonatomic) IBOutlet UISwitch *autorefreshSwitch;
