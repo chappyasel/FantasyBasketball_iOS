@@ -77,7 +77,7 @@
             //Points
             leftPointsView = [[UILabel alloc] initWithFrame:CGRectMake(207-50, 0, 50, 52.7)];
             leftPointsBackground = [[UIView alloc] initWithFrame:leftPointsView.frame];
-            leftPointsBackground.backgroundColor = [UIColor colorWithRed:0/255.0 green:150/255.0 blue:255/255.0 alpha:1];
+            leftPointsBackground.backgroundColor = [UIColor FBBlueHighlightColor];
             leftPointsBackground.alpha = 0.0;
             if (!self.leftPlayer.isPlaying) leftPointsView.text = @"-";
             else leftPointsView.text = [NSString stringWithFormat:@"%.0f",self.leftPlayer.fantasyPoints];
@@ -161,7 +161,7 @@
             //Points
             rightPointsView = [[UILabel alloc] initWithFrame:CGRectMake(207, 0, 50, 52.7)];
             rightPointsBackground = [[UIView alloc] initWithFrame:rightPointsView.frame];
-            rightPointsBackground.backgroundColor = [UIColor colorWithRed:0/255.0 green:150/255.0 blue:255/255.0 alpha:1];
+            rightPointsBackground.backgroundColor = [UIColor FBBlueHighlightColor];
             rightPointsBackground.alpha = 0.0;
             if (!self.rightPlayer.isPlaying) rightPointsView.text = @"-";
             else rightPointsView.text = [NSString stringWithFormat:@"%.0f",self.rightPlayer.fantasyPoints];

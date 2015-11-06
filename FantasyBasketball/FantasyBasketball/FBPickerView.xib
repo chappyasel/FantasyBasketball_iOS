@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9046" systemVersion="15A279b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9527.1" systemVersion="15A279b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9035"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9525.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -12,122 +11,54 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JP3-h7-wq8">
-                    <rect key="frame" x="0.0" y="45" width="600" height="200"/>
-                    <animations/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="24z-Xl-ydB">
+                    <rect key="frame" x="0.0" y="456" width="414" height="280"/>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="eUz-2H-SUa">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="280"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2xg-IR-fAM">
+                                <rect key="frame" x="0.0" y="40" width="414" height="240"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </pickerView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eTV-tw-NA5">
+                                <rect key="frame" x="0.0" y="10" width="100" height="40"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancelButtonPressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="su2-Zp-eAt"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C68-uW-ABk">
+                                <rect key="frame" x="314" y="10" width="100" height="40"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="20" maxY="0.0"/>
+                                <state key="normal" title="Done"/>
+                                <connections>
+                                    <action selector="doneButtonPressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="0ZZ-jW-PYH"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                    </view>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="Oa3-Jy-HKb"/>
-                        <constraint firstAttribute="height" constant="200" id="iHO-pB-9rG">
-                            <variation key="widthClass=compact" constant="220"/>
-                        </constraint>
+                        <constraint firstAttribute="height" constant="280" id="JdL-at-L8f"/>
                     </constraints>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="Oa3-Jy-HKb"/>
-                        </mask>
-                    </variation>
-                </pickerView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aft-nK-md1">
-                    <rect key="frame" x="0.0" y="0.0" width="300" height="52"/>
-                    <animations/>
-                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="52" id="QHB-z4-J2T"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <inset key="contentEdgeInsets" minX="25" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    <state key="normal" title="Cancel">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <variation key="widthClass=compact" misplaced="YES">
-                        <rect key="frame" x="0.0" y="498" width="207" height="18"/>
-                    </variation>
-                    <connections>
-                        <action selector="cancelButtonPressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="54f-7c-sYZ"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wGK-cK-oEA">
-                    <rect key="frame" x="300" y="0.0" width="300" height="52"/>
-                    <animations/>
-                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="52" id="3hB-Uc-UF9"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="25" maxY="0.0"/>
-                    <state key="normal" title="Done">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <variation key="widthClass=compact" misplaced="YES">
-                        <rect key="frame" x="207" y="498" width="207" height="18"/>
-                    </variation>
-                    <connections>
-                        <action selector="doneButtonPressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="4Bp-G1-wPf"/>
-                    </connections>
-                </button>
+                    <blurEffect style="extraLight"/>
+                </visualEffectView>
             </subviews>
-            <animations/>
-            <color key="backgroundColor" white="0.0" alpha="0.59999999999999998" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="wGK-cK-oEA" secondAttribute="bottom" constant="200" id="30D-Cu-9hC">
-                    <variation key="widthClass=compact" constant="220"/>
-                </constraint>
-                <constraint firstAttribute="bottom" secondItem="Aft-nK-md1" secondAttribute="bottom" constant="200" id="ATg-Yu-PMq">
-                    <variation key="widthClass=compact" constant="220"/>
-                </constraint>
-                <constraint firstAttribute="trailing" secondItem="wGK-cK-oEA" secondAttribute="trailing" id="Bu4-0r-rCb"/>
-                <constraint firstItem="JP3-h7-wq8" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="GV1-2L-iYO"/>
-                <constraint firstItem="JP3-h7-wq8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="M6l-Xu-HWv"/>
-                <constraint firstItem="Aft-nK-md1" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.5" id="ZoL-K2-lQT"/>
-                <constraint firstItem="Aft-nK-md1" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="c8Z-yy-JJ2"/>
-                <constraint firstItem="wGK-cK-oEA" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.5" id="rvG-9x-qIi"/>
-                <constraint firstItem="wGK-cK-oEA" firstAttribute="baseline" secondItem="JP3-h7-wq8" secondAttribute="baseline" id="sZW-zy-3s4"/>
-                <constraint firstAttribute="bottom" secondItem="JP3-h7-wq8" secondAttribute="bottom" id="zFa-DE-0Ec"/>
+                <constraint firstItem="24z-Xl-ydB" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="9Ji-hs-o9Y"/>
+                <constraint firstAttribute="bottom" secondItem="24z-Xl-ydB" secondAttribute="bottom" id="fNo-r1-BWe"/>
+                <constraint firstItem="24z-Xl-ydB" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="nNU-0f-89O"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
-            <variation key="default">
-                <mask key="subviews">
-                    <exclude reference="JP3-h7-wq8"/>
-                    <exclude reference="Aft-nK-md1"/>
-                    <exclude reference="wGK-cK-oEA"/>
-                </mask>
-                <mask key="constraints">
-                    <exclude reference="ATg-Yu-PMq"/>
-                    <exclude reference="ZoL-K2-lQT"/>
-                    <exclude reference="c8Z-yy-JJ2"/>
-                    <exclude reference="GV1-2L-iYO"/>
-                    <exclude reference="M6l-Xu-HWv"/>
-                    <exclude reference="zFa-DE-0Ec"/>
-                    <exclude reference="30D-Cu-9hC"/>
-                    <exclude reference="Bu4-0r-rCb"/>
-                    <exclude reference="rvG-9x-qIi"/>
-                    <exclude reference="sZW-zy-3s4"/>
-                </mask>
-            </variation>
-            <variation key="widthClass=compact">
-                <mask key="subviews">
-                    <include reference="JP3-h7-wq8"/>
-                    <include reference="Aft-nK-md1"/>
-                    <include reference="wGK-cK-oEA"/>
-                </mask>
-                <mask key="constraints">
-                    <include reference="ATg-Yu-PMq"/>
-                    <include reference="ZoL-K2-lQT"/>
-                    <include reference="c8Z-yy-JJ2"/>
-                    <include reference="GV1-2L-iYO"/>
-                    <include reference="M6l-Xu-HWv"/>
-                    <include reference="zFa-DE-0Ec"/>
-                    <include reference="30D-Cu-9hC"/>
-                    <include reference="Bu4-0r-rCb"/>
-                    <include reference="rvG-9x-qIi"/>
-                    <exclude reference="sZW-zy-3s4"/>
-                </mask>
-            </variation>
             <connections>
-                <outlet property="cancelButton" destination="Aft-nK-md1" id="aaH-aK-7AE"/>
-                <outlet property="doneButton" destination="wGK-cK-oEA" id="Af9-Pk-yb4"/>
-                <outlet property="pickerView" destination="JP3-h7-wq8" id="YYh-qP-3c8"/>
+                <outlet property="cancelButton" destination="eTV-tw-NA5" id="ybW-1B-bbQ"/>
+                <outlet property="doneButton" destination="C68-uW-ABk" id="sST-jM-504"/>
+                <outlet property="pickerView" destination="2xg-IR-fAM" id="eLX-ce-GmG"/>
             </connections>
         </view>
     </objects>

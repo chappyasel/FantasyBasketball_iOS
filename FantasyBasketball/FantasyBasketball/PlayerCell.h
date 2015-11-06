@@ -21,7 +21,7 @@
 @property (nonatomic, weak) id <PlayerCellDelegate> delegate;
 @property (nonatomic) FBPlayer *player;
 
-- (instancetype) initWithPlayer:(FBPlayer *)pl view:(UIViewController<UIScrollViewDelegate> *)superview scrollDistance:(float)dist;
+- (instancetype) initWithPlayer:(FBPlayer *)pl view:(UIViewController<UIScrollViewDelegate> *)superview scrollDistance:(float)dist height:(float) height;
 
 - (void)setScrollDistance:(float)dist;
 

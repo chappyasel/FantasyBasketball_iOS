@@ -56,13 +56,15 @@ NSMutableArray *cells;
 }
 
 - (void)loadTableHeaderView {
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 40)];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 110, 30)];
-    label.text = @"Auto-refresh:";
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 414, 40)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, 125, 30)];
+    label.text = @"AUTO-REFRESH:";
+    label.textColor = [UIColor whiteColor];
+    label.font = [UIFont boldSystemFontOfSize:14];
     label.textAlignment = NSTextAlignmentRight;
-    label.textColor = [UIColor lightGrayColor];
     self.autorefreshSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(130, 4.5, 51, 31)];
-    self.autorefreshSwitch.onTintColor = [UIColor lightGrayColor];
+    self.autorefreshSwitch.onTintColor = [UIColor whiteColor];
+    self.autorefreshSwitch.tintColor = [UIColor whiteColor];
     [self.autorefreshSwitch addTarget:self action:@selector(autorefreshStateChanged:) forControlEvents:UIControlEventValueChanged];
     updateTimer = [[NSTimer alloc] initWithFireDate:[NSDate date] interval:2 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
     [headerView addSubview:label];
@@ -168,12 +170,9 @@ NSTimer *updateTimer;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    UIView *cell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 414, 40)];
-    cell.backgroundColor = [UIColor lightGrayColor];
-    //Divider
-    UILabel *div = [[UILabel alloc] initWithFrame:CGRectMake(129, 0, 1, 40)];
-    div.backgroundColor = [UIColor lightGrayColor];
-    [cell addSubview:div];
+    float width = self.tableView.frame.size.width;
+    UIView *cell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, 40)];
+    cell.backgroundColor = [UIColor colorWithRed:228/255.0 green:141/255.0 blue:78/255.0 alpha:1.0];
     //STATS LABELS
     float tot1 = 0;
     float tot2 = 0;
@@ -187,15 +186,17 @@ NSTimer *updateTimer;
             if (player.isPlaying) tot2 += player.fantasyPoints;
         }
     }
-    UILabel *stats = [[UILabel alloc] initWithFrame:CGRectMake(207-50, 0, 50, 40)];
+    UILabel *stats = [[UILabel alloc] initWithFrame:CGRectMake(width/2-50, 0, 50, 40)];
     stats.text = [NSString stringWithFormat:@"%.0f",tot1];
     stats.textAlignment = NSTextAlignmentCenter;
     stats.font = [UIFont boldSystemFontOfSize:19];
+    stats.textColor = [UIColor whiteColor];
     [cell addSubview:stats];
-    UILabel *stats2 = [[UILabel alloc] initWithFrame:CGRectMake(207, 0, 50, 40)];
+    UILabel *stats2 = [[UILabel alloc] initWithFrame:CGRectMake(width/2, 0, 50, 40)];
     stats2.text = [NSString stringWithFormat:@"%.0f",tot2];
     stats2.textAlignment = NSTextAlignmentCenter;
     stats2.font = [UIFont boldSystemFontOfSize:19];
+    stats2.textColor = [UIColor whiteColor];
     [cell addSubview:stats2];
     return cell;
 }

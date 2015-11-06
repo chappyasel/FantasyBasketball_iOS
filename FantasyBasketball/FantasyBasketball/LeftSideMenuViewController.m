@@ -67,9 +67,10 @@
     }
     else return;
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:vc];
-    navController.navigationBar.barTintColor = [UIColor colorWithRed:192/255.0 green:77/255.0 blue:25/255.0 alpha:1.0];
+    navController.navigationBar.barTintColor = [UIColor FBDarkOrangeColor];
     navController.navigationBar.tintColor = [UIColor whiteColor];
     navController.navigationBar.translucent = NO;
+    navController.navigationBar.barStyle = UIBarStyleBlack;
     [navController.navigationBar setTitleTextAttributes: @{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     [self.sideMenuViewController setContentViewController:navController animated:YES];
     [self.sideMenuViewController hideMenuViewController];

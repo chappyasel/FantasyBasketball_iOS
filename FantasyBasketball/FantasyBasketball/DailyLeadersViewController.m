@@ -39,12 +39,14 @@ int team;
 
 - (void)loadTableHeaderView {
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 414, 40)];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 110, 30)];
-    label.text = @"Auto-refresh:";
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, 125, 30)];
+    label.text = @"AUTO-REFRESH:";
+    label.textColor = [UIColor whiteColor];
+    label.font = [UIFont boldSystemFontOfSize:14];
     label.textAlignment = NSTextAlignmentRight;
-    label.textColor = [UIColor lightGrayColor];
-    self.autorefreshSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(120, 4.5, 51, 31)];
-    self.autorefreshSwitch.onTintColor = [UIColor lightGrayColor];
+    self.autorefreshSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(130, 4.5, 51, 31)];
+    self.autorefreshSwitch.onTintColor = [UIColor whiteColor];
+    self.autorefreshSwitch.tintColor = [UIColor whiteColor];
     [self.autorefreshSwitch addTarget:self action:@selector(autorefreshStateChanged:) forControlEvents:UIControlEventValueChanged];
     updateTimer = [[NSTimer alloc] initWithFireDate:[NSDate date] interval:2 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
     [headerView addSubview:label];
@@ -124,7 +126,7 @@ NSTimer *updateTimer;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 40;
+    return 30;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -132,16 +134,17 @@ NSTimer *updateTimer;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *cell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 40)];
-    cell.backgroundColor = [UIColor lightGrayColor];
+    UIView *cell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 30)];
+    cell.backgroundColor = [UIColor FBMediumOrangeColor];
     //NAME
-    UILabel *name = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 180, 40)];
-    name.text = @"  NAME               TYPE";
-    name.font = [UIFont boldSystemFontOfSize:17];
+    UILabel *name = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 180, 30)];
+    name.text = @"   NAME                       TYPE";
+    name.font = [UIFont boldSystemFontOfSize:14];
+    name.textColor = [UIColor whiteColor];
     [cell addSubview:name];
     //STATS SCROLLVIEW
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(180, 0, self.tableView.frame.size.width-130, 40)];
-    [scrollView setContentSize:CGSizeMake(13*50+150, 40)];
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(180, 0, self.tableView.frame.size.width-130, 30)];
+    [scrollView setContentSize:CGSizeMake(13*50+120, 30)];
     [scrollView setShowsHorizontalScrollIndicator:NO];
     [scrollView setShowsVerticalScrollIndicator:NO];
     [scrollView setBounces:NO];
@@ -152,16 +155,18 @@ NSTimer *updateTimer;
     [scrollViewsDL addObject:scrollView];
     //STATS LABELS
     NSString *arr[14] = {@"STATUS", @"FPTS", @"MIN", @"FGM", @"FGA", @"FTM", @"FTA", @"REB", @"AST", @"BLK", @"STL", @"TO", @"PTS"};
-    UILabel *stats1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 150, 40)];
+    UILabel *stats1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120, 30)];
     stats1.text = [NSString stringWithFormat:@"%@",arr[0]];
     stats1.textAlignment = NSTextAlignmentCenter;
-    stats1.font = [UIFont boldSystemFontOfSize:17];
+    stats1.font = [UIFont boldSystemFontOfSize:14];
+    stats1.textColor = [UIColor whiteColor];
     [scrollView addSubview:stats1];
     for (int i = 1; i < 13; i++) {
-        UILabel *stats = [[UILabel alloc] initWithFrame:CGRectMake(50*i+100, 0, 50, 40)];
+        UILabel *stats = [[UILabel alloc] initWithFrame:CGRectMake(50*i+(120-50), 0, 50, 30)];
         stats.text = [NSString stringWithFormat:@"%@",arr[i]];
         stats.textAlignment = NSTextAlignmentCenter;
-        stats.font = [UIFont boldSystemFontOfSize:17];
+        stats.font = [UIFont boldSystemFontOfSize:14];
+        stats.textColor = [UIColor whiteColor];
         [scrollView addSubview:stats];
     }
     return cell;
@@ -170,7 +175,7 @@ NSTimer *updateTimer;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PlayerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Identifier"];
     FBPlayer *player = playersDL[indexPath.row];
-    cell = [[PlayerCell alloc] initWithPlayer:player view:self scrollDistance:scrollDistanceDL];
+    cell = [[PlayerCell alloc] initWithPlayer:player view:self scrollDistance:scrollDistanceDL height:40.0];
     cell.delegate = self;
     return cell;
 }

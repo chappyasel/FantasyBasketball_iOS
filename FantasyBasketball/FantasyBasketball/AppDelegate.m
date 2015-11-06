@@ -87,9 +87,10 @@
     //RESideMenu init
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:
                         [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"mu"]];
-    navController.navigationBar.barTintColor = [UIColor colorWithRed:192/255.0 green:77/255.0 blue:25/255.0 alpha:1.0];
+    navController.navigationBar.barTintColor = [UIColor FBDarkOrangeColor];
     navController.navigationBar.tintColor = [UIColor whiteColor];
     navController.navigationBar.translucent = NO;
+    navController.navigationBar.barStyle = UIBarStyleBlack;
     [navController.navigationBar setTitleTextAttributes: @{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     RESideMenu *sideMenuViewController = [[RESideMenu alloc] initWithContentViewController: navController
                                                                     leftMenuViewController:[[LeftSideMenuViewController alloc] init]
@@ -108,7 +109,7 @@
     sideMenuViewController.contentViewShadowEnabled = YES;
     self.window.rootViewController = sideMenuViewController;
     self.window.backgroundColor = [UIColor whiteColor];
-    [self.window setTintColor:[UIColor colorWithRed:192/255.0 green:77/255.0 blue:25/255.0 alpha:1.0]];
+    [self.window setTintColor:[UIColor FBDarkOrangeColor]];
     return YES;
 }
 

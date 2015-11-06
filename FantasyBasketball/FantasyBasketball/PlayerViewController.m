@@ -118,13 +118,15 @@ bool needsLoadGamesButton = YES;
     else playerFound = YES;
     if (!playerFound) {
         handleError = YES;
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Player Not Found"
-                                                        message:@"The requested player was not found on ESPNs server. This is likely an application error."
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-        return;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Player Not Found"
+                                                            message:@"The requested player was not found on ESPNs server. This is likely an application error."
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        });
+        completed();
     }
     completed();
 }
@@ -431,20 +433,20 @@ bool needsLoadGamesButton = YES;
     self.headerStat5.text = [NSString stringWithFormat:@"%@%%",ranks[5]];
     if ([ranks[6] intValue] > 0) {
         self.headerStat6.text = [NSString stringWithFormat:@"%@",ranks[6]];
-        self.headerStat6.textColor = [UIColor colorWithRed:0/255.0f green:190/255.0f blue:0/255.0f alpha:1.0f]; //green
+        self.headerStat6.textColor = [UIColor FBGreenColor];
     }
     else if ([ranks[6] intValue] == 0) self.headerStat6.text = @"0.0";
     else {
         self.headerStat6.text = [NSString stringWithFormat:@"%@",ranks[6]];
-        self.headerStat6.textColor = [UIColor colorWithRed:240/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f]; //red
+        self.headerStat6.textColor = [UIColor FBRedColor];
     }
     if ([ranks[0] isEqualToString:@"FA"]) {
         self.headerOwnerLabel.text = @"FA";
-        self.headerOwnerLabel.textColor = [UIColor colorWithRed:0/255.0f green:190/255.0f blue:0/255.0f alpha:1.0f]; //green
+        self.headerOwnerLabel.textColor = [UIColor FBGreenColor];
     }
     else if ([ranks[0] containsString:@"WA ("]) {
         self.headerOwnerLabel.text = [NSString stringWithFormat:@"%@",ranks[0]];
-        self.headerOwnerLabel.textColor = [UIColor colorWithRed:200/255.0f green:200/255.0f blue:40/255.0f alpha:1.0f]; //yellow
+        self.headerOwnerLabel.textColor = [UIColor FBYellowColor];
     }
     else {
         self.headerOwnerLabel.text = [NSString stringWithFormat:@"Owned (%@)",ranks[0]];

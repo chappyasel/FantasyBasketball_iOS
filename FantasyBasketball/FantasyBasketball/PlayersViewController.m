@@ -60,6 +60,9 @@ float scrollDistancePL;
     searchBar.placeholder = @"Search by last name";
     searchBar.returnKeyType = UIReturnKeySearch;
     searchBar.showsCancelButton = YES;
+    searchBar.backgroundImage = [[UIImage alloc] init];
+    searchBar.backgroundColor = [UIColor FBMediumOrangeColor];
+    searchBar.tintColor = [UIColor whiteColor];
     self.tableView.tableHeaderView = searchBar;
     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
 }
@@ -118,7 +121,7 @@ float scrollDistancePL;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 40;
+    return 30;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -126,16 +129,17 @@ float scrollDistancePL;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *cell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 40)];
-    cell.backgroundColor = [UIColor lightGrayColor];
+    UIView *cell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 30)];
+    cell.backgroundColor = [UIColor FBMediumOrangeColor];
     //NAME
-    UILabel *name = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 180, 40)];
-    name.text = @"  NAME               TYPE";
-    name.font = [UIFont boldSystemFontOfSize:17];
+    UILabel *name = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 180, 30)];
+    name.text = @"   NAME                       TYPE";
+    name.font = [UIFont boldSystemFontOfSize:14];
+    name.textColor = [UIColor whiteColor];
     [cell addSubview:name];
     //STATS SCROLLVIEW
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(180, 0, self.tableView.frame.size.width-130, 40)];
-    [scrollView setContentSize:CGSizeMake(14*50+150, 40)];
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(180, 0, self.tableView.frame.size.width-130, 30)];
+    [scrollView setContentSize:CGSizeMake(14*50+120, 30)];
     [scrollView setShowsHorizontalScrollIndicator:NO];
     [scrollView setShowsVerticalScrollIndicator:NO];
     [scrollView setBounces:NO];
@@ -146,24 +150,26 @@ float scrollDistancePL;
     [scrollViewsPL addObject:scrollView];
     //STATS LABELS
     NSString *arr[15] = {@"STATUS", @"FPTS", @"TOT", @"OWN", @"+/-", @"FGM", @"FGA", @"FTM", @"FTA", @"REB", @"AST", @"BLK", @"STL", @"TO", @"PTS"};
-    UILabel *stats1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 150, 40)];
+    UILabel *stats1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120, 30)];
     stats1.text = [NSString stringWithFormat:@"%@",arr[0]];
     stats1.textAlignment = NSTextAlignmentCenter;
-    stats1.font = [UIFont boldSystemFontOfSize:17];
+    stats1.font = [UIFont boldSystemFontOfSize:14];
+    stats1.textColor = [UIColor whiteColor];
     [scrollView addSubview:stats1];
     for (int i = 1; i < 15; i++) {
-        UILabel *stats = [[UILabel alloc] initWithFrame:CGRectMake(50*i+100, 0, 50, 40)];
+        UILabel *stats = [[UILabel alloc] initWithFrame:CGRectMake(50*i+(120-50), 0, 50, 30)];
         //stats.text = [NSString stringWithFormat:@"%@",arr[i]];
         NSDictionary *underlineAttribute = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle)};
         stats.attributedText = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@",arr[i]]
                                                                attributes:underlineAttribute];
         stats.textAlignment = NSTextAlignmentCenter;
-        stats.font = [UIFont boldSystemFontOfSize:17];
+        stats.font = [UIFont boldSystemFontOfSize:14];
+        stats.textColor = [UIColor whiteColor];
         [scrollView addSubview:stats];
     }
     //STATS BUTTONS
     for (int i = 0; i < 14; i++) {
-        UIButton *refresh = [[UIButton alloc] initWithFrame:CGRectMake(50*i+150, 0, 50, 40)];
+        UIButton *refresh = [[UIButton alloc] initWithFrame:CGRectMake(50*i+120, 0, 50, 30)];
         refresh.titleLabel.text = @"";
         refresh.tag = i; //used for determining sortChoices[] index
         [refresh addTarget:self action:@selector(updateSort:) forControlEvents:UIControlEventTouchUpInside];
@@ -183,7 +189,7 @@ float scrollDistancePL;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PlayerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Identifier"];
     FBPlayer *player = playersPL[indexPath.row];
-    cell = [[PlayerCell alloc] initWithPlayer:player view:self scrollDistance:scrollDistancePL];
+    cell = [[PlayerCell alloc] initWithPlayer:player view:self scrollDistance:scrollDistancePL height:40.0];
     cell.delegate = self;
     return cell;
 }

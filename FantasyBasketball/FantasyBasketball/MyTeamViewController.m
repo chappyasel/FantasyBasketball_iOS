@@ -25,8 +25,8 @@ NSString *scoringPeriodMT = @"today";   //span of stats
 - (void)viewDidLoad {
     [super viewDidLoad];
     scoringDay = self.session.scoringPeriodID.intValue;
-    [self loadplayersMT];
     [self loadTableView];
+    [self loadplayersMT];
     [self loadDatePickerData];
     NSString *XpathQueryString = @"//h3[@class='team-name']";
     NSArray *nodes = [parser searchWithXPathQuery:XpathQueryString];
@@ -40,14 +40,13 @@ NSString *scoringPeriodMT = @"today";   //span of stats
 }
 
 - (IBAction)refreshButtonPressed:(UIButton *)sender {
-    [self loadplayersMT];
     scrollViewsMT = [[NSMutableArray alloc] init];
-    [self.tableView reloadData];
+    [self loadplayersMT];
 }
 
 - (void)loadplayersMT {
     numStarters = 0;
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/clubhouse?leagueId=%@&teamId=%@&seasonId=%@&version=%@&scoringPeriod=%d",self.session.leagueID,self.session.teamID,self.session.seasonID,scoringPeriodMT,scoringDay]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/clubhouse?leagueId=%@&teamId=%@&seasonId=%@&version=%@&scoringPeriodId=%d",self.session.leagueID,self.session.teamID,self.session.seasonID,scoringPeriodMT,scoringDay]];
     NSData *html = [NSData dataWithContentsOfURL:url];
     parser = [TFHpple hppleWithHTMLData:html];
     NSString *XpathQueryString = @"//table[@class='playerTableTable tableBody']/tr";
@@ -82,6 +81,7 @@ NSString *scoringPeriodMT = @"today";   //span of stats
         }
     }
     for (FBPlayer *player in playersMT) if(player.isStarting) numStarters ++;
+    [self.tableView reloadData];
 }
 
 #pragma mark - Table View
@@ -98,34 +98,35 @@ NSString *scoringPeriodMT = @"today";   //span of stats
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 40;
+    return 30;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    if ([scoringPeriodMT isEqual:@"today"]) return 40;
+    if ([scoringPeriodMT isEqual:@"today"]) return 30;
     return 0;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 40;
+    return 42.46;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *cell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 40)];
-    cell.backgroundColor = [UIColor lightGrayColor];
+    UIView *cell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 30)];
+    cell.backgroundColor = [UIColor FBMediumOrangeColor];
     //NAME
-    UILabel *name = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 130, 40)];
-    name.font = [UIFont boldSystemFontOfSize:17];
+    UILabel *name = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 130, 30)];
+    name.font = [UIFont boldSystemFontOfSize:14];
+    name.textColor = [UIColor whiteColor];
     if (section == 0) name.text = @"  STARTERS";
     if (section == 1) name.text = @"  BENCH";
     [cell addSubview:name];
     //Divider
-    UILabel *div = [[UILabel alloc] initWithFrame:CGRectMake(129, 0, 1, 40)];
-    div.backgroundColor = [UIColor lightGrayColor];
-    [cell addSubview:div];
+    //UILabel *div = [[UILabel alloc] initWithFrame:CGRectMake(129, 0, 1, 40)];
+    //div.backgroundColor = [UIColor lightGrayColor];
+    //[cell addSubview:div];
     //STATS SCROLLVIEW
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(130, 0, self.tableView.frame.size.width-130, 40)];
-    [scrollView setContentSize:CGSizeMake(13*50+150, 40)];
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(130, 0, self.tableView.frame.size.width-130, 30)];
+    [scrollView setContentSize:CGSizeMake(13*50+120, 30)];
     [scrollView setShowsHorizontalScrollIndicator:NO];
     [scrollView setShowsVerticalScrollIndicator:NO];
     [scrollView setBounces:NO];
@@ -136,31 +137,33 @@ NSString *scoringPeriodMT = @"today";   //span of stats
     [scrollViewsMT addObject:scrollView];
     //STATS LABELS
     NSString *arr[14] = {@"STATUS", @"FPTS", @"FGM", @"FGA", @"FTM", @"FTA", @"REB", @"AST", @"BLK", @"STL", @"TO", @"PTS", @"OWN", @"+/-"};
-    UILabel *stats1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 150, 40)];
+    UILabel *stats1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120, 30)];
     stats1.text = [NSString stringWithFormat:@"%@",arr[0]];
     stats1.textAlignment = NSTextAlignmentCenter;
-    stats1.font = [UIFont boldSystemFontOfSize:17];
+    stats1.font = [UIFont boldSystemFontOfSize:14];
+    stats1.textColor = [UIColor whiteColor];
     [scrollView addSubview:stats1];
     for (int i = 1; i < 14; i++) {
-        UILabel *stats = [[UILabel alloc] initWithFrame:CGRectMake(50*i+100/*size-50*/, 0, 50, 40)];
+        UILabel *stats = [[UILabel alloc] initWithFrame:CGRectMake(50*i+(120-50), 0, 50, 30)];
         stats.text = [NSString stringWithFormat:@"%@",arr[i]];
-        stats.font = [UIFont boldSystemFontOfSize:17];
+        stats.font = [UIFont boldSystemFontOfSize:14];
         stats.textAlignment = NSTextAlignmentCenter;
+        stats.textColor = [UIColor whiteColor];
         [scrollView addSubview:stats];
     }
     return cell;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    UIView *cell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 40)];
-    cell.backgroundColor = [UIColor lightGrayColor];
+    UIView *cell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 30)];
+    cell.backgroundColor = [UIColor FBMediumOrangeColor];
     //Divider
-    UILabel *div = [[UILabel alloc] initWithFrame:CGRectMake(129, 0, 1, 40)];
-    div.backgroundColor = [UIColor lightGrayColor];
-    [cell addSubview:div];
+    //UILabel *div = [[UILabel alloc] initWithFrame:CGRectMake(129, 0, 1, 40)];
+    //div.backgroundColor = [UIColor lightGrayColor];
+    //[cell addSubview:div];
     //STATS SCROLLVIEW
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(130, 0, self.tableView.frame.size.width-130, 40)];
-    [scrollView setContentSize:CGSizeMake(13*50+150, 40)];
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(130, 0, self.tableView.frame.size.width-130, 30)];
+    [scrollView setContentSize:CGSizeMake(13*50+120, 30)];
     [scrollView setShowsHorizontalScrollIndicator:NO];
     [scrollView setShowsVerticalScrollIndicator:NO];
     [scrollView setBounces:NO];
@@ -190,10 +193,11 @@ NSString *scoringPeriodMT = @"today";   //span of stats
         }
     }
     for (int i = 0; i < 11; i++) {
-        UILabel *stats = [[UILabel alloc] initWithFrame:CGRectMake(50*i+150, 0, 50, 40)];
+        UILabel *stats = [[UILabel alloc] initWithFrame:CGRectMake(50*i+120, 0, 50, 30)];
         stats.text = [NSString stringWithFormat:@"%.0f",arr[i]];
         stats.textAlignment = NSTextAlignmentCenter;
         stats.font = [UIFont boldSystemFontOfSize:17];
+        stats.textColor = [UIColor whiteColor];
         [scrollView addSubview:stats];
     }
     return cell;
@@ -202,7 +206,7 @@ NSString *scoringPeriodMT = @"today";   //span of stats
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PlayerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Identifier"];
     FBPlayer *player = playersMT[indexPath.row+indexPath.section*numStarters];
-    cell = [[PlayerCell alloc] initWithPlayer:player view:self scrollDistance:scrollDistanceMT];
+    cell = [[PlayerCell alloc] initWithPlayer:player view:self scrollDistance:scrollDistanceMT height:42.46];
     cell.delegate = self;
     return cell;
 }
@@ -271,7 +275,6 @@ NSArray *pickerData;
     //if (data2 == 0 && data1 == 3) refreshButton.enabled = YES;
     //else refreshButton.enabled = NO;
     [self loadplayersMT];
-    [self.tableView reloadData];
     [self fadeOutWithPickerView:pickerView];
 }
 

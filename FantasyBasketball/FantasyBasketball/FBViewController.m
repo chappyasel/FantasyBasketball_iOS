@@ -30,6 +30,7 @@
     self.tableView.dataSource = self;
     self.tableView.showsHorizontalScrollIndicator = NO;
     self.tableView.showsVerticalScrollIndicator = NO;
+    self.tableView.backgroundColor = [UIColor FBMediumOrangeColor];
     [self.view addSubview:self.tableView];
 }
 
