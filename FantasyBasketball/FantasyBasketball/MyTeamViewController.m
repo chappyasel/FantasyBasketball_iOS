@@ -9,49 +9,52 @@
 #import "MyTeamViewController.h"
 
 @interface MyTeamViewController ()
+
+@property TFHpple *parser;
+@property NSMutableArray *players;
+@property int numStarters;
+
+@property NSMutableArray *scrollViews;
+@property float globalScrollDistance;
+
+@property int scoringDay;            //time of stats
+@property NSString *scoringPeriod;   //span of stats
+
 @end
 
 @implementation MyTeamViewController
 
-TFHpple *parser;
-NSMutableArray *playersMT;
-int numStarters = 0;
-NSMutableArray *scrollViewsMT;
-float scrollDistanceMT;
-
-int scoringDay;                         //time of stats
-NSString *scoringPeriodMT = @"today";   //span of stats
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    scoringDay = self.session.scoringPeriodID.intValue;
+    _scoringPeriod = @"today";
+    _scoringDay = self.session.scoringPeriodID.intValue;
     [self loadTableView];
-    [self loadplayersMT];
+    [self loadplayers];
     [self loadDatePickerData];
     NSString *XpathQueryString = @"//h3[@class='team-name']";
-    NSArray *nodes = [parser searchWithXPathQuery:XpathQueryString];
+    NSArray *nodes = [self.parser searchWithXPathQuery:XpathQueryString];
     NSString *teamName = [[nodes firstObject] content];
     if (teamName) self.title = teamName;
     else self.title = @"My Team";
 }
 
 - (void)loadTableView {
-    scrollViewsMT = [[NSMutableArray alloc] init];
+    self.scrollViews = [[NSMutableArray alloc] init];
 }
 
 - (IBAction)refreshButtonPressed:(UIButton *)sender {
-    scrollViewsMT = [[NSMutableArray alloc] init];
-    [self loadplayersMT];
+    self.scrollViews = [[NSMutableArray alloc] init];
+    [self loadplayers];
 }
 
-- (void)loadplayersMT {
-    numStarters = 0;
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/clubhouse?leagueId=%@&teamId=%@&seasonId=%@&version=%@&scoringPeriodId=%d",self.session.leagueID,self.session.teamID,self.session.seasonID,scoringPeriodMT,scoringDay]];
+- (void)loadplayers {
+    _numStarters = 0;
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/clubhouse?leagueId=%@&teamId=%@&seasonId=%@&version=%@&scoringPeriodId=%d",self.session.leagueID,self.session.teamID,self.session.seasonID,_scoringPeriod,_scoringDay]];
     NSData *html = [NSData dataWithContentsOfURL:url];
-    parser = [TFHpple hppleWithHTMLData:html];
+    self.parser = [TFHpple hppleWithHTMLData:html];
     NSString *XpathQueryString = @"//table[@class='playerTableTable tableBody']/tr";
-    NSArray *nodes = [parser searchWithXPathQuery:XpathQueryString];
-    playersMT = [[NSMutableArray alloc] initWithCapacity:13];
+    NSArray *nodes = [self.parser searchWithXPathQuery:XpathQueryString];
+    self.players = [[NSMutableArray alloc] initWithCapacity:13];
     for (int i = 0; i < nodes.count; i++) {
         TFHppleElement *element = nodes[i];
         if ([element objectForKey:@"id"]) {
@@ -77,10 +80,10 @@ NSString *scoringPeriodMT = @"today";   //span of stats
             [dict setObject:children[16].content forKey:@"fantasyPoints"];
             [dict setObject:children[18].content forKey:@"percentOwned"];
             [dict setObject:children[19].content forKey:@"plusMinus"];
-            [playersMT addObject:[[FBPlayer alloc] initWithDictionary:dict]];
+            [self.players addObject:[[FBPlayer alloc] initWithDictionary:dict]];
         }
     }
-    for (FBPlayer *player in playersMT) if(player.isStarting) numStarters ++;
+    for (FBPlayer *player in _players) if(player.isStarting) _numStarters ++;
     [self.tableView reloadData];
 }
 
@@ -92,8 +95,8 @@ NSString *scoringPeriodMT = @"today";   //span of stats
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) return numStarters;
-    if (section == 1) return 13-numStarters;
+    if (section == 0) return _numStarters;
+    if (section == 1) return 13-_numStarters;
     return 0;
 }
 
@@ -102,7 +105,7 @@ NSString *scoringPeriodMT = @"today";   //span of stats
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    if ([scoringPeriodMT isEqual:@"today"]) return 30;
+    if ([_scoringPeriod isEqual:@"today"]) return 30;
     return 0;
 }
 
@@ -133,8 +136,8 @@ NSString *scoringPeriodMT = @"today";   //span of stats
     [cell addSubview:scrollView];
     scrollView.delegate = self;
     scrollView.tag = 1;
-    [scrollView setContentOffset:CGPointMake(scrollDistanceMT, 0)];
-    [scrollViewsMT addObject:scrollView];
+    [scrollView setContentOffset:CGPointMake(_globalScrollDistance, 0)];
+    [self.scrollViews addObject:scrollView];
     //STATS LABELS
     NSString *arr[14] = {@"STATUS", @"FPTS", @"FGM", @"FGA", @"FTM", @"FTA", @"REB", @"AST", @"BLK", @"STL", @"TO", @"PTS", @"OWN", @"+/-"};
     UILabel *stats1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120, 30)];
@@ -170,13 +173,13 @@ NSString *scoringPeriodMT = @"today";   //span of stats
     [cell addSubview:scrollView];
     scrollView.delegate = self;
     scrollView.tag = 1;
-    [scrollView setContentOffset:CGPointMake(scrollDistanceMT, 0)];
-    [scrollViewsMT addObject:scrollView];
+    [scrollView setContentOffset:CGPointMake(_globalScrollDistance, 0)];
+    [self.scrollViews addObject:scrollView];
     //STATS LABELS
     float arr[11] = {0,0,0,0,0,0,0,0,0,0,0};
     if (section == 0) {
-        for (int i = 0; i < numStarters; i++) {
-            FBPlayer *player = playersMT[i];
+        for (int i = 0; i < _numStarters; i++) {
+            FBPlayer *player = self.players[i];
             if (player.isPlaying) {
                 float arr2[11] = {player.fantasyPoints,player.fgm,player.fga,player.ftm,player.fta,player.rebounds,player.assists,player.blocks,player.steals,player.turnovers,player.points};
                 for (int s = 0; s < 11; s++) arr[s] += arr2[s];
@@ -184,8 +187,8 @@ NSString *scoringPeriodMT = @"today";   //span of stats
         }
     }
     else {
-        for (int i = numStarters; i < 13; i++) {
-            FBPlayer *player = playersMT[i];
+        for (int i = _numStarters; i < 13; i++) {
+            FBPlayer *player = self.players[i];
             if (player.isPlaying) {
                 float arr2[11] = {player.fantasyPoints,player.fgm,player.fga,player.ftm,player.fta,player.rebounds,player.assists,player.blocks,player.steals,player.turnovers,player.points};
                 for (int s = 0; s < 11; s++) arr[s] += arr2[s];
@@ -205,8 +208,8 @@ NSString *scoringPeriodMT = @"today";   //span of stats
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PlayerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Identifier"];
-    FBPlayer *player = playersMT[indexPath.row+indexPath.section*numStarters];
-    cell = [[PlayerCell alloc] initWithPlayer:player view:self scrollDistance:scrollDistanceMT height:42.46];
+    FBPlayer *player = self.players[indexPath.row+indexPath.section*_numStarters];
+    cell = [[PlayerCell alloc] initWithPlayer:player view:self scrollDistance:_globalScrollDistance height:42.46];
     cell.delegate = self;
     return cell;
 }
@@ -215,9 +218,9 @@ NSString *scoringPeriodMT = @"today";   //span of stats
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (scrollView.tag == 1) {
-        scrollDistanceMT = scrollView.contentOffset.x;
-        for (UIScrollView *sV in scrollViewsMT) [sV setContentOffset:CGPointMake(scrollDistanceMT, 0) animated:NO];
-        for (NSIndexPath *path in [self.tableView indexPathsForVisibleRows]) [(PlayerCell *)[self.tableView cellForRowAtIndexPath:path] setScrollDistance:scrollDistanceMT];
+        _globalScrollDistance = scrollView.contentOffset.x;
+        for (UIScrollView *sV in self.scrollViews) [sV setContentOffset:CGPointMake(_globalScrollDistance, 0) animated:NO];
+        for (NSIndexPath *path in [self.tableView indexPathsForVisibleRows]) [(PlayerCell *)[self.tableView cellForRowAtIndexPath:path] setScrollDistance:_globalScrollDistance];
     }
 }
 
@@ -250,8 +253,8 @@ NSArray *pickerData;
     [picker resetData];
     [picker setData:pickerData[0] ForColumn:0];
     [picker setData:pickerData[1] ForColumn:1];
-    [picker selectIndex:-(self.session.scoringPeriodID.intValue-scoringDay)+6 inColumn:0];
-    [picker selectIndex:(int)[[NSArray arrayWithObjects:@"today", @"last7", @"last15", @"last30", @"currSeason", @"lastSeason", @"projections",nil] indexOfObject:scoringPeriodMT] inColumn:1];
+    [picker selectIndex:-(self.session.scoringPeriodID.intValue-_scoringDay)+6 inColumn:0];
+    [picker selectIndex:(int)[[NSArray arrayWithObjects:@"today", @"last7", @"last15", @"last30", @"currSeason", @"lastSeason", @"projections",nil] indexOfObject:_scoringPeriod] inColumn:1];
     [picker setAlpha:0.0];
     [self.view addSubview:picker];
     [UIView animateWithDuration:0.1 animations:^{
@@ -264,17 +267,17 @@ NSArray *pickerData;
 - (void)doneButtonPressedInPickerView:(FBPickerView *)pickerView {
     int data1 = [pickerView selectedIndexForColumn:0];
     int data2 = [pickerView selectedIndexForColumn:1];
-    scoringDay = self.session.scoringPeriodID.intValue-6+data1;
-    if (data2 == 0) scoringPeriodMT = @"today";
-    else if (data2 == 1) scoringPeriodMT = @"last7";
-    else if (data2 == 2) scoringPeriodMT = @"last15";
-    else if (data2 == 3) scoringPeriodMT = @"last30";
-    else if (data2 == 4) scoringPeriodMT = @"currSeason";
-    else if (data2 == 5) scoringPeriodMT = @"lastSeason";
-    else  scoringPeriodMT = @"projections";
+    _scoringDay = self.session.scoringPeriodID.intValue-6+data1;
+    if (data2 == 0) _scoringPeriod = @"today";
+    else if (data2 == 1) _scoringPeriod = @"last7";
+    else if (data2 == 2) _scoringPeriod = @"last15";
+    else if (data2 == 3) _scoringPeriod = @"last30";
+    else if (data2 == 4) _scoringPeriod = @"currSeason";
+    else if (data2 == 5) _scoringPeriod = @"lastSeason";
+    else _scoringPeriod = @"projections";
     //if (data2 == 0 && data1 == 3) refreshButton.enabled = YES;
     //else refreshButton.enabled = NO;
-    [self loadplayersMT];
+    [self loadplayers];
     [self fadeOutWithPickerView:pickerView];
 }
 

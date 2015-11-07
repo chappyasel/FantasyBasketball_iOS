@@ -10,27 +10,27 @@
 
 @interface DailyLeadersViewController ()
 
+@property TFHpple *parser;
+
+@property NSMutableArray *players;
+
+@property NSMutableArray *scrollViews;
+@property float globalScrollDistance;
+
+@property int scoringDay;
+@property int team;
+
 @end
 
 @implementation DailyLeadersViewController
 
-NSMutableArray *playersDL;
-NSMutableArray *scrollViewsDL;
-TFHpple *parser;
-float scrollDistanceDL;
-int scoringDay;
-int team;
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"Daily Leaders";
-    
-    
-    
-    scoringDay = self.session.scoringPeriodID.intValue;
-    team = -1; //All defualt
-    scrollViewsDL = [[NSMutableArray alloc] init];
-    [self loadplayersDL];
+    _scoringDay = self.session.scoringPeriodID.intValue;
+    _team = -1; //All defualt
+    self.scrollViews = [[NSMutableArray alloc] init];
+    [self loadplayers];
 }
 
 - (void)loadTableView {
@@ -78,18 +78,18 @@ NSTimer *updateTimer;
 }
 
 - (IBAction)refreshButtonPressed:(UIButton *)sender {
-    [self loadplayersDL];
-    scrollViewsDL = [[NSMutableArray alloc] init];
+    [self loadplayers];
+    self.scrollViews = [[NSMutableArray alloc] init];
     [self.tableView reloadData];
 }
 
-- (void)loadplayersDL {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/leaders?leagueId=%@&teamId=%@&scoringPeriodId=%d&startIndex=0&proTeamId=%d",self.session.leagueID,self.session.teamID,scoringDay,team]];
+- (void)loadplayers {
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/leaders?leagueId=%@&teamId=%@&scoringPeriodId=%d&startIndex=0&proTeamId=%d",self.session.leagueID,self.session.teamID,_scoringDay,_team]];
     NSData *html = [NSData dataWithContentsOfURL:url];
-    parser = [TFHpple hppleWithHTMLData:html];
+    self.parser = [TFHpple hppleWithHTMLData:html];
     NSString *XpathQueryString = @"//table[@class='playerTableTable tableBody']/tr";
-    NSArray *nodes = [parser searchWithXPathQuery:XpathQueryString];
-    playersDL = [[NSMutableArray alloc] init];
+    NSArray *nodes = [self.parser searchWithXPathQuery:XpathQueryString];
+    self.players = [[NSMutableArray alloc] init];
     for (int i = 0; i < nodes.count; i++) {
         TFHppleElement *element = nodes[i];
         if ([element objectForKey:@"id"]) {
@@ -114,7 +114,7 @@ NSTimer *updateTimer;
             [dict setObject:children[17].content forKey:@"turnovers"];
             [dict setObject:children[18].content forKey:@"points"];
             [dict setObject:children[20].content forKey:@"fantasyPoints"];
-            [playersDL addObject:[[FBPlayer alloc] initWithDictionary:dict]];
+            [self.players addObject:[[FBPlayer alloc] initWithDictionary:dict]];
         }
     }
 }
@@ -122,7 +122,7 @@ NSTimer *updateTimer;
 #pragma mark - Table View
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return playersDL.count;
+    return self.players.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -151,8 +151,8 @@ NSTimer *updateTimer;
     [cell addSubview:scrollView];
     scrollView.delegate = self;
     scrollView.tag = 1;
-    [scrollView setContentOffset:CGPointMake(scrollDistanceDL, 0)];
-    [scrollViewsDL addObject:scrollView];
+    [scrollView setContentOffset:CGPointMake(_globalScrollDistance, 0)];
+    [self.scrollViews addObject:scrollView];
     //STATS LABELS
     NSString *arr[14] = {@"STATUS", @"FPTS", @"MIN", @"FGM", @"FGA", @"FTM", @"FTA", @"REB", @"AST", @"BLK", @"STL", @"TO", @"PTS"};
     UILabel *stats1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120, 30)];
@@ -174,8 +174,8 @@ NSTimer *updateTimer;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PlayerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Identifier"];
-    FBPlayer *player = playersDL[indexPath.row];
-    cell = [[PlayerCell alloc] initWithPlayer:player view:self scrollDistance:scrollDistanceDL height:40.0];
+    FBPlayer *player = self.players[indexPath.row];
+    cell = [[PlayerCell alloc] initWithPlayer:player view:self scrollDistance:_globalScrollDistance height:40.0];
     cell.delegate = self;
     return cell;
 }
@@ -184,9 +184,9 @@ NSTimer *updateTimer;
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (scrollView.tag == 1) {
-        scrollDistanceDL = scrollView.contentOffset.x;
-        for (UIScrollView *sV in scrollViewsDL) [sV setContentOffset:CGPointMake(scrollDistanceDL, 0) animated:NO];
-        for (NSIndexPath *path in [self.tableView indexPathsForVisibleRows]) [(PlayerCell *)[self.tableView cellForRowAtIndexPath:path] setScrollDistance:scrollDistanceDL];
+        _globalScrollDistance = scrollView.contentOffset.x;
+        for (UIScrollView *sV in self.scrollViews) [sV setContentOffset:CGPointMake(_globalScrollDistance, 0) animated:NO];
+        for (NSIndexPath *path in [self.tableView indexPathsForVisibleRows]) [(PlayerCell *)[self.tableView cellForRowAtIndexPath:path] setScrollDistance:_globalScrollDistance];
     }
 }
 
@@ -231,12 +231,12 @@ NSMutableArray <NSMutableArray <NSString *> *> *pickerData;
 - (void)doneButtonPressedInPickerView:(FBPickerView *)pickerView {
     int data1 = (int)[pickerView selectedIndexForColumn:0];
     int data2 = (int)[pickerView selectedIndexForColumn:1];
-    scoringDay = data1+1;
+    _scoringDay = data1+1;
     int indexs[32] = {-1, 0, 1, 17, 2, 30, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 29, 14, 15, 16, 3, 18, 25, 19, 20, 21, 22, 24, 23, 28, 26, 27};
-    team = indexs[data2];
+    _team = indexs[data2];
     //if (scoringDay == self.session.scoringPeriodID) refreshButton.enabled = YES;
     //else refreshButton.enabled = NO;
-    [self loadplayersDL];
+    [self loadplayers];
     [self.tableView reloadData];
     [self fadeOutWithPickerView:pickerView];
 }

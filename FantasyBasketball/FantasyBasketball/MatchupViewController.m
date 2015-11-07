@@ -10,43 +10,41 @@
 
 @interface MatchupViewController ()
 
-@property JBBarChartView *team1BarChart;
-@property JBBarChartView *team2BarChart;
+@property TFHpple *parser;
 
-@property NSArray *team1Scores;
-@property NSArray *team2Scores;
+@property bool handleError;
+
+@property NSMutableArray *playersTeam1;
+@property int numStartersTeam1;
+@property NSMutableArray *playersTeam2;
+@property int numStartersTeam2;
+
+@property NSArray *scoresTeam1;
+@property JBBarChartView *barChartTeam1;
+@property NSArray *scoresTeam2;
+@property JBBarChartView *barChartTeam2;
+
+@property NSMutableArray *cells;
 
 @end
 
 @implementation MatchupViewController
 
-TFHpple *parserMU;
-
-bool handleError;
-
-NSMutableArray *playersMU1;
-int numStartersMU1 = 0;
-NSMutableArray *playersMU2;
-int numStartersMU2 = 0;
-NSMutableArray *scoresMU1;
-NSMutableArray *scoresMU2;
-NSMutableArray *cells;
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"Matchup";
-    handleError = NO;
-    cells = [[NSMutableArray alloc] init];
+    _handleError = NO;
+    self.cells = [[NSMutableArray alloc] init];
     [self loadplayersMU];
-    if (handleError) return;
+    if (_handleError) return;
     [self loadTableView];
     [self loadBarCharts];
 }
 
 - (void)refreshScoresWithFirstTeamName: (NSString *)firstName {
-    if (handleError) return;
+    if (_handleError) return;
     NSString *XpathQueryString = @"//tr[@class='tableBody']";
-    NSArray <TFHppleElement *> *nodes = [parserMU searchWithXPathQuery:XpathQueryString];
+    NSArray <TFHppleElement *> *nodes = [self.parser searchWithXPathQuery:XpathQueryString];
     NSString *team1Name = nodes[0].firstChild.content;
     NSString *team2Name = nodes[1].firstChild.content;
     int t1;
@@ -65,7 +63,7 @@ NSMutableArray *cells;
     }
     self.team1Display1.text = ((TFHppleElement *)nodes[t1].children[10]).content;
     self.team2Display1.text = ((TFHppleElement *)nodes[t2].children[10]).content;
-    self.team1Scores = @[    @"200",
+    self.scoresTeam1 = @[    @"200",
                              ((TFHppleElement *)nodes[t1].children[2]).content,
                              ((TFHppleElement *)nodes[t1].children[3]).content,
                              ((TFHppleElement *)nodes[t1].children[4]).content,
@@ -74,7 +72,7 @@ NSMutableArray *cells;
                              ((TFHppleElement *)nodes[t1].children[7]).content,
                              ((TFHppleElement *)nodes[t1].children[8]).content];
     
-    self.team2Scores = @[    ((TFHppleElement *)nodes[t2].children[8]).content,
+    self.scoresTeam2 = @[    ((TFHppleElement *)nodes[t2].children[8]).content,
                              ((TFHppleElement *)nodes[t2].children[7]).content,
                              ((TFHppleElement *)nodes[t2].children[6]).content,
                              ((TFHppleElement *)nodes[t2].children[5]).content,
@@ -82,29 +80,29 @@ NSMutableArray *cells;
                              ((TFHppleElement *)nodes[t2].children[3]).content,
                              ((TFHppleElement *)nodes[t2].children[2]).content,
                              @"200"];
-    [self.team1BarChart reloadData];
-    [self.team2BarChart reloadData];
+    [self.barChartTeam1 reloadData];
+    [self.barChartTeam2 reloadData];
 }
 
 - (void)loadBarCharts {
     float width = self.view.frame.size.width/2-15;
-    self.team1BarChart = [[JBBarChartView alloc] init];
-    self.team1BarChart.frame = CGRectMake(-width/8, 0, width, 104);
-    self.team1BarChart.dataSource = self;
-    self.team1BarChart.delegate = self;
-    self.team1BarChart.inverted = YES;
-    [self.scoreView addSubview:self.team1BarChart];
-    [self.scoreView sendSubviewToBack:self.team1BarChart];
-    [self.team1BarChart reloadData];
+    self.barChartTeam1 = [[JBBarChartView alloc] init];
+    self.barChartTeam1.frame = CGRectMake(-width/8, 0, width, 104);
+    self.barChartTeam1.dataSource = self;
+    self.barChartTeam1.delegate = self;
+    self.barChartTeam1.inverted = YES;
+    [self.scoreView addSubview:self.barChartTeam1];
+    [self.scoreView sendSubviewToBack:self.barChartTeam1];
+    [self.barChartTeam1 reloadData];
     
-    self.team2BarChart = [[JBBarChartView alloc] init];
-    self.team2BarChart.frame = CGRectMake(width+2*15+width/8, 0, width, 104);
-    self.team2BarChart.dataSource = self;
-    self.team2BarChart.delegate = self;
-    self.team2BarChart.inverted = YES;
-    [self.scoreView addSubview:self.team2BarChart];
-    [self.scoreView sendSubviewToBack:self.team2BarChart];
-    [self.team2BarChart reloadData];
+    self.barChartTeam2 = [[JBBarChartView alloc] init];
+    self.barChartTeam2.frame = CGRectMake(width+2*15+width/8, 0, width, 104);
+    self.barChartTeam2.dataSource = self;
+    self.barChartTeam2.delegate = self;
+    self.barChartTeam2.inverted = YES;
+    [self.scoreView addSubview:self.barChartTeam2];
+    [self.scoreView sendSubviewToBack:self.barChartTeam2];
+    [self.barChartTeam2 reloadData];
 }
 
 - (void)loadTableView {
@@ -132,7 +130,7 @@ NSMutableArray *cells;
 }
 
 - (void)autorefreshStateChanged:(UISwitch *)sender{
-    if (handleError) return;
+    if (_handleError) return;
     if (sender.isOn) {
         updateTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
         [self timerFired:nil];
@@ -155,16 +153,16 @@ NSTimer *updateTimer;
 }
 
 - (void)loadplayersMU {
-    numStartersMU1 = 0, numStartersMU2 = 0;
+    _numStartersTeam1 = 0, _numStartersTeam2 = 0;
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/boxscorefull?leagueId=%@&teamId=%@&scoringPeriodId=%@&seasonId=%@&view=scoringperiod&version=full",self.session.leagueID,self.session.teamID,self.session.scoringPeriodID,self.session.seasonID]];
     NSError *error;
     NSData *html = [NSData dataWithContentsOfURL:url options:NSDataReadingMapped error:&error];
     if (error) NSLog(@"Matchup error: %@",error);
-    parserMU = [TFHpple hppleWithHTMLData:html];
+    self.parser = [TFHpple hppleWithHTMLData:html];
     //table[@class='playerTableTable tableBody']/tr
-    NSArray *nodes = [parserMU searchWithXPathQuery:@"//table[@class='playerTableTable tableBody']/tr"];
-    playersMU1 = [[NSMutableArray alloc] initWithCapacity:13];
-    playersMU2 = [[NSMutableArray alloc] initWithCapacity:13];
+    NSArray *nodes = [self.parser searchWithXPathQuery:@"//table[@class='playerTableTable tableBody']/tr"];
+    self.playersTeam1 = [[NSMutableArray alloc] initWithCapacity:13];
+    self.playersTeam2 = [[NSMutableArray alloc] initWithCapacity:13];
     if (nodes.count == 0) {
         NSLog(@"Error");
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Matchup Found"
@@ -173,13 +171,13 @@ NSTimer *updateTimer;
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
         [alert show];
-        handleError = YES;
+        _handleError = YES;
         return;
     }
     //team search
-    TFHppleElement *name = [parserMU searchWithXPathQuery:@"//table[@id='playertable_0']/tr[@class='playerTableBgRowHead tableHead playertableTableHeader']/td"].firstObject;
+    TFHppleElement *name = [self.parser searchWithXPathQuery:@"//table[@id='playertable_0']/tr[@class='playerTableBgRowHead tableHead playertableTableHeader']/td"].firstObject;
     NSString *firstTeamName = [name.content stringByReplacingOccurrencesOfString:@" Box Score" withString:@""];
-    handleError = NO;
+    _handleError = NO;
     for (int i = 0; i < nodes.count; i++) {
         TFHppleElement *element = nodes[i];
         if ([element objectForKey:@"id"]) {
@@ -206,12 +204,12 @@ NSTimer *updateTimer;
             [dict setObject:children[16].content forKey:@"points"];
             [dict setObject:children[18].content forKey:@"fantasyPoints"];
             //[dict setObject:[[element objectForKey:@"id"] substringFromIndex:4] forKey:@"playerID"];
-            if (i < 13) [playersMU1 addObject:[[FBPlayer alloc] initWithDictionary:dict]];
-            else [playersMU2 addObject:[[FBPlayer alloc] initWithDictionary:dict]];
+            if (i < 13) [self.playersTeam1 addObject:[[FBPlayer alloc] initWithDictionary:dict]];
+            else [self.playersTeam2 addObject:[[FBPlayer alloc] initWithDictionary:dict]];
         }
     }
-    for (FBPlayer *player in playersMU1) if(player.isStarting) numStartersMU1 ++;
-    for (FBPlayer *player in playersMU2) if(player.isStarting) numStartersMU2 ++;
+    for (FBPlayer *player in self.playersTeam1) if(player.isStarting) _numStartersTeam1 ++;
+    for (FBPlayer *player in self.playersTeam2) if(player.isStarting) _numStartersTeam2 ++;
     [self refreshScoresWithFirstTeamName: firstTeamName];
 }
 
@@ -222,8 +220,8 @@ NSTimer *updateTimer;
 }
 
 - (CGFloat)barChartView:(JBBarChartView *)barChartView heightForBarViewAtIndex:(NSUInteger)index {
-    if (barChartView == self.team1BarChart) return [self.team1Scores[index] floatValue];
-    return [self.team2Scores[index] floatValue];
+    if (barChartView == self.barChartTeam1) return [self.scoresTeam1[index] floatValue];
+    return [self.scoresTeam2[index] floatValue];
 }
 
 - (UIColor *)barChartView:(JBBarChartView *)barChartView colorForBarViewAtIndex:(NSUInteger)index {
@@ -233,7 +231,7 @@ NSTimer *updateTimer;
 #pragma mark - Table View
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (handleError) return 0;
+    if (_handleError) return 0;
     return 10;
 }
 
@@ -253,12 +251,12 @@ NSTimer *updateTimer;
     float tot1 = 0;
     float tot2 = 0;
     if (section == 0) {
-        for (int i = 0; i < numStartersMU1; i++) {
-            FBPlayer *player = playersMU1[i];
+        for (int i = 0; i < self.numStartersTeam1; i++) {
+            FBPlayer *player = self.playersTeam1[i];
             if (player.isPlaying) tot1 += player.fantasyPoints;
         }
-        for (int i = 0; i < numStartersMU2; i++) {
-            FBPlayer *player = playersMU2[i];
+        for (int i = 0; i < self.numStartersTeam2; i++) {
+            FBPlayer *player = self.playersTeam2[i];
             if (player.isPlaying) tot2 += player.fantasyPoints;
         }
     }
@@ -280,17 +278,17 @@ NSTimer *updateTimer;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FBPlayer *rightPlayer;
     FBPlayer *leftPlayer;
-    if (playersMU1.count-1 >= indexPath.row+indexPath.section*numStartersMU1)
-        leftPlayer = playersMU1[indexPath.row+indexPath.section*numStartersMU1];
-    if (playersMU2.count-1 >= indexPath.row+indexPath.section*numStartersMU2)
-        rightPlayer = playersMU2[indexPath.row+indexPath.section*numStartersMU2];
-    if (cells.count >= indexPath.row+indexPath.section*numStartersMU1+1) {
-        MatchupPlayerCell *cell = cells[indexPath.row+indexPath.section*numStartersMU1];
+    if (self.playersTeam1.count-1 >= indexPath.row+indexPath.section*_numStartersTeam1)
+        leftPlayer = self.playersTeam1[indexPath.row+indexPath.section*_numStartersTeam1];
+    if (self.playersTeam2.count-1 >= indexPath.row+indexPath.section*_numStartersTeam2)
+        rightPlayer = self.playersTeam2[indexPath.row+indexPath.section*_numStartersTeam2];
+    if (self.cells.count >= indexPath.row+indexPath.section*_numStartersTeam1+1) {
+        MatchupPlayerCell *cell = self.cells[indexPath.row+indexPath.section*_numStartersTeam1];
         if (!cell) {
             cell = [[MatchupPlayerCell alloc] initWithRightPlayer:rightPlayer leftPlayer:leftPlayer view:self expanded:NO];
             cell.delegate = self;
             cell.index = (int)indexPath.row;
-            [cells addObject:cell];
+            [self.cells addObject:cell];
         }
         else [cell updateWithRightPlayer:rightPlayer leftPlayer:leftPlayer];
         return cell;
@@ -298,7 +296,7 @@ NSTimer *updateTimer;
     MatchupPlayerCell *cell = [[MatchupPlayerCell alloc] initWithRightPlayer:rightPlayer leftPlayer:leftPlayer view:self expanded:NO];
     cell.delegate = self;
     cell.index = (int)indexPath.row;
-    [cells addObject:cell];
+    [self.cells addObject:cell];
     return cell;
 }
 

@@ -11,12 +11,12 @@
 
 @interface WebViewController ()
 
+@property UINavigationBar *navBar;
+@property UIBarButtonItem *refreshButton;
+
 @end
 
 @implementation WebViewController
-
-UINavigationBar *barWV;
-UIBarButtonItem *refreshButton;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -24,40 +24,40 @@ UIBarButtonItem *refreshButton;
 
 - (void)viewWillAppear:(BOOL)animated {
     [self loadNavBar];
-    [_webDisplay loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.link]]];
-    _webDisplay.scrollView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
+    [self.webDisplay loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.link]]];
+    self.webDisplay.scrollView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
 }
 
 - (void) adjustViewsForOrientation:(UIInterfaceOrientation) orientation {
     switch (orientation) {
         case UIInterfaceOrientationPortrait: case UIInterfaceOrientationPortraitUpsideDown: {
-            [barWV setFrame:CGRectMake(0, 0, 414, 64)];
-            _webDisplay.frame = CGRectMake(0, 0, 414, 736);
-            _webDisplay.scrollView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
+            [self.navBar setFrame:CGRectMake(0, 0, 414, 64)];
+            self.webDisplay.frame = CGRectMake(0, 0, 414, 736);
+            self.webDisplay.scrollView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
         } break;
         case UIInterfaceOrientationLandscapeLeft: case UIInterfaceOrientationLandscapeRight: {
-            [barWV setFrame:CGRectMake(0, 0, 736, 44)];
-            _webDisplay.frame = CGRectMake(0, 0, 736, 414);
-            _webDisplay.scrollView.contentInset = UIEdgeInsetsMake(44, 0, 0, 0);
+            [self.navBar setFrame:CGRectMake(0, 0, 736, 44)];
+            self.webDisplay.frame = CGRectMake(0, 0, 736, 414);
+            self.webDisplay.scrollView.contentInset = UIEdgeInsetsMake(44, 0, 0, 0);
         } break;
         case UIInterfaceOrientationUnknown: break;
     }
 }
 
 - (void)loadNavBar {
-    barWV = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
-    if (self.view.frame.size.height < 500) barWV.frame = CGRectMake(0, 0, self.view.frame.size.width, 44);
+    self.navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
+    if (self.view.frame.size.height < 500) self.navBar.frame = CGRectMake(0, 0, self.view.frame.size.width, 44);
     UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@""];
-    refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshButtonPressed:)];
-    navItem.rightBarButtonItem = refreshButton;
+    self.refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshButtonPressed:)];
+    navItem.rightBarButtonItem = self.refreshButton;
     UIBarButtonItem *bi2 = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backButtonPressed:)];
     navItem.leftBarButtonItem = bi2;
-    barWV.items = [NSArray arrayWithObject:navItem];
-    [self.view addSubview:barWV];
+    self.navBar.items = [NSArray arrayWithObject:navItem];
+    [self.view addSubview:self.navBar];
 }
 
 - (void)refreshButtonPressed:(UIButton *)sender {
-    [_webDisplay reload];
+    [self.webDisplay reload];
 }
 
 - (void)didReceiveMemoryWarning {

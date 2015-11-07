@@ -10,26 +10,30 @@
 
 @interface PlayersViewController ()
 
+@property TFHpple *parser;
+
+@property NSMutableArray *players;
+
+@property NSMutableArray *scrollViews;
+@property float globalScrollDistance;
+
+@property NSArray *sortChoices;
+@property NSString *sort;
+@property NSString *scoringPeriod;
+@property NSString *searchText;
+
+@property int sortIndex;
+@property int availability;
+@property int team;
+
 @end
 
 @implementation PlayersViewController
 
-NSArray *sortChoices;
-NSString *sort;
-int sortIndex;
-int availability;
-int team;
-NSString *scoringPeriodPL;
-NSString *searchText;
-NSMutableArray *playersPL;
-NSMutableArray *scrollViewsPL;
-TFHpple *parser;
-float scrollDistancePL;
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"Find Players";
-    sortChoices = [[NSArray alloc] initWithObjects: //FPTS, TOT, OWN, +/-, ...
+    _sortChoices = [[NSArray alloc] initWithObjects: //FPTS, TOT, OWN, +/-, ...
                    @"AAAAARgAAAAHAQAMc3RhdFNlYXNvbklkAwAAB%2BABAAhjYXRlZ29yeQMAAAACAQAJZGlyZWN0aW9uA%2F%2F%2F%2F%2F8BAAZjb2x1bW4D%2F%2F%2F%2F%2FgEAC3NwbGl0VHlwZUlkAwAAAAABABBzdGF0U291cmNlVHlwZUlkAwAAAAABAAtzdGF0UXVlcnlJZAMAAAAB", //FPTS
                    @"AAAAARgAAAAHAQAMc3RhdFNlYXNvbklkAwAAB%2BABAAhjYXRlZ29yeQMAAAACAQAJZGlyZWN0aW9uA%2F%2F%2F%2F%2F8BAAZjb2x1bW4D%2F%2F%2F%2F%2FQEAC3NwbGl0VHlwZUlkAwAAAAABABBzdGF0U291cmNlVHlwZUlkAwAAAAABAAtzdGF0UXVlcnlJZAMAAAAB&r=7692735", //TOT
                    @"AAAAARgAAAADAQAIY2F0ZWdvcnkDAAAAAwEABmNvbHVtbgMAAAAHAQAJZGlyZWN0aW9uA%2F%2F%2F%2F%2F8%3D&r=30813114", //OWN
@@ -44,14 +48,14 @@ float scrollDistancePL;
                    @"AAAAARgAAAAIAQAMc3RhdFNlYXNvbklkAwAAB%2BABAAhjYXRlZ29yeQMAAAABAQAJZGlyZWN0aW9uA%2F%2F%2F%2F%2F8BAAZjb2x1bW4DAAAAAgEAC3NwbGl0VHlwZUlkAwAAAAABABBzdGF0U291cmNlVHlwZUlkAwAAAAABAAtzb3J0QXZlcmFnZQkBAQALc3RhdFF1ZXJ5SWQDAAAAAQ%3D%3D&r=63854691", //STL
                    @"AAAAARgAAAAIAQAMc3RhdFNlYXNvbklkAwAAB%2BABAAhjYXRlZ29yeQMAAAABAQAJZGlyZWN0aW9uA%2F%2F%2F%2F%2F8BAAZjb2x1bW4DAAAACwEAC3NwbGl0VHlwZUlkAwAAAAABABBzdGF0U291cmNlVHlwZUlkAwAAAAABAAtzb3J0QXZlcmFnZQkBAQALc3RhdFF1ZXJ5SWQDAAAAAQ%3D%3D&r=67940983", //TO
                    @"AAAAARgAAAAIAQAMc3RhdFNlYXNvbklkAwAAB%2BABAAhjYXRlZ29yeQMAAAABAQAJZGlyZWN0aW9uA%2F%2F%2F%2F%2F8BAAZjb2x1bW4DAAAAAAEAC3NwbGl0VHlwZUlkAwAAAAABABBzdGF0U291cmNlVHlwZUlkAwAAAAABAAtzb3J0QXZlcmFnZQkBAQALc3RhdFF1ZXJ5SWQDAAAAAQ%3D%3D&r=36360871", /*PTS*/ nil];
-    sort = sortChoices[3];
-    sortIndex = 3; //+/- sort
-    availability = 1; //Available
-    scoringPeriodPL = @"last15";
-    searchText = @"null";
-    team = -1;
-    scrollViewsPL = [[NSMutableArray alloc] init];
-    [self loadplayersPL];
+    _sort = _sortChoices[3];
+    _sortIndex = 3; //+/- sort
+    _availability = 1; //Available
+    _scoringPeriod = @"last15";
+    _searchText = @"null";
+    _team = -1;
+    self.scrollViews = [[NSMutableArray alloc] init];
+    [self loadplayers];
 }
 
 - (void)loadSearchBar {
@@ -76,13 +80,13 @@ float scrollDistancePL;
     [self loadDatePickerData];
 }
 
-- (void)loadplayersPL {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/freeagency?leagueId=%@&seasonId=%@&context=freeagency&view=stats&version=%@&avail=%d&sortMap=%@&slotCategoryGroup=%@&search=%@&proTeamId=%d",self.session.leagueID,self.session.seasonID,scoringPeriodPL,availability,sort,@"null",searchText,team]];
+- (void)loadplayers {
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/freeagency?leagueId=%@&seasonId=%@&context=freeagency&view=stats&version=%@&avail=%d&sortMap=%@&slotCategoryGroup=%@&search=%@&proTeamId=%d",self.session.leagueID,self.session.seasonID,_scoringPeriod,_availability,_sort,@"null",_searchText,_team]];
     NSData *html = [NSData dataWithContentsOfURL:url];
-    parser = [TFHpple hppleWithHTMLData:html];
+    self.parser = [TFHpple hppleWithHTMLData:html];
     NSString *XpathQueryString = @"//table[@class='playerTableTable tableBody']/tr";
-    NSArray *nodes = [parser searchWithXPathQuery:XpathQueryString];
-    playersPL = [[NSMutableArray alloc] init];
+    NSArray *nodes = [self.parser searchWithXPathQuery:XpathQueryString];
+    self.players = [[NSMutableArray alloc] init];
     for (int i = 0; i < nodes.count; i++) {
         TFHppleElement *element = nodes[i];
         if ([element objectForKey:@"id"]) {
@@ -109,7 +113,7 @@ float scrollDistancePL;
             [dict setObject:children[20].content forKey:@"fantasyPoints"];
             [dict setObject:children[22].content forKey:@"percentOwned"];
             [dict setObject:children[23].content forKey:@"plusMinus"];
-            [playersPL addObject:[[FBPlayer alloc] initWithDictionary:dict]];
+            [self.players addObject:[[FBPlayer alloc] initWithDictionary:dict]];
         }
     }
 }
@@ -117,7 +121,7 @@ float scrollDistancePL;
 #pragma mark - Table View
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return playersPL.count;
+    return self.players.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -146,8 +150,8 @@ float scrollDistancePL;
     [cell addSubview:scrollView];
     scrollView.delegate = self;
     scrollView.tag = 1;
-    [scrollView setContentOffset:CGPointMake(scrollDistancePL, 0)];
-    [scrollViewsPL addObject:scrollView];
+    [scrollView setContentOffset:CGPointMake(_globalScrollDistance, 0)];
+    [self.scrollViews addObject:scrollView];
     //STATS LABELS
     NSString *arr[15] = {@"STATUS", @"FPTS", @"TOT", @"OWN", @"+/-", @"FGM", @"FGA", @"FTM", @"FTA", @"REB", @"AST", @"BLK", @"STL", @"TO", @"PTS"};
     UILabel *stats1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120, 30)];
@@ -179,17 +183,17 @@ float scrollDistancePL;
 }
 
 - (void)updateSort: (UIButton *)sender {
-    sort = sortChoices[sender.tag];
-    sortIndex = (int)sender.tag;
-    [self loadplayersPL];
-    scrollViewsPL = [[NSMutableArray alloc] init];
+    _sort = _sortChoices[sender.tag];
+    _sortIndex = (int)sender.tag;
+    [self loadplayers];
+    self.scrollViews = [[NSMutableArray alloc] init];
     [self.tableView reloadData];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PlayerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Identifier"];
-    FBPlayer *player = playersPL[indexPath.row];
-    cell = [[PlayerCell alloc] initWithPlayer:player view:self scrollDistance:scrollDistancePL height:40.0];
+    FBPlayer *player = self.players[indexPath.row];
+    cell = [[PlayerCell alloc] initWithPlayer:player view:self scrollDistance:_globalScrollDistance height:40.0];
     cell.delegate = self;
     return cell;
 }
@@ -198,10 +202,10 @@ float scrollDistancePL;
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (scrollView.tag == 1) {
-        scrollDistancePL = scrollView.contentOffset.x;
-        for (UIScrollView *sV in scrollViewsPL) [sV setContentOffset:CGPointMake(scrollDistancePL, 0) animated:NO];
+        _globalScrollDistance = scrollView.contentOffset.x;
+        for (UIScrollView *sV in self.scrollViews) [sV setContentOffset:CGPointMake(_globalScrollDistance, 0) animated:NO];
         for (NSIndexPath *path in [self.tableView indexPathsForVisibleRows])
-            if ([self.tableView cellForRowAtIndexPath:path]) [(PlayerCell *)[self.tableView cellForRowAtIndexPath:path] setScrollDistance:scrollDistancePL];
+            if ([self.tableView cellForRowAtIndexPath:path]) [(PlayerCell *)[self.tableView cellForRowAtIndexPath:path] setScrollDistance:_globalScrollDistance];
     }
 }
 
@@ -210,24 +214,24 @@ float scrollDistancePL;
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     [searchBar resignFirstResponder];
     searchBar.text = @"";
-    searchText = @"";
+    _searchText = @"";
     //[self.picker selectRow:1 inComponent:0 animated:NO];
-    availability = 1;
-    sortIndex = 3;
-    sort = sortChoices[3];
-    [self loadplayersPL];
+    _availability = 1;
+    _sortIndex = 3;
+    _sort = _sortChoices[3];
+    [self loadplayers];
     [self.tableView reloadData];
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     [searchBar resignFirstResponder];
-    if ([searchBar.text isEqualToString:@""]) searchText = @"null";
-    else searchText = searchBar.text;
+    if ([searchBar.text isEqualToString:@""]) _searchText = @"null";
+    else _searchText = searchBar.text;
     //[self.picker selectRow:0 inComponent:0 animated:NO];
-    availability = -1;
-    sortIndex = 0;
-    sort = sortChoices[0];
-    [self loadplayersPL];
+    _availability = -1;
+    _sortIndex = 0;
+    _sort = _sortChoices[0];
+    [self loadplayers];
     [self.tableView reloadData];
 }
 
@@ -267,20 +271,20 @@ NSMutableArray <NSArray <NSString *> *> *pickerData;
     int data1 = (int)[pickerView selectedIndexForColumn:0];
     int data2 = (int)[pickerView selectedIndexForColumn:1];
     int data3 = (int)[pickerView selectedIndexForColumn:2];
-    if (data1 == 0) availability = -1; //All
-    if (data1 == 1) availability = 1; //Available
-    if (data1 == 2) availability = 3; //On Waivers
-    if (data1 == 3) availability = 2; //Free Agents
-    if (data1 == 4) availability = 4; //On Rosters
-    else if (data2 == 0) scoringPeriodPL = @"last7";
-    else if (data2 == 1) scoringPeriodPL = @"last15";
-    else if (data2 == 2) scoringPeriodPL = @"last30";
-    else if (data2 == 3) scoringPeriodPL = @"currSeason";
-    else if (data2 == 4) scoringPeriodPL = @"lastSeason";
-    else  scoringPeriodPL = @"projections";
+    if (data1 == 0) _availability = -1; //All
+    if (data1 == 1) _availability = 1; //Available
+    if (data1 == 2) _availability = 3; //On Waivers
+    if (data1 == 3) _availability = 2; //Free Agents
+    if (data1 == 4) _availability = 4; //On Rosters
+    else if (data2 == 0) _scoringPeriod = @"last7";
+    else if (data2 == 1) _scoringPeriod = @"last15";
+    else if (data2 == 2) _scoringPeriod = @"last30";
+    else if (data2 == 3) _scoringPeriod = @"currSeason";
+    else if (data2 == 4) _scoringPeriod = @"lastSeason";
+    else _scoringPeriod = @"projections";
     int indexs[32] = {-1, 0, 1, 17, 2, 30, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 29, 14, 15, 16, 3, 18, 25, 19, 20, 21, 22, 24, 23, 28, 26, 27};
-    team = indexs[data3];
-    [self loadplayersPL];
+    _team = indexs[data3];
+    [self loadplayers];
     [self.tableView reloadData];
     [self fadeOutWithPickerView:pickerView];
 }

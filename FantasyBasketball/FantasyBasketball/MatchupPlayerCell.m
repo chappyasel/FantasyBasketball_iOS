@@ -268,16 +268,16 @@
     }
     if (!self.rightPlayer.isPlaying) rightPointsView.text = @"-";
     else if (![rightPointsView.text isEqualToString:[NSString stringWithFormat:@"%.0f",self.rightPlayer.fantasyPoints]]) {
-        rightPointsView.text = [NSString stringWithFormat:@"%.0f",self.rightPlayer.fantasyPoints];
-        if (rightPointsView.text.intValue < (int)self.rightPlayer.fantasyPoints) rightPointsBackground.backgroundColor = [UIColor FBBlueHighlightColor];
+        if (rightPointsView.text.intValue <= (int)self.rightPlayer.fantasyPoints) rightPointsBackground.backgroundColor = [UIColor FBBlueHighlightColor];
         else rightPointsBackground.backgroundColor = [UIColor FBRedHighlightColor];
+        rightPointsView.text = [NSString stringWithFormat:@"%.0f",self.rightPlayer.fantasyPoints];
         [self highlightRightScore];
     }
     if (!self.leftPlayer.isPlaying) leftPointsView.text = @"-";
     else if (![leftPointsView.text isEqualToString:[NSString stringWithFormat:@"%.0f",self.leftPlayer.fantasyPoints]]) {
-        leftPointsView.text = [NSString stringWithFormat:@"%.0f",self.leftPlayer.fantasyPoints];
-        if (leftPointsView.text.intValue < (int)self.leftPlayer.fantasyPoints) leftPointsBackground.backgroundColor = [UIColor FBBlueHighlightColor];
+        if (leftPointsView.text.intValue <= (int)self.leftPlayer.fantasyPoints) leftPointsBackground.backgroundColor = [UIColor FBBlueHighlightColor];
         else leftPointsBackground.backgroundColor = [UIColor FBRedHighlightColor];
+        leftPointsView.text = [NSString stringWithFormat:@"%.0f",self.leftPlayer.fantasyPoints];
         [self highlightLeftScore];
     }
     if (self.rightPlayer.gameState == FBGameStateHasntStarted) rightPointsView.textColor = [UIColor lightGrayColor];

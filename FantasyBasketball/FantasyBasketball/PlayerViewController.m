@@ -20,30 +20,31 @@
 @property (nonatomic, strong) NSOperationQueue *imageOperationQueue;
 @property (nonatomic, strong) NSCache *imageCache;
 
+@property TFHpple *parser;
+
+@property bool handleError;
+
+@property NSMutableArray *scrollViews;
+@property float globalScrollDistance;
+
+@property NSMutableArray *ranks; // @[type, prk15, prk2016, prk, adp, own, +/-]
+@property NSMutableArray *info;
+@property NSMutableArray *games;
+@property NSMutableArray *news;
+@property NSMutableArray *rotoworld;
+
 @end
 
 @implementation PlayerViewController
-
-bool handleError;
-TFHpple *parser;
-
-NSMutableArray *scrollViewsP;
-float scrollDistanceP;
-
-NSMutableArray *ranks; // @[type, prk15, prk2016, prk, adp, own, +/-]
-NSMutableArray *info;
-NSMutableArray *games;
-NSMutableArray *news;
-NSMutableArray *rotoworld;
 
 bool needsLoadGamesButton = YES;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    handleError = NO;
+    _handleError = NO;
     needsLoadGamesButton = YES;
     gameLogIsBasic = YES;
-    scrollViewsP = [[NSMutableArray alloc] init];
+    self.scrollViews = [[NSMutableArray alloc] init];
     self.imageOperationQueue = [[NSOperationQueue alloc]init];
     self.imageOperationQueue.maxConcurrentOperationCount = 4;
     self.imageCache = [[NSCache alloc] init];
@@ -74,7 +75,7 @@ bool needsLoadGamesButton = YES;
                     [_infoTableView reloadData];
                 });
             }];
-            [self loadGamesWithParser:parser CompletionBlock:^{
+            [self loadGamesWithParser:self.parser CompletionBlock:^{
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self setupGameLogTableView];
                     [self setupGraphView];
@@ -99,15 +100,15 @@ bool needsLoadGamesButton = YES;
 - (void)loadParserWebpageWithCompletionBlock:(void (^)(void)) completed {
     NSString *url = [NSString stringWithFormat:@"http://espn.go.com/nba/players/_/search/%@",[self.player.lastName stringByReplacingOccurrencesOfString:@" " withString:@"_"]];
     NSData *html = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
-    parser = [TFHpple hppleWithHTMLData:html];
+    self.parser = [TFHpple hppleWithHTMLData:html];
     bool playerFound = NO;
-    if ([[[[parser searchWithXPathQuery:@"//h1[@class='h2']"] firstObject] content] containsString:@"NBA Player Search -"]) { //couldnt find player first try
+    if ([[[[self.parser searchWithXPathQuery:@"//h1[@class='h2']"] firstObject] content] containsString:@"NBA Player Search -"]) { //couldnt find player first try
         NSLog(@"Could not Find player, looking deeper...");
-        for (TFHppleElement *p in [parser searchWithXPathQuery:@"//table[@class='tablehead']/tr"]) {
+        for (TFHppleElement *p in [self.parser searchWithXPathQuery:@"//table[@class='tablehead']/tr"]) {
             if (![[p objectForKey:@"class"] isEqual:@"stathead"] && ![[p objectForKey:@"class"] isEqual:@"colhead"]) {
                 NSArray *name = [p.firstChild.firstChild.content componentsSeparatedByString:@", "];
                 if ([name[1] containsString:self.player.firstName]) { //player found
-                    parser = [TFHpple hppleWithHTMLData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[p.firstChild.firstChild objectForKey:@"href"]]]];
+                    self.parser = [TFHpple hppleWithHTMLData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[p.firstChild.firstChild objectForKey:@"href"]]]];
                     NSLog(@"Found player");
                     playerFound = YES;
                     break;
@@ -117,7 +118,7 @@ bool needsLoadGamesButton = YES;
     }
     else playerFound = YES;
     if (!playerFound) {
-        handleError = YES;
+        _handleError = YES;
         dispatch_async(dispatch_get_main_queue(), ^{
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Player Not Found"
                                                             message:@"The requested player was not found on ESPNs server. This is likely an application error."
@@ -138,19 +139,19 @@ bool needsLoadGamesButton = YES;
     TFHpple *parserR = [TFHpple hppleWithHTMLData:html];
     NSString *XpathQueryString = @"//table[@class='playerTableTable tableBody']/tr";
     NSArray *nodes = [parserR searchWithXPathQuery:XpathQueryString];
-    ranks = [[NSMutableArray alloc] init];
+    self.ranks = [[NSMutableArray alloc] init];
     for (int i = 0; i < nodes.count; i++) {
         TFHppleElement *element = nodes[i];
         if ([element objectForKey:@"id"]) {
             NSArray <TFHppleElement *> *children = element.children;
             if ([children[0].content containsString:self.player.firstName]) {
-                [ranks addObject:children[2].content];
-                [ranks addObject:children[9].content];
-                [ranks addObject:children[11].content];
-                [ranks addObject:children[13].content];
-                [ranks addObject:children[14].content];
-                [ranks addObject:children[15].content];
-                [ranks addObject:children[16].content];
+                [self.ranks addObject:children[2].content];
+                [self.ranks addObject:children[9].content];
+                [self.ranks addObject:children[11].content];
+                [self.ranks addObject:children[13].content];
+                [self.ranks addObject:children[14].content];
+                [self.ranks addObject:children[15].content];
+                [self.ranks addObject:children[16].content];
                 break;
             }
         }
@@ -159,28 +160,28 @@ bool needsLoadGamesButton = YES;
 }
 
 - (void)loadInfoWithCompletionBlock:(void (^)(void)) completed {
-    info = [[NSMutableArray alloc] init];
-    NSArray *infoRaw = [parser searchWithXPathQuery:@"//div[@class='player-bio']/ul"];
+    self.info = [[NSMutableArray alloc] init];
+    NSArray *infoRaw = [self.parser searchWithXPathQuery:@"//div[@class='player-bio']/ul"];
     for (TFHppleElement *e in infoRaw) {
         if ([[e objectForKey:@"class"] isEqualToString:@"general-info"]) {
             NSString *final = [e.firstChild.content stringByReplacingOccurrencesOfString:@" " withString:@"   "];
             final = [NSString stringWithFormat:@"%@   %@",final,((TFHppleElement *)e.children[1]).content];
             final = [final stringByReplacingOccurrencesOfString:@"(null) " withString:@""];
             final = [final stringByReplacingOccurrencesOfString:@", " withString:@"   "];
-            [info addObject:final];
+            [self.info addObject:final];
         }
         else if ([[e objectForKey:@"class"] isEqualToString:@"player-metadata floatleft"]) {
             for (TFHppleElement *c in e.children) {
                 if ([c.content containsString:@"Experience"]) {
                     NSString *final = [c.content stringByReplacingOccurrencesOfString:@"Experience" withString:@", Experience: "];
-                    if (info.count >= 4) [info replaceObjectAtIndex:3 withObject:[NSString stringWithFormat:@"%@ %@",info[3],final]];
-                    else [info replaceObjectAtIndex:0 withObject:[NSString stringWithFormat:@"%@ %@",info[0],final]];
+                    if (self.info.count >= 4) [self.info replaceObjectAtIndex:3 withObject:[NSString stringWithFormat:@"%@ %@",self.info[3],final]];
+                    else [self.info replaceObjectAtIndex:0 withObject:[NSString stringWithFormat:@"%@ %@",self.info[0],final]];
                 }
                 else {
                     NSString *final = [c.content stringByReplacingOccurrencesOfString:@"Born" withString:@"Born: "];
                     final = [final stringByReplacingOccurrencesOfString:@"Drafted" withString:@"Drafted: "];
                     final = [final stringByReplacingOccurrencesOfString:@"College" withString:@"College: "];
-                    [info addObject:final];
+                    [self.info addObject:final];
                 }
             }
         }
@@ -189,9 +190,9 @@ bool needsLoadGamesButton = YES;
 } //[_infoTableView reloadData];
 
 - (void)loadRotoworldWithCompletionBlock:(void (^)(void)) completed {
-    _rotoworldTableView.delegate = self;
-    _rotoworldTableView.dataSource = self;
-    rotoworld = [[NSMutableArray alloc] init];
+    self.rotoworldTableView.delegate = self;
+    self.rotoworldTableView.dataSource = self;
+    self.rotoworld = [[NSMutableArray alloc] init];
     TFHpple *statParser = [[TFHpple alloc] initWithHTMLData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.rotoworld.com/content/playersearch.aspx?searchname=%@,%@&sport=nba",self.player.lastName,self.player.firstName]]]];
     NSString *rotoworldLink = [[[statParser searchWithXPathQuery:@"//div[@class='moreplayernews']/a"] firstObject] objectForKey:@"href"];
     TFHpple *rotoParser = [[TFHpple alloc] initWithHTMLData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.rotoworld.com%@",rotoworldLink]]]];
@@ -217,7 +218,7 @@ bool needsLoadGamesButton = YES;
                 [rotoPeice setObject:[[[c childrenWithClassName:@"related"] firstObject] content] forKey:@"related"];
             }
         }
-        [rotoworld addObject:rotoPeice];
+        [self.rotoworld addObject:rotoPeice];
     }
     TFHppleElement *e = [[rotoParser searchWithXPathQuery:@"//div[@class='pp']/div[@class='playernews']"] firstObject];
     NSMutableDictionary *rotoPeice = [[NSMutableDictionary alloc] init];
@@ -236,7 +237,7 @@ bool needsLoadGamesButton = YES;
             [rotoPeice setObject:[c.children[1] content] forKey:@"date"];
         }
     }
-    [rotoworld insertObject:rotoPeice atIndex:0];
+    [self.rotoworld insertObject:rotoPeice atIndex:0];
     completed();
 } //[_rotoworldTableView reloadData];
 
@@ -244,8 +245,8 @@ bool needsLoadGamesButton = YES;
     _newsTableView.delegate = self;
     _newsTableView.dataSource = self;
     //news
-    news = [[NSMutableArray alloc] init];
-    NSArray *newsRaw = [parser searchWithXPathQuery:@"//div[@id='default-tab']/ol/li"];
+    self.news = [[NSMutableArray alloc] init];
+    NSArray *newsRaw = [self.parser searchWithXPathQuery:@"//div[@id='default-tab']/ol/li"];
     for (TFHppleElement *element in newsRaw) {
         NSMutableDictionary *newsPeice = [[NSMutableDictionary alloc] init];
         for (TFHppleElement *part in element.children) {
@@ -264,7 +265,7 @@ bool needsLoadGamesButton = YES;
                 [newsPeice setObject:[part content] forKey:@"time"];
             }
         }
-        if (newsPeice.count > 0) [news addObject:newsPeice];
+        if (newsPeice.count > 0) [self.news addObject:newsPeice];
     }
     completed();
 } //[_newsTableView reloadData];
@@ -289,7 +290,7 @@ bool needsLoadGamesButton = YES;
                 if ([[gameT.children.firstObject content] containsString:@"REGULAR SEASON STATS"]) break; //end of reg season
         }
     }
-    games = [[NSMutableArray alloc] init];
+    self.games = [[NSMutableArray alloc] init];
     for (NSMutableArray *rawGame in rawGames) {
         if (rawGame.count > 16) {
             NSArray *fg = [rawGame[4] componentsSeparatedByString:@"-"];
@@ -314,7 +315,7 @@ bool needsLoadGamesButton = YES;
             [game insertObject:[NSNumber numberWithLong:[game[3] longValue]-[game[4] longValue]+[game[7] longValue]-[game[8] longValue]-
                                 [game[14] longValue]+[game[15] longValue]+[game[12] longValue]+[game[11] longValue]+[game[10] longValue]+
                                 [game[9] longValue]] atIndex:2]; //fpts
-            [games addObject:game];
+            [self.games addObject:game];
         }
     }
     completed();
@@ -322,7 +323,7 @@ bool needsLoadGamesButton = YES;
 
 - (void)loadMoreGames:(UIButton *)sender {
     needsLoadGamesButton = NO;
-    NSArray *results = [parser searchWithXPathQuery:@"//div[@class='mod-content']/p[@class='footer']/a"];
+    NSArray *results = [self.parser searchWithXPathQuery:@"//div[@class='mod-content']/p[@class='footer']/a"];
     NSString *link = @"";
     for (TFHppleElement *e in results) if ([e.content containsString:@"Game Log"]) link = [e objectForKey:@"href"];
     NSString *url = [NSString stringWithFormat:@"http://espn.go.com%@",link];
@@ -368,8 +369,8 @@ bool needsLoadGamesButton = YES;
 
 - (void)setupPlayerHeader {
     //name, team
-    _playerNameDisplay.text = [[[parser searchWithXPathQuery:@"//div[@class='mod-content']/h1"] firstObject] content];
-    _playerTeamDisplay.text = [[[parser searchWithXPathQuery:@"//ul[@class='general-info']/li[@class='last']/a"] firstObject] content];
+    _playerNameDisplay.text = [[[self.parser searchWithXPathQuery:@"//div[@class='mod-content']/h1"] firstObject] content];
+    _playerTeamDisplay.text = [[[self.parser searchWithXPathQuery:@"//ul[@class='general-info']/li[@class='last']/a"] firstObject] content];
     //stats
     /*
      NSArray *seasonStats = [[[parser searchWithXPathQuery:@"//table[@class='header-stats']/tr"] firstObject] children];
@@ -392,7 +393,7 @@ bool needsLoadGamesButton = YES;
      }
      */
     //player image
-    TFHppleElement *link = [[parser searchWithXPathQuery:@"//div[@class='main-headshot']/img"] firstObject];
+    TFHppleElement *link = [[self.parser searchWithXPathQuery:@"//div[@class='main-headshot']/img"] firstObject];
     UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[link objectForKey:@"src"]]]];
     _playerImageView.image = image;
     //team image
@@ -406,7 +407,7 @@ bool needsLoadGamesButton = YES;
 }
 
 - (void)setupGameLogTableView {
-    if (handleError) return;
+    if (_handleError) return;
     _gameTableView.delegate = self;
     _gameTableView.dataSource = self;
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 375, 40)];
@@ -426,30 +427,30 @@ bool needsLoadGamesButton = YES;
 }
 
 - (void)setupPlayerRanksView {
-    self.headerStat1.text = ranks[1];
-    self.headerStat2.text = ranks[2];
-    self.headerStat3.text = ranks[3];
-    self.headerStat4.text = ranks[4];
-    self.headerStat5.text = [NSString stringWithFormat:@"%@%%",ranks[5]];
-    if ([ranks[6] intValue] > 0) {
-        self.headerStat6.text = [NSString stringWithFormat:@"%@",ranks[6]];
+    self.headerStat1.text = self.ranks[1];
+    self.headerStat2.text = self.ranks[2];
+    self.headerStat3.text = self.ranks[3];
+    self.headerStat4.text = self.ranks[4];
+    self.headerStat5.text = [NSString stringWithFormat:@"%@%%",self.ranks[5]];
+    if ([self.ranks[6] intValue] > 0) {
+        self.headerStat6.text = [NSString stringWithFormat:@"%@",self.ranks[6]];
         self.headerStat6.textColor = [UIColor FBGreenColor];
     }
-    else if ([ranks[6] intValue] == 0) self.headerStat6.text = @"0.0";
+    else if ([self.ranks[6] intValue] == 0) self.headerStat6.text = @"0.0";
     else {
-        self.headerStat6.text = [NSString stringWithFormat:@"%@",ranks[6]];
+        self.headerStat6.text = [NSString stringWithFormat:@"%@",self.ranks[6]];
         self.headerStat6.textColor = [UIColor FBRedColor];
     }
-    if ([ranks[0] isEqualToString:@"FA"]) {
+    if ([self.ranks[0] isEqualToString:@"FA"]) {
         self.headerOwnerLabel.text = @"FA";
         self.headerOwnerLabel.textColor = [UIColor FBGreenColor];
     }
-    else if ([ranks[0] containsString:@"WA ("]) {
-        self.headerOwnerLabel.text = [NSString stringWithFormat:@"%@",ranks[0]];
+    else if ([self.ranks[0] containsString:@"WA ("]) {
+        self.headerOwnerLabel.text = [NSString stringWithFormat:@"%@",self.ranks[0]];
         self.headerOwnerLabel.textColor = [UIColor FBYellowColor];
     }
     else {
-        self.headerOwnerLabel.text = [NSString stringWithFormat:@"Owned (%@)",ranks[0]];
+        self.headerOwnerLabel.text = [NSString stringWithFormat:@"Owned (%@)",self.ranks[0]];
         self.headerOwnerLabel.textColor = [UIColor whiteColor];
     }
 }
@@ -494,14 +495,14 @@ bool gameLogIsBasic = YES;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (handleError) return 0;
-    if (tableView == _infoTableView) return info.count;
+    if (_handleError) return 0;
+    if (tableView == _infoTableView) return self.info.count;
     if (tableView == _statsBasicTableView) return 2;
     if (tableView == _gamesBasicTableView) return 3;
-    if (tableView == _gameTableView && needsLoadGamesButton) return games.count+1;
-    if (tableView == _gameTableView) return games.count;
-    if (tableView == _rotoworldTableView) return rotoworld.count;
-    return news.count;
+    if (tableView == _gameTableView && needsLoadGamesButton) return self.games.count+1;
+    if (tableView == _gameTableView) return self.games.count;
+    if (tableView == _rotoworldTableView) return self.rotoworld.count;
+    return self.news.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -518,7 +519,7 @@ bool gameLogIsBasic = YES;
     if (tableView == _gameTableView && needsLoadGamesButton) return 40;
     if (tableView == _gameTableView) return 30;
     if (tableView == _rotoworldTableView) {
-        NSString *text = [NSString stringWithFormat:@"%@ %@",[rotoworld[indexPath.row] objectForKey:@"report"],[rotoworld[indexPath.row] objectForKey:@"impact"]];
+        NSString *text = [NSString stringWithFormat:@"%@ %@",[self.rotoworld[indexPath.row] objectForKey:@"report"],[self.rotoworld[indexPath.row] objectForKey:@"impact"]];
         UIFont *font = [UIFont systemFontOfSize:15];
         NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:@ {NSFontAttributeName: font}];
         CGRect rect = [attributedText boundingRectWithSize:(CGSize){self.view.frame.size.width-20.0, CGFLOAT_MAX} options:NSStringDrawingUsesLineFragmentOrigin context:nil];
@@ -559,8 +560,8 @@ bool gameLogIsBasic = YES;
             [cell addSubview:scrollView];
             scrollView.delegate = self;
             scrollView.tag = 2; //for 2nd seperate table
-            [scrollView setContentOffset:CGPointMake(scrollDistanceP, 0)];
-            [scrollViewsP addObject:scrollView];
+            [scrollView setContentOffset:CGPointMake(_globalScrollDistance, 0)];
+            [self.scrollViews addObject:scrollView];
             //STATS LABELS
             NSString *arr[17] = {@"DATE", @"GAME", @"FPTS", @"MIN", @"FGM", @"FGA", @"3PM", @"3PA", @"FTM", @"FTA", @"REB", @"AST", @"BLK", @"STL", @"PF", @"TO", @"PTS"};
             for (int i = 0; i < 17; i++) {
@@ -606,8 +607,8 @@ bool gameLogIsBasic = YES;
         [cell addSubview:scrollView];
         scrollView.delegate = self;
         scrollView.tag = 2; //for 2nd seperate table
-        [scrollView setContentOffset:CGPointMake(scrollDistanceP, 0)];
-        [scrollViewsP addObject:scrollView];
+        [scrollView setContentOffset:CGPointMake(_globalScrollDistance, 0)];
+        [self.scrollViews addObject:scrollView];
         //STATS LABELS
         NSString *arr[16] = {@"FPTS", @"GP", @"MIN", @"FGM", @"FGA", @"3PM", @"3PA", @"FTM", @"FTA", @"REB", @"AST", @"BLK", @"STL", @"PF", @"TO", @"PTS"};
         for (int i = 0; i < 16; i++) {
@@ -632,7 +633,7 @@ bool gameLogIsBasic = YES;
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier];
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, width-15, 25)];
         
-        NSString *text = info[indexPath.row];
+        NSString *text = self.info[indexPath.row];
         NSDictionary *attrs = @{ NSFontAttributeName:[UIFont systemFontOfSize:16],
                                  NSForegroundColorAttributeName:[UIColor darkGrayColor] };
         NSDictionary *subAttrs = @{ NSFontAttributeName:[UIFont boldSystemFontOfSize:16],
@@ -686,7 +687,7 @@ bool gameLogIsBasic = YES;
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier];
             float height = 30.0;
             if (needsLoadGamesButton) height = 40.0;
-            if (indexPath.row == games.count && needsLoadGamesButton) { //last row
+            if (indexPath.row == self.games.count && needsLoadGamesButton) { //last row
                 UIButton *more = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, width, 40)];
                 [more setTitle:@"Load More Games" forState:UIControlStateNormal];
                 [more addTarget:self action:@selector(loadMoreGames:) forControlEvents:UIControlEventTouchUpInside];
@@ -694,7 +695,7 @@ bool gameLogIsBasic = YES;
                 [cell addSubview:more];
             }
             else {
-                NSMutableArray *game = games[indexPath.row];
+                NSMutableArray *game = self.games[indexPath.row];
                 if (game) {
                     for (int i = 0; i < 8; i++) {
                         UILabel *stats;
@@ -724,7 +725,7 @@ bool gameLogIsBasic = YES;
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier];
             float height = 30.0;
             if (needsLoadGamesButton) height = 40.0;
-            if (indexPath.row == games.count && needsLoadGamesButton) { //last row
+            if (indexPath.row == self.games.count && needsLoadGamesButton) { //last row
                 UIButton *more = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, width, 40)];
                 [more setTitle:@"Load More Games" forState:UIControlStateNormal];
                 [more addTarget:self action:@selector(loadMoreGames:) forControlEvents:UIControlEventTouchUpInside];
@@ -732,7 +733,7 @@ bool gameLogIsBasic = YES;
                 [cell addSubview:more];
             }
             else {
-                NSMutableArray *game = games[indexPath.row];
+                NSMutableArray *game = self.games[indexPath.row];
                 //STATS SCROLLVIEW
                 UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, _gameTableView.frame.size.width, height)];
                 [scrollView setContentSize:CGSizeMake(17*50+150, height)];
@@ -742,8 +743,8 @@ bool gameLogIsBasic = YES;
                 [cell addSubview:scrollView];
                 scrollView.delegate = self;
                 scrollView.tag = 1;
-                [scrollView setContentOffset:CGPointMake(scrollDistanceP, 0)];
-                [scrollViewsP addObject:scrollView];
+                [scrollView setContentOffset:CGPointMake(_globalScrollDistance, 0)];
+                [self.scrollViews addObject:scrollView];
                 for (int i = 0; i < 17; i++) {
                     UILabel *stats;
                     if (i == 0) stats = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, height)];
@@ -764,7 +765,7 @@ bool gameLogIsBasic = YES;
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
         cell = nil;
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier];
-        NSMutableArray *game = games[indexPath.row];
+        NSMutableArray *game = self.games[indexPath.row];
         if (game!= nil) {
             for (int i = 0; i < 8; i++) {
                 UILabel *stats;
@@ -791,7 +792,7 @@ bool gameLogIsBasic = YES;
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
         cell = nil;
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier];
-        NSMutableDictionary *rotoPeice = rotoworld[indexPath.row];
+        NSMutableDictionary *rotoPeice = self.rotoworld[indexPath.row];
         float height = [self tableView:_rotoworldTableView heightForRowAtIndexPath:indexPath];
         //start
         UILabel *text = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, width-20, height-25)];
@@ -820,7 +821,7 @@ bool gameLogIsBasic = YES;
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
         cell = nil;
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier];
-        NSMutableDictionary *newsPeice = news[indexPath.row];
+        NSMutableDictionary *newsPeice = self.news[indexPath.row];
         int x = 0;
         if ([newsPeice objectForKey:@"image"]) {
             x = 100;
@@ -871,7 +872,7 @@ bool gameLogIsBasic = YES;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView == _newsTableView) {
-        NSMutableDictionary *newsPeice = news[indexPath.row];
+        NSMutableDictionary *newsPeice = self.news[indexPath.row];
         if ([newsPeice objectForKey:@"link"]) {
             PlayerViewController *modalVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"p"];
             modalVC.modalPresentationStyle = UIModalPresentationCustom;
@@ -906,17 +907,17 @@ bool gameLogIsBasic = YES;
 int numGraphPoints;
 
 - (NSInteger)numberOfPointsInLineGraph:(BEMSimpleLineGraphView *)graph {
-    numGraphPoints = (games.count < 15) ? (int)games.count : 15;
+    numGraphPoints = (self.games.count < 15) ? (int)self.games.count : 15;
     _graphNameDisplay.text = [NSString stringWithFormat:@"Fanstasy Points (Last %d games)",numGraphPoints];
     return numGraphPoints;
 }
 
 - (CGFloat)lineGraph:(BEMSimpleLineGraphView *)graph valueForPointAtIndex:(NSInteger)index {
-    return (CGFloat)[games[numGraphPoints-index-1][2] intValue];
+    return (CGFloat)[self.games[numGraphPoints-index-1][2] intValue];
 }
 
 - (NSString *)lineGraph:(BEMSimpleLineGraphView *)graph labelOnXAxisForIndex:(NSInteger)index {
-    return (NSString *)games[numGraphPoints-index-1][0];
+    return (NSString *)self.games[numGraphPoints-index-1][0];
 }
 
 - (CGFloat)baseValueForYAxisOnLineGraph:(nonnull BEMSimpleLineGraphView *)graph {
@@ -939,8 +940,8 @@ int numGraphPoints;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (scrollView.tag == 1) {
-        for (UIScrollView *sV in scrollViewsP) [sV setContentOffset:CGPointMake(scrollView.contentOffset.x, 0) animated:NO];
-        scrollDistanceP = scrollView.contentOffset.x;
+        for (UIScrollView *sV in self.scrollViews) [sV setContentOffset:CGPointMake(scrollView.contentOffset.x, 0) animated:NO];
+        _globalScrollDistance = scrollView.contentOffset.x;
     }
     else if (scrollView == _bottomScrollView){
         float dist = scrollView.contentOffset.x/self.view.frame.size.width;
