@@ -96,6 +96,8 @@
     self.barChartTeam1.dataSource = self;
     self.barChartTeam1.delegate = self;
     self.barChartTeam1.inverted = YES;
+    self.barChartTeam1.alpha = 0.5;
+    self.barChartTeam1.userInteractionEnabled = NO;
     [self.scoreView addSubview:self.barChartTeam1];
     [self.scoreView sendSubviewToBack:self.barChartTeam1];
     [self.barChartTeam1 reloadData];
@@ -105,6 +107,8 @@
     self.barChartTeam2.dataSource = self;
     self.barChartTeam2.delegate = self;
     self.barChartTeam2.inverted = YES;
+    self.barChartTeam2.alpha = 0.5;
+    self.barChartTeam2.userInteractionEnabled = NO;
     [self.scoreView addSubview:self.barChartTeam2];
     [self.scoreView sendSubviewToBack:self.barChartTeam2];
     [self.barChartTeam2 reloadData];
@@ -191,7 +195,8 @@ NSTimer *updateTimer;
             [dict setObject:children[0].content forKey:@"isStarting"];
             [dict setObject:[children[1].children[0] content] forKey:@"firstName+lastName"];
             [dict setObject:[children[1].children[1] content] forKey:@"team+position"];
-            if (children[1].children.count == 4) [dict setObject:[children[1].children[2] content] forKey:@"injury"];
+            if (children[1].children.count > 2 && ![((TFHppleElement *)children[1].children[2]).tagName isEqualToString:@"a"])
+                [dict setObject:[children[1].children[2] content] forKey:@"injury"];
             [dict setObject:children[2].content forKey:@"isHome+opponent"];
             [dict setObject:children[3].content forKey:@"isPlaying+gameState+score+status"];
             if (![dict[@"isPlaying+gameState+score+status"] isEqualToString:@""]) [dict setObject: [[[children[3] childrenWithTagName:@"a"] firstObject] objectForKey:@"href"] forKey:@"gameLink"];
@@ -345,6 +350,10 @@ NSTimer *updateTimer;
     int data1 = [pickerView selectedIndexForColumn:0];
     self.selectedPickerData = [pickerView selectedStringForColumn:0];
     _scoringDay = self.session.scoringPeriodID.intValue-6+data1;
+    if (_scoringDay != self.session.scoringPeriodID.intValue) {
+        [self.autorefreshSwitch setOn:NO];
+        [self autorefreshStateChanged:self.autorefreshSwitch];
+    }
     [self loadplayersMU];
     [self.tableView reloadData];
     [self fadeOutWithPickerView:pickerView];

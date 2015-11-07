@@ -97,7 +97,8 @@ NSTimer *updateTimer;
             NSArray <TFHppleElement *> *children = element.children;
             [dict setObject:[children[0].children[0] content] forKey:@"firstName+lastName"];
             [dict setObject:[children[0].children[1] content] forKey:@"team+position"];
-            if (children[0].children.count == 4) [dict setObject:[children[0].children[2] content] forKey:@"injury"];
+            if (children[0].children.count > 2 && ![((TFHppleElement *)children[0].children[2]).tagName isEqualToString:@"a"])
+                [dict setObject:[children[0].children[2] content] forKey:@"injury"];
             [dict setObject:children[2].content forKey:@"type"];
             [dict setObject:children[5].content forKey:@"isHome+opponent"];
             [dict setObject:children[6].content forKey:@"isPlaying+gameState+score+status"];
@@ -237,6 +238,10 @@ NSTimer *updateTimer;
     _scoringDay = data1+1;
     int indexs[32] = {-1, 0, 1, 17, 2, 30, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 29, 14, 15, 16, 3, 18, 25, 19, 20, 21, 22, 24, 23, 28, 26, 27};
     _team = indexs[data2];
+    if (_scoringDay != self.session.scoringPeriodID.intValue) {
+        [self.autorefreshSwitch setOn:NO];
+        [self autorefreshStateChanged:self.autorefreshSwitch];
+    }
     [self loadplayers];
     [self.tableView reloadData];
     [self fadeOutWithPickerView:pickerView];

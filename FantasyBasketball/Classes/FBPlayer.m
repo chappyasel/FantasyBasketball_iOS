@@ -53,8 +53,13 @@
             _lastName = name[1];
             for (int i = 2; i < name.count; i++) _lastName = [NSString stringWithFormat:@"%@ %@",_lastName,name[i]];
         }
-        _team = [[dict[@"team+position"] substringFromIndex:2] substringToIndex:3];
-        _position = [dict[@"team+position"] substringFromIndex:6];
+        NSMutableArray <NSString *> *arr = [[NSMutableArray alloc] initWithArray:[dict[@"team+position"] componentsSeparatedByCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        for (int i = 0; i < arr.count; i++) arr[i] = [arr[i] stringByReplacingOccurrencesOfString:@"," withString:@""];
+        _team = arr[1];
+        _position = arr[2];
+        for (int i = 3; i < (int)arr.count; i++) {
+            if (![arr[i] isEqualToString:@""]) _position = [NSString stringWithFormat:@"%@, %@",_position,arr[i]];
+        }
         _injury = dict[@"injury"];
         _type = dict[@"type"];
         if ([_type containsString:@"WA ("]) _type = [NSString stringWithFormat:@"WA-%@",[_type substringWithRange:NSMakeRange(4, 2)]];

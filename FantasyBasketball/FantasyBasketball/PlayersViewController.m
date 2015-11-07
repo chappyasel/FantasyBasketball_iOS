@@ -93,7 +93,8 @@
             NSArray <TFHppleElement *> *children = element.children;
             [dict setObject:[children[0].children[0] content] forKey:@"firstName+lastName"];
             [dict setObject:[children[0].children[1] content] forKey:@"team+position"];
-            if (children[1].children.count == 4) [dict setObject:[children[0].children[2] content] forKey:@"injury"];
+            if (children[0].children.count > 2 && ![((TFHppleElement *)children[0].children[2]).tagName isEqualToString:@"a"])
+                [dict setObject:[children[0].children[2] content] forKey:@"injury"];
             [dict setObject:children[2].content forKey:@"type"];
             [dict setObject:children[5].content forKey:@"isHome+opponent"];
             [dict setObject:children[6].content forKey:@"isPlaying+gameState+score+status"];
@@ -248,6 +249,7 @@
 
 - (void)fadeIn:(UIButton *)sender {
     self.navigationItem.rightBarButtonItem.enabled = NO;
+    [self.view endEditing:YES];
     FBPickerView *picker = [FBPickerView loadViewFromNib];
     picker.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     picker.delegate = self;

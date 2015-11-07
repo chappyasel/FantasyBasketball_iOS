@@ -48,14 +48,19 @@ bool needsLoadGamesButton = YES;
     self.imageOperationQueue = [[NSOperationQueue alloc]init];
     self.imageOperationQueue.maxConcurrentOperationCount = 4;
     self.imageCache = [[NSCache alloc] init];
-    self.darkBackground.alpha = 0.0;
-    [UIView animateWithDuration:0.3 animations:^(void) {
-        self.darkBackground.alpha = 0.85;
-    }];
     [self setupScrollView];
     [self setupOverview];
     [self setupGameLogTableView];
     [self beginAsyncLoading];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.darkBackground.alpha = 0.0;
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView animateWithDuration:0.3 animations:^(void) {
+        self.darkBackground.alpha = 0.85;
+    }];
 }
 
 - (void)beginAsyncLoading {
@@ -640,11 +645,16 @@ bool gameLogIsBasic = YES;
                                     NSForegroundColorAttributeName:[UIColor darkGrayColor] };
         NSRange range1 = NSMakeRange(0, 0);
         NSRange range2 = NSMakeRange(0, 0);
+        if (indexPath.row == 0) {
+            range1 = [text rangeOfString:@"Experience:"];
+        }
         if (indexPath.row == 1) {
             range1 = [text rangeOfString:@"Born:"];
+            range2 = [text rangeOfString:@"Age:"];
         }
         else if (indexPath.row == 2) {
             range1 = [text rangeOfString:@"Drafted:"];
+            range2 = [text rangeOfString:@"College:"];
         }
         else if (indexPath.row == 3) {
             range1 = [text rangeOfString:@"College:"];

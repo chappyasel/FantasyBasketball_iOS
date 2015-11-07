@@ -51,8 +51,7 @@
 }
 
 -(void)fadeOutWithPickerView: (FBPickerView *) pickerView {
-    [pickerView setAlpha:1.0];
-    [UIView animateWithDuration:0.1 animations:^{
+    [UIView animateWithDuration:0.2 animations:^{
         [pickerView setAlpha:0.0];
     } completion:^(BOOL finished) {
         [pickerView removeFromSuperview];

@@ -63,7 +63,8 @@
             [dict setObject:children[0].content forKey:@"isStarting"];
             [dict setObject:[children[1].children[0] content] forKey:@"firstName+lastName"];
             [dict setObject:[children[1].children[1] content] forKey:@"team+position"];
-            if (children[1].children.count == 4) [dict setObject:[children[1].children[2] content] forKey:@"injury"];
+            if (children[1].children.count > 2 && ![((TFHppleElement *)children[1].children[2]).tagName isEqualToString:@"a"])
+                [dict setObject:[children[1].children[2] content] forKey:@"injury"];
             [dict setObject:children[3].content forKey:@"isHome+opponent"];
             [dict setObject:children[4].content forKey:@"isPlaying+gameState+score+status"];
             if (![dict[@"isPlaying+gameState+score+status"] isEqualToString:@""]) [dict setObject: [[[children[4] childrenWithTagName:@"a"] firstObject] objectForKey:@"href"] forKey:@"gameLink"];
