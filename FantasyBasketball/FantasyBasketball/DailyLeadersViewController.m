@@ -17,6 +17,8 @@
 @property NSMutableArray *scrollViews;
 @property float globalScrollDistance;
 
+@property NSMutableArray <NSMutableArray <NSString *> *> *pickerData;
+@property NSArray <NSString *> *selectedPickerData;
 @property int scoringDay;
 @property int team;
 
@@ -27,9 +29,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"Daily Leaders";
-    _scoringDay = self.session.scoringPeriodID.intValue;
-    _team = -1; //All defualt
     self.scrollViews = [[NSMutableArray alloc] init];
+    [self loadPickerViewData];
     [self loadplayers];
 }
 
@@ -74,7 +75,6 @@ NSTimer *updateTimer;
 
 -(void)viewWillAppear:(BOOL)animated{
     [self loadTableView];
-    [self loadDatePickerData];
 }
 
 - (IBAction)refreshButtonPressed:(UIButton *)sender {
@@ -192,21 +192,22 @@ NSTimer *updateTimer;
 
 #pragma mark - FBPickerView
 
-NSMutableArray <NSMutableArray <NSString *> *> *pickerData;
-
-- (void)loadDatePickerData {
-    pickerData = [[NSMutableArray alloc] initWithCapacity:2];
-    pickerData[0] = [[NSMutableArray alloc] init];
+- (void)loadPickerViewData {
+    _scoringDay = self.session.scoringPeriodID.intValue;
+    _team = -1; //All (defualt)
+    self.selectedPickerData = @[@"Today",@"All"];
+    self.pickerData = [[NSMutableArray alloc] initWithCapacity:2];
+    self.pickerData[0] = [[NSMutableArray alloc] init];
     NSDate *date = [NSDate date];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"E, MMM d"];
-    for (int i = 0; i < self.session.scoringPeriodID.intValue; i++) pickerData[0][i] = @"";
+    for (int i = 0; i < self.session.scoringPeriodID.intValue; i++) self.pickerData[0][i] = @"";
     for (int i = 1; i < self.session.scoringPeriodID.intValue; i++) { //days before
         date = [NSDate dateWithTimeIntervalSinceNow:-86400*i];
-        pickerData[0][self.session.scoringPeriodID.intValue-1-i] = [formatter stringFromDate:date];
+        self.pickerData[0][self.session.scoringPeriodID.intValue-1-i] = [formatter stringFromDate:date];
     }
-    pickerData[0][self.session.scoringPeriodID.intValue-1] = @"Today";
-    pickerData[1] = [[NSMutableArray alloc] initWithObjects:@"All", @"FA", @"Atl", @"Bkn", @"Bos", @"Cha", @"Chi", @"Cle", @"Dal", @"Den", @"Det", @"GS", @"Hou", @"Ind", @"LAC", @"LAL", @"Mem", @"Mia", @"Mil", @"Min", @"Nor", @"NY", @"OKC", @"Orl", @"Phi", @"Pho", @"Por", @"SA", @"Sac", @"Tor", @"Uta", @"Wsh", nil];
+    self.pickerData[0][self.session.scoringPeriodID.intValue-1] = @"Today";
+    self.pickerData[1] = [[NSMutableArray alloc] initWithObjects:@"All", @"FA", @"Atl", @"Bkn", @"Bos", @"Cha", @"Chi", @"Cle", @"Dal", @"Den", @"Det", @"GS", @"Hou", @"Ind", @"LAC", @"LAL", @"Mem", @"Mia", @"Mil", @"Min", @"Nor", @"NY", @"OKC", @"Orl", @"Phi", @"Pho", @"Por", @"SA", @"Sac", @"Tor", @"Uta", @"Wsh", nil];
 }
 
 - (void)fadeIn:(UIButton *)sender {
@@ -215,13 +216,13 @@ NSMutableArray <NSMutableArray <NSString *> *> *pickerData;
     picker.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     picker.delegate = self;
     [picker resetData];
-    [picker setData:pickerData[0] ForColumn:0];
-    [picker setData:pickerData[1] ForColumn:1];
-    [picker selectIndex:self.session.scoringPeriodID.intValue-1 inColumn:0];
-    [picker selectIndex:0 inColumn:1];
+    [picker setData:self.pickerData[0] ForColumn:0];
+    [picker setData:self.pickerData[1] ForColumn:1];
+    [picker selectString:self.selectedPickerData[0] inColumn:0];
+    [picker selectString:self.selectedPickerData[1] inColumn:1];
     [picker setAlpha:0.0];
     [self.view addSubview:picker];
-    [UIView animateWithDuration:0.1 animations:^{
+    [UIView animateWithDuration:0.25 animations:^{
         [picker setAlpha:1.0];
     } completion: nil];
 }
@@ -231,11 +232,11 @@ NSMutableArray <NSMutableArray <NSString *> *> *pickerData;
 - (void)doneButtonPressedInPickerView:(FBPickerView *)pickerView {
     int data1 = (int)[pickerView selectedIndexForColumn:0];
     int data2 = (int)[pickerView selectedIndexForColumn:1];
+    self.selectedPickerData = @[[pickerView selectedStringForColumn:0],
+                                [pickerView selectedStringForColumn:1]];
     _scoringDay = data1+1;
     int indexs[32] = {-1, 0, 1, 17, 2, 30, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 29, 14, 15, 16, 3, 18, 25, 19, 20, 21, 22, 24, 23, 28, 26, 27};
     _team = indexs[data2];
-    //if (scoringDay == self.session.scoringPeriodID) refreshButton.enabled = YES;
-    //else refreshButton.enabled = NO;
     [self loadplayers];
     [self.tableView reloadData];
     [self fadeOutWithPickerView:pickerView];

@@ -32,6 +32,10 @@
 
 - (int)selectedIndexForColumn: (int) col;
 
+- (NSString *)selectedStringForColumn: (int) col;
+
 - (void)selectIndex: (int) index inColumn: (int) col;
+
+- (void)selectString: (NSString *) str inColumn: (int) col;
 
 @end

@@ -17,8 +17,10 @@
 @property NSMutableArray *scrollViews;
 @property float globalScrollDistance;
 
-@property int scoringDay;            //time of stats
-@property NSString *scoringPeriod;   //span of stats
+@property NSMutableArray <NSMutableArray <NSString *> *> *pickerData;
+@property NSArray <NSString *> *selectedPickerData;
+@property int scoringDay; //time of stats
+@property NSString *scoringPeriod; //span of stats
 
 @end
 
@@ -26,11 +28,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _scoringPeriod = @"today";
-    _scoringDay = self.session.scoringPeriodID.intValue;
+    [self loadPickerViewData];
     [self loadTableView];
     [self loadplayers];
-    [self loadDatePickerData];
     NSString *XpathQueryString = @"//h3[@class='team-name']";
     NSArray *nodes = [self.parser searchWithXPathQuery:XpathQueryString];
     NSString *teamName = [[nodes firstObject] content];
@@ -226,22 +226,25 @@
 
 #pragma mark - FBPickerView
 
-NSArray *pickerData;
-
--(void)loadDatePickerData {
-    pickerData = [[NSMutableArray alloc] initWithObjects:
-                  [[NSMutableArray alloc] initWithObjects: @"-", @"-", @"-", @"-", @"-", @"Yesterday", @"Today", @"Tomorrow", @"-", @"-", @"-", @"-", @"-", nil],
-                  [[NSMutableArray alloc]initWithObjects: @"Today", @"Last 7", @"Last 15", @"Last 30", @"Season", @"Last Season", @"Projections", nil], nil];
+-(void)loadPickerViewData {
+    _scoringPeriod = @"today";
+    _scoringDay = self.session.scoringPeriodID.intValue;
+    self.selectedPickerData = @[@"Today", @"Today"];
+    self.pickerData = [[NSMutableArray alloc] initWithArray:
+                       @[[[NSMutableArray alloc] initWithArray:
+                          @[@"-", @"-", @"-", @"-", @"-", @"Yesterday", @"Today", @"Tomorrow", @"-", @"-", @"-", @"-", @"-"]],
+                         [[NSMutableArray alloc] initWithArray:
+                          @[@"Today", @"Last 7", @"Last 15", @"Last 30", @"Season", @"Last Season", @"Projections"]]]];
     NSDate *date = [NSDate date];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"E, MMM d"];
     for (int i = 1; i < 6; i++) { //days before
         date = [NSDate dateWithTimeIntervalSinceNow:-86400*i];
-        pickerData[0][5-i] = [formatter stringFromDate:date];
+        self.pickerData[0][5-i] = [formatter stringFromDate:date];
     }
     for (int i = 2; i < 7; i++) { //days after
         date = [NSDate dateWithTimeIntervalSinceNow:86400*i];
-        pickerData[0][6+i] = [formatter stringFromDate:date];
+        self.pickerData[0][6+i] = [formatter stringFromDate:date];
     }
 }
 
@@ -251,13 +254,13 @@ NSArray *pickerData;
     picker.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     picker.delegate = self;
     [picker resetData];
-    [picker setData:pickerData[0] ForColumn:0];
-    [picker setData:pickerData[1] ForColumn:1];
-    [picker selectIndex:-(self.session.scoringPeriodID.intValue-_scoringDay)+6 inColumn:0];
-    [picker selectIndex:(int)[[NSArray arrayWithObjects:@"today", @"last7", @"last15", @"last30", @"currSeason", @"lastSeason", @"projections",nil] indexOfObject:_scoringPeriod] inColumn:1];
+    [picker setData:self.pickerData[0] ForColumn:0];
+    [picker setData:self.pickerData[1] ForColumn:1];
+    [picker selectString:self.selectedPickerData[0] inColumn:0];
+    [picker selectString:self.selectedPickerData[1] inColumn:1];
     [picker setAlpha:0.0];
     [self.view addSubview:picker];
-    [UIView animateWithDuration:0.1 animations:^{
+    [UIView animateWithDuration:0.25 animations:^{
         [picker setAlpha:1.0];
     } completion: nil];
 }
@@ -267,6 +270,8 @@ NSArray *pickerData;
 - (void)doneButtonPressedInPickerView:(FBPickerView *)pickerView {
     int data1 = [pickerView selectedIndexForColumn:0];
     int data2 = [pickerView selectedIndexForColumn:1];
+    self.selectedPickerData = @[[pickerView selectedStringForColumn:0],
+                                [pickerView selectedStringForColumn:1]];
     _scoringDay = self.session.scoringPeriodID.intValue-6+data1;
     if (data2 == 0) _scoringPeriod = @"today";
     else if (data2 == 1) _scoringPeriod = @"last7";
@@ -275,8 +280,6 @@ NSArray *pickerData;
     else if (data2 == 4) _scoringPeriod = @"currSeason";
     else if (data2 == 5) _scoringPeriod = @"lastSeason";
     else _scoringPeriod = @"projections";
-    //if (data2 == 0 && data1 == 3) refreshButton.enabled = YES;
-    //else refreshButton.enabled = NO;
     [self loadplayers];
     [self fadeOutWithPickerView:pickerView];
 }

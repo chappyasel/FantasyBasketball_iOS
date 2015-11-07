@@ -26,6 +26,10 @@
 
 @property NSMutableArray *cells;
 
+@property NSMutableArray <NSString *> *pickerData;
+@property NSString *selectedPickerData;
+@property int scoringDay; //time of stats
+
 @end
 
 @implementation MatchupViewController
@@ -35,6 +39,7 @@
     self.title = @"Matchup";
     _handleError = NO;
     self.cells = [[NSMutableArray alloc] init];
+    [self loadPickerViewData];
     [self loadplayersMU];
     if (_handleError) return;
     [self loadTableView];
@@ -154,7 +159,7 @@ NSTimer *updateTimer;
 
 - (void)loadplayersMU {
     _numStartersTeam1 = 0, _numStartersTeam2 = 0;
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/boxscorefull?leagueId=%@&teamId=%@&scoringPeriodId=%@&seasonId=%@&view=scoringperiod&version=full",self.session.leagueID,self.session.teamID,self.session.scoringPeriodID,self.session.seasonID]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/boxscorefull?leagueId=%@&teamId=%@&scoringPeriodId=%d&seasonId=%@&view=scoringperiod&version=full",self.session.leagueID,self.session.teamID,_scoringDay,self.session.seasonID]];
     NSError *error;
     NSData *html = [NSData dataWithContentsOfURL:url options:NSDataReadingMapped error:&error];
     if (error) NSLog(@"Matchup error: %@",error);
@@ -302,24 +307,34 @@ NSTimer *updateTimer;
 
 #pragma mark - FBPickerView
 
-NSArray *pickerData;
-
--(void)loadDatePickerData {
-    pickerData = [[NSArray alloc] initWithObjects: [[NSArray alloc] initWithObjects: @"No PickerView Data", nil], nil];
+-(void)loadPickerViewData {
+    _scoringDay = self.session.scoringPeriodID.intValue;
+    self.selectedPickerData = @"Today";
+    self.pickerData = [[NSMutableArray alloc] initWithArray: @[@"-", @"-", @"-", @"-", @"-", @"Yesterday", @"Today", @"Tomorrow", @"-", @"-", @"-", @"-", @"-"]];
+    NSDate *date = [NSDate date];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"E, MMM d"];
+    for (int i = 1; i < 6; i++) { //days before
+        date = [NSDate dateWithTimeIntervalSinceNow:-86400*i];
+        self.pickerData[5-i] = [formatter stringFromDate:date];
+    }
+    for (int i = 2; i < 7; i++) { //days after
+        date = [NSDate dateWithTimeIntervalSinceNow:86400*i];
+        self.pickerData[6+i] = [formatter stringFromDate:date];
+    }
 }
 
 -(void) fadeIn:(UIButton *)sender {
-    [self loadDatePickerData];
     self.navigationItem.rightBarButtonItem.enabled = NO;
     FBPickerView *picker = [FBPickerView loadViewFromNib];
     picker.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     picker.delegate = self;
     [picker resetData];
-    [picker setData:pickerData[0] ForColumn:0];
-    [picker selectIndex:0 inColumn:0];
+    [picker setData:self.pickerData ForColumn:0];
+    [picker selectString:self.selectedPickerData inColumn:0];
     [picker setAlpha:0.0];
     [self.view addSubview:picker];
-    [UIView animateWithDuration:0.1 animations:^{
+    [UIView animateWithDuration:0.25 animations:^{
         [picker setAlpha:1.0];
     } completion: nil];
 }
@@ -327,6 +342,11 @@ NSArray *pickerData;
 #pragma mark - FBPickerView delegate methods
 
 - (void)doneButtonPressedInPickerView:(FBPickerView *)pickerView {
+    int data1 = [pickerView selectedIndexForColumn:0];
+    self.selectedPickerData = [pickerView selectedStringForColumn:0];
+    _scoringDay = self.session.scoringPeriodID.intValue-6+data1;
+    [self loadplayersMU];
+    [self.tableView reloadData];
     [self fadeOutWithPickerView:pickerView];
 }
 

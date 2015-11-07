@@ -8,14 +8,13 @@
 
 #import "FBPickerView.h"
 
-@implementation FBPickerView
+@implementation FBPickerView {
+    NSMutableArray <NSArray <NSString *> *> *data; //An array containing arrays of strings
+}
 
 +(FBPickerView *)loadViewFromNib{
     return (FBPickerView *)[[[NSBundle mainBundle] loadNibNamed:@"FBPickerView" owner:self options:0] objectAtIndex:0];
 }
-
-//An array containing arrays of strings
-NSMutableArray <NSArray <NSString *> *> *data;
 
 - (void) resetData {
     data = [[NSMutableArray alloc] init];
@@ -33,8 +32,17 @@ NSMutableArray <NSArray <NSString *> *> *data;
     return (int)[_pickerView selectedRowInComponent:col];
 }
 
+- (NSString *)selectedStringForColumn: (int) col {
+    return data[col][[_pickerView selectedRowInComponent:col]];
+}
+
 - (void)selectIndex:(int)index inColumn:(int)col {
     [_pickerView selectRow:index inComponent:col animated:NO];
+}
+
+- (void)selectString:(NSString *)str inColumn:(int)col {
+    int index = (int)[data[col] indexOfObject:str];
+    [self selectIndex:index inColumn:col];
 }
 
 #pragma mark - touch methods

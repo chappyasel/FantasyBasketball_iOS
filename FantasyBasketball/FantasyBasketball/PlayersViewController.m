@@ -22,6 +22,8 @@
 @property NSString *scoringPeriod;
 @property NSString *searchText;
 
+@property NSArray <NSArray <NSString *> *> *pickerData;
+@property NSArray <NSString *> *selectedPickerData;
 @property int sortIndex;
 @property int availability;
 @property int team;
@@ -50,10 +52,8 @@
                    @"AAAAARgAAAAIAQAMc3RhdFNlYXNvbklkAwAAB%2BABAAhjYXRlZ29yeQMAAAABAQAJZGlyZWN0aW9uA%2F%2F%2F%2F%2F8BAAZjb2x1bW4DAAAAAAEAC3NwbGl0VHlwZUlkAwAAAAABABBzdGF0U291cmNlVHlwZUlkAwAAAAABAAtzb3J0QXZlcmFnZQkBAQALc3RhdFF1ZXJ5SWQDAAAAAQ%3D%3D&r=36360871", /*PTS*/ nil];
     _sort = _sortChoices[3];
     _sortIndex = 3; //+/- sort
-    _availability = 1; //Available
-    _scoringPeriod = @"last15";
     _searchText = @"null";
-    _team = -1;
+    [self loadPickerViewData];
     self.scrollViews = [[NSMutableArray alloc] init];
     [self loadplayers];
 }
@@ -77,7 +77,6 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [self loadTableView];
-    [self loadDatePickerData];
 }
 
 - (void)loadplayers {
@@ -237,13 +236,14 @@
 
 #pragma mark - FBPickerView
 
-NSMutableArray <NSArray <NSString *> *> *pickerData;
-
-- (void)loadDatePickerData {
-    pickerData = [[NSMutableArray alloc] initWithObjects:
-                  [[NSArray alloc] initWithObjects:@"All", @"Available", @"On Waivers", @"Free Agents", @"On Rosters", nil],
-                  [[NSArray alloc] initWithObjects:@"Last 7", @"Last 15", @"Last 30", @"Season", @"Last Season", @"Projections", nil],
-                  [[NSArray alloc] initWithObjects:@"All", @"FA", @"Atl", @"Bkn", @"Bos", @"Cha", @"Chi", @"Cle", @"Dal", @"Den", @"Det", @"GS", @"Hou", @"Ind", @"LAC", @"LAL", @"Mem", @"Mia", @"Mil", @"Min", @"Nor", @"NY", @"OKC", @"Orl", @"Phi", @"Pho", @"Por", @"SA", @"Sac", @"Tor", @"Uta", @"Wsh", nil], nil];
+- (void)loadPickerViewData {
+    _availability = 1; //Available
+    _scoringPeriod = @"last15";
+    _team = -1;
+    self.selectedPickerData = @[@"Available", @"Last 15", @"All"];
+    self.pickerData = @[ @[@"All", @"Available", @"On Waivers", @"Free Agents", @"On Rosters"],
+                         @[@"Last 7", @"Last 15", @"Last 30", @"Season", @"Last Season", @"Projections"],
+                         @[@"All", @"FA", @"Atl", @"Bkn", @"Bos", @"Cha", @"Chi", @"Cle", @"Dal", @"Den", @"Det", @"GS", @"Hou", @"Ind", @"LAC", @"LAL", @"Mem", @"Mia", @"Mil", @"Min", @"Nor", @"NY", @"OKC", @"Orl", @"Phi", @"Pho", @"Por", @"SA", @"Sac", @"Tor", @"Uta", @"Wsh"]];
 }
 
 - (void)fadeIn:(UIButton *)sender {
@@ -252,15 +252,15 @@ NSMutableArray <NSArray <NSString *> *> *pickerData;
     picker.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     picker.delegate = self;
     [picker resetData];
-    [picker setData:pickerData[0] ForColumn:0];
-    [picker setData:pickerData[1] ForColumn:1];
-    [picker setData:pickerData[2] ForColumn:2];
-    [picker selectIndex:1 inColumn:0];
-    [picker selectIndex:1 inColumn:1];
-    [picker selectIndex:0 inColumn:2];
+    [picker setData:self.pickerData[0] ForColumn:0];
+    [picker setData:self.pickerData[1] ForColumn:1];
+    [picker setData:self.pickerData[2] ForColumn:2];
+    [picker selectString:self.selectedPickerData[0] inColumn:0];
+    [picker selectString:self.selectedPickerData[1] inColumn:1];
+    [picker selectString:self.selectedPickerData[2] inColumn:2];
     [picker setAlpha:0.0];
     [self.view addSubview:picker];
-    [UIView animateWithDuration:0.1 animations:^{
+    [UIView animateWithDuration:0.25 animations:^{
         [picker setAlpha:1.0];
     } completion: nil];
 }
@@ -271,6 +271,9 @@ NSMutableArray <NSArray <NSString *> *> *pickerData;
     int data1 = (int)[pickerView selectedIndexForColumn:0];
     int data2 = (int)[pickerView selectedIndexForColumn:1];
     int data3 = (int)[pickerView selectedIndexForColumn:2];
+    self.selectedPickerData = @[[pickerView selectedStringForColumn:0],
+                                [pickerView selectedStringForColumn:1],
+                                [pickerView selectedStringForColumn:2]];
     if (data1 == 0) _availability = -1; //All
     if (data1 == 1) _availability = 1; //Available
     if (data1 == 2) _availability = 3; //On Waivers
