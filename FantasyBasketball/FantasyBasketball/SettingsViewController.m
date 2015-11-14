@@ -55,6 +55,7 @@
         NSManagedObjectContext *context = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
         FBSession *session = [NSEntityDescription insertNewObjectForEntityForName:@"FBSession" inManagedObjectContext:context];
         session.isSelected = NO;
+        session.scoringPeriodID = self.sessions[0].scoringPeriodID;
         [self.sessions addObject:session];
         SessionViewController *modalVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"ss"];
         modalVC.modalPresentationStyle = UIModalPresentationCustom;

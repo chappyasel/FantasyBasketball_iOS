@@ -68,7 +68,7 @@
     }
     self.team1Display1.text = ((TFHppleElement *)nodes[t1].children[10]).content;
     self.team2Display1.text = ((TFHppleElement *)nodes[t2].children[10]).content;
-    self.scoresTeam1 = @[    @"200",
+    self.scoresTeam1 = @[    @"200", //acts as setter for height
                              ((TFHppleElement *)nodes[t1].children[2]).content,
                              ((TFHppleElement *)nodes[t1].children[3]).content,
                              ((TFHppleElement *)nodes[t1].children[4]).content,
@@ -230,8 +230,8 @@ NSTimer *updateTimer;
 }
 
 - (CGFloat)barChartView:(JBBarChartView *)barChartView heightForBarViewAtIndex:(NSUInteger)index {
-    if (barChartView == self.barChartTeam1) return [self.scoresTeam1[index] floatValue];
-    return [self.scoresTeam2[index] floatValue];
+    if (barChartView == self.barChartTeam1) return MAX(0, [self.scoresTeam1[index] floatValue]);
+    return MAX(0, [self.scoresTeam2[index] floatValue]);
 }
 
 - (UIColor *)barChartView:(JBBarChartView *)barChartView colorForBarViewAtIndex:(NSUInteger)index {

@@ -41,6 +41,7 @@ bool needsLoadGamesButton = YES;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setNeedsStatusBarAppearanceUpdate];
     _handleError = NO;
     needsLoadGamesButton = YES;
     gameLogIsBasic = YES;
@@ -397,6 +398,14 @@ bool needsLoadGamesButton = YES;
      for (UILabel *label in _statSlot3Header) label.text = [statNames[2] content];
      }
      */
+    if (!self.player.injury || [self.player.injury isEqualToString:@""]) {
+        _headerInjuryLabel.text = @"Healthy";
+        _headerInjuryLabel.textColor = [UIColor FBGreenColor];
+    }
+    else {
+        _headerInjuryLabel.text = self.player.injury;
+        _headerInjuryLabel.textColor = [UIColor FBRedColor];
+    }
     //player image
     TFHppleElement *link = [[self.parser searchWithXPathQuery:@"//div[@class='main-headshot']/img"] firstObject];
     UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[link objectForKey:@"src"]]]];
@@ -1001,6 +1010,10 @@ int numGraphPoints;
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 @end

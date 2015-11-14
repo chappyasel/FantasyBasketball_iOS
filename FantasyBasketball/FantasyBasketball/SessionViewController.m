@@ -41,12 +41,11 @@
     self.session.leagueID = [NSNumber numberWithInt:[self.leagueInput.text intValue]];
     self.session.teamID = [NSNumber numberWithInt:[self.teamInput.text intValue]];
     self.session.seasonID = [NSNumber numberWithInt:[self.seasonInput.text intValue]];
-    self.session.scoringPeriodID = [NSNumber numberWithInt:[self.scoringIDInput.text intValue]];
     [self.delegate sessionVCDidDissapearWithResultSession:self.session];
 }
 
 - (void)loadKeyboardDismissBar {
-    NSArray *textFields = [[NSArray alloc] initWithObjects:self.leagueInput, self.teamInput, self.seasonInput, self.scoringIDInput, nil];
+    NSArray *textFields = [[NSArray alloc] initWithObjects:self.leagueInput, self.teamInput, self.seasonInput, nil];
     for (UITextField *field in textFields) {
         UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:field action:@selector(resignFirstResponder)];
         UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 414, 44)];

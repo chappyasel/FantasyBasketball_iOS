@@ -32,6 +32,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *headerStat5;
 @property (weak, nonatomic) IBOutlet UILabel *headerStat6;
 @property (weak, nonatomic) IBOutlet UILabel *headerOwnerLabel;
+@property (weak, nonatomic) IBOutlet UILabel *headerInjuryLabel;
 
 //nav bar
 

@@ -13,8 +13,12 @@
 #import "SettingsViewController.h"
 #import "MatchupViewController.h"
 #import "MyTeamViewController.h"
+#import "NewsViewController.h"
+#import "WatchListViewController.h"
 #import "PlayersViewController.h"
 #import "DailyLeadersViewController.h"
+#import "ScoreboardViewController.h"
+#import "StandingsViewController.h"
 
 @implementation LeftSideMenuViewController
 
@@ -33,7 +37,6 @@
         tableView;
     });
     [self.view addSubview:self.tableView];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(UpdateSession:)
                                                  name:@"SessionChangeNotification"
