@@ -114,14 +114,23 @@
     FBSession *session = self.sessions[indexPath.row];
     cell.textLabel.text = [NSString stringWithFormat:@"%@",session.name];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"LeagueID: %@, TeamID: %@",session.leagueID,session.teamID];
-    cell.detailTextLabel.textColor = [UIColor lightGrayColor];
-    if (session.isSelected) {
-        cell.textLabel.font = [UIFont boldSystemFontOfSize:18];
-        cell.detailTextLabel.font = [UIFont boldSystemFontOfSize:14];
-    }
-    else {
+    if (session.leagueID.intValue == 0 || session.teamID.intValue == 0 || session.seasonID.intValue == 0) { //not a valid team
+        cell.textLabel.text = [NSString stringWithFormat:@"%@ (Invalid)",cell.textLabel.text];
+        cell.detailTextLabel.textColor = [UIColor FBRedColor];
+        cell.textLabel.textColor = [UIColor FBRedColor];
         cell.textLabel.font = [UIFont systemFontOfSize:18];
         cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
+    }
+    else {
+        cell.detailTextLabel.textColor = [UIColor lightGrayColor];
+        if (session.isSelected) {
+            cell.textLabel.font = [UIFont boldSystemFontOfSize:18];
+            cell.detailTextLabel.font = [UIFont boldSystemFontOfSize:14];
+        }
+        else {
+            cell.textLabel.font = [UIFont systemFontOfSize:18];
+            cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
+        }
     }
     UIButton *deleteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     deleteButton.frame = CGRectMake(self.tableView.frame.size.width-100, 10, 80, 30);

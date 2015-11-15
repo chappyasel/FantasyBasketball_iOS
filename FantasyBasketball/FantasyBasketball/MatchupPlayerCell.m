@@ -19,28 +19,28 @@
     UIView *leftPointsBackground;
 }
 
-- (instancetype) initWithRightPlayer:(FBPlayer *)rP leftPlayer:(FBPlayer *)lP view:(UIViewController *)superview expanded:(bool)expanded {
+- (instancetype) initWithRightPlayer:(FBPlayer *)rP leftPlayer:(FBPlayer *)lP view:(UIViewController *)superview expanded:(bool)expanded size:(CGSize)size{
     self.selectionStyle = UITableViewCellSelectionStyleNone;
-    if (self = [super initWithFrame:CGRectMake(0, 0, 414, 152.7)]) {
+    if (self = [super initWithFrame:CGRectMake(0, 0, size.width, size.height)]) {
         self.rightPlayer = rP;
         self.leftPlayer = lP;
         if (self.leftPlayer) {
             //NAME
-            UILabel *name = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 150, 25)];
+            UILabel *name = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, size.width/2-50-10, 25)];
             name.text = [NSString stringWithFormat:@"%@. %@",[self.leftPlayer.firstName substringToIndex:1],self.leftPlayer.lastName];
             [self addSubview:name];
             //INFO
-            leftSubnameView = [[UILabel alloc] initWithFrame:CGRectMake(10, 19, 150, 20)];
+            leftSubnameView = [[UILabel alloc] initWithFrame:CGRectMake(10, 19, size.width/2-50-10, 20)];
             leftSubnameView.textColor = [UIColor grayColor];
-            leftSubnameView.font = [leftSubnameView.font fontWithSize:11];
+            leftSubnameView.font = (size.width > 400) ? [UIFont systemFontOfSize:11]:[UIFont systemFontOfSize:8];
             if (self.leftPlayer.isPlaying) leftSubnameView.text = [NSString stringWithFormat:@"%@, %@ %@",self.leftPlayer.opponent,self.leftPlayer.status,self.leftPlayer.score];
             else leftSubnameView.text = @"-";
             [self addSubview:leftSubnameView];
             if (self.leftPlayer.gameState != FBGameStateHasntStarted) {
                 //STATS
-                leftSubname2View = [[UILabel alloc] initWithFrame:CGRectMake(10, 32, 150, 20)];
+                leftSubname2View = [[UILabel alloc] initWithFrame:CGRectMake(10, 32, size.width/2-50-10, 20)];
                 leftSubname2View.textColor = [UIColor grayColor];
-                leftSubname2View.font = [leftSubname2View.font fontWithSize:11];
+                leftSubname2View.font = (size.width > 400) ? [UIFont systemFontOfSize:11]:[UIFont systemFontOfSize:8];
                 int stat1 = 0;
                 int stat2 = 0;
                 NSString *stat1t = @"";
@@ -75,7 +75,7 @@
                 [self addSubview:leftSubname2View];
             }
             //Points
-            leftPointsView = [[UILabel alloc] initWithFrame:CGRectMake(207-50, 0, 50, 52.7)];
+            leftPointsView = [[UILabel alloc] initWithFrame:CGRectMake(size.width/2-50, 0, 50, size.height)];
             leftPointsBackground = [[UIView alloc] initWithFrame:leftPointsView.frame];
             leftPointsBackground.backgroundColor = [UIColor blackColor];
             leftPointsBackground.alpha = 0.0;
@@ -88,14 +88,14 @@
             [self addSubview:leftPointsBackground];
             [self addSubview:leftPointsView];
             //Link
-            UIButton *link = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 207-50, 52.7)];
+            UIButton *link = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, size.width/2-50, size.height)];
             [link addTarget:self action:@selector(linkPlayerPressed:) forControlEvents:UIControlEventTouchUpInside];
             link.tag = 0;
             link.backgroundColor = [UIColor clearColor];
             link.titleLabel.text = @"";
             [self addSubview:link];
             //Game link
-            UIButton *gLink = [[UIButton alloc] initWithFrame:CGRectMake(207-50, 0, 50, 52.7)];
+            UIButton *gLink = [[UIButton alloc] initWithFrame:CGRectMake(size.width/2-50, 0, 50, size.height)];
             if (self.leftPlayer.isPlaying) [gLink addTarget:self action:@selector(linkGameLinkPressed:) forControlEvents:UIControlEventTouchUpInside];
             gLink.tag = 0;
             gLink.backgroundColor = [UIColor clearColor];
@@ -107,13 +107,13 @@
         }
         if (self.rightPlayer) {
             //NAME
-            UILabel *name2 = [[UILabel alloc] initWithFrame:CGRectMake(414-160, 0, 150, 25)];
+            UILabel *name2 = [[UILabel alloc] initWithFrame:CGRectMake(size.width/2+50, 0, size.width/2-50-10, 25)];
             name2.text = [NSString stringWithFormat:@"%@. %@",[self.rightPlayer.firstName substringToIndex:1],self.rightPlayer.lastName];
             name2.textAlignment = NSTextAlignmentRight;
             [self addSubview:name2];
             //INFO
-            rightSubnameView = [[UILabel alloc] initWithFrame:CGRectMake(414-160, 20, 150, 20)];
-            rightSubnameView.font = [rightSubnameView.font fontWithSize:11];
+            rightSubnameView = [[UILabel alloc] initWithFrame:CGRectMake(size.width/2+50, 20, size.width/2-50-10, 20)];
+            rightSubnameView.font = (size.width > 400) ? [UIFont systemFontOfSize:11]:[UIFont systemFontOfSize:8];
             rightSubnameView.textColor = [UIColor grayColor];
             rightSubnameView.textAlignment = NSTextAlignmentRight;
             if (self.rightPlayer.isPlaying) rightSubnameView.text = [NSString stringWithFormat:@"%@ %@, %@",self.rightPlayer.status,self.rightPlayer.score,self.rightPlayer.opponent];
@@ -121,9 +121,9 @@
             [self addSubview:rightSubnameView];
             if (self.rightPlayer.gameState != FBGameStateHasntStarted) {
                 //STATS
-                rightSubname2View = [[UILabel alloc] initWithFrame:CGRectMake(414-160, 32, 150, 20)];
+                rightSubname2View = [[UILabel alloc] initWithFrame:CGRectMake(size.width/2+50, 32, size.width/2-50-10, 20)];
                 rightSubname2View.textColor = [UIColor grayColor];
-                rightSubname2View.font = [rightSubname2View.font fontWithSize:11];
+                rightSubname2View.font = (size.width > 400) ? [UIFont systemFontOfSize:11]:[UIFont systemFontOfSize:8];
                 rightSubname2View.textAlignment = NSTextAlignmentRight;
                 int stat1 = 0;
                 int stat2 = 0;
@@ -159,7 +159,7 @@
                 [self addSubview:rightSubname2View];
             }
             //Points
-            rightPointsView = [[UILabel alloc] initWithFrame:CGRectMake(207, 0, 50, 52.7)];
+            rightPointsView = [[UILabel alloc] initWithFrame:CGRectMake(size.width/2, 0, 50, size.height)];
             rightPointsBackground = [[UIView alloc] initWithFrame:rightPointsView.frame];
             rightPointsBackground.backgroundColor = [UIColor blackColor];
             rightPointsBackground.alpha = 0.0;
@@ -172,14 +172,14 @@
             [self addSubview:rightPointsBackground];
             [self addSubview:rightPointsView];
             //Link
-            UIButton *link = [[UIButton alloc] initWithFrame:CGRectMake(208+50, 0, 207-50, 52.7)];
+            UIButton *link = [[UIButton alloc] initWithFrame:CGRectMake(size.width/2+50, 0, size.width/2-50, size.height)];
             [link addTarget:self action:@selector(linkPlayerPressed:) forControlEvents:UIControlEventTouchUpInside];
             link.tag = 1;
             link.backgroundColor = [UIColor clearColor];
             link.titleLabel.text = @"";
             [self addSubview:link];
             //Game link
-            UIButton *gLink = [[UIButton alloc] initWithFrame:CGRectMake(208, 0, 50, 52.7)];
+            UIButton *gLink = [[UIButton alloc] initWithFrame:CGRectMake(size.width/2, 0, 50, size.height)];
             if (self.rightPlayer.isPlaying) [gLink addTarget:self action:@selector(linkGameLinkPressed:) forControlEvents:UIControlEventTouchUpInside];
             gLink.tag = 1;
             gLink.backgroundColor = [UIColor clearColor];

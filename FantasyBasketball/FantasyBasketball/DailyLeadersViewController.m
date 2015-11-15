@@ -135,16 +135,25 @@ NSTimer *updateTimer;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    bool isLarge = self.view.frame.size.width > 400;
     UIView *cell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 30)];
     cell.backgroundColor = [UIColor FBMediumOrangeColor];
     //NAME
-    UILabel *name = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 180, 30)];
-    name.text = @"   NAME                       TYPE";
+    UILabel *name;
+    if (isLarge) {
+        name = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 180, 30)];
+        name.text = @"   NAME                       TYPE";
+    }
+    else {
+        name = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 150, 30)];
+        name.text = @"   NAME                TYPE";
+    }
     name.font = [UIFont boldSystemFontOfSize:14];
     name.textColor = [UIColor whiteColor];
     [cell addSubview:name];
     //STATS SCROLLVIEW
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(180, 0, self.tableView.frame.size.width-130, 30)];
+    UIScrollView *scrollView = isLarge ? [[UIScrollView alloc] initWithFrame:CGRectMake(180, 0, self.tableView.frame.size.width-180, 30)]:
+                                         [[UIScrollView alloc] initWithFrame:CGRectMake(150, 0, self.tableView.frame.size.width-150, 30)];
     [scrollView setContentSize:CGSizeMake(13*50+120, 30)];
     [scrollView setShowsHorizontalScrollIndicator:NO];
     [scrollView setShowsVerticalScrollIndicator:NO];
@@ -176,7 +185,7 @@ NSTimer *updateTimer;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PlayerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Identifier"];
     FBPlayer *player = self.players[indexPath.row];
-    cell = [[PlayerCell alloc] initWithPlayer:player view:self scrollDistance:_globalScrollDistance height:40.0];
+    cell = [[PlayerCell alloc] initWithPlayer:player view:self scrollDistance:_globalScrollDistance size:CGSizeMake(self.view.frame.size.width, 40.0)];
     cell.delegate = self;
     return cell;
 }

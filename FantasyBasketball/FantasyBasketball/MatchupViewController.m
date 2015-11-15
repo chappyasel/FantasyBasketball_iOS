@@ -256,7 +256,7 @@ NSTimer *updateTimer;
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     float width = self.tableView.frame.size.width;
     UIView *cell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, 40)];
-    cell.backgroundColor = [UIColor colorWithRed:228/255.0 green:141/255.0 blue:78/255.0 alpha:1.0];
+    cell.backgroundColor = [UIColor FBMediumOrangeColor];
     //STATS LABELS
     float tot1 = 0;
     float tot2 = 0;
@@ -295,7 +295,7 @@ NSTimer *updateTimer;
     if (self.cells.count >= indexPath.row+indexPath.section*_numStartersTeam1+1) {
         MatchupPlayerCell *cell = self.cells[indexPath.row+indexPath.section*_numStartersTeam1];
         if (!cell) {
-            cell = [[MatchupPlayerCell alloc] initWithRightPlayer:rightPlayer leftPlayer:leftPlayer view:self expanded:NO];
+            cell = [[MatchupPlayerCell alloc] initWithRightPlayer:rightPlayer leftPlayer:leftPlayer view:self expanded:NO size:CGSizeMake(self.view.frame.size.width, 52.7)];
             cell.delegate = self;
             cell.index = (int)indexPath.row;
             [self.cells addObject:cell];
@@ -303,7 +303,7 @@ NSTimer *updateTimer;
         else [cell updateWithRightPlayer:rightPlayer leftPlayer:leftPlayer];
         return cell;
     }
-    MatchupPlayerCell *cell = [[MatchupPlayerCell alloc] initWithRightPlayer:rightPlayer leftPlayer:leftPlayer view:self expanded:NO];
+    MatchupPlayerCell *cell = [[MatchupPlayerCell alloc] initWithRightPlayer:rightPlayer leftPlayer:leftPlayer view:self expanded:NO size:CGSizeMake(self.view.frame.size.width, 52.7)];
     cell.delegate = self;
     cell.index = (int)indexPath.row;
     [self.cells addObject:cell];

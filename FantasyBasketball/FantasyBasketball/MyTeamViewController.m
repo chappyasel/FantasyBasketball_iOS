@@ -115,10 +115,11 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    bool isLarge = self.view.frame.size.width > 400;
     UIView *cell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 30)];
     cell.backgroundColor = [UIColor FBMediumOrangeColor];
     //NAME
-    UILabel *name = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 130, 30)];
+    UILabel *name = isLarge ? [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 130, 30)]:[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 115, 30)];
     name.font = [UIFont boldSystemFontOfSize:14];
     name.textColor = [UIColor whiteColor];
     if (section == 0) name.text = @"  STARTERS";
@@ -129,7 +130,8 @@
     //div.backgroundColor = [UIColor lightGrayColor];
     //[cell addSubview:div];
     //STATS SCROLLVIEW
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(130, 0, self.tableView.frame.size.width-130, 30)];
+    UIScrollView *scrollView = isLarge ? [[UIScrollView alloc] initWithFrame:CGRectMake(130, 0, self.tableView.frame.size.width-130, 30)]:
+                                         [[UIScrollView alloc] initWithFrame:CGRectMake(115, 0, self.tableView.frame.size.width-115, 30)];
     [scrollView setContentSize:CGSizeMake(13*50+120, 30)];
     [scrollView setShowsHorizontalScrollIndicator:NO];
     [scrollView setShowsVerticalScrollIndicator:NO];
@@ -159,6 +161,7 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    bool isLarge = self.view.frame.size.width > 400;
     UIView *cell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 30)];
     cell.backgroundColor = [UIColor FBMediumOrangeColor];
     //Divider
@@ -166,7 +169,8 @@
     //div.backgroundColor = [UIColor lightGrayColor];
     //[cell addSubview:div];
     //STATS SCROLLVIEW
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(130, 0, self.tableView.frame.size.width-130, 30)];
+    UIScrollView *scrollView = isLarge ? [[UIScrollView alloc] initWithFrame:CGRectMake(130, 0, self.tableView.frame.size.width-130, 30)]:
+                                         [[UIScrollView alloc] initWithFrame:CGRectMake(115, 0, self.tableView.frame.size.width-115, 30)];
     [scrollView setContentSize:CGSizeMake(13*50+120, 30)];
     [scrollView setShowsHorizontalScrollIndicator:NO];
     [scrollView setShowsVerticalScrollIndicator:NO];
@@ -210,7 +214,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PlayerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Identifier"];
     FBPlayer *player = self.players[indexPath.row+indexPath.section*_numStarters];
-    cell = [[PlayerCell alloc] initWithPlayer:player view:self scrollDistance:_globalScrollDistance height:42.46];
+    cell = [[PlayerCell alloc] initWithPlayer:player view:self scrollDistance:_globalScrollDistance size:CGSizeMake(self.view.frame.size.width, 42.46)];
     cell.delegate = self;
     return cell;
 }

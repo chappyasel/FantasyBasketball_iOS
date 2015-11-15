@@ -48,6 +48,7 @@
 //bottom half
 
 @property (weak, nonatomic) IBOutlet UIScrollView *bottomScrollView;
+@property (weak, nonatomic) IBOutlet UIView *bottomContentView;
 
 @property (weak, nonatomic) IBOutlet UITableView *infoTableView;
 @property (weak, nonatomic) IBOutlet UILabel *graphNameDisplay;

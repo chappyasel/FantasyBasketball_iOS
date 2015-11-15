@@ -133,16 +133,25 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    bool isLarge = self.view.frame.size.width > 400;
     UIView *cell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 30)];
     cell.backgroundColor = [UIColor FBMediumOrangeColor];
     //NAME
-    UILabel *name = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 180, 30)];
-    name.text = @"   NAME                       TYPE";
+    UILabel *name;
+    if (isLarge) {
+        name = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 180, 30)];
+        name.text = @"   NAME                       TYPE";
+    }
+    else {
+        name = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 150, 30)];
+        name.text = @"   NAME                TYPE";
+    }
     name.font = [UIFont boldSystemFontOfSize:14];
     name.textColor = [UIColor whiteColor];
     [cell addSubview:name];
     //STATS SCROLLVIEW
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(180, 0, self.tableView.frame.size.width-130, 30)];
+    UIScrollView *scrollView = isLarge ? [[UIScrollView alloc] initWithFrame:CGRectMake(180, 0, self.tableView.frame.size.width-180, 30)]:
+                                         [[UIScrollView alloc] initWithFrame:CGRectMake(150, 0, self.tableView.frame.size.width-150, 30)];
     [scrollView setContentSize:CGSizeMake(14*50+120, 30)];
     [scrollView setShowsHorizontalScrollIndicator:NO];
     [scrollView setShowsVerticalScrollIndicator:NO];
@@ -193,7 +202,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PlayerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Identifier"];
     FBPlayer *player = self.players[indexPath.row];
-    cell = [[PlayerCell alloc] initWithPlayer:player view:self scrollDistance:_globalScrollDistance height:40.0];
+    cell = [[PlayerCell alloc] initWithPlayer:player view:self scrollDistance:_globalScrollDistance size:CGSizeMake(self.view.frame.size.width, 40.0)];
     cell.delegate = self;
     return cell;
 }
@@ -242,9 +251,16 @@
     _scoringPeriod = @"last15";
     _team = -1;
     self.selectedPickerData = @[@"Available", @"Last 15", @"All"];
-    self.pickerData = @[ @[@"All", @"Available", @"On Waivers", @"Free Agents", @"On Rosters"],
-                         @[@"Last 7", @"Last 15", @"Last 30", @"Season", @"Last Season", @"Projections"],
-                         @[@"All", @"FA", @"Atl", @"Bkn", @"Bos", @"Cha", @"Chi", @"Cle", @"Dal", @"Den", @"Det", @"GS", @"Hou", @"Ind", @"LAC", @"LAL", @"Mem", @"Mia", @"Mil", @"Min", @"Nor", @"NY", @"OKC", @"Orl", @"Phi", @"Pho", @"Por", @"SA", @"Sac", @"Tor", @"Uta", @"Wsh"]];
+    if (self.view.frame.size.width > 400) {
+        self.pickerData = @[ @[@"All", @"Available", @"On Waivers", @"Free Agents", @"On Rosters"],
+                             @[@"Last 7", @"Last 15", @"Last 30", @"Season", @"Last Season", @"Projections"],
+                             @[@"All", @"FA", @"Atl", @"Bkn", @"Bos", @"Cha", @"Chi", @"Cle", @"Dal", @"Den", @"Det", @"GS", @"Hou", @"Ind", @"LAC", @"LAL", @"Mem", @"Mia", @"Mil", @"Min", @"Nor", @"NY", @"OKC", @"Orl", @"Phi", @"Pho", @"Por", @"SA", @"Sac", @"Tor", @"Uta", @"Wsh"]];
+    }
+    else {
+        self.pickerData = @[ @[@"All", @"Available", @"Waiver", @"FA", @"On Team"],
+                             @[@"Last 7", @"Last 15", @"Last 30", @"Season", @"Last Season", @"Projections"],
+                             @[@"All", @"FA", @"Atl", @"Bkn", @"Bos", @"Cha", @"Chi", @"Cle", @"Dal", @"Den", @"Det", @"GS", @"Hou", @"Ind", @"LAC", @"LAL", @"Mem", @"Mia", @"Mil", @"Min", @"Nor", @"NY", @"OKC", @"Orl", @"Phi", @"Pho", @"Por", @"SA", @"Sac", @"Tor", @"Uta", @"Wsh"]];
+    }
 }
 
 - (void)fadeIn:(UIButton *)sender {
