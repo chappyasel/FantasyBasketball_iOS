@@ -20,7 +20,7 @@
 @property NSMutableArray <NSMutableArray <NSString *> *> *pickerData;
 @property NSArray <NSString *> *selectedPickerData;
 @property int scoringDay; //time of stats
-@property NSString *scoringPeriod; //span of stats
+//@property NSString *scoringPeriod; //span of stats
 
 @end
 
@@ -78,9 +78,17 @@
             [dict setObject:children[13].content forKey:@"blocks"];
             [dict setObject:children[14].content forKey:@"turnovers"];
             [dict setObject:children[15].content forKey:@"points"];
-            [dict setObject:children[16].content forKey:@"fantasyPoints"];
-            [dict setObject:children[18].content forKey:@"percentOwned"];
-            [dict setObject:children[19].content forKey:@"plusMinus"];
+            if ([self.scoringPeriod isEqualToString:@"today"]) {
+                [dict setObject:children[16].content forKey:@"fantasyPoints"];
+                [dict setObject:children[18].content forKey:@"percentOwned"];
+                [dict setObject:children[19].content forKey:@"plusMinus"];
+            }
+            else {
+                [dict setObject:children[17].content forKey:@"totalFantasyPoints"];
+                [dict setObject:children[18].content forKey:@"fantasyPoints"];
+                [dict setObject:children[20].content forKey:@"percentOwned"];
+                [dict setObject:children[21].content forKey:@"plusMinus"];
+            }
             [self.players addObject:[[FBPlayer alloc] initWithDictionary:dict]];
         }
     }

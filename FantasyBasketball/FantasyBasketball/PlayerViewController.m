@@ -419,6 +419,14 @@
         _headerInjuryLabel.text = @"Healthy";
         _headerInjuryLabel.textColor = [UIColor FBGreenColor];
     }
+    else if ([self.player.injury isEqualToString:@"DTD"]){
+        _headerInjuryLabel.text = @"Day-To-Day";
+        _headerInjuryLabel.textColor = [UIColor FBRedColor];
+    }
+    else if ([self.player.injury isEqualToString:@"O"]){
+        _headerInjuryLabel.text = @"Out";
+        _headerInjuryLabel.textColor = [UIColor FBRedColor];
+    }
     else {
         _headerInjuryLabel.text = self.player.injury;
         _headerInjuryLabel.textColor = [UIColor FBRedColor];

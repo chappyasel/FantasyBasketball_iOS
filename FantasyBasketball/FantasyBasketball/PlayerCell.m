@@ -7,6 +7,7 @@
 //
 
 #import "PlayerCell.h"
+#import "MyTeamViewController.h"
 
 @implementation PlayerCell {
     UIScrollView *scrollView;
@@ -57,7 +58,7 @@
             type.textAlignment = NSTextAlignmentCenter;
             [self addSubview:type];
         }
-        //Link
+        //LINK
         UIButton *link;
         if (isMTVC) link = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 120, size.height)];
         else link = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 150, size.height)];
@@ -65,7 +66,7 @@
         link.backgroundColor = [UIColor clearColor];
         link.titleLabel.text = @"";
         [self addSubview:link];
-        //Divider
+        //DIVIDER
         UILabel *div;
         if (isMTVC) div = isLarge ? [[UILabel alloc] initWithFrame:CGRectMake(130-1, 0, 1, size.height)]:[[UILabel alloc] initWithFrame:CGRectMake(115-1, 0, 1, size.height)];
         else div = isLarge ? [[UILabel alloc] initWithFrame:CGRectMake(180-1, 0, 1, size.height)]:[[UILabel alloc] initWithFrame:CGRectMake(150-1, 0, 1, size.height)];
@@ -113,7 +114,7 @@
             float arr2[13] = {self.player.fantasyPoints,self.player.fgm,self.player.fga,self.player.ftm,self.self.player.fta,self.player.rebounds,self.player.assists,self.player.blocks,self.player.steals,self.player.turnovers,self.player.points,self.player.percentOwned,self.player.plusMinus};
             for (int i = 0; i < 11; i++) {
                 UILabel *stats = [[UILabel alloc] initWithFrame:CGRectMake(50*i+120, 0, 50, size.height)];
-                if (![@"today" isEqual:@"today"]) stats.text = [NSString stringWithFormat:@"%.1f",arr2[i]]; //NEED TO WORK ON THIS **************************
+                if (![((MyTeamViewController *)superview).scoringPeriod isEqualToString:@"today"]) stats.text = [NSString stringWithFormat:@"%.1f",arr2[i]];
                 else if (!self.player.isPlaying) stats.text = @"-";
                 else stats.text = [NSString stringWithFormat:@"%.0f",arr2[i]];
                 stats.textAlignment = NSTextAlignmentCenter;
@@ -136,7 +137,7 @@
             }
             [scrollView addSubview:stats];
         }
-        else if (isMTVC) {
+        else if (isPLVC) {
             float arr2[14] = {self.player.fantasyPoints,self.player.totalFantasyPoints,self.player.percentOwned,self.player.plusMinus,self.player.fgm,self.player.fga,self.player.ftm,self.player.fta,self.player.rebounds,self.player.assists,self.player.blocks,self.player.steals,self.player.turnovers,self.player.points};
             for (int i = 0; i < 14; i++) {
                 UILabel *stats = [[UILabel alloc] initWithFrame:CGRectMake(50*i+120, 0, 50, size.height)];

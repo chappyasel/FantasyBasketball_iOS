@@ -90,7 +90,7 @@
 }
 
 - (void)loadBarCharts {
-    float width = self.view.frame.size.width/2-15;
+    float width = self.scoreView.frame.size.width/2-15;
     self.barChartTeam1 = [[JBBarChartView alloc] init];
     self.barChartTeam1.frame = CGRectMake(-width/8, 0, width, 104);
     self.barChartTeam1.dataSource = self;
@@ -295,7 +295,7 @@ NSTimer *updateTimer;
     if (self.cells.count >= indexPath.row+indexPath.section*_numStartersTeam1+1) {
         MatchupPlayerCell *cell = self.cells[indexPath.row+indexPath.section*_numStartersTeam1];
         if (!cell) {
-            cell = [[MatchupPlayerCell alloc] initWithRightPlayer:rightPlayer leftPlayer:leftPlayer view:self expanded:NO size:CGSizeMake(self.view.frame.size.width, 52.7)];
+            cell = [[MatchupPlayerCell alloc] initWithRightPlayer:rightPlayer leftPlayer:leftPlayer view:self expanded:NO size:CGSizeMake(self.tableView.frame.size.width, 52.7)];
             cell.delegate = self;
             cell.index = (int)indexPath.row;
             [self.cells addObject:cell];
@@ -303,7 +303,7 @@ NSTimer *updateTimer;
         else [cell updateWithRightPlayer:rightPlayer leftPlayer:leftPlayer];
         return cell;
     }
-    MatchupPlayerCell *cell = [[MatchupPlayerCell alloc] initWithRightPlayer:rightPlayer leftPlayer:leftPlayer view:self expanded:NO size:CGSizeMake(self.view.frame.size.width, 52.7)];
+    MatchupPlayerCell *cell = [[MatchupPlayerCell alloc] initWithRightPlayer:rightPlayer leftPlayer:leftPlayer view:self expanded:NO size:CGSizeMake(self.tableView.frame.size.width, 52.7)];
     cell.delegate = self;
     cell.index = (int)indexPath.row;
     [self.cells addObject:cell];
@@ -361,6 +361,14 @@ NSTimer *updateTimer;
 
 - (void)cancelButtonPressedInPickerView:(FBPickerView *)pickerView {
     [self fadeOutWithPickerView:pickerView];
+}
+
+-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)orientation duration:(NSTimeInterval)duration {
+    self.cells = [[NSMutableArray alloc] init];
+    [self.tableView reloadData];
+    [self.barChartTeam1 removeFromSuperview];
+    [self.barChartTeam2 removeFromSuperview];
+    [self performSelector:@selector(loadBarCharts) withObject:nil afterDelay:.2];
 }
 
 @end

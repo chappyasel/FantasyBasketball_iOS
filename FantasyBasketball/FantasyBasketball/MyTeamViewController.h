@@ -12,4 +12,6 @@
 
 @interface MyTeamViewController : FBViewController <UIScrollViewDelegate, FBPickerViewDelegate>
 
+@property NSString *scoringPeriod; //span of stats
+
 @end
