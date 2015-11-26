@@ -60,6 +60,7 @@
 		F9947F6A1B66A44E008F9B70 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9947F691B66A44E008F9B70 /* CoreGraphics.framework */; };
 		F9947F6C1B66A456008F9B70 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9947F6B1B66A456008F9B70 /* UIKit.framework */; };
 		F9947F6E1B66A45F008F9B70 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9947F6D1B66A45F008F9B70 /* Foundation.framework */; };
+		F9CA8B3A1C07A66600771533 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9CA8B391C07A66600771533 /* WebKit.framework */; };
 		F9D7023C1A9F678000AAEB18 /* PlayerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D7023B1A9F678000AAEB18 /* PlayerCell.m */; };
 		F9E5F20E1BEEAC04003E8CAA /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9E5F20D1BEEAC04003E8CAA /* NewsViewController.m */; };
 		F9E5F2121BEEAE42003E8CAA /* WatchListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9E5F2111BEEAE42003E8CAA /* WatchListViewController.m */; };
@@ -177,6 +178,7 @@
 		F9947F691B66A44E008F9B70 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		F9947F6B1B66A456008F9B70 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F9947F6D1B66A45F008F9B70 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		F9CA8B391C07A66600771533 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		F9D7023A1A9F678000AAEB18 /* PlayerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayerCell.h; path = FantasyBasketball/PlayerCell.h; sourceTree = "<group>"; };
 		F9D7023B1A9F678000AAEB18 /* PlayerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayerCell.m; path = FantasyBasketball/PlayerCell.m; sourceTree = "<group>"; };
 		F9DB2EF11B66A25E00B7AC82 /* FanstasyBaskeyballPrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FanstasyBaskeyballPrefixHeader.pch; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9CA8B3A1C07A66600771533 /* WebKit.framework in Frameworks */,
 				F9573F351B6BF3AA00AE4872 /* QuartzCore.framework in Frameworks */,
 				F9947F6E1B66A45F008F9B70 /* Foundation.framework in Frameworks */,
 				F9947F6C1B66A456008F9B70 /* UIKit.framework in Frameworks */,
@@ -228,6 +231,7 @@
 		F90461DF1A6C2A29008A2C8E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F9CA8B391C07A66600771533 /* WebKit.framework */,
 				F9573F341B6BF3AA00AE4872 /* QuartzCore.framework */,
 				F9947F6D1B66A45F008F9B70 /* Foundation.framework */,
 				F9947F6B1B66A456008F9B70 /* UIKit.framework */,

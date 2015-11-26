@@ -175,27 +175,10 @@
                     <view key="view" contentMode="scaleToFill" id="xd9-f9-i6w">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <webView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zMC-Jh-gaL">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <gestureRecognizers/>
-                                <dataDetectorType key="dataDetectorTypes"/>
-                            </webView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="zMC-Jh-gaL" firstAttribute="height" secondItem="xd9-f9-i6w" secondAttribute="height" id="0Tc-I0-oEi"/>
-                            <constraint firstItem="zMC-Jh-gaL" firstAttribute="centerY" secondItem="xd9-f9-i6w" secondAttribute="centerY" id="4st-iB-03O"/>
-                            <constraint firstItem="zMC-Jh-gaL" firstAttribute="width" secondItem="xd9-f9-i6w" secondAttribute="width" id="D64-qd-6aI"/>
-                            <constraint firstItem="zMC-Jh-gaL" firstAttribute="centerX" secondItem="xd9-f9-i6w" secondAttribute="centerX" id="nwY-Wc-w9k"/>
-                        </constraints>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
-                    <connections>
-                        <outlet property="webDisplay" destination="zMC-Jh-gaL" id="fGT-85-UgU"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DA9-GR-gaw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

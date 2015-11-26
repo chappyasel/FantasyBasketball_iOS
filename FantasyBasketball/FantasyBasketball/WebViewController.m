@@ -20,28 +20,49 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
+    [self.view addSubview:self.webView];
+    [self.webView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    self.webView.navigationDelegate = self;
+    
+    NSURL *nsurl=[NSURL URLWithString:self.link];
+    NSURLRequest *nsrequest=[NSURLRequest requestWithURL:nsurl];
+    [self.webView loadRequest:nsrequest];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [self loadNavBar];
-    [self.webDisplay loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.link]]];
-    self.webDisplay.scrollView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
 }
 
-- (void) adjustViewsForOrientation:(UIInterfaceOrientation) orientation {
-    switch (orientation) {
-        case UIInterfaceOrientationPortrait: case UIInterfaceOrientationPortraitUpsideDown: {
-            [self.navBar setFrame:CGRectMake(0, 0, 414, 64)];
-            self.webDisplay.frame = CGRectMake(0, 0, 414, 736);
-            self.webDisplay.scrollView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
-        } break;
-        case UIInterfaceOrientationLandscapeLeft: case UIInterfaceOrientationLandscapeRight: {
-            [self.navBar setFrame:CGRectMake(0, 0, 736, 44)];
-            self.webDisplay.frame = CGRectMake(0, 0, 736, 414);
-            self.webDisplay.scrollView.contentInset = UIEdgeInsetsMake(44, 0, 0, 0);
-        } break;
-        case UIInterfaceOrientationUnknown: break;
-    }
+- (void)viewDidAppear:(BOOL)animated {
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.webView
+                                                          attribute:NSLayoutAttributeWidth
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeWidth
+                                                         multiplier:1.0
+                                                           constant:0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.webView
+                                                          attribute:NSLayoutAttributeHeight
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeHeight
+                                                         multiplier:1.0
+                                                           constant:-64]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.webView
+                                                          attribute:NSLayoutAttributeCenterX
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeCenterX
+                                                         multiplier:1.0
+                                                           constant:0.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.webView
+                                                          attribute:NSLayoutAttributeCenterY
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeCenterY
+                                                         multiplier:1.0
+                                                           constant:32.0]];
 }
 
 - (void)loadNavBar {
@@ -57,18 +78,31 @@
 }
 
 - (void)refreshButtonPressed:(UIButton *)sender {
-    [self.webDisplay reload];
+    [self.webView reload];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    NSLog(@"MEMORY WARNING");
 }
 
 #pragma mark - Navigation
 
 - (void)backButtonPressed:(UIButton *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - navigation delegate
+
+-(void)webView:(WKWebView *)webView didStartProvisionalNavigation: (WKNavigation *)navigation {
+    
+}
+
+- (void)webView:(WKWebView *)webView didFinishNavigation: (WKNavigation *)navigation{
+    
+}
+
+-(void)webView:(WKWebView *)webView didFailNavigation: (WKNavigation *)navigation withError:(NSError *)error {
+    
 }
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation

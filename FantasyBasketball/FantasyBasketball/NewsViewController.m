@@ -7,6 +7,7 @@
 //
 
 #import "NewsViewController.h"
+#import "WebViewController.h"
 #import "TFHpple.h"
 
 @interface NewsViewController ()
@@ -19,6 +20,8 @@
 @property NSMutableArray *generalNews;
 @property NSMutableArray *transactions;
 @property NSMutableArray *teamNews;
+
+@property int numTeamPlayersLoaded; //out of 13 (for section header)
 
 @end
 
@@ -46,13 +49,14 @@
                 [self.tableView reloadData];
             });
         }];
-        [self loadTeamNewsWithCompletionBlock:^{
+        [self loadTeamNewsWithCompletionBlock:^(int numCompleted) {
             //sort by time
             self.teamNews = [[NSMutableArray alloc] initWithArray:[self.teamNews sortedArrayUsingComparator:^NSComparisonResult(NSDictionary *d1, NSDictionary *d2) {
                 NSDate *date1 = d1[@"date"];
                 NSDate *date2 = d2[@"date"];
                 return [date2 compare:date1]; //newest first
             }]];
+            self.numTeamPlayersLoaded = numCompleted;
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.tableView reloadData];
             });
@@ -60,8 +64,9 @@
     });
 }
 
-- (void)loadTeamNewsWithCompletionBlock:(void (^)(void)) completed {
+- (void)loadTeamNewsWithCompletionBlock:(void (^)(int numCompleted)) completed {
     //load team
+    int i = 0;
     self.teamNews = [[NSMutableArray alloc] init];
     NSMutableArray *names = [[NSMutableArray alloc] init];
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/clubhouse?leagueId=%@&teamId=%@&seasonId=%@&version=today&scoringPeriodId=%@",self.session.leagueID,self.session.teamID,self.session.seasonID,self.session.scoringPeriodID]];
@@ -80,41 +85,46 @@
         }
     }
     for (NSArray *name in names) {
-        [self.teamNews addObject:[self loadRotoworldWithName:name]];
-        completed();
+        [self.teamNews addObjectsFromArray:[self loadRotoworldWithName:name]];
+        i++;
+        completed(i);
     }
 }
 
-- (NSDictionary *)loadRotoworldWithName:(NSArray *)name {
+- (NSArray <NSDictionary *> *)loadRotoworldWithName:(NSArray *)name {
+    NSMutableArray <NSDictionary *> *news = [[NSMutableArray alloc] init];
     TFHpple *statParser = [[TFHpple alloc] initWithHTMLData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.rotoworld.com/content/playersearch.aspx?searchname=%@,%@&sport=nba",name[1],name[0]]]]];
     NSString *rotoworldLink = [[[statParser searchWithXPathQuery:@"//div[@class='moreplayernews']/a"] firstObject] objectForKey:@"href"];
     TFHpple *rotoParser = [[TFHpple alloc] initWithHTMLData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.rotoworld.com%@",rotoworldLink]]]];
-    TFHppleElement *e = [[rotoParser searchWithXPathQuery:@"//div[@class='pp']/div[@class='playernews']"] firstObject];
-    NSMutableDictionary *rotoPeice = [[NSMutableDictionary alloc] init];
-    for (TFHppleElement *c in e.children) {
-        if ([[c objectForKey:@"class"] isEqualToString:@"report"]) {
-            NSString *tmp = [c.content stringByReplacingOccurrencesOfString:@"\r" withString:@""];
-            tmp = [tmp stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-            tmp = [tmp stringByReplacingOccurrencesOfString:@"  " withString:@""];
-            [rotoPeice setObject:tmp forKey:@"report"];
+    NSArray <TFHppleElement *> *elements = [rotoParser searchWithXPathQuery:@"//div[@class='pp']/div[@class='playernews']"];
+    for (TFHppleElement *element in elements) {
+        NSMutableDictionary *rotoPeice = [[NSMutableDictionary alloc] init];
+        for (TFHppleElement *c in element.children) {
+            if ([[c objectForKey:@"class"] isEqualToString:@"report"]) {
+                NSString *tmp = [c.content stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+                tmp = [tmp stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+                tmp = [tmp stringByReplacingOccurrencesOfString:@"  " withString:@""];
+                [rotoPeice setObject:tmp forKey:@"report"];
+            }
+            if ([[c objectForKey:@"class"] isEqualToString:@"impact"]) {
+                NSString *tmp = [c.firstChild.content stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+                tmp = [tmp stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+                tmp = [tmp stringByReplacingOccurrencesOfString:@"  " withString:@""];
+                [rotoPeice setObject:tmp forKey:@"impact"];
+                NSString *dateString = [c.children[1] content];
+                NSDateFormatter *currentDateFormatter = [[NSDateFormatter alloc] init];
+                [currentDateFormatter setDateFormat:@" yyyy"];
+                dateString = [dateString stringByAppendingString:[currentDateFormatter stringFromDate:[NSDate date]]];
+                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                [dateFormatter setDateFormat:@"MMM dd - h:mm a yyyy"];
+                NSDate *date = [dateFormatter dateFromString:dateString];
+                [rotoPeice setObject:date forKey:@"date"];
+            }
         }
-        if ([[c objectForKey:@"class"] isEqualToString:@"impact"]) {
-            NSString *tmp = [c.firstChild.content stringByReplacingOccurrencesOfString:@"\r" withString:@""];
-            tmp = [tmp stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-            tmp = [tmp stringByReplacingOccurrencesOfString:@"  " withString:@""];
-            [rotoPeice setObject:tmp forKey:@"impact"];
-            NSString *dateString = [c.children[1] content];
-            NSDateFormatter *currentDateFormatter = [[NSDateFormatter alloc] init];
-            [currentDateFormatter setDateFormat:@" yyyy"];
-            dateString = [dateString stringByAppendingString:[currentDateFormatter stringFromDate:[NSDate date]]];
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat:@"MMM dd - h:mm a yyyy"];
-            NSDate *date = [dateFormatter dateFromString:dateString];
-            [rotoPeice setObject:date forKey:@"date"];
-        }
+        [rotoPeice setObject:[NSString stringWithFormat:@"%@ %@",name[0],name[1]] forKey:@"name"];
+        [news addObject:rotoPeice];
     }
-    [rotoPeice setObject:[NSString stringWithFormat:@"%@ %@",name[0],name[1]] forKey:@"name"];
-    return rotoPeice;
+    return news;
 }
 
 - (void)loadWatchListNews {
@@ -208,7 +218,10 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (section == 0) return @"CBS Fantasy News";
     if (section == 1) return @"League Transactions";
-    if (section == 2) return @"Rotoworld Team News";
+    if (section == 2) {
+        if (self.numTeamPlayersLoaded == 13) return @"Rotoworld Team News";
+        return [NSString stringWithFormat:@"Rotoworld Team News (%d/%d players)",self.numTeamPlayersLoaded,13];
+    }
     return @"";
 }
 
@@ -374,7 +387,7 @@
     self.animator.behindViewScale = 0.9;
     self.animator.transitionDuration = 0.5;
     self.animator.direction = ZFModalTransitonDirectionBottom;
-    [self.animator setContentScrollView:modalVC.webDisplay.scrollView];
+    [self.animator setContentScrollView:modalVC.webView.scrollView];
     modalVC.transitioningDelegate = self.animator;
     [self presentViewController:modalVC animated:YES completion:nil];
 }

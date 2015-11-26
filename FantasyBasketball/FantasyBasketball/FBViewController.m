@@ -96,7 +96,7 @@
     self.animator.behindViewScale = 0.9;
     self.animator.transitionDuration = 0.5;
     self.animator.direction = ZFModalTransitonDirectionBottom;
-    [self.animator setContentScrollView:modalVC.webDisplay.scrollView];
+    [self.animator setContentScrollView:modalVC.webView.scrollView];
     modalVC.transitioningDelegate = self.animator;
     [self presentViewController:modalVC animated:YES completion:nil];
 }

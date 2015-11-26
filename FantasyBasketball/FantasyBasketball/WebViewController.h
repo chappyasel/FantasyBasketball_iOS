@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <WebKit/WebKit.h>
 
-@interface WebViewController : UIViewController <UIWebViewDelegate, UIGestureRecognizerDelegate>
+@interface WebViewController : UIViewController <WKNavigationDelegate, UIGestureRecognizerDelegate>
 
 @property NSString *link;
 
-@property (weak, nonatomic) IBOutlet UIWebView *webDisplay;
+@property (strong, nonatomic) IBOutlet WKWebView *webView;
 
 @end
