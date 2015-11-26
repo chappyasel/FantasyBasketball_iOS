@@ -55,7 +55,7 @@
     NSString *XpathQueryString = @"//table[@class='playerTableTable tableBody']/tr";
     NSArray *nodes = [self.parser searchWithXPathQuery:XpathQueryString];
     self.players = [[NSMutableArray alloc] initWithCapacity:13];
-    for (int i = 0; i < nodes.count; i++) {
+    for (int i = 2; i < nodes.count; i++) {
         TFHppleElement *element = nodes[i];
         if ([element objectForKey:@"id"]) {
             NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
