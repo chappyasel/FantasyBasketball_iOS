@@ -10,8 +10,6 @@
 
 @interface FBViewController ()
 
-@property (nonatomic, strong) ZFModalTransitionAnimator *animator;
-
 @end
 
 @implementation FBViewController

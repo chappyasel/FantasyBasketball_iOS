@@ -83,7 +83,7 @@
         <!--Watch List View Controller-->
         <scene sceneID="uRY-Jx-mF0">
             <objects>
-                <viewController id="2Zr-Kz-vFH" customClass="WatchListViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="wl" id="2Zr-Kz-vFH" customClass="WatchListViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="lCF-7U-APa"/>
                         <viewControllerLayoutGuide type="bottom" id="Wh5-Im-W8q"/>
@@ -111,7 +111,7 @@
         <!--Scoreboard View Controller-->
         <scene sceneID="AZt-nZ-IZT">
             <objects>
-                <viewController id="yey-Az-PfK" customClass="ScoreboardViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="sc" id="yey-Az-PfK" customClass="ScoreboardViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fUM-1S-nAW"/>
                         <viewControllerLayoutGuide type="bottom" id="pma-L2-pNI"/>
@@ -139,7 +139,7 @@
         <!--Standings View Controller-->
         <scene sceneID="WbO-hg-vRr">
             <objects>
-                <viewController id="CoK-jl-rFL" customClass="StandingsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="st" id="CoK-jl-rFL" customClass="StandingsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="SQ4-nT-NM7"/>
                         <viewControllerLayoutGuide type="bottom" id="w5h-ad-Egi"/>
@@ -686,7 +686,7 @@
         <!--News View Controller-->
         <scene sceneID="2fZ-0l-zXg">
             <objects>
-                <viewController id="mJD-Xl-ZOh" customClass="NewsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="n" id="mJD-Xl-ZOh" customClass="NewsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5OO-kE-Qpz"/>
                         <viewControllerLayoutGuide type="bottom" id="0EU-Ou-VD5"/>
@@ -695,23 +695,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Team, Watch list, Fantasy news" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rty-Oq-Q2X">
-                                <rect key="frame" x="88" y="357" width="239" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Transactions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4fP-KU-IsF">
-                                <rect key="frame" x="158" y="386" width="99" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="88h-Fh-WvW">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="88h-Fh-WvW" firstAttribute="width" secondItem="99M-Sd-daa" secondAttribute="width" id="7LU-9z-L83"/>
+                            <constraint firstItem="88h-Fh-WvW" firstAttribute="height" secondItem="99M-Sd-daa" secondAttribute="height" id="lJZ-af-sAS"/>
+                            <constraint firstItem="88h-Fh-WvW" firstAttribute="centerX" secondItem="99M-Sd-daa" secondAttribute="centerX" id="mUs-5n-JZr"/>
+                            <constraint firstItem="88h-Fh-WvW" firstAttribute="centerY" secondItem="99M-Sd-daa" secondAttribute="centerY" id="y0l-eU-zEz"/>
+                        </constraints>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+                    <connections>
+                        <outlet property="tableView" destination="88h-Fh-WvW" id="lSF-vQ-cKd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LDM-kI-76B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -324,7 +324,7 @@
 };
 
 - (void)linkGameLinkPressed:(UIButton *)sender {
-    if (sender.tag == 0) [self.delegate linkWithGameLink:self.leftPlayer];
+    if (sender.tag == 0) [self.delegate linkWithGameLink:self.leftPlayer.gameLink];
     if (sender.tag == 1) [self.delegate linkWithGameLink:self.rightPlayer];
 }
 

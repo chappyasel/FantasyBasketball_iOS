@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FBViewController.h"
 
-@interface WatchListViewController : UIViewController
+@interface WatchListViewController : FBViewController
 
 @end

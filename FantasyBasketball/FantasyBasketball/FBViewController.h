@@ -20,6 +20,8 @@
 
 @interface FBViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, FBPickerViewDelegate, PlayerCellDelegate>
 
+@property (nonatomic, strong) ZFModalTransitionAnimator *animator;
+
 @property (strong, nonatomic) FBSession *session;
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;

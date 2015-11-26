@@ -25,7 +25,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView = ({
-        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, (self.view.frame.size.height-(54*5+200))/2.0, self.view.frame.size.width, 54*5+200) style:UITableViewStylePlain];
+        int height = 45*10 + 200;
+        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, (self.view.frame.size.height-height)/2.0, self.view.frame.size.width, height) style:UITableViewStylePlain];
         tableView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
         tableView.delegate = self;
         tableView.dataSource = self;
@@ -63,10 +64,22 @@
         vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"mt"];
     }
     else if (i == 4) {
-        vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"pl"];
+        vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"n"];
     }
     else if (i == 5) {
+        vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"wl"];
+    }
+    else if (i == 6) {
+        vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"pl"];
+    }
+    else if (i == 7) {
         vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"dl"];
+    }
+    else if (i == 8) {
+        vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"sc"];
+    }
+    else if (i == 9) {
+        vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"st"];
     }
     else return;
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:vc];
@@ -83,7 +96,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) return 200;
-    return 54;
+    return 45;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -91,7 +104,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectionIndex {
-    return 6;
+    return 10;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -104,8 +117,8 @@
         cell.textLabel.textColor = [UIColor whiteColor];
         cell.textLabel.highlightedTextColor = [UIColor lightGrayColor];
         cell.selectedBackgroundView = [[UIView alloc] init];
-        NSArray *titles = @[@"", @"Settings", @"Matchup", @"My Team", @"Players", @"Daily Leaders"];
-        NSArray *images = @[@"", @"SE@2x.png", @"MA@2x.png", @"MY@2x.png", @"PL@2x.png", @"DL@2x.png"];
+        NSArray *titles = @[@"", @"Settings", @"Matchup", @"My Team", @"News", @"Watch List", @"Players", @"Daily Leaders", @"Scoreboard", @"Standings"];
+        NSArray *images = @[@"", @"SE@2x.png", @"MA@2x.png", @"MY@2x.png", @"NE@2x.png", @"WL@2x.png", @"PL@2x.png", @"DL@2x.png", @"SC@2x.png", @"ST@2x.png"];
         cell.textLabel.text = titles[indexPath.row];
         cell.imageView.image = [UIImage imageNamed:images[indexPath.row]];
         if (indexPath.row == 0) {
