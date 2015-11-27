@@ -120,17 +120,54 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="NBA + League scoreboard" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I5Z-V2-mlh">
-                                <rect key="frame" x="107" y="357" width="201" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yON-hK-bnf">
+                                <rect key="frame" x="0.0" y="64" width="414" height="44"/>
+                                <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="rP2-z9-L5u">
+                                        <rect key="frame" x="67" y="8" width="280" height="29"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="280" id="8YL-EU-v0e"/>
+                                            <constraint firstAttribute="height" constant="28" id="JiK-o1-FZP"/>
+                                        </constraints>
+                                        <segments>
+                                            <segment title="League Scoreboard"/>
+                                            <segment title="NBA Scoreboard"/>
+                                        </segments>
+                                        <color key="tintColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        <connections>
+                                            <action selector="scoreboardModeChanged:" destination="yey-Az-PfK" eventType="valueChanged" id="XQp-ZH-yWq"/>
+                                        </connections>
+                                    </segmentedControl>
+                                </subviews>
+                                <color key="backgroundColor" red="0.87058823529411766" green="0.43529411764705883" blue="0.12549019607843137" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="ND4-JJ-EgQ"/>
+                                    <constraint firstItem="rP2-z9-L5u" firstAttribute="centerX" secondItem="yON-hK-bnf" secondAttribute="centerX" id="j4Y-Hh-L9h"/>
+                                    <constraint firstItem="rP2-z9-L5u" firstAttribute="centerY" secondItem="yON-hK-bnf" secondAttribute="centerY" id="jYe-aE-Yin"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vTG-iw-RAQ">
+                                <rect key="frame" x="0.0" y="108" width="414" height="628"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="vTG-iw-RAQ" firstAttribute="width" secondItem="MmS-8s-K3N" secondAttribute="width" id="5t0-fd-nr7"/>
+                            <constraint firstItem="yON-hK-bnf" firstAttribute="centerX" secondItem="MmS-8s-K3N" secondAttribute="centerX" id="81B-ot-sfu"/>
+                            <constraint firstItem="vTG-iw-RAQ" firstAttribute="centerX" secondItem="MmS-8s-K3N" secondAttribute="centerX" id="Ied-mA-cxD"/>
+                            <constraint firstItem="yON-hK-bnf" firstAttribute="width" secondItem="MmS-8s-K3N" secondAttribute="width" id="PTW-vk-RAY"/>
+                            <constraint firstItem="pma-L2-pNI" firstAttribute="top" secondItem="vTG-iw-RAQ" secondAttribute="bottom" id="lZY-KU-AGs"/>
+                            <constraint firstItem="vTG-iw-RAQ" firstAttribute="top" secondItem="yON-hK-bnf" secondAttribute="bottom" id="peL-7K-ehQ"/>
+                            <constraint firstItem="yON-hK-bnf" firstAttribute="top" secondItem="fUM-1S-nAW" secondAttribute="bottom" id="u8x-Fw-xgL"/>
+                        </constraints>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+                    <connections>
+                        <outlet property="segmentedControl" destination="rP2-z9-L5u" id="Wmg-1t-g1U"/>
+                        <outlet property="tableView" destination="vTG-iw-RAQ" id="ptz-16-KVK"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="91r-Ih-xXy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

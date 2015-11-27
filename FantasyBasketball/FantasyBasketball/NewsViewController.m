@@ -31,6 +31,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"News";
+    self.tableView.backgroundColor = [UIColor whiteColor];
+    self.tableView.showsVerticalScrollIndicator = YES;
     self.imageOperationQueue = [[NSOperationQueue alloc]init];
     self.imageOperationQueue.maxConcurrentOperationCount = 4;
     self.imageCache = [[NSCache alloc] init];

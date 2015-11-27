@@ -11,4 +11,6 @@
 
 @interface ScoreboardViewController : FBViewController
 
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
+
 @end
