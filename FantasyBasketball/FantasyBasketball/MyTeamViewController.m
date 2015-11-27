@@ -30,17 +30,25 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self loadTableView];
+    [self setupTableView];
     [self loadPickerViewData];
-    [self loadplayers];
-    if (!self.globalLink) self.title = @"My Team";
-    else {
-        NSString *XpathQueryString = @"//h3[@class='team-name']";
-        NSArray *nodes = [self.parser searchWithXPathQuery:XpathQueryString];
-        NSString *teamName = [[nodes firstObject] content];
-        if (teamName) self.title = teamName;
-        else self.title = @"Team";
-    }
+    [self beginAsyncLoading];
+}
+
+- (void)beginAsyncLoading {
+    dispatch_queue_t myQueue = dispatch_queue_create("My Queue",NULL);
+    dispatch_async(myQueue, ^{
+        [self loadplayersWithCompletionBlock:^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.tableView reloadData];
+            });
+        }];
+        [self loadTitleWithCompletionBlock:^(NSString *title) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.title = title;
+            });
+        }];
+    });
 }
 
 - (void)initWithTeamLink: (NSString *) link {
@@ -57,11 +65,22 @@
     }];
 }
 
-- (void)loadTableView {
+- (void)setupTableView {
     self.scrollViews = [[NSMutableArray alloc] init];
 }
 
-- (void)loadplayers {
+- (void)loadTitleWithCompletionBlock:(void (^)(NSString *title)) completed {
+    if (!self.globalLink) completed(@"My Team");
+    else {
+        NSString *XpathQueryString = @"//h3[@class='team-name']";
+        NSArray *nodes = [self.parser searchWithXPathQuery:XpathQueryString];
+        NSString *teamName = [[nodes firstObject] content];
+        if (teamName) completed(teamName);
+        else completed(@"Team");
+    }
+}
+
+- (void)loadplayersWithCompletionBlock:(void (^)(void)) completed {
     _numStarters = 0;
     NSString *link = self.globalLink;
     if (link == nil) link = [NSString stringWithFormat:@"http://games.espn.go.com/fba/clubhouse?leagueId=%@&teamId=%@&seasonId=%@",self.session.leagueID,self.session.teamID,self.session.seasonID];
@@ -110,7 +129,7 @@
         }
     }
     for (FBPlayer *player in _players) if(player.isStarting) _numStarters ++;
-    [self.tableView reloadData];
+    completed();
 }
 
 #pragma mark - Table View
@@ -122,7 +141,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) return _numStarters;
-    if (section == 1) return 13-_numStarters;
+    if (section == 1) return self.players.count-_numStarters;
     return 0;
 }
 
@@ -311,7 +330,7 @@
     else if (data2 == 4) _scoringPeriod = @"currSeason";
     else if (data2 == 5) _scoringPeriod = @"lastSeason";
     else _scoringPeriod = @"projections";
-    [self loadplayers];
+    [self beginAsyncLoading];
     [self fadeOutWithPickerView:pickerView];
 }
 

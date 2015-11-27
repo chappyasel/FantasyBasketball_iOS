@@ -55,8 +55,21 @@
     _searchText = @"null";
     [self loadPickerViewData];
     self.scrollViews = [[NSMutableArray alloc] init];
-    [self loadplayers];
+    [self beginAsyncLoading];
 }
+
+- (void)beginAsyncLoading {
+    dispatch_queue_t myQueue = dispatch_queue_create("My Queue",NULL);
+    dispatch_async(myQueue, ^{
+        [self loadplayersWithCompletionBlock:^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.tableView reloadData];
+                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+            });
+        }];
+    });
+}
+
 
 - (void)loadSearchBar {
     UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 414, 44)];
@@ -68,7 +81,6 @@
     searchBar.backgroundColor = [UIColor FBMediumOrangeColor];
     searchBar.tintColor = [UIColor whiteColor];
     self.tableView.tableHeaderView = searchBar;
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
 }
 
 - (void)loadTableView {
@@ -79,7 +91,7 @@
     [self loadTableView];
 }
 
-- (void)loadplayers {
+- (void)loadplayersWithCompletionBlock:(void (^)(void)) completed {
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/freeagency?leagueId=%@&seasonId=%@&context=freeagency&view=stats&version=%@&avail=%d&sortMap=%@&slotCategoryGroup=%@&search=%@&proTeamId=%d",self.session.leagueID,self.session.seasonID,_scoringPeriod,_availability,_sort,@"null",_searchText,_team]];
     NSData *html = [NSData dataWithContentsOfURL:url];
     self.parser = [TFHpple hppleWithHTMLData:html];
@@ -116,6 +128,7 @@
             [self.players addObject:[[FBPlayer alloc] initWithDictionary:dict]];
         }
     }
+    completed();
 }
 
 #pragma mark - Table View
@@ -194,7 +207,7 @@
 - (void)updateSort: (UIButton *)sender {
     _sort = _sortChoices[sender.tag];
     _sortIndex = (int)sender.tag;
-    [self loadplayers];
+    [self beginAsyncLoading];
     self.scrollViews = [[NSMutableArray alloc] init];
     [self.tableView reloadData];
 }
@@ -229,7 +242,7 @@
     _availability = 1;
     _sortIndex = 3;
     _sort = _sortChoices[3];
-    [self loadplayers];
+    [self beginAsyncLoading];
     [self.tableView reloadData];
 }
 
@@ -241,7 +254,7 @@
     _availability = -1;
     _sortIndex = 0;
     _sort = _sortChoices[0];
-    [self loadplayers];
+    [self beginAsyncLoading];
     [self.tableView reloadData];
 }
 
@@ -306,7 +319,7 @@
     else _scoringPeriod = @"projections";
     int indexs[32] = {-1, 0, 1, 17, 2, 30, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 29, 14, 15, 16, 3, 18, 25, 19, 20, 21, 22, 24, 23, 28, 26, 27};
     _team = indexs[data3];
-    [self loadplayers];
+    [self beginAsyncLoading];
     [self.tableView reloadData];
     [self fadeOutWithPickerView:pickerView];
 }

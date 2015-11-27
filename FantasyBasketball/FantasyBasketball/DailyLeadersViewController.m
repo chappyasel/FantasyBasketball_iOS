@@ -31,7 +31,18 @@
     self.title = @"Daily Leaders";
     self.scrollViews = [[NSMutableArray alloc] init];
     [self loadPickerViewData];
-    [self loadplayers];
+    [self beginAsyncLoading];
+}
+
+- (void)beginAsyncLoading {
+    dispatch_queue_t myQueue = dispatch_queue_create("My Queue",NULL);
+    dispatch_async(myQueue, ^{
+        [self loadplayersWithCompletionBlock:^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.tableView reloadData];
+            });
+        }];
+    });
 }
 
 - (void)loadTableView {
@@ -78,12 +89,12 @@ NSTimer *updateTimer;
 }
 
 - (IBAction)refreshButtonPressed:(UIButton *)sender {
-    [self loadplayers];
+    [self beginAsyncLoading];
     self.scrollViews = [[NSMutableArray alloc] init];
     [self.tableView reloadData];
 }
 
-- (void)loadplayers {
+- (void)loadplayersWithCompletionBlock:(void (^)(void)) completed {
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/leaders?leagueId=%@&teamId=%@&scoringPeriodId=%d&startIndex=0&proTeamId=%d",self.session.leagueID,self.session.teamID,_scoringDay,_team]];
     NSData *html = [NSData dataWithContentsOfURL:url];
     self.parser = [TFHpple hppleWithHTMLData:html];
@@ -118,6 +129,7 @@ NSTimer *updateTimer;
             [self.players addObject:[[FBPlayer alloc] initWithDictionary:dict]];
         }
     }
+    completed();
 }
 
 #pragma mark - Table View
@@ -252,7 +264,7 @@ NSTimer *updateTimer;
         [self.autorefreshSwitch setOn:NO];
         [self autorefreshStateChanged:self.autorefreshSwitch];
     }
-    [self loadplayers];
+    [self beginAsyncLoading];
     [self.tableView reloadData];
     [self fadeOutWithPickerView:pickerView];
 }

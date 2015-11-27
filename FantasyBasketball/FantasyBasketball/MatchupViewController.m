@@ -15,9 +15,9 @@
 @property TFHpple *parser;
 @property bool handleError;
 
-@property NSMutableArray *playersTeam1;
+@property (strong, nonatomic) NSMutableArray *playersTeam1;
 @property int numStartersTeam1;
-@property NSMutableArray *playersTeam2;
+@property (strong, nonatomic) NSMutableArray *playersTeam2;
 @property int numStartersTeam2;
 
 @property NSArray *scoresTeam1;
@@ -40,11 +40,23 @@
     self.title = @"Matchup";
     _handleError = NO;
     self.cells = [[NSMutableArray alloc] init];
+    [self setupTableView];
+    [self setupBarCharts];
     [self loadPickerViewData];
-    [self loadPlayersMU];
-    if (_handleError) return;
-    [self loadTableView];
-    [self loadBarCharts];
+    [self beginAsyncLoading];
+}
+
+- (void)beginAsyncLoading {
+    dispatch_queue_t myQueue = dispatch_queue_create("My Queue",NULL);
+    dispatch_async(myQueue, ^{
+        [self loadPlayersWithCompletionBlock:^(NSString *firstTeamName) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (_handleError) return;
+                [self loadScoresWithFirstTeamName:firstTeamName];
+                [self.tableView reloadData];
+            });
+        }];
+    });
 }
 
 - (void)initWithMatchupLink: (NSString *) link {
@@ -61,122 +73,7 @@
     }];
 }
 
-- (void)refreshScoresWithFirstTeamName: (NSString *)firstName {
-    if (_handleError) return;
-    NSString *XpathQueryString = @"//tr[@class='tableBody']";
-    NSArray <TFHppleElement *> *nodes = [self.parser searchWithXPathQuery:XpathQueryString];
-    NSString *team1Name = nodes[0].firstChild.content;
-    NSString *team2Name = nodes[1].firstChild.content;
-    int t1;
-    int t2;
-    if ([team1Name containsString:firstName]) {
-        self.team1Display2.text = team1Name;
-        self.team2Display2.text = team2Name;
-        t1 = 0;
-        t2 = 1;
-    }
-    else {
-        self.team1Display2.text = team2Name;
-        self.team2Display2.text = team1Name;
-        t1 = 1;
-        t2 = 0;
-    }
-    self.team1Display1.text = ((TFHppleElement *)nodes[t1].children[10]).content;
-    self.team2Display1.text = ((TFHppleElement *)nodes[t2].children[10]).content;
-    self.scoresTeam1 = @[    @"200", //acts as setter for height
-                             ((TFHppleElement *)nodes[t1].children[2]).content,
-                             ((TFHppleElement *)nodes[t1].children[3]).content,
-                             ((TFHppleElement *)nodes[t1].children[4]).content,
-                             ((TFHppleElement *)nodes[t1].children[5]).content,
-                             ((TFHppleElement *)nodes[t1].children[6]).content,
-                             ((TFHppleElement *)nodes[t1].children[7]).content,
-                             ((TFHppleElement *)nodes[t1].children[8]).content];
-    
-    self.scoresTeam2 = @[    ((TFHppleElement *)nodes[t2].children[8]).content,
-                             ((TFHppleElement *)nodes[t2].children[7]).content,
-                             ((TFHppleElement *)nodes[t2].children[6]).content,
-                             ((TFHppleElement *)nodes[t2].children[5]).content,
-                             ((TFHppleElement *)nodes[t2].children[4]).content,
-                             ((TFHppleElement *)nodes[t2].children[3]).content,
-                             ((TFHppleElement *)nodes[t2].children[2]).content,
-                             @"200"];
-    [self.barChartTeam1 reloadData];
-    [self.barChartTeam2 reloadData];
-}
-
-- (void)loadBarCharts {
-    float width = self.scoreView.frame.size.width/2-15;
-    self.barChartTeam1 = [[JBBarChartView alloc] init];
-    self.barChartTeam1.frame = CGRectMake(-width/8, 0, width, 104);
-    self.barChartTeam1.dataSource = self;
-    self.barChartTeam1.delegate = self;
-    self.barChartTeam1.inverted = YES;
-    self.barChartTeam1.alpha = 0.5;
-    self.barChartTeam1.userInteractionEnabled = NO;
-    [self.scoreView addSubview:self.barChartTeam1];
-    [self.scoreView sendSubviewToBack:self.barChartTeam1];
-    [self.barChartTeam1 reloadData];
-    
-    self.barChartTeam2 = [[JBBarChartView alloc] init];
-    self.barChartTeam2.frame = CGRectMake(width+2*15+width/8, 0, width, 104);
-    self.barChartTeam2.dataSource = self;
-    self.barChartTeam2.delegate = self;
-    self.barChartTeam2.inverted = YES;
-    self.barChartTeam2.alpha = 0.5;
-    self.barChartTeam2.userInteractionEnabled = NO;
-    [self.scoreView addSubview:self.barChartTeam2];
-    [self.scoreView sendSubviewToBack:self.barChartTeam2];
-    [self.barChartTeam2 reloadData];
-}
-
-- (void)loadTableView {
-    self.tableView.separatorInset = UIEdgeInsetsMake(15, 0, 0, 15);
-    self.tableView.contentOffset = CGPointMake(0, 0);
-    [self loadTableHeaderView];
-}
-
-- (void)loadTableHeaderView {
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 414, 40)];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, 125, 30)];
-    label.text = @"AUTO-REFRESH:";
-    label.textColor = [UIColor whiteColor];
-    label.font = [UIFont boldSystemFontOfSize:14];
-    label.textAlignment = NSTextAlignmentRight;
-    self.autorefreshSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(130, 4.5, 51, 31)];
-    self.autorefreshSwitch.onTintColor = [UIColor whiteColor];
-    self.autorefreshSwitch.tintColor = [UIColor whiteColor];
-    [self.autorefreshSwitch addTarget:self action:@selector(autorefreshStateChanged:) forControlEvents:UIControlEventValueChanged];
-    updateTimer = [[NSTimer alloc] initWithFireDate:[NSDate date] interval:2 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
-    [headerView addSubview:label];
-    [headerView addSubview:self.autorefreshSwitch];
-    self.tableView.tableHeaderView = headerView;
-    [self.tableView setContentOffset:CGPointMake(0,40)];
-}
-
-- (void)autorefreshStateChanged:(UISwitch *)sender{
-    if (_handleError) return;
-    if (sender.isOn) {
-        updateTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
-        [self timerFired:nil];
-    }
-    else {
-        [updateTimer invalidate];
-        updateTimer = nil;
-    }
-}
-
-NSTimer *updateTimer;
-
-- (void)timerFired:(NSTimer *)timer {
-    [self refreshButtonPressed:nil];
-}
-
-- (IBAction)refreshButtonPressed:(UIButton *)sender {
-    [self loadPlayersMU];
-    [self.tableView reloadData];
-}
-
-- (void)loadPlayersMU {
+- (void)loadPlayersWithCompletionBlock:(void (^)(NSString *firstTeamName)) completed {
     _numStartersTeam1 = 0, _numStartersTeam2 = 0;
     NSString *link = self.globalLink;
     if (link == nil) link = [NSString stringWithFormat:@"http://games.espn.go.com/fba/boxscorefull?leagueId=%@&teamId=%@&seasonId=%@",self.session.leagueID,self.session.teamID,self.session.seasonID];
@@ -238,7 +135,120 @@ NSTimer *updateTimer;
     }
     for (FBPlayer *player in self.playersTeam1) if(player.isStarting) _numStartersTeam1 ++;
     for (FBPlayer *player in self.playersTeam2) if(player.isStarting) _numStartersTeam2 ++;
-    [self refreshScoresWithFirstTeamName: firstTeamName];
+    completed(firstTeamName);
+}
+
+- (void)loadScoresWithFirstTeamName: (NSString *)firstName {
+    if (_handleError) return;
+    NSString *XpathQueryString = @"//tr[@class='tableBody']";
+    NSArray <TFHppleElement *> *nodes = [self.parser searchWithXPathQuery:XpathQueryString];
+    NSString *team1Name = nodes[0].firstChild.content;
+    NSString *team2Name = nodes[1].firstChild.content;
+    int t1;
+    int t2;
+    if ([team1Name containsString:firstName]) {
+        self.team1Display2.text = team1Name;
+        self.team2Display2.text = team2Name;
+        t1 = 0;
+        t2 = 1;
+    }
+    else {
+        self.team1Display2.text = team2Name;
+        self.team2Display2.text = team1Name;
+        t1 = 1;
+        t2 = 0;
+    }
+    self.team1Display1.text = ((TFHppleElement *)nodes[t1].children[10]).content;
+    self.team2Display1.text = ((TFHppleElement *)nodes[t2].children[10]).content;
+    self.scoresTeam1 = @[    @"200", //acts as setter for height
+                             ((TFHppleElement *)nodes[t1].children[2]).content,
+                             ((TFHppleElement *)nodes[t1].children[3]).content,
+                             ((TFHppleElement *)nodes[t1].children[4]).content,
+                             ((TFHppleElement *)nodes[t1].children[5]).content,
+                             ((TFHppleElement *)nodes[t1].children[6]).content,
+                             ((TFHppleElement *)nodes[t1].children[7]).content,
+                             ((TFHppleElement *)nodes[t1].children[8]).content];
+    
+    self.scoresTeam2 = @[    ((TFHppleElement *)nodes[t2].children[8]).content,
+                             ((TFHppleElement *)nodes[t2].children[7]).content,
+                             ((TFHppleElement *)nodes[t2].children[6]).content,
+                             ((TFHppleElement *)nodes[t2].children[5]).content,
+                             ((TFHppleElement *)nodes[t2].children[4]).content,
+                             ((TFHppleElement *)nodes[t2].children[3]).content,
+                             ((TFHppleElement *)nodes[t2].children[2]).content,
+                             @"200"];
+    [self.barChartTeam1 reloadData];
+    [self.barChartTeam2 reloadData];
+}
+
+- (void)setupBarCharts {
+    float width = self.scoreView.frame.size.width/2-15;
+    self.barChartTeam1 = [[JBBarChartView alloc] init];
+    self.barChartTeam1.frame = CGRectMake(-width/8, 0, width, 104);
+    self.barChartTeam1.dataSource = self;
+    self.barChartTeam1.delegate = self;
+    self.barChartTeam1.inverted = YES;
+    self.barChartTeam1.alpha = 0.5;
+    self.barChartTeam1.userInteractionEnabled = NO;
+    [self.scoreView addSubview:self.barChartTeam1];
+    [self.scoreView sendSubviewToBack:self.barChartTeam1];
+    
+    self.barChartTeam2 = [[JBBarChartView alloc] init];
+    self.barChartTeam2.frame = CGRectMake(width+2*15+width/8, 0, width, 104);
+    self.barChartTeam2.dataSource = self;
+    self.barChartTeam2.delegate = self;
+    self.barChartTeam2.inverted = YES;
+    self.barChartTeam2.alpha = 0.5;
+    self.barChartTeam2.userInteractionEnabled = NO;
+    [self.scoreView addSubview:self.barChartTeam2];
+    [self.scoreView sendSubviewToBack:self.barChartTeam2];
+}
+
+- (void)setupTableView {
+    self.tableView.separatorInset = UIEdgeInsetsMake(15, 0, 0, 15);
+    self.tableView.contentOffset = CGPointMake(0, 0);
+    [self setupTableHeaderView];
+}
+
+- (void)setupTableHeaderView {
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 414, 40)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, 125, 30)];
+    label.text = @"AUTO-REFRESH:";
+    label.textColor = [UIColor whiteColor];
+    label.font = [UIFont boldSystemFontOfSize:14];
+    label.textAlignment = NSTextAlignmentRight;
+    self.autorefreshSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(130, 4.5, 51, 31)];
+    self.autorefreshSwitch.onTintColor = [UIColor whiteColor];
+    self.autorefreshSwitch.tintColor = [UIColor whiteColor];
+    [self.autorefreshSwitch addTarget:self action:@selector(autorefreshStateChanged:) forControlEvents:UIControlEventValueChanged];
+    updateTimer = [[NSTimer alloc] initWithFireDate:[NSDate date] interval:2 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
+    [headerView addSubview:label];
+    [headerView addSubview:self.autorefreshSwitch];
+    self.tableView.tableHeaderView = headerView;
+    [self.tableView setContentOffset:CGPointMake(0,40)];
+}
+
+- (void)autorefreshStateChanged:(UISwitch *)sender{
+    if (_handleError) return;
+    if (sender.isOn) {
+        updateTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
+        [self timerFired:nil];
+    }
+    else {
+        [updateTimer invalidate];
+        updateTimer = nil;
+    }
+}
+
+NSTimer *updateTimer;
+
+- (void)timerFired:(NSTimer *)timer {
+    [self refreshButtonPressed:nil];
+}
+
+- (IBAction)refreshButtonPressed:(UIButton *)sender {
+    [self beginAsyncLoading];
+    [self.tableView reloadData];
 }
 
 #pragma mark - bar charts delegate
@@ -260,7 +270,8 @@ NSTimer *updateTimer;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (_handleError) return 0;
-    return 10;
+    if (self.playersTeam1) return 10;
+    return 0;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
@@ -373,7 +384,7 @@ NSTimer *updateTimer;
         [self.autorefreshSwitch setOn:NO];
         [self autorefreshStateChanged:self.autorefreshSwitch];
     }
-    [self loadPlayersMU];
+    [self beginAsyncLoading];
     [self.tableView reloadData];
     [self fadeOutWithPickerView:pickerView];
 }
@@ -387,7 +398,7 @@ NSTimer *updateTimer;
     [self.tableView reloadData];
     [self.barChartTeam1 removeFromSuperview];
     [self.barChartTeam2 removeFromSuperview];
-    [self performSelector:@selector(loadBarCharts) withObject:nil afterDelay:.2];
+    [self performSelector:@selector(setupBarCharts) withObject:nil afterDelay:.2];
 }
 
 @end
