@@ -43,23 +43,12 @@
     if (self = [super init]) {
         if (![dict[@"isStarting"] isEqual:@"Bench"]) _isStarting = YES;
         else _isStarting = NO;
-        NSArray *name = [dict[@"firstName+lastName"] componentsSeparatedByString:@" "];
-        _firstName = name[0];
-        if ([_firstName isEqualToString:@"Luc"]) { //special case: Luc Richard Mbah a Moute
-            _firstName = @"Luc Richard";
-            _lastName = @"Mbah a Moute";
-        }
-        else { //normal case
-            _lastName = name[1];
-            for (int i = 2; i < name.count; i++) _lastName = [NSString stringWithFormat:@"%@ %@",_lastName,name[i]];
-        }
-        NSMutableArray <NSString *> *arr = [[NSMutableArray alloc] initWithArray:[dict[@"team+position"] componentsSeparatedByCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-        for (int i = 0; i < arr.count; i++) arr[i] = [arr[i] stringByReplacingOccurrencesOfString:@"," withString:@""];
-        _team = arr[1];
-        _position = arr[2];
-        for (int i = 3; i < (int)arr.count; i++) {
-            if (![arr[i] isEqualToString:@""]) _position = [NSString stringWithFormat:@"%@, %@",_position,arr[i]];
-        }
+        NSDictionary *name = [FBPlayer separateFirstAndLastNameForString:dict[@"firstName+lastName"]];
+        _firstName = name[@"first"];
+        _lastName = name[@"last"];
+        NSDictionary *teamPos = [FBPlayer separateTeamAndPositionForString:dict[@"team+position"]];
+        _team = teamPos[@"team"];
+        _position = teamPos[@"position"];
         _injury = dict[@"injury"];
         _type = dict[@"type"];
         if ([_type containsString:@"WA ("]) _type = [NSString stringWithFormat:@"WA-%@",[_type substringWithRange:NSMakeRange(4, 2)]];
@@ -115,6 +104,30 @@
         _playerID = [dict[@"playerID"] floatValue];
     }
     return self;
+}
+
++ (NSDictionary *)separateFirstAndLastNameForString: (NSString *) string { //@"first", @"last"
+    NSArray *name = [string componentsSeparatedByString:@" "];
+    NSString *firstName = name[0];
+    NSString *lastName = name[1];
+    if ([firstName isEqualToString:@"Luc"]) { //special case: Luc Richard Mbah a Moute
+        firstName = @"Luc Richard";
+        lastName = @"Mbah a Moute";
+    }
+    else for (int i = 2; i < name.count; i++) lastName = [NSString stringWithFormat:@"%@ %@",lastName,name[i]]; //normal case
+    return [[NSDictionary alloc] initWithObjects:@[firstName, lastName] forKeys:@[@"first", @"last"]];
+}
+
++ (NSDictionary *)separateTeamAndPositionForString: (NSString *) string { //@"team", @"position"
+    NSMutableArray <NSString *> *arr = [[NSMutableArray alloc] initWithArray:
+        [string componentsSeparatedByCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+    for (int i = 0; i < arr.count; i++) arr[i] = [arr[i] stringByReplacingOccurrencesOfString:@"," withString:@""];
+    NSString *team = arr[1];
+    NSString *position = arr[2];
+    for (int i = 3; i < (int)arr.count; i++)
+        if (![arr[i] isEqualToString:@""])
+            position = [NSString stringWithFormat:@"%@, %@",position,arr[i]];
+    return [[NSDictionary alloc] initWithObjects:@[team, position] forKeys:@[@"team", @"position"]];
 }
 
 @end

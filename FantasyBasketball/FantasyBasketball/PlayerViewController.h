@@ -13,7 +13,8 @@
 
 @interface PlayerViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
-@property FBPlayer *player;
+@property NSString *playerFirstName;
+@property NSString *playerLastName;
 
 //header
 

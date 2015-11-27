@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FBViewController.h"
 
-@interface ScoreboardViewController : UIViewController
+@interface ScoreboardViewController : FBViewController
 
 @end

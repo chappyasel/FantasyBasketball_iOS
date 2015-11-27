@@ -72,7 +72,8 @@
 - (void)linkWithPlayer:(FBPlayer *)player {
     PlayerViewController *modalVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"p"];
     modalVC.modalPresentationStyle = UIModalPresentationCustom;
-    modalVC.player = player;
+    modalVC.playerFirstName = player.firstName;
+    modalVC.playerLastName = player.lastName;
     self.animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:modalVC];
     self.animator.dragable = YES;
     self.animator.bounces = YES;

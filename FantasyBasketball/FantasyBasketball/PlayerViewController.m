@@ -27,6 +27,9 @@
 @property NSMutableArray *scrollViews;
 @property float globalScrollDistance;
 
+@property NSString *playerInjury;
+@property NSString *playerTeam;
+
 @property NSMutableArray *ranks; // @[type, prk15, prk2016, prk, adp, own, +/-]
 @property NSMutableArray *info;
 @property NSMutableArray *games;
@@ -80,6 +83,8 @@
             [self loadPlayerRanksWithCompletionBlock:^{
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self setupPlayerRanksView];
+                    [self setupPlayerInjury];
+                    [self setupPlayerTeamImage];
                 });
             }];
             [self loadInfoWithCompletionBlock:^{
@@ -114,7 +119,7 @@
 #pragma mark - data loading
 
 - (void)loadParserWebpageWithCompletionBlock:(void (^)(void)) completed {
-    NSString *url = [NSString stringWithFormat:@"http://espn.go.com/nba/players/_/search/%@",[self.player.lastName stringByReplacingOccurrencesOfString:@" " withString:@"_"]];
+    NSString *url = [NSString stringWithFormat:@"http://espn.go.com/nba/players/_/search/%@",[self.playerLastName stringByReplacingOccurrencesOfString:@" " withString:@"_"]];
     NSData *html = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
     self.parser = [TFHpple hppleWithHTMLData:html];
     bool playerFound = NO;
@@ -123,7 +128,7 @@
         for (TFHppleElement *p in [self.parser searchWithXPathQuery:@"//table[@class='tablehead']/tr"]) {
             if (![[p objectForKey:@"class"] isEqual:@"stathead"] && ![[p objectForKey:@"class"] isEqual:@"colhead"]) {
                 NSArray *name = [p.firstChild.firstChild.content componentsSeparatedByString:@", "];
-                if ([name[1] containsString:self.player.firstName]) { //player found
+                if ([name[1] containsString:self.playerFirstName]) { //player found
                     self.parser = [TFHpple hppleWithHTMLData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[p.firstChild.firstChild objectForKey:@"href"]]]];
                     NSLog(@"Found player");
                     playerFound = YES;
@@ -148,9 +153,9 @@
     completed();
 }
 
-- (void)loadPlayerRanksWithCompletionBlock:(void (^)(void)) completed {
+- (void)loadPlayerRanksWithCompletionBlock:(void (^)(void)) completed { //also includes injury, team
     FBSession *session = [FBSession fetchCurrentSession];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/freeagency?leagueId=%@&seasonId=%@&context=freeagency&version=%@&avail=-1&search=%@&view=research",session.leagueID,session.seasonID,@"null",self.player.lastName]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/freeagency?leagueId=%@&seasonId=%@&context=freeagency&version=%@&avail=-1&search=%@&view=research",session.leagueID,session.seasonID,@"null",self.playerLastName]];
     NSData *html = [NSData dataWithContentsOfURL:url];
     TFHpple *parserR = [TFHpple hppleWithHTMLData:html];
     NSString *XpathQueryString = @"//table[@class='playerTableTable tableBody']/tr";
@@ -160,7 +165,11 @@
         TFHppleElement *element = nodes[i];
         if ([element objectForKey:@"id"]) {
             NSArray <TFHppleElement *> *children = element.children;
-            if ([children[0].content containsString:self.player.firstName]) {
+            if ([children[0].content containsString:self.playerFirstName]) {
+                if (children[1].children.count > 2 && ![((TFHppleElement *)children[1].children[2]).tagName isEqualToString:@"a"]) //injury
+                    self.playerInjury = [children[1].children[2] content];
+                NSString *teamPos = [children[0].children[1] content];
+                self.playerTeam = [FBPlayer separateTeamAndPositionForString:teamPos][@"team"];
                 [self.ranks addObject:children[2].content];
                 [self.ranks addObject:children[9].content];
                 [self.ranks addObject:children[11].content];
@@ -207,7 +216,7 @@
 
 - (void)loadRotoworldWithCompletionBlock:(void (^)(void)) completed {
     self.rotoworld = [[NSMutableArray alloc] init];
-    TFHpple *statParser = [[TFHpple alloc] initWithHTMLData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.rotoworld.com/content/playersearch.aspx?searchname=%@,%@&sport=nba",self.player.lastName,self.player.firstName]]]];
+    TFHpple *statParser = [[TFHpple alloc] initWithHTMLData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.rotoworld.com/content/playersearch.aspx?searchname=%@,%@&sport=nba",self.playerLastName,self.playerFirstName]]]];
     NSString *rotoworldLink = [[[statParser searchWithXPathQuery:@"//div[@class='moreplayernews']/a"] firstObject] objectForKey:@"href"];
     TFHpple *rotoParser = [[TFHpple alloc] initWithHTMLData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.rotoworld.com%@",rotoworldLink]]]];
     NSArray *data = [rotoParser searchWithXPathQuery:@"//div[@class='RW_pn']/div[@class='pb']/div[@style='width:460px; float:left;']"];
@@ -415,30 +424,36 @@
      for (UILabel *label in _statSlot3Header) label.text = [statNames[2] content];
      }
      */
-    if (!self.player.injury || [self.player.injury isEqualToString:@""]) {
-        _headerInjuryLabel.text = @"Healthy";
-        _headerInjuryLabel.textColor = [UIColor FBGreenColor];
-    }
-    else if ([self.player.injury isEqualToString:@"DTD"]){
-        _headerInjuryLabel.text = @"Day-To-Day";
-        _headerInjuryLabel.textColor = [UIColor FBRedColor];
-    }
-    else if ([self.player.injury isEqualToString:@"O"]){
-        _headerInjuryLabel.text = @"Out";
-        _headerInjuryLabel.textColor = [UIColor FBRedColor];
-    }
-    else {
-        _headerInjuryLabel.text = self.player.injury;
-        _headerInjuryLabel.textColor = [UIColor FBRedColor];
-    }
     //player image
     TFHppleElement *link = [[self.parser searchWithXPathQuery:@"//div[@class='main-headshot']/img"] firstObject];
     UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[link objectForKey:@"src"]]]];
     _playerImageView.image = image;
+}
+
+- (void)setupPlayerInjury {
+    if (!self.playerInjury || [self.playerInjury isEqualToString:@""]) {
+        _headerInjuryLabel.text = @"Healthy";
+        _headerInjuryLabel.textColor = [UIColor FBGreenColor];
+    }
+    else if ([self.playerInjury isEqualToString:@"DTD"]){
+        _headerInjuryLabel.text = @"Day-To-Day";
+        _headerInjuryLabel.textColor = [UIColor FBRedColor];
+    }
+    else if ([self.playerInjury isEqualToString:@"O"]){
+        _headerInjuryLabel.text = @"Out";
+        _headerInjuryLabel.textColor = [UIColor FBRedColor];
+    }
+    else {
+        _headerInjuryLabel.text = self.playerInjury;
+        _headerInjuryLabel.textColor = [UIColor FBRedColor];
+    }
+}
+
+- (void)setupPlayerTeamImage {
     //team image
     float width = self.view.frame.size.width/2.5;
     UIImageView *teamImage = [[UIImageView alloc] initWithFrame:CGRectMake(-45, width-30, width, width*(1/1.25))];
-    teamImage.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://a2.espncdn.com/prod/assets/clubhouses/2010/nba/teamlogos/%@.png",self.player.team]]]];
+    teamImage.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://a2.espncdn.com/prod/assets/clubhouses/2010/nba/teamlogos/%@.png",self.playerTeam]]]];
     teamImage.contentMode = UIViewContentModeScaleAspectFit;
     teamImage.alpha = 0.25;
     [self.view addSubview:teamImage];
@@ -919,9 +934,9 @@ bool gameLogIsBasic = YES;
     if (tableView == _newsTableView) {
         NSMutableDictionary *newsPeice = self.news[indexPath.row];
         if ([newsPeice objectForKey:@"link"]) {
-            PlayerViewController *modalVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"p"];
+            WebViewController *modalVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"p"];
             modalVC.modalPresentationStyle = UIModalPresentationCustom;
-            modalVC.player = [newsPeice objectForKey:@"link"];
+            modalVC.link = [newsPeice objectForKey:@"link"];
             self.animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:modalVC];
             self.animator.dragable = YES;
             self.animator.bounces = YES;
@@ -929,7 +944,7 @@ bool gameLogIsBasic = YES;
             self.animator.behindViewScale = 0.9;
             self.animator.transitionDuration = 0.3;
             self.animator.direction = ZFModalTransitonDirectionBottom;
-            [self.animator setContentScrollView:modalVC.bottomScrollView];
+            [self.animator setContentScrollView:modalVC.webView.scrollView];
             modalVC.transitioningDelegate = self.animator;
             [self presentViewController:modalVC animated:YES completion:nil];
         }

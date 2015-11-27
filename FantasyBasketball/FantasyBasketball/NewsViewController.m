@@ -9,6 +9,7 @@
 #import "NewsViewController.h"
 #import "WebViewController.h"
 #import "TFHpple.h"
+#import "FBPlayer.h"
 
 @interface NewsViewController ()
 
@@ -77,11 +78,8 @@
         TFHppleElement *element = nodes[i];
         if ([element objectForKey:@"id"]) {
             NSString *nameString = ((TFHppleElement *)element.children[1]).firstChild.content;
-            NSArray *name = [nameString componentsSeparatedByString:@" "];
-            NSString *firstName = name[0];
-            NSString *lastName = name[1];
-            for (int i = 2; i < name.count; i++) lastName = [NSString stringWithFormat:@"%@ %@",lastName,name[i]];
-            [names addObject:@[firstName, lastName]];
+            NSDictionary *name = [FBPlayer separateFirstAndLastNameForString:nameString];
+            [names addObject:@[name[@"first"], name[@"last"]]];
         }
     }
     for (NSArray *name in names) {
@@ -199,6 +197,11 @@
     else if (indexPath.section == 1) {
         NSDictionary *transaction = self.transactions[indexPath.row];
         if (transaction[@"link"]) [self linkWithWebLink:transaction[@"link"]];
+    }
+    else if (indexPath.section == 2) {
+        NSDictionary *teamNewsRow = self.teamNews[indexPath.row];
+        NSDictionary *name = [FBPlayer separateFirstAndLastNameForString:teamNewsRow[@"name"]];
+        [self linkWithPlayerName:[[NSDictionary alloc] initWithObjects:@[name[@"first"], name[@"last"]] forKeys:@[@"first", @"last"]]];
     }
 }
 
@@ -374,7 +377,24 @@
     return [NSString stringWithFormat:@"%@ ago",time];
 }
 
-#pragma mark - other link
+#pragma mark - other links
+
+- (void)linkWithPlayerName:(NSDictionary *)playerName { //@"first", @"last"
+    PlayerViewController *modalVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"p"];
+    modalVC.modalPresentationStyle = UIModalPresentationCustom;
+    modalVC.playerFirstName = playerName[@"first"];
+    modalVC.playerLastName = playerName[@"last"];
+    self.animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:modalVC];
+    self.animator.dragable = YES;
+    self.animator.bounces = YES;
+    self.animator.behindViewAlpha = 0.8;
+    self.animator.behindViewScale = 0.9;
+    self.animator.transitionDuration = 0.3;
+    self.animator.direction = ZFModalTransitonDirectionBottom;
+    [self.animator setContentScrollView:modalVC.bottomScrollView];
+    modalVC.transitioningDelegate = self.animator;
+    [self presentViewController:modalVC animated:YES completion:nil];
+}
 
 - (void)linkWithWebLink:(NSString *)link {
     WebViewController *modalVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"w"];

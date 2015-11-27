@@ -64,4 +64,8 @@ typedef NS_ENUM(NSInteger, FBGameState) {
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
 
++ (NSDictionary *)separateFirstAndLastNameForString: (NSString *) string;
+
++ (NSDictionary *)separateTeamAndPositionForString: (NSString *) string;
+
 @end
