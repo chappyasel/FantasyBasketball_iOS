@@ -20,4 +20,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *team2Display1;
 @property (weak, nonatomic) IBOutlet UILabel *team2Display2;
 
+- (void)initWithMatchupLink: (NSString *) link;
+
 @end

@@ -10,7 +10,7 @@
 
 @interface MyTeamViewController ()
 
-@property BOOL isLoadingLink;
+@property NSString *globalLink;
 
 @property TFHpple *parser;
 @property NSMutableArray *players;
@@ -28,19 +28,12 @@
 
 @implementation MyTeamViewController
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    self.isLoadingLink = NO;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadTableView];
-    if (!self.isLoadingLink) {
-        [self loadPickerViewData];
-        [self loadplayersWithLink:nil];
-        self.title = @"My Team";
-    }
+    [self loadPickerViewData];
+    [self loadplayers];
+    if (!self.globalLink) self.title = @"My Team";
     else {
         NSString *XpathQueryString = @"//h3[@class='team-name']";
         NSArray *nodes = [self.parser searchWithXPathQuery:XpathQueryString];
@@ -51,14 +44,11 @@
 }
 
 - (void)initWithTeamLink: (NSString *) link {
-    self.isLoadingLink = YES;
+    self.globalLink = link;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back"
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
                                                                             action:@selector(backButtonPressed:)];
-    self.navigationItem.rightBarButtonItem = nil;
-    self.scoringPeriod = @"today";
-    [self loadplayersWithLink:link];
 }
 
 - (IBAction)backButtonPressed:(id)sender {
@@ -71,11 +61,12 @@
     self.scrollViews = [[NSMutableArray alloc] init];
 }
 
-- (void)loadplayersWithLink: (NSString *) link {
+- (void)loadplayers {
     _numStarters = 0;
-    NSURL *url;
-    if (link == nil) url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/clubhouse?leagueId=%@&teamId=%@&seasonId=%@&version=%@&scoringPeriodId=%d",self.session.leagueID,self.session.teamID,self.session.seasonID,_scoringPeriod,_scoringDay]];
-    else url = [NSURL URLWithString:link];
+    NSString *link = self.globalLink;
+    if (link == nil) link = [NSString stringWithFormat:@"http://games.espn.go.com/fba/clubhouse?leagueId=%@&teamId=%@&seasonId=%@",self.session.leagueID,self.session.teamID,self.session.seasonID];
+    link = [NSString stringWithFormat:@"%@&version=%@&scoringPeriodId=%d",link,_scoringPeriod,_scoringDay];
+    NSURL *url = [NSURL URLWithString:link];
     NSData *html = [NSData dataWithContentsOfURL:url];
     self.parser = [TFHpple hppleWithHTMLData:html];
     NSString *XpathQueryString = @"//table[@class='playerTableTable tableBody']/tr";
@@ -247,6 +238,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PlayerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Identifier"];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     FBPlayer *player = self.players[indexPath.row+indexPath.section*_numStarters];
     cell = [[PlayerCell alloc] initWithPlayer:player view:self scrollDistance:_globalScrollDistance size:CGSizeMake(self.view.frame.size.width, 42.46)];
     cell.delegate = self;
@@ -319,7 +311,7 @@
     else if (data2 == 4) _scoringPeriod = @"currSeason";
     else if (data2 == 5) _scoringPeriod = @"lastSeason";
     else _scoringPeriod = @"projections";
-    [self loadplayersWithLink:nil];
+    [self loadplayers];
     [self fadeOutWithPickerView:pickerView];
 }
 

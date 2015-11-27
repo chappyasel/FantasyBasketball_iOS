@@ -10,8 +10,9 @@
 
 @interface MatchupViewController ()
 
-@property TFHpple *parser;
+@property NSString *globalLink;
 
+@property TFHpple *parser;
 @property bool handleError;
 
 @property NSMutableArray *playersTeam1;
@@ -40,10 +41,24 @@
     _handleError = NO;
     self.cells = [[NSMutableArray alloc] init];
     [self loadPickerViewData];
-    [self loadplayersMU];
+    [self loadPlayersMU];
     if (_handleError) return;
     [self loadTableView];
     [self loadBarCharts];
+}
+
+- (void)initWithMatchupLink: (NSString *) link {
+    self.globalLink = link;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back"
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:@selector(backButtonPressed:)];
+}
+
+- (IBAction)backButtonPressed:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
 }
 
 - (void)refreshScoresWithFirstTeamName: (NSString *)firstName {
@@ -157,13 +172,16 @@ NSTimer *updateTimer;
 }
 
 - (IBAction)refreshButtonPressed:(UIButton *)sender {
-    [self loadplayersMU];
+    [self loadPlayersMU];
     [self.tableView reloadData];
 }
 
-- (void)loadplayersMU {
+- (void)loadPlayersMU {
     _numStartersTeam1 = 0, _numStartersTeam2 = 0;
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/boxscorefull?leagueId=%@&teamId=%@&scoringPeriodId=%d&seasonId=%@&view=scoringperiod&version=full",self.session.leagueID,self.session.teamID,_scoringDay,self.session.seasonID]];
+    NSString *link = self.globalLink;
+    if (link == nil) link = [NSString stringWithFormat:@"http://games.espn.go.com/fba/boxscorefull?leagueId=%@&teamId=%@&seasonId=%@",self.session.leagueID,self.session.teamID,self.session.seasonID];
+    link = [NSString stringWithFormat: @"%@&scoringPeriodId=%d&view=scoringperiod&version=full",link,_scoringDay];
+    NSURL *url = [NSURL URLWithString:link];
     NSError *error;
     NSData *html = [NSData dataWithContentsOfURL:url options:NSDataReadingMapped error:&error];
     if (error) NSLog(@"Matchup error: %@",error);
@@ -304,6 +322,7 @@ NSTimer *updateTimer;
         return cell;
     }
     MatchupPlayerCell *cell = [[MatchupPlayerCell alloc] initWithRightPlayer:rightPlayer leftPlayer:leftPlayer view:self expanded:NO size:CGSizeMake(self.tableView.frame.size.width, 52.7)];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.delegate = self;
     cell.index = (int)indexPath.row;
     [self.cells addObject:cell];
@@ -354,7 +373,7 @@ NSTimer *updateTimer;
         [self.autorefreshSwitch setOn:NO];
         [self autorefreshStateChanged:self.autorefreshSwitch];
     }
-    [self loadplayersMU];
+    [self loadPlayersMU];
     [self.tableView reloadData];
     [self fadeOutWithPickerView:pickerView];
 }

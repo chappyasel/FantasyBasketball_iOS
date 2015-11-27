@@ -7,10 +7,11 @@
 //
 
 #import "ScoreboardViewController.h"
+#import "MatchupViewController.h"
 
 @interface ScoreboardViewController ()
 
-@property NSMutableArray *leagueScoreboard; //name, abbreviation, record, manager, score, teamLink (matchupLink)
+@property NSMutableArray *leagueScoreboard; //link, teams -> (name, abbreviation, record, manager, score, teamLink)
 @property NSMutableArray *NBAScoreboard; //status, tv, teams -> (abbreviation, image, name, score)
 
 @property BOOL isInLeagueMode;
@@ -53,7 +54,7 @@
     NSArray *nodes = [parser searchWithXPathQuery:@"//div[@id='scoreboardMatchups']/div/table/tr/td/table"];
     for (int i = 0; i < nodes.count; i++) {
         TFHppleElement *matchupElement = nodes[i];
-        NSMutableArray *matchup = [[NSMutableArray alloc] init];
+        NSMutableArray *muTeams = [[NSMutableArray alloc] init];
         for (int t = 0; t < 2; t++) {
             NSMutableDictionary *teamDict = [[NSMutableDictionary alloc] init];
             TFHppleElement *team = matchupElement.children[t];
@@ -68,9 +69,11 @@
             for (int i = 2; i < recordManager.count; i++) manager = [NSString stringWithFormat:@"%@ %@",manager,recordManager[i]];
             teamDict[@"manager"] = manager;
             teamDict[@"record"] = [recordManager[0] stringByReplacingOccurrencesOfString:@"(" withString:@""];
-            [matchup addObject:teamDict];
+            [muTeams addObject:teamDict];
         }
-        [self.leagueScoreboard addObject:matchup];
+        NSString *link = [matchupElement.children[2] firstChild].firstChild.firstChild.attributes[@"href"];
+        link = [NSString stringWithFormat:@"%@%@",@"http://games.espn.go.com",link];
+        [self.leagueScoreboard addObject:[[NSDictionary alloc] initWithObjects:@[muTeams, link] forKeys:@[@"teams", @"link"]]];
     }
     completed();
 }
@@ -112,7 +115,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+    if (self.isInLeagueMode) {
+        [self linkWithMatchupLink:self.leagueScoreboard[indexPath.row][@"link"]];
+    }
 }
 
 #pragma mark - Table View
@@ -134,8 +139,9 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Identifier"];
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleDefault; //change later?
     if (self.isInLeagueMode) {
-        NSArray <NSDictionary *> *matchup = self.leagueScoreboard[indexPath.row];
+        NSDictionary *matchup = self.leagueScoreboard[indexPath.row];
         //background
         UIView *background = [[UIView alloc] initWithFrame:CGRectMake(10, 5, width-20, 120-10)];
         background.backgroundColor = [UIColor FBMediumOrangeColor];
@@ -143,7 +149,7 @@
         [cell addSubview:background];
         //left name
         UILabel *leftName = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, (width-20)/2-10, 30)];
-        leftName.text = matchup[0][@"name"];
+        leftName.text = matchup[@"teams"][0][@"name"];
         leftName.font = [UIFont systemFontOfSize:18 weight:UIFontWeightMedium];
         leftName.textAlignment = NSTextAlignmentCenter;
         leftName.textColor = [UIColor whiteColor];
@@ -151,7 +157,7 @@
         [background addSubview:leftName];
         //left subname
         UILabel *leftSName = [[UILabel alloc] initWithFrame:CGRectMake(5, 30, (width-20)/2-10, 20)];
-        leftSName.text = [NSString stringWithFormat:@"%@ (%@)",matchup[0][@"manager"],matchup[0][@"record"]];
+        leftSName.text = [NSString stringWithFormat:@"%@ (%@)",matchup[@"teams"][0][@"manager"],matchup[@"teams"][0][@"record"]];
         leftSName.font = [UIFont systemFontOfSize:14 weight:UIFontWeightRegular];
         leftSName.textAlignment = NSTextAlignmentCenter;
         leftSName.textColor = [UIColor whiteColor];
@@ -159,7 +165,7 @@
         [background addSubview:leftSName];
         //left score
         UILabel *leftScore = [[UILabel alloc] initWithFrame:CGRectMake(5, 55, (width-20)/2-10, 40)];
-        leftScore.text = matchup[0][@"score"];
+        leftScore.text = matchup[@"teams"][0][@"score"];
         leftScore.font = [UIFont systemFontOfSize:40 weight:UIFontWeightRegular];
         leftScore.textAlignment = NSTextAlignmentCenter;
         leftScore.textColor = [UIColor whiteColor];
@@ -167,7 +173,7 @@
         [background addSubview:leftScore];
         //right name
         UILabel *rightName = [[UILabel alloc] initWithFrame:CGRectMake(width-(width-20)/2-10-5, 5, (width-20)/2-10, 30)];
-        rightName.text = matchup[1][@"name"];
+        rightName.text = matchup[@"teams"][1][@"name"];
         rightName.font = [UIFont systemFontOfSize:18 weight:UIFontWeightMedium];
         rightName.textAlignment = NSTextAlignmentCenter;
         rightName.textColor = [UIColor whiteColor];
@@ -175,7 +181,7 @@
         [background addSubview:rightName];
         //right subname
         UILabel *rightSName = [[UILabel alloc] initWithFrame:CGRectMake(width-(width-20)/2-10-5, 30, (width-20)/2-10, 20)];
-        rightSName.text = [NSString stringWithFormat:@"%@ (%@)",matchup[1][@"manager"],matchup[1][@"record"]];
+        rightSName.text = [NSString stringWithFormat:@"%@ (%@)",matchup[@"teams"][1][@"manager"],matchup[@"teams"][1][@"record"]];
         rightSName.font = [UIFont systemFontOfSize:14 weight:UIFontWeightRegular];
         rightSName.textAlignment = NSTextAlignmentCenter;
         rightSName.textColor = [UIColor whiteColor];
@@ -183,7 +189,7 @@
         [background addSubview:rightSName];
         //right score
         UILabel *rightScore = [[UILabel alloc] initWithFrame:CGRectMake(width-(width-20)/2-10-5, 55, (width-20)/2-10, 40)];
-        rightScore.text = matchup[1][@"score"];
+        rightScore.text = matchup[@"teams"][1][@"score"];
         rightScore.font = [UIFont systemFontOfSize:40 weight:UIFontWeightRegular];
         rightScore.textAlignment = NSTextAlignmentCenter;
         rightScore.textColor = [UIColor whiteColor];
@@ -218,6 +224,28 @@
     self.animator.transitionDuration = 0.5;
     self.animator.direction = ZFModalTransitonDirectionBottom;
     [self.animator setContentScrollView:modalVC.webView.scrollView];
+    modalVC.transitioningDelegate = self.animator;
+    [self presentViewController:modalVC animated:YES completion:nil];
+}
+
+- (void)linkWithMatchupLink:(NSString *)link {
+    MatchupViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"mu"];
+    [vc initWithMatchupLink:link];
+    UINavigationController *modalVC = [[UINavigationController alloc] initWithRootViewController:vc];
+    modalVC.navigationBar.barTintColor = [UIColor FBDarkOrangeColor];
+    modalVC.navigationBar.tintColor = [UIColor whiteColor];
+    modalVC.navigationBar.translucent = NO;
+    modalVC.navigationBar.barStyle = UIBarStyleBlack;
+    [modalVC.navigationBar setTitleTextAttributes: @{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    modalVC.modalPresentationStyle = UIModalPresentationCustom;
+    self.animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:modalVC];
+    self.animator.dragable = NO;
+    self.animator.bounces = YES;
+    self.animator.behindViewAlpha = 0.8;
+    self.animator.behindViewScale = 0.9;
+    self.animator.transitionDuration = 0.5;
+    self.animator.direction = ZFModalTransitonDirectionBottom;
+    [self.animator setContentScrollView:vc.tableView];
     modalVC.transitioningDelegate = self.animator;
     [self presentViewController:modalVC animated:YES completion:nil];
 }

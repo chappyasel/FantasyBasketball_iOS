@@ -184,6 +184,7 @@ NSTimer *updateTimer;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PlayerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Identifier"];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     FBPlayer *player = self.players[indexPath.row];
     cell = [[PlayerCell alloc] initWithPlayer:player view:self scrollDistance:_globalScrollDistance size:CGSizeMake(self.view.frame.size.width, 40.0)];
     cell.delegate = self;
