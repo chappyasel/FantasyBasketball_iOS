@@ -10,6 +10,8 @@
 
 @interface MyTeamViewController ()
 
+@property BOOL isLoadingLink;
+
 @property TFHpple *parser;
 @property NSMutableArray *players;
 @property int numStarters;
@@ -26,30 +28,54 @@
 
 @implementation MyTeamViewController
 
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    self.isLoadingLink = NO;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self loadPickerViewData];
     [self loadTableView];
-    [self loadplayers];
-    NSString *XpathQueryString = @"//h3[@class='team-name']";
-    NSArray *nodes = [self.parser searchWithXPathQuery:XpathQueryString];
-    NSString *teamName = [[nodes firstObject] content];
-    if (teamName) self.title = teamName;
-    else self.title = @"My Team";
+    if (!self.isLoadingLink) {
+        [self loadPickerViewData];
+        [self loadplayersWithLink:nil];
+        self.title = @"My Team";
+    }
+    else {
+        NSString *XpathQueryString = @"//h3[@class='team-name']";
+        NSArray *nodes = [self.parser searchWithXPathQuery:XpathQueryString];
+        NSString *teamName = [[nodes firstObject] content];
+        if (teamName) self.title = teamName;
+        else self.title = @"Team";
+    }
+}
+
+- (void)initWithTeamLink: (NSString *) link {
+    self.isLoadingLink = YES;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back"
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:@selector(backButtonPressed:)];
+    self.navigationItem.rightBarButtonItem = nil;
+    self.scoringPeriod = @"today";
+    [self loadplayersWithLink:link];
+}
+
+- (IBAction)backButtonPressed:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
 }
 
 - (void)loadTableView {
     self.scrollViews = [[NSMutableArray alloc] init];
 }
 
-- (IBAction)refreshButtonPressed:(UIButton *)sender {
-    self.scrollViews = [[NSMutableArray alloc] init];
-    [self loadplayers];
-}
-
-- (void)loadplayers {
+- (void)loadplayersWithLink: (NSString *) link {
     _numStarters = 0;
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/clubhouse?leagueId=%@&teamId=%@&seasonId=%@&version=%@&scoringPeriodId=%d",self.session.leagueID,self.session.teamID,self.session.seasonID,_scoringPeriod,_scoringDay]];
+    NSURL *url;
+    if (link == nil) url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/clubhouse?leagueId=%@&teamId=%@&seasonId=%@&version=%@&scoringPeriodId=%d",self.session.leagueID,self.session.teamID,self.session.seasonID,_scoringPeriod,_scoringDay]];
+    else url = [NSURL URLWithString:link];
     NSData *html = [NSData dataWithContentsOfURL:url];
     self.parser = [TFHpple hppleWithHTMLData:html];
     NSString *XpathQueryString = @"//table[@class='playerTableTable tableBody']/tr";
@@ -293,7 +319,7 @@
     else if (data2 == 4) _scoringPeriod = @"currSeason";
     else if (data2 == 5) _scoringPeriod = @"lastSeason";
     else _scoringPeriod = @"projections";
-    [self loadplayers];
+    [self loadplayersWithLink:nil];
     [self fadeOutWithPickerView:pickerView];
 }
 

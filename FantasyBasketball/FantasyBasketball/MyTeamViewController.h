@@ -14,4 +14,6 @@
 
 @property NSString *scoringPeriod; //span of stats
 
+- (void)initWithTeamLink: (NSString *) link;
+
 @end

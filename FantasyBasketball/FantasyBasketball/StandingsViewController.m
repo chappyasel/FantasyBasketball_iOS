@@ -7,6 +7,7 @@
 //
 
 #import "StandingsViewController.h"
+#import "MyTeamViewController.h"
 
 @interface StandingsViewController ()
 
@@ -79,6 +80,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 2) {
+        [self linkWithTeamLink:self.teamStats[indexPath.row][@"link"]];
+    }
+    else {
+        [self linkWithTeamLink:self.standingTables[indexPath.section][@"teams"][indexPath.row][@"link"]];
+    }
 }
 
 #pragma mark - Table View
@@ -182,6 +189,30 @@
         }
     }
     return cell;
+}
+
+#pragma mark - link
+
+- (void)linkWithTeamLink:(NSString *)link {
+    MyTeamViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"mt"];
+    [vc initWithTeamLink:link];
+    UINavigationController *modalVC = [[UINavigationController alloc] initWithRootViewController:vc];
+    modalVC.navigationBar.barTintColor = [UIColor FBDarkOrangeColor];
+    modalVC.navigationBar.tintColor = [UIColor whiteColor];
+    modalVC.navigationBar.translucent = NO;
+    modalVC.navigationBar.barStyle = UIBarStyleBlack;
+    [modalVC.navigationBar setTitleTextAttributes: @{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    modalVC.modalPresentationStyle = UIModalPresentationCustom;
+    self.animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:modalVC];
+    self.animator.dragable = NO;
+    self.animator.bounces = YES;
+    self.animator.behindViewAlpha = 0.8;
+    self.animator.behindViewScale = 0.9;
+    self.animator.transitionDuration = 0.5;
+    self.animator.direction = ZFModalTransitonDirectionBottom;
+    [self.animator setContentScrollView:vc.tableView];
+    modalVC.transitioningDelegate = self.animator;
+    [self presentViewController:modalVC animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {

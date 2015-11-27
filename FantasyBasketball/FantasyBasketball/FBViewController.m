@@ -14,9 +14,7 @@
 
 @implementation FBViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    self.session = [FBSession fetchCurrentSession];
+- (void)awakeFromNib {
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Menu"
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
@@ -24,6 +22,11 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
                                                                                            target:self
                                                                                            action:@selector(fadeIn:)];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.session = [FBSession fetchCurrentSession];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.showsHorizontalScrollIndicator = NO;
