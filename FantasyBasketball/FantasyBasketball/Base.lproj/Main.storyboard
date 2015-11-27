@@ -185,17 +185,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Standings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BbG-L3-V3G">
-                                <rect key="frame" x="169" y="357" width="77" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RrZ-o9-4vT">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="RrZ-o9-4vT" firstAttribute="height" secondItem="Pa9-Vw-aeI" secondAttribute="height" id="9q0-XR-iYH"/>
+                            <constraint firstItem="RrZ-o9-4vT" firstAttribute="centerY" secondItem="Pa9-Vw-aeI" secondAttribute="centerY" id="F23-Da-XdL"/>
+                            <constraint firstItem="RrZ-o9-4vT" firstAttribute="width" secondItem="Pa9-Vw-aeI" secondAttribute="width" id="OT1-48-aeM"/>
+                            <constraint firstItem="RrZ-o9-4vT" firstAttribute="centerX" secondItem="Pa9-Vw-aeI" secondAttribute="centerX" id="n1w-iv-cnY"/>
+                        </constraints>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+                    <connections>
+                        <outlet property="tableView" destination="RrZ-o9-4vT" id="OC8-KG-GdG"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FWf-wV-hVh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -668,7 +675,7 @@
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" minimumFontSize="8" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aWm-w4-xos">
                                 <rect key="frame" x="20" y="73" width="316" height="76"/>
-                                <string key="text">You can keep track of multiple teams and easily switch between them here. To select a league, press on it. To add a new league, preess the "new" button.</string>
+                                <string key="text">You can keep track of multiple teams and easily switch between them here. To select a league, press on it. To add a new league, press the "new" button.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" red="0.32072254830000002" green="0.32072254830000002" blue="0.32072254830000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>

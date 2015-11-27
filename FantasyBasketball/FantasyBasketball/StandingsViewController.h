@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FBViewController.h"
 
-@interface StandingsViewController : UIViewController
+@interface StandingsViewController : FBViewController
 
 @end
