@@ -67,6 +67,8 @@
 		F9E5F2151BEEAE4F003E8CAA /* ScoreboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9E5F2141BEEAE4F003E8CAA /* ScoreboardViewController.m */; };
 		F9E5F2181BEEAE5C003E8CAA /* StandingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9E5F2171BEEAE5C003E8CAA /* StandingsViewController.m */; };
 		F9F8185D1B6ABA0700EE70E7 /* FBPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F8185A1B6ABA0700EE70E7 /* FBPlayer.m */; };
+		F9F9877C1C096A48007C3BE9 /* FBIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = F9F9877B1C096A48007C3BE9 /* FBIcon.png */; };
+		F9F9877F1C097268007C3BE9 /* ScoreboardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F9877E1C097268007C3BE9 /* ScoreboardCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -192,6 +194,9 @@
 		F9E5F2171BEEAE5C003E8CAA /* StandingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StandingsViewController.m; sourceTree = "<group>"; };
 		F9F818591B6ABA0700EE70E7 /* FBPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBPlayer.h; path = Classes/FBPlayer.h; sourceTree = "<group>"; };
 		F9F8185A1B6ABA0700EE70E7 /* FBPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBPlayer.m; path = Classes/FBPlayer.m; sourceTree = "<group>"; };
+		F9F9877B1C096A48007C3BE9 /* FBIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = FBIcon.png; path = FantasyBasketball/Images/FBIcon.png; sourceTree = "<group>"; };
+		F9F9877D1C097268007C3BE9 /* ScoreboardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScoreboardCell.h; path = FantasyBasketball/ScoreboardCell.h; sourceTree = "<group>"; };
+		F9F9877E1C097268007C3BE9 /* ScoreboardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScoreboardCell.m; path = FantasyBasketball/ScoreboardCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -464,6 +469,7 @@
 				F9528BBC1C06620D00B421DC /* WL@2x.png */,
 				F918BB141B6D344A00E927C4 /* basketball@2x.png */,
 				F95F53D11B6BFE5300CFF253 /* StadiumBlur.jpg */,
+				F9F9877B1C096A48007C3BE9 /* FBIcon.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -475,6 +481,8 @@
 				F9D7023B1A9F678000AAEB18 /* PlayerCell.m */,
 				F9908DFD1AA250F0008DF9D8 /* MatchupPlayerCell.h */,
 				F9908DFE1AA250F0008DF9D8 /* MatchupPlayerCell.m */,
+				F9F9877D1C097268007C3BE9 /* ScoreboardCell.h */,
+				F9F9877E1C097268007C3BE9 /* ScoreboardCell.m */,
 				F96DAF421B6C2F2B00648CCF /* FBPickerView.h */,
 				F96DAF431B6C2F2B00648CCF /* FBPickerView.m */,
 				F96DAF451B6C2F5200648CCF /* FBPickerView.xib */,
@@ -642,6 +650,7 @@
 				F96DAF461B6C2F5200648CCF /* FBPickerView.xib in Resources */,
 				F904F3B31B6C8E8100B7BD37 /* GR@2x.png in Resources */,
 				F95F53D21B6BFE5300CFF253 /* StadiumBlur.jpg in Resources */,
+				F9F9877C1C096A48007C3BE9 /* FBIcon.png in Resources */,
 				F976584E1B65E69100ACC050 /* Fantasy Basketball.entitlements in Resources */,
 				F97658501B65E69100ACC050 /* MainInterface.storyboard in Resources */,
 				F904F3AC1B6C8E7B00B7BD37 /* MA@2x.png in Resources */,
@@ -753,6 +762,7 @@
 				F9E5F20E1BEEAC04003E8CAA /* NewsViewController.m in Sources */,
 				F9908DFF1AA250F0008DF9D8 /* MatchupPlayerCell.m in Sources */,
 				F954E9921B65E52C000F323F /* BEMLine.m in Sources */,
+				F9F9877F1C097268007C3BE9 /* ScoreboardCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

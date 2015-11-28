@@ -11,8 +11,10 @@
 @implementation MatchupPlayerCell {
     UILabel *rightSubnameView;
     UILabel *leftSubnameView;
+    
     UILabel *rightSubname2View;
     UILabel *leftSubname2View;
+    
     UILabel *rightPointsView;
     UIView *rightPointsBackground;
     UILabel *leftPointsView;
@@ -324,7 +326,7 @@
 };
 
 - (void)linkGameLinkPressed:(UIButton *)sender {
-    if (sender.tag == 0) [self.delegate linkWithGameLink:self.leftPlayer.gameLink];
+    if (sender.tag == 0) [self.delegate linkWithGameLink:self.leftPlayer];
     if (sender.tag == 1) [self.delegate linkWithGameLink:self.rightPlayer];
 }
 

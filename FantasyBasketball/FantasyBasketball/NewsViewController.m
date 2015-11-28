@@ -142,7 +142,7 @@
     NSString *title = ((TFHppleElement *)((TFHppleElement *)firstItem.children[3]).children[1]).content;
     NSString *link = [((TFHppleElement *)((TFHppleElement *)firstItem.children[3]).children[1]).firstChild.attributes valueForKey:@"href"];
     link = [NSString stringWithFormat:@"%@%@",@"http://www.cbssports.com",link];
-    [self.generalNews addObject:[[NSDictionary alloc] initWithObjects:@[imageLink, title, link] forKeys:@[@"img", @"title", @"link"]]];
+    [self.generalNews addObject:[[NSDictionary alloc] initWithObjects:@[imageLink, title, link] forKeys:@[@"image", @"title", @"link"]]];
     NSArray <TFHppleElement *> *otherItems = [parser searchWithXPathQuery:@"//ul[@id='latest-stream-listing']/div/li"]; //rest of news items
     for (int i = 0; i < otherItems.count; i++) {
         TFHppleElement *newsItem = otherItems[i];
@@ -255,7 +255,7 @@
         //title
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(140, 10, width-160, 80)];
         titleLabel.text = newsPeice[@"title"];
-        titleLabel.font = [UIFont systemFontOfSize:21 weight:UIFontWeightMedium];
+        titleLabel.font = [UIFont systemFontOfSize:19 weight:UIFontWeightMedium];
         titleLabel.numberOfLines = 2;
         [cell addSubview:titleLabel];
         //image

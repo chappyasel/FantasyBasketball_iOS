@@ -16,6 +16,8 @@
 
 @property BOOL isInLeagueMode;
 
+@property NSMutableArray *cells;
+
 @end
 
 @implementation ScoreboardViewController
@@ -25,6 +27,7 @@
     self.title = @"Scoreboard";
     self.tableView.backgroundColor = [UIColor whiteColor];
     self.isInLeagueMode = YES;
+    [self setupTableHeaderView];
     [self beginAsyncLoading];
 }
 
@@ -33,15 +36,30 @@
     dispatch_async(myQueue, ^{
         [self loadLeagueScoreboardWithCompletionBlock:^{
             dispatch_async(dispatch_get_main_queue(), ^{
-                if (self.isInLeagueMode) [self.tableView reloadData];
+                if (self.isInLeagueMode) {
+                    [self.tableView reloadData];
+                    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+                }
             });
         }];
         [self loadNBAScoreboardWithCompletionBlock:^{
             dispatch_async(dispatch_get_main_queue(), ^{
-                if (!self.isInLeagueMode) [self.tableView reloadData];
+                if (!self.isInLeagueMode) {
+                    [self.tableView reloadData];
+                    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+                }
             });
         }];
     });
+}
+
+- (void)refreshNonAsync {
+    [self loadLeagueScoreboardWithCompletionBlock:^{
+        if (self.isInLeagueMode) [self.tableView reloadData];
+    }];
+    [self loadNBAScoreboardWithCompletionBlock:^{
+        if (!self.isInLeagueMode) [self.tableView reloadData];
+    }];
 }
 
 - (void)loadLeagueScoreboardWithCompletionBlock:(void (^)(void)) completed {
@@ -111,6 +129,48 @@
     completed();
 }
 
+#pragma mark - UI
+
+- (void)setupTableHeaderView {
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 414, 40)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, 125, 30)];
+    label.text = @"AUTO-REFRESH:";
+    label.textColor = [UIColor lightGrayColor];
+    label.font = [UIFont boldSystemFontOfSize:14];
+    label.textAlignment = NSTextAlignmentRight;
+    self.autorefreshSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(130, 4.5, 51, 31)];
+    self.autorefreshSwitch.onTintColor = [UIColor FBMediumOrangeColor];
+    self.autorefreshSwitch.tintColor = [UIColor lightGrayColor];
+    [self.autorefreshSwitch addTarget:self action:@selector(autorefreshStateChanged:) forControlEvents:UIControlEventValueChanged];
+    updateTimer = [[NSTimer alloc] initWithFireDate:[NSDate date] interval:2 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
+    [headerView addSubview:label];
+    [headerView addSubview:self.autorefreshSwitch];
+    self.tableView.tableHeaderView = headerView;
+    [self.tableView setContentOffset:CGPointMake(0,40)];
+}
+
+- (void)autorefreshStateChanged:(UISwitch *)sender{
+    if (sender.isOn) {
+        updateTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
+        [self timerFired:nil];
+    }
+    else {
+        [updateTimer invalidate];
+        updateTimer = nil;
+    }
+}
+
+NSTimer *updateTimer;
+
+- (void)timerFired:(NSTimer *)timer {
+    [self refreshButtonPressed:nil];
+}
+
+- (IBAction)refreshButtonPressed:(UIButton *)sender {
+    [self refreshNonAsync];
+    [self.tableView reloadData];
+}
+
 #pragma mark - table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -133,102 +193,19 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    float width = self.view.frame.size.width;
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Identifier"];
-    cell = nil; //temporary
+    ScoreboardCell *cell = self.cells[indexPath.row];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Identifier"];
+        cell = [[ScoreboardCell alloc] initWithMatchup:self.leagueScoreboard[indexPath.row] view:self size:CGSizeMake(self.tableView.frame.size.width, 120)];
+        cell.delegate = self;
+        [self.cells addObject:cell];
     }
-    cell.selectionStyle = UITableViewCellSelectionStyleDefault; //change later?
-    if (self.isInLeagueMode) {
-        NSDictionary *matchup = self.leagueScoreboard[indexPath.row];
-        //background
-        UIView *background = [[UIView alloc] initWithFrame:CGRectMake(10, 5, width-20, 120-10)];
-        background.backgroundColor = [UIColor FBMediumOrangeColor];
-        background.layer.cornerRadius = 5;
-        [cell addSubview:background];
-        //left name
-        UILabel *leftName = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, (width-20)/2-10, 30)];
-        leftName.text = matchup[@"teams"][0][@"name"];
-        leftName.font = [UIFont systemFontOfSize:18 weight:UIFontWeightMedium];
-        leftName.textAlignment = NSTextAlignmentCenter;
-        leftName.textColor = [UIColor whiteColor];
-        leftName.lineBreakMode = NSLineBreakByTruncatingMiddle;
-        [background addSubview:leftName];
-        //left subname
-        UILabel *leftSName = [[UILabel alloc] initWithFrame:CGRectMake(5, 30, (width-20)/2-10, 20)];
-        leftSName.text = [NSString stringWithFormat:@"%@ (%@)",matchup[@"teams"][0][@"manager"],matchup[@"teams"][0][@"record"]];
-        leftSName.font = [UIFont systemFontOfSize:14 weight:UIFontWeightRegular];
-        leftSName.textAlignment = NSTextAlignmentCenter;
-        leftSName.textColor = [UIColor whiteColor];
-        leftSName.lineBreakMode = NSLineBreakByTruncatingMiddle;
-        [background addSubview:leftSName];
-        //left score
-        UILabel *leftScore = [[UILabel alloc] initWithFrame:CGRectMake(5, 55, (width-20)/2-10, 40)];
-        leftScore.text = matchup[@"teams"][0][@"score"];
-        leftScore.font = [UIFont systemFontOfSize:40 weight:UIFontWeightRegular];
-        leftScore.textAlignment = NSTextAlignmentCenter;
-        leftScore.textColor = [UIColor whiteColor];
-        leftScore.lineBreakMode = NSLineBreakByTruncatingMiddle;
-        [background addSubview:leftScore];
-        //right name
-        UILabel *rightName = [[UILabel alloc] initWithFrame:CGRectMake(width-(width-20)/2-10-5, 5, (width-20)/2-10, 30)];
-        rightName.text = matchup[@"teams"][1][@"name"];
-        rightName.font = [UIFont systemFontOfSize:18 weight:UIFontWeightMedium];
-        rightName.textAlignment = NSTextAlignmentCenter;
-        rightName.textColor = [UIColor whiteColor];
-        rightName.lineBreakMode = NSLineBreakByTruncatingMiddle;
-        [background addSubview:rightName];
-        //right subname
-        UILabel *rightSName = [[UILabel alloc] initWithFrame:CGRectMake(width-(width-20)/2-10-5, 30, (width-20)/2-10, 20)];
-        rightSName.text = [NSString stringWithFormat:@"%@ (%@)",matchup[@"teams"][1][@"manager"],matchup[@"teams"][1][@"record"]];
-        rightSName.font = [UIFont systemFontOfSize:14 weight:UIFontWeightRegular];
-        rightSName.textAlignment = NSTextAlignmentCenter;
-        rightSName.textColor = [UIColor whiteColor];
-        rightSName.lineBreakMode = NSLineBreakByTruncatingMiddle;
-        [background addSubview:rightSName];
-        //right score
-        UILabel *rightScore = [[UILabel alloc] initWithFrame:CGRectMake(width-(width-20)/2-10-5, 55, (width-20)/2-10, 40)];
-        rightScore.text = matchup[@"teams"][1][@"score"];
-        rightScore.font = [UIFont systemFontOfSize:40 weight:UIFontWeightRegular];
-        rightScore.textAlignment = NSTextAlignmentCenter;
-        rightScore.textColor = [UIColor whiteColor];
-        rightScore.lineBreakMode = NSLineBreakByTruncatingMiddle;
-        [background addSubview:rightScore];
-    }
-    else {
-        
-    }
+    else [cell updateWithMatchup:self.leagueScoreboard[indexPath.row]];
     return cell;
 }
 
-#pragma mark - segmented control actions
+#pragma mark - scoreboard cell delegate
 
-- (IBAction)scoreboardModeChanged:(UISegmentedControl *)sender {
-    if (sender.selectedSegmentIndex == 0) self.isInLeagueMode = YES;
-    else self.isInLeagueMode = NO;
-    [self.tableView reloadData];
-}
-
-#pragma mark - other links
-
-- (void)linkWithWebLink:(NSString *)link {
-    WebViewController *modalVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"w"];
-    modalVC.modalPresentationStyle = UIModalPresentationCustom;
-    modalVC.link = link;
-    self.animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:modalVC];
-    self.animator.dragable = YES;
-    self.animator.bounces = YES;
-    self.animator.behindViewAlpha = 0.8;
-    self.animator.behindViewScale = 0.9;
-    self.animator.transitionDuration = 0.5;
-    self.animator.direction = ZFModalTransitonDirectionBottom;
-    [self.animator setContentScrollView:modalVC.webView.scrollView];
-    modalVC.transitioningDelegate = self.animator;
-    [self presentViewController:modalVC animated:YES completion:nil];
-}
-
-- (void)linkWithMatchupLink:(NSString *)link {
+- (void)linkWithMatchupLink: (NSString *)link {
     MatchupViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"mu"];
     [vc initWithMatchupLink:link];
     UINavigationController *modalVC = [[UINavigationController alloc] initWithRootViewController:vc];
@@ -248,6 +225,14 @@
     [self.animator setContentScrollView:vc.tableView];
     modalVC.transitioningDelegate = self.animator;
     [self presentViewController:modalVC animated:YES completion:nil];
+}
+
+#pragma mark - segmented control actions
+
+- (IBAction)scoreboardModeChanged:(UISegmentedControl *)sender {
+    if (sender.selectedSegmentIndex == 0) self.isInLeagueMode = YES;
+    else self.isInLeagueMode = NO;
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {

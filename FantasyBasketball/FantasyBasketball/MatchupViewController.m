@@ -59,6 +59,14 @@
     });
 }
 
+- (void)refreshNonAsync {
+    [self loadPlayersWithCompletionBlock:^(NSString *firstTeamName) {
+        if (_handleError) return;
+        [self loadScoresWithFirstTeamName:firstTeamName];
+        [self.tableView reloadData];
+    }];
+}
+
 - (void)initWithMatchupLink: (NSString *) link {
     self.globalLink = link;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back"
@@ -247,7 +255,7 @@ NSTimer *updateTimer;
 }
 
 - (IBAction)refreshButtonPressed:(UIButton *)sender {
-    [self beginAsyncLoading];
+    [self refreshNonAsync];
     [self.tableView reloadData];
 }
 
@@ -384,7 +392,7 @@ NSTimer *updateTimer;
         [self.autorefreshSwitch setOn:NO];
         [self autorefreshStateChanged:self.autorefreshSwitch];
     }
-    [self beginAsyncLoading];
+    [self refreshNonAsync];
     [self.tableView reloadData];
     [self fadeOutWithPickerView:pickerView];
 }

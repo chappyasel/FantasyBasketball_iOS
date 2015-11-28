@@ -40,9 +40,16 @@
         [self loadplayersWithCompletionBlock:^{
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.tableView reloadData];
+                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
             });
         }];
     });
+}
+
+- (void)refreshNonAsync {
+    [self loadplayersWithCompletionBlock:^{
+        [self.tableView reloadData];
+    }];
 }
 
 - (void)loadTableView {
@@ -89,7 +96,7 @@ NSTimer *updateTimer;
 }
 
 - (IBAction)refreshButtonPressed:(UIButton *)sender {
-    [self beginAsyncLoading];
+    [self refreshNonAsync];
     self.scrollViews = [[NSMutableArray alloc] init];
     [self.tableView reloadData];
 }
@@ -264,7 +271,7 @@ NSTimer *updateTimer;
         [self.autorefreshSwitch setOn:NO];
         [self autorefreshStateChanged:self.autorefreshSwitch];
     }
-    [self beginAsyncLoading];
+    [self refreshNonAsync];
     [self.tableView reloadData];
     [self fadeOutWithPickerView:pickerView];
 }

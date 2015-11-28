@@ -736,32 +736,30 @@ bool gameLogIsBasic = YES;
         return cell;
     }
     if (tableView == _gameTableView) {
-        if (gameLogIsBasic) {
+        static NSString *MyIdentifier = @"MyIdentifier";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+        cell = nil;
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier];
+        float height = 30.0;
+        if (self.needsLoadGamesButton) height = 40.0;
+        if (indexPath.row == self.games.count && self.needsLoadGamesButton) { //last row
+            UIButton *more = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, width, 40)];
+            [more setTitle:@"Load More Games" forState:UIControlStateNormal];
+            [more addTarget:self action:@selector(loadMoreGames:) forControlEvents:UIControlEventTouchUpInside];
+            [more setTitleColor:[UIColor colorWithRed:0 green:0.478431 blue:1.0 alpha:1.0] forState:UIControlStateNormal];
+            [cell addSubview:more];
+        }
+        else {
             //       0    1    2    3   4   5   6   7   8   9  10  11  12  13  14 15 16
             //game: date game fpts min fgm fga 3pm 3pa ftm fta reb ast blk stl pf to pts
-            //   165   |      210
-            //65 50 50 | 42 42 42 42 42
-            static NSString *MyIdentifier = @"MyIdentifier";
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
-            cell = nil;
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier];
-            float height = 30.0;
-            if (self.needsLoadGamesButton) height = 40.0;
-            if (indexPath.row == self.games.count && self.needsLoadGamesButton) { //last row
-                UIButton *more = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, width, 40)];
-                [more setTitle:@"Load More Games" forState:UIControlStateNormal];
-                [more addTarget:self action:@selector(loadMoreGames:) forControlEvents:UIControlEventTouchUpInside];
-                [more setTitleColor:[UIColor colorWithRed:0 green:0.478431 blue:1.0 alpha:1.0] forState:UIControlStateNormal];
-                [cell addSubview:more];
-            }
-            else {
-                NSMutableArray *game = self.games[indexPath.row];
+            NSMutableArray *game = self.games[indexPath.row];
+            if (gameLogIsBasic) {
                 if (game != nil) {
                     for (int i = 0; i < 8; i++) {
                         UILabel *stats;
-                        if (i==0) stats = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width*.17, 30)];
-                        else if (i==1 || i==2) stats = [[UILabel alloc] initWithFrame:CGRectMake((i-1)*width*.14+width*.17, 0, width*.14, 30)];
-                        else stats = [[UILabel alloc] initWithFrame:CGRectMake((i-3)*width*.11+width*.45, 0, width*.11, 30)];
+                        if (i==0) stats = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width*.17, height)];
+                        else if (i==1 || i==2) stats = [[UILabel alloc] initWithFrame:CGRectMake((i-1)*width*.14+width*.17, 0, width*.14, height)];
+                        else stats = [[UILabel alloc] initWithFrame:CGRectMake((i-3)*width*.11+width*.45, 0, width*.11, height)];
                         if (i==0)      stats.text = [NSString stringWithFormat:@"%@",[[game[0] componentsSeparatedByString:@" "] lastObject]];
                         else if (i==1) stats.text = [NSString stringWithFormat:@"%@",game[2]];
                         else if (i==2) stats.text = [NSString stringWithFormat:@"%@",game[3]];
@@ -776,24 +774,7 @@ bool gameLogIsBasic = YES;
                     }
                 }
             }
-            return cell;
-        }
-        else {
-            static NSString *MyIdentifier = @"MyIdentifier";
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
-            cell = nil;
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier];
-            float height = 30.0;
-            if (self.needsLoadGamesButton) height = 40.0;
-            if (indexPath.row == self.games.count && self.needsLoadGamesButton) { //last row
-                UIButton *more = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, width, 40)];
-                [more setTitle:@"Load More Games" forState:UIControlStateNormal];
-                [more addTarget:self action:@selector(loadMoreGames:) forControlEvents:UIControlEventTouchUpInside];
-                [more setTitleColor:[UIColor colorWithRed:0 green:0.478431 blue:1.0 alpha:1.0] forState:UIControlStateNormal];
-                [cell addSubview:more];
-            }
             else {
-                NSMutableArray *game = self.games[indexPath.row];
                 //STATS SCROLLVIEW
                 UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, _gameTableView.frame.size.width, height)];
                 [scrollView setContentSize:CGSizeMake(17*50+150, height)];
@@ -815,8 +796,8 @@ bool gameLogIsBasic = YES;
                     [scrollView addSubview:stats];
                 }
             }
-            return cell;
         }
+        return cell;
     }
     else if (tableView == _gamesBasicTableView) {
         //       0    1    2    3   4   5   6   7   8   9  10  11  12  13  14 15 16

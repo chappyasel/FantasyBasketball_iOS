@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "FBViewController.h"
+#import "ScoreboardCell.h"
 
-@interface ScoreboardViewController : FBViewController
+@interface ScoreboardViewController : FBViewController <ScoreboardCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
+
+@property (strong, nonatomic) IBOutlet UISwitch *autorefreshSwitch;
 
 @end
