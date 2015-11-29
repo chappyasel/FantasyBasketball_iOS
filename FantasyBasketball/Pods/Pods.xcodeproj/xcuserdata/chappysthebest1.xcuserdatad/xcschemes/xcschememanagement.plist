@@ -4,7 +4,22 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>FrameAccessor.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>GraphKit.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>JBChartView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>MKFoundationKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -27,22 +42,37 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>0F7B1940DE10624DFABB6A65D0BE9B4A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>383DF1D0756F323FC2957E68F6997C6D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9E5B6D094672D2D87810C8ED1C3036E4</key>
+		<key>5B76374993D313CCBB294E87BB10BAED</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B8DAF3B465BD21778AD3C349A1A19758</key>
+		<key>970176E4C248C9FFA9FFEE0933B897DC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EADB141B52DA47FF108810A72217CAD9</key>
+		<key>99C955F0F53E9B63A9CF3C1A8B378A92</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CC583880AD24A30C69B268B072649FE3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EE15FD0C5B5790F289599012737817D8</key>
 		<dict>
 			<key>primary</key>
 			<true/>

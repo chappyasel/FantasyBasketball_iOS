@@ -7,118 +7,229 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04B4911E495B6432B2E08524141441FA /* GKLineGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 672800EAA0FA46BDC50E2468032401EB /* GKLineGraph.m */; };
 		0769A81CECD904D759621701858754FC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258B0C8029B3982F03A30ED9FB271283 /* Foundation.framework */; };
-		0C71195FAF1E0BB9D24FF208CAF62EE8 /* ZFModalTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B63890FFDEC1E6DA7CBF1DC21F6DF15 /* ZFModalTransitionAnimator.m */; };
-		15F96CD77D99BFD4DB9C41A45FC30033 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B18F24645AA4D651DFC7B69A3A0833DB /* QuartzCore.framework */; };
-		1A446592082638056562B5F6F377F985 /* ZFModalTransitionAnimator.h in Headers */ = {isa = PBXBuildFile; fileRef = C7B32B177A72444D22212C0996F80357 /* ZFModalTransitionAnimator.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1A4649C3CB71142058F9C8AA323AAC98 /* ZFDragableModalTransition-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9F401E83C91459BE1C08EFA3D34E85 /* ZFDragableModalTransition-dummy.m */; };
-		1D468ECE4E7537CE0F4D60835DC72949 /* JBLineChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 892712CDB4529B7A4AB656E5EE2D9B10 /* JBLineChartView.m */; };
-		25FC53FDA8C53C96A98C54F60F4AE94F /* RESideMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = F63BE34234C40F975180A625797A3F24 /* RESideMenu.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		39166675C7DDAE528FD1A04DAE876B57 /* Pods-FantasyBasketball-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A64228883F260BD0F9974DF7BD9ACB /* Pods-FantasyBasketball-dummy.m */; };
-		4A1A0ABCFB2375FAA2B715E13EF96E8A /* RECommonFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 0EC3CCB466677B5040C449A1B73474D0 /* RECommonFunctions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		62BF657644593554505029F1ADED69DF /* UIViewController+RESideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 86A3554ABBCF0C760CC52BCCAEAF48D7 /* UIViewController+RESideMenu.m */; };
-		713DAA066A43F8408F1D035EFB173C69 /* RESideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F314C18A8BD87D96B7E03EA1A085874 /* RESideMenu.m */; };
-		7E329EF860FE515B20295618CC98305D /* JBLineChartView.h in Headers */ = {isa = PBXBuildFile; fileRef = 8555E367EE4061A58F584C2781F3A679 /* JBLineChartView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8114C705D8EE130D931C38250F3D299B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258B0C8029B3982F03A30ED9FB271283 /* Foundation.framework */; };
-		81B3024A95D95455BE0A0F17F0DA8C62 /* RESideMenu-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 018866B9255E0F578C9089743AC6EC23 /* RESideMenu-dummy.m */; };
-		81E55F721EB306948709748DCE76290E /* JBBarChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 561786DE3DF53C90E9202BBA664A6EE0 /* JBBarChartView.m */; };
-		859D9EAFAFE10C06DAC48E20F6A365AC /* JBBarChartView.h in Headers */ = {isa = PBXBuildFile; fileRef = 486A5706955CC4E86919E5AED16B19A8 /* JBBarChartView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		9C0ADE077C806EE52D6402DCDEC164DF /* JBChartView.h in Headers */ = {isa = PBXBuildFile; fileRef = F35AD8940B42DCF65AC1612D597E2032 /* JBChartView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		ABDC119F024D96386F7FEC61640B275B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258B0C8029B3982F03A30ED9FB271283 /* Foundation.framework */; };
-		B4162CE6143D61442C822A89B521EAB4 /* JBChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F0B0B3B04BE5BA932B9E3839E642AB /* JBChartView.m */; };
-		BAF2E47CBF4A1DB809F8541AC0934136 /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 959311089DDC4DD455F2501BAA3CA436 /* RECommonFunctions.m */; };
-		DDEBF0ACACDDA7AFF54FE912A7E8F7AB /* JBChartView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D5E32157BE20C02CAC74B504564D30BE /* JBChartView-dummy.m */; };
-		E7E2230222A21B87CCFEEC50B5689699 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258B0C8029B3982F03A30ED9FB271283 /* Foundation.framework */; };
-		F3371A7CEA10FBF169D37DAD822830B6 /* UIViewController+RESideMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 020D39B899A26C1DA57B64540C45CDF8 /* UIViewController+RESideMenu.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		19B9412DC02FC36F70D413BA546C244A /* ScrollViewFrameAccessor.h in Headers */ = {isa = PBXBuildFile; fileRef = AAF50C62AE817F8D9BE3E4EA4F3EE5E7 /* ScrollViewFrameAccessor.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1C5E0C8B17B1B927CBBDE5E068A350FB /* NSMutableArray+MK_Stack.h in Headers */ = {isa = PBXBuildFile; fileRef = 2549D3F4AC5DDB1FA2C6A183640BC34F /* NSMutableArray+MK_Stack.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1D3C68727C83F2D6A4038BE3765D2F82 /* UIViewController+RESideMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = DD5945BCDA065385E7785679F725747A /* UIViewController+RESideMenu.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1D468ECE4E7537CE0F4D60835DC72949 /* JBLineChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E03560B4716C42ABDA00119EC7F71A4 /* JBLineChartView.m */; };
+		1D749466C0F4C800C038B6278E75F23B /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA8331C43C5CF17FA5DD185082957C7 /* RECommonFunctions.m */; };
+		1E88AA109A7220C69902C27547184472 /* GKBar.m in Sources */ = {isa = PBXBuildFile; fileRef = A7BB10A4169B768AA41F5D749EA3F6CF /* GKBar.m */; };
+		26D4024D273BA1CFD175B8D6ACCA0286 /* ZFModalTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA138EDF45A91F12138055E7847E268 /* ZFModalTransitionAnimator.m */; };
+		273B602F855CCB2D922B3CA086E719F5 /* NSArray+MK_Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A4CBC7ECDB56213A4D1D143B8D77A63 /* NSArray+MK_Block.m */; };
+		2E3F6CC62CB2EE0C2157806A30DC8272 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B18F24645AA4D651DFC7B69A3A0833DB /* QuartzCore.framework */; };
+		2EAC8B319FB8DAFD248800C87554CC01 /* UIViewController+RESideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 64099582B352FBE5887983F0378F9A15 /* UIViewController+RESideMenu.m */; };
+		303F43B700CF71C6C1667628926EE13D /* NSMutableArray+MK_Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = CD66B941E2D685F6CD0A3EFDA24DA570 /* NSMutableArray+MK_Queue.m */; };
+		3444AA6A01F708C4013436F692A63672 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258B0C8029B3982F03A30ED9FB271283 /* Foundation.framework */; };
+		3DA0A0EF1BD7DE12DC44C4492F127EE0 /* UIColor+GraphKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A80BD54017904E89C90E1762748584A /* UIColor+GraphKit.m */; };
+		3F6511F037828851D1078A838E46B9C7 /* ViewFrameAccessor.h in Headers */ = {isa = PBXBuildFile; fileRef = 7406111E8F18D2F8CA029E80E2C4CF51 /* ViewFrameAccessor.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		403783DFE445FDDE15C44E3C732A70A5 /* NSMutableArray+MK_Queue.h in Headers */ = {isa = PBXBuildFile; fileRef = DE2090B43CD205CC37DBE02922220331 /* NSMutableArray+MK_Queue.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		44A060885D07DD186E65BE9E86460590 /* RESideMenu-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D993E979D1B7A46CB8BE20951CBFF6 /* RESideMenu-dummy.m */; };
+		49457CD2F71695A297D4C2ECCB4DAF7B /* ZFDragableModalTransition-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F4532A9F9575141E543EE299200D328 /* ZFDragableModalTransition-dummy.m */; };
+		7863D7F2B2102D342ADF4C19E00179F4 /* RECommonFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = DBDC0E8A186C5730E2A6AD5DF7441D14 /* RECommonFunctions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		793044C3C6D940DB92CA7157EEFFC9BA /* NSMutableArray+MK_Misc.m in Sources */ = {isa = PBXBuildFile; fileRef = D912F8B568EC3C54B410DB0CF0E8E5E0 /* NSMutableArray+MK_Misc.m */; };
+		7E329EF860FE515B20295618CC98305D /* JBLineChartView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EA2A92CF393B84B6FBC9F0D6C21DA41 /* JBLineChartView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		81E55F721EB306948709748DCE76290E /* JBBarChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 852D7D1F5B028DCE37D934436ADDDFA3 /* JBBarChartView.m */; };
+		859D9EAFAFE10C06DAC48E20F6A365AC /* JBBarChartView.h in Headers */ = {isa = PBXBuildFile; fileRef = 26C072C96E26ED9305660F39304B728F /* JBBarChartView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		89CC5BE21517B0B633517E8D87F329F9 /* GKBarGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FB6C4781BBE490A165B395BB0CCA603 /* GKBarGraph.m */; };
+		8EA76E94E12767356BD016491E81FA25 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258B0C8029B3982F03A30ED9FB271283 /* Foundation.framework */; };
+		95023A7A1A0324545FC1CA4DFE206B94 /* NSArray+MK_Misc.h in Headers */ = {isa = PBXBuildFile; fileRef = 3120320BC968F3B43E21D49B51A36C68 /* NSArray+MK_Misc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		98B4F060D503AB616BD4DCC2EE936126 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258B0C8029B3982F03A30ED9FB271283 /* Foundation.framework */; };
+		9C0ADE077C806EE52D6402DCDEC164DF /* JBChartView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0952B9F3FD2540DDA186D55BF3A536CC /* JBChartView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9C89864A59B50F50CBDE0D8E45129F90 /* ScrollViewFrameAccessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 54D0D92B1AF36519D49564CED1B9F73E /* ScrollViewFrameAccessor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		9F725DD4AEE04E6648B92864E956633E /* ZFModalTransitionAnimator.h in Headers */ = {isa = PBXBuildFile; fileRef = D288933A3DE3CC86A1F2179C013CE361 /* ZFModalTransitionAnimator.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A219564DD370C54DDFDD1ED6C68CB56C /* RESideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FC7A835EFEC00D3F1238479FAB7F7F7 /* RESideMenu.m */; };
+		A3083208D534E42BE66B754FE0CA36A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258B0C8029B3982F03A30ED9FB271283 /* Foundation.framework */; };
+		A95F50F0BC20246431E578001B63874C /* GraphKit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3417503F1D3EF9FA8A769570FDDA592E /* GraphKit-dummy.m */; };
+		B185315B7ABCB51CA2E7A9D92662C63B /* GKBar.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A12A40FEEF70BF7024025B385ADC870 /* GKBar.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B4162CE6143D61442C822A89B521EAB4 /* JBChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BB319B69776B63951660561FDB2FD6 /* JBChartView.m */; };
+		BE1F9E57FCC031763A01E0CE2A099EAF /* NSMutableArray+MK_Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = 6614CDF7F1CD046F5060C6661AADEDE9 /* NSMutableArray+MK_Stack.m */; };
+		C33B722606607036B4FD7B9C52520DE7 /* GraphKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 9614B0173AC56ADE4791B880DE3E6654 /* GraphKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C4EDA27389362DD620E76FA2C724821C /* NSArray+MK_Misc.m in Sources */ = {isa = PBXBuildFile; fileRef = BDF4563B6B97490C7AE2FD8C912B916B /* NSArray+MK_Misc.m */; };
+		C52A970E886824832895A80C1BABAF3A /* GKBarGraph.h in Headers */ = {isa = PBXBuildFile; fileRef = 445D77A46F47158069D74B7DCADA30C0 /* GKBarGraph.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CA304F00C4767896949695447753444C /* NSArray+MK_Block.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A84D224F8D8933BA940BC2BB26E36CD /* NSArray+MK_Block.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CD153F16BAD5B778237CD79BA6AF41DA /* NSArray+MK.h in Headers */ = {isa = PBXBuildFile; fileRef = 173110757D2F471132799DD3DBA6C0C0 /* NSArray+MK.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE0939CBFC4759E85F5ED8AA1527BE39 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258B0C8029B3982F03A30ED9FB271283 /* Foundation.framework */; };
+		D881509F2D41ED32EED98189748F0F91 /* RESideMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B2F42E8C2D2E1EF859989C4D8684ACC /* RESideMenu.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DCAF11106A4832E0DBBFB31949068ACD /* ViewFrameAccessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5837DFF8C175924EC857DC8F6B488281 /* ViewFrameAccessor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		DDEA9EA614CC27C47BFA162313E3473C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258B0C8029B3982F03A30ED9FB271283 /* Foundation.framework */; };
+		DDEBF0ACACDDA7AFF54FE912A7E8F7AB /* JBChartView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B158C2CD86888BEE7078DC23A6CDC19A /* JBChartView-dummy.m */; };
+		E86E6A51842C055E912A3811346102C9 /* FrameAccessor-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 27688B6E23696BFACA510A032FF66084 /* FrameAccessor-dummy.m */; };
+		E9F911F2E924D449BC538DFC3776A547 /* Pods-FantasyBasketball-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A64228883F260BD0F9974DF7BD9ACB /* Pods-FantasyBasketball-dummy.m */; };
+		EB4E17D84611C2DAD7107B62A4730B5C /* MKFoundationKit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E69B78872BD00F1A731C921B54B6FB7 /* MKFoundationKit-dummy.m */; };
+		EB842340AC24C1E5D740ADFD052F38DB /* NSMutableArray+MK_Misc.h in Headers */ = {isa = PBXBuildFile; fileRef = 016DD66838EF24C8DC04D115F1AB34C4 /* NSMutableArray+MK_Misc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EEA93B0A9FA22E2637F9399FC3D3121B /* GKLineGraph.h in Headers */ = {isa = PBXBuildFile; fileRef = 521CD9152C1CA65B612274151EC25E9E /* GKLineGraph.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F952339396C0EDCFF3493B549A5363C2 /* FrameAccessor.h in Headers */ = {isa = PBXBuildFile; fileRef = 71445369F5A217E799CCED55E01B940B /* FrameAccessor.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FD0344D7F3C0561F31B327A4950F8E14 /* UIColor+GraphKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 12BCD4FE4703DBF7D93B9EC1638B1032 /* UIColor+GraphKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		1F0CF8B0F8D940F8CC0C8A69992A24C5 /* PBXContainerItemProxy */ = {
+		1A3C852FA1C11C3356108894C4DF043C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EE15FD0C5B5790F289599012737817D8;
+			remoteInfo = ZFDragableModalTransition;
+		};
+		270584D81B0B4F3A9DB06BE4B50C7754 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 383DF1D0756F323FC2957E68F6997C6D;
 			remoteInfo = JBChartView;
 		};
-		6BED3C75D80486792DD8388877E8E1D6 /* PBXContainerItemProxy */ = {
+		438338C718AAB7E34DFBB3A9AB969E93 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = EADB141B52DA47FF108810A72217CAD9;
-			remoteInfo = ZFDragableModalTransition;
+			remoteGlobalIDString = 970176E4C248C9FFA9FFEE0933B897DC;
+			remoteInfo = MKFoundationKit;
 		};
-		9387EB591AB6EBBAD4A1AED7898B84BB /* PBXContainerItemProxy */ = {
+		44F32FB87AB4740858275508625FE83E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 9E5B6D094672D2D87810C8ED1C3036E4;
+			remoteGlobalIDString = 0F7B1940DE10624DFABB6A65D0BE9B4A;
+			remoteInfo = FrameAccessor;
+		};
+		5193B08824381A417AF3C647B8EC0C8A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0F7B1940DE10624DFABB6A65D0BE9B4A;
+			remoteInfo = FrameAccessor;
+		};
+		9E21D8CD03C1644C8F51751EAB833F92 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 970176E4C248C9FFA9FFEE0933B897DC;
+			remoteInfo = MKFoundationKit;
+		};
+		D2FD98626E069B6AD150CBD7507CDE52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 99C955F0F53E9B63A9CF3C1A8B378A92;
 			remoteInfo = RESideMenu;
+		};
+		FC6CB36DEAD4FD2DFA6F0B2C2E655255 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CC583880AD24A30C69B268B072649FE3;
+			remoteInfo = GraphKit;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		018866B9255E0F578C9089743AC6EC23 /* RESideMenu-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "RESideMenu-dummy.m"; sourceTree = "<group>"; };
-		020D39B899A26C1DA57B64540C45CDF8 /* UIViewController+RESideMenu.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIViewController+RESideMenu.h"; path = "RESideMenu/UIViewController+RESideMenu.h"; sourceTree = "<group>"; };
-		09334BF12899C49950F8FBCF34A5A29E /* ZFDragableModalTransition-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ZFDragableModalTransition-prefix.pch"; sourceTree = "<group>"; };
-		0B82B89C3DFDA7DBAA17E2D90413A487 /* ZFDragableModalTransition.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ZFDragableModalTransition.xcconfig; sourceTree = "<group>"; };
-		0EC3CCB466677B5040C449A1B73474D0 /* RECommonFunctions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RECommonFunctions.h; path = RESideMenu/RECommonFunctions.h; sourceTree = "<group>"; };
-		0ED1731488F463478FA5B2ADA0F1A302 /* RESideMenu.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = RESideMenu.xcconfig; sourceTree = "<group>"; };
-		1C9F401E83C91459BE1C08EFA3D34E85 /* ZFDragableModalTransition-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ZFDragableModalTransition-dummy.m"; sourceTree = "<group>"; };
+		016DD66838EF24C8DC04D115F1AB34C4 /* NSMutableArray+MK_Misc.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+MK_Misc.h"; path = "Source/NSArray/NSMutableArray+MK_Misc.h"; sourceTree = "<group>"; };
+		0952B9F3FD2540DDA186D55BF3A536CC /* JBChartView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JBChartView.h; path = Classes/JBChartView.h; sourceTree = "<group>"; };
+		0A84D224F8D8933BA940BC2BB26E36CD /* NSArray+MK_Block.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSArray+MK_Block.h"; path = "Source/NSArray/NSArray+MK_Block.h"; sourceTree = "<group>"; };
+		113B7DDE9D37AEEAAB88E66B8CB2005E /* libMKFoundationKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMKFoundationKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		12BCD4FE4703DBF7D93B9EC1638B1032 /* UIColor+GraphKit.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIColor+GraphKit.h"; path = "Source/UIColor+GraphKit.h"; sourceTree = "<group>"; };
+		173110757D2F471132799DD3DBA6C0C0 /* NSArray+MK.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSArray+MK.h"; path = "Source/NSArray/NSArray+MK.h"; sourceTree = "<group>"; };
 		1EE13758F4D88C222E39DCD53945BA51 /* Pods-FantasyBasketball-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-FantasyBasketball-acknowledgements.plist"; sourceTree = "<group>"; };
+		1FA8331C43C5CF17FA5DD185082957C7 /* RECommonFunctions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RECommonFunctions.m; path = RESideMenu/RECommonFunctions.m; sourceTree = "<group>"; };
+		1FB6C4781BBE490A165B395BB0CCA603 /* GKBarGraph.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GKBarGraph.m; path = Source/BarGraph/GKBarGraph.m; sourceTree = "<group>"; };
+		2549D3F4AC5DDB1FA2C6A183640BC34F /* NSMutableArray+MK_Stack.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+MK_Stack.h"; path = "Source/NSArray/NSMutableArray+MK_Stack.h"; sourceTree = "<group>"; };
 		258B0C8029B3982F03A30ED9FB271283 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		26C072C96E26ED9305660F39304B728F /* JBBarChartView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JBBarChartView.h; path = Classes/JBBarChartView.h; sourceTree = "<group>"; };
+		27688B6E23696BFACA510A032FF66084 /* FrameAccessor-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "FrameAccessor-dummy.m"; sourceTree = "<group>"; };
 		27A64228883F260BD0F9974DF7BD9ACB /* Pods-FantasyBasketball-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-FantasyBasketball-dummy.m"; sourceTree = "<group>"; };
 		27C6A1CF700C249248ECADE37A6095AB /* Pods-FantasyBasketball.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-FantasyBasketball.release.xcconfig"; sourceTree = "<group>"; };
-		3555C6471EBE3D1E294994B2A2C6AD70 /* JBChartView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "JBChartView-prefix.pch"; sourceTree = "<group>"; };
-		486A5706955CC4E86919E5AED16B19A8 /* JBBarChartView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JBBarChartView.h; path = Classes/JBBarChartView.h; sourceTree = "<group>"; };
-		54F3F98247440652BB28CD49436B022F /* libJBChartView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libJBChartView.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		561786DE3DF53C90E9202BBA664A6EE0 /* JBBarChartView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JBBarChartView.m; path = Classes/JBBarChartView.m; sourceTree = "<group>"; };
-		5AD30317B21F2ADDB16B564F1EBF83F2 /* libPods-FantasyBasketball.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FantasyBasketball.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6F314C18A8BD87D96B7E03EA1A085874 /* RESideMenu.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RESideMenu.m; path = RESideMenu/RESideMenu.m; sourceTree = "<group>"; };
+		3120320BC968F3B43E21D49B51A36C68 /* NSArray+MK_Misc.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSArray+MK_Misc.h"; path = "Source/NSArray/NSArray+MK_Misc.h"; sourceTree = "<group>"; };
+		3417503F1D3EF9FA8A769570FDDA592E /* GraphKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "GraphKit-dummy.m"; sourceTree = "<group>"; };
+		3AA138EDF45A91F12138055E7847E268 /* ZFModalTransitionAnimator.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ZFModalTransitionAnimator.m; path = Classes/ZFModalTransitionAnimator.m; sourceTree = "<group>"; };
+		43587CD758ED5A9F97E6E75E317E5107 /* ZFDragableModalTransition-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ZFDragableModalTransition-prefix.pch"; sourceTree = "<group>"; };
+		445D77A46F47158069D74B7DCADA30C0 /* GKBarGraph.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GKBarGraph.h; path = Source/BarGraph/GKBarGraph.h; sourceTree = "<group>"; };
+		47D848FAFFD4298DD127D927A149C78D /* ZFDragableModalTransition.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ZFDragableModalTransition.xcconfig; sourceTree = "<group>"; };
+		483CE51846DFB8A1CAC7A52949755562 /* JBChartView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = JBChartView.xcconfig; sourceTree = "<group>"; };
+		4A80BD54017904E89C90E1762748584A /* UIColor+GraphKit.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIColor+GraphKit.m"; path = "Source/UIColor+GraphKit.m"; sourceTree = "<group>"; };
+		4E03560B4716C42ABDA00119EC7F71A4 /* JBLineChartView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JBLineChartView.m; path = Classes/JBLineChartView.m; sourceTree = "<group>"; };
+		4EA2A92CF393B84B6FBC9F0D6C21DA41 /* JBLineChartView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JBLineChartView.h; path = Classes/JBLineChartView.h; sourceTree = "<group>"; };
+		521CD9152C1CA65B612274151EC25E9E /* GKLineGraph.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GKLineGraph.h; path = Source/LineGraph/GKLineGraph.h; sourceTree = "<group>"; };
+		526EA0D6E903C36204EC29ECCE2189BE /* libJBChartView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libJBChartView.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		54D0D92B1AF36519D49564CED1B9F73E /* ScrollViewFrameAccessor.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ScrollViewFrameAccessor.m; path = FrameAccessor/ScrollViewFrameAccessor.m; sourceTree = "<group>"; };
+		5837DFF8C175924EC857DC8F6B488281 /* ViewFrameAccessor.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ViewFrameAccessor.m; path = FrameAccessor/ViewFrameAccessor.m; sourceTree = "<group>"; };
+		5B2F42E8C2D2E1EF859989C4D8684ACC /* RESideMenu.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RESideMenu.h; path = RESideMenu/RESideMenu.h; sourceTree = "<group>"; };
+		64099582B352FBE5887983F0378F9A15 /* UIViewController+RESideMenu.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+RESideMenu.m"; path = "RESideMenu/UIViewController+RESideMenu.m"; sourceTree = "<group>"; };
+		6614CDF7F1CD046F5060C6661AADEDE9 /* NSMutableArray+MK_Stack.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+MK_Stack.m"; path = "Source/NSArray/NSMutableArray+MK_Stack.m"; sourceTree = "<group>"; };
+		672800EAA0FA46BDC50E2468032401EB /* GKLineGraph.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GKLineGraph.m; path = Source/LineGraph/GKLineGraph.m; sourceTree = "<group>"; };
+		6A4CBC7ECDB56213A4D1D143B8D77A63 /* NSArray+MK_Block.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSArray+MK_Block.m"; path = "Source/NSArray/NSArray+MK_Block.m"; sourceTree = "<group>"; };
+		71445369F5A217E799CCED55E01B940B /* FrameAccessor.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FrameAccessor.h; path = FrameAccessor/FrameAccessor.h; sourceTree = "<group>"; };
 		7352F11254180796E9611B649556B14F /* Pods-FantasyBasketball-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-FantasyBasketball-resources.sh"; sourceTree = "<group>"; };
-		76613D2A5E65D97271BEE74F5E693CF4 /* JBChartView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = JBChartView.xcconfig; sourceTree = "<group>"; };
-		8555E367EE4061A58F584C2781F3A679 /* JBLineChartView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JBLineChartView.h; path = Classes/JBLineChartView.h; sourceTree = "<group>"; };
-		86A3554ABBCF0C760CC52BCCAEAF48D7 /* UIViewController+RESideMenu.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+RESideMenu.m"; path = "RESideMenu/UIViewController+RESideMenu.m"; sourceTree = "<group>"; };
-		892712CDB4529B7A4AB656E5EE2D9B10 /* JBLineChartView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JBLineChartView.m; path = Classes/JBLineChartView.m; sourceTree = "<group>"; };
-		959311089DDC4DD455F2501BAA3CA436 /* RECommonFunctions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RECommonFunctions.m; path = RESideMenu/RECommonFunctions.m; sourceTree = "<group>"; };
-		9B63890FFDEC1E6DA7CBF1DC21F6DF15 /* ZFModalTransitionAnimator.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ZFModalTransitionAnimator.m; path = Classes/ZFModalTransitionAnimator.m; sourceTree = "<group>"; };
+		7406111E8F18D2F8CA029E80E2C4CF51 /* ViewFrameAccessor.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ViewFrameAccessor.h; path = FrameAccessor/ViewFrameAccessor.h; sourceTree = "<group>"; };
+		7E69B78872BD00F1A731C921B54B6FB7 /* MKFoundationKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MKFoundationKit-dummy.m"; sourceTree = "<group>"; };
+		84F88235490A3EAABAF07167F19126D6 /* libZFDragableModalTransition.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libZFDragableModalTransition.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		852D7D1F5B028DCE37D934436ADDDFA3 /* JBBarChartView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JBBarChartView.m; path = Classes/JBBarChartView.m; sourceTree = "<group>"; };
+		859FB0C88BBCC1F7FEE816541F4EB82A /* libFrameAccessor.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libFrameAccessor.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9614B0173AC56ADE4791B880DE3E6654 /* GraphKit.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GraphKit.h; path = Source/GraphKit.h; sourceTree = "<group>"; };
+		979A3625ED0C6D82F1AC12D2656A3000 /* RESideMenu.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = RESideMenu.xcconfig; sourceTree = "<group>"; };
+		9A12A40FEEF70BF7024025B385ADC870 /* GKBar.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GKBar.h; path = Source/BarGraph/GKBar.h; sourceTree = "<group>"; };
+		9D640C2475899043DDE290D631F46183 /* GraphKit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GraphKit-prefix.pch"; sourceTree = "<group>"; };
+		9F4532A9F9575141E543EE299200D328 /* ZFDragableModalTransition-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ZFDragableModalTransition-dummy.m"; sourceTree = "<group>"; };
+		9FC7A835EFEC00D3F1238479FAB7F7F7 /* RESideMenu.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RESideMenu.m; path = RESideMenu/RESideMenu.m; sourceTree = "<group>"; };
+		A1C4A513AD052ADC8ED91F6306335554 /* RESideMenu-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "RESideMenu-prefix.pch"; sourceTree = "<group>"; };
+		A7BB10A4169B768AA41F5D749EA3F6CF /* GKBar.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GKBar.m; path = Source/BarGraph/GKBar.m; sourceTree = "<group>"; };
 		A860C1E9294349285167CDE91A840D0A /* Pods-FantasyBasketball-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-FantasyBasketball-frameworks.sh"; sourceTree = "<group>"; };
+		AAF50C62AE817F8D9BE3E4EA4F3EE5E7 /* ScrollViewFrameAccessor.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ScrollViewFrameAccessor.h; path = FrameAccessor/ScrollViewFrameAccessor.h; sourceTree = "<group>"; };
+		B158C2CD86888BEE7078DC23A6CDC19A /* JBChartView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "JBChartView-dummy.m"; sourceTree = "<group>"; };
 		B18F24645AA4D651DFC7B69A3A0833DB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
+		B1B9A52F5EEA87D935D8C1612CEF5859 /* GraphKit.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GraphKit.xcconfig; sourceTree = "<group>"; };
 		B2480A6589453FE7ACB9DC70AEB04302 /* Pods-FantasyBasketball.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-FantasyBasketball.debug.xcconfig"; sourceTree = "<group>"; };
-		B7B8A1A8EC069F2AE71F0056492242F1 /* libZFDragableModalTransition.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libZFDragableModalTransition.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B8B2D6FFE2EFBEE89B1865B172A85926 /* libPods-FantasyBasketball.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FantasyBasketball.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		C705AD143E99EABC45239CC343CF11E6 /* libRESideMenu.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRESideMenu.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		C7B32B177A72444D22212C0996F80357 /* ZFModalTransitionAnimator.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZFModalTransitionAnimator.h; path = Classes/ZFModalTransitionAnimator.h; sourceTree = "<group>"; };
-		D3F0B0B3B04BE5BA932B9E3839E642AB /* JBChartView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JBChartView.m; path = Classes/JBChartView.m; sourceTree = "<group>"; };
-		D5E32157BE20C02CAC74B504564D30BE /* JBChartView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "JBChartView-dummy.m"; sourceTree = "<group>"; };
-		E9A80218E89A82C5A173B8BCCFE9E6D6 /* RESideMenu-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "RESideMenu-prefix.pch"; sourceTree = "<group>"; };
+		BDA69928CB726B0C28BA2716ED1B84ED /* MKFoundationKit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MKFoundationKit-prefix.pch"; sourceTree = "<group>"; };
+		BDF4563B6B97490C7AE2FD8C912B916B /* NSArray+MK_Misc.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSArray+MK_Misc.m"; path = "Source/NSArray/NSArray+MK_Misc.m"; sourceTree = "<group>"; };
+		C1BB319B69776B63951660561FDB2FD6 /* JBChartView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JBChartView.m; path = Classes/JBChartView.m; sourceTree = "<group>"; };
+		C3D993E979D1B7A46CB8BE20951CBFF6 /* RESideMenu-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "RESideMenu-dummy.m"; sourceTree = "<group>"; };
+		C58091435436D22CD44466852790D0EA /* MKFoundationKit.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = MKFoundationKit.xcconfig; sourceTree = "<group>"; };
+		CD66B941E2D685F6CD0A3EFDA24DA570 /* NSMutableArray+MK_Queue.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+MK_Queue.m"; path = "Source/NSArray/NSMutableArray+MK_Queue.m"; sourceTree = "<group>"; };
+		D288933A3DE3CC86A1F2179C013CE361 /* ZFModalTransitionAnimator.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZFModalTransitionAnimator.h; path = Classes/ZFModalTransitionAnimator.h; sourceTree = "<group>"; };
+		D912F8B568EC3C54B410DB0CF0E8E5E0 /* NSMutableArray+MK_Misc.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+MK_Misc.m"; path = "Source/NSArray/NSMutableArray+MK_Misc.m"; sourceTree = "<group>"; };
+		D98C090EF170442E2C673388848B9B17 /* FrameAccessor.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FrameAccessor.xcconfig; sourceTree = "<group>"; };
+		DBDC0E8A186C5730E2A6AD5DF7441D14 /* RECommonFunctions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RECommonFunctions.h; path = RESideMenu/RECommonFunctions.h; sourceTree = "<group>"; };
+		DD5945BCDA065385E7785679F725747A /* UIViewController+RESideMenu.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIViewController+RESideMenu.h"; path = "RESideMenu/UIViewController+RESideMenu.h"; sourceTree = "<group>"; };
+		DE2090B43CD205CC37DBE02922220331 /* NSMutableArray+MK_Queue.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+MK_Queue.h"; path = "Source/NSArray/NSMutableArray+MK_Queue.h"; sourceTree = "<group>"; };
+		DFE88A968BDD67B86FD671BD18BD7BCF /* FrameAccessor-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "FrameAccessor-prefix.pch"; sourceTree = "<group>"; };
 		EDCA54A6832DBE95B87C33164042A36F /* Pods-FantasyBasketball-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-FantasyBasketball-acknowledgements.markdown"; sourceTree = "<group>"; };
-		F35AD8940B42DCF65AC1612D597E2032 /* JBChartView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JBChartView.h; path = Classes/JBChartView.h; sourceTree = "<group>"; };
-		F63BE34234C40F975180A625797A3F24 /* RESideMenu.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RESideMenu.h; path = RESideMenu/RESideMenu.h; sourceTree = "<group>"; };
+		F026EE4DFF87FE8AEBDC09B2F85AEC6A /* libRESideMenu.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRESideMenu.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F084FD91A594E43FD25D3154F27C7182 /* JBChartView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "JBChartView-prefix.pch"; sourceTree = "<group>"; };
+		FE6D68D3AF8AEA9AEB2089C8A7CDCDA7 /* libGraphKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGraphKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		802276DA56821DCFD34D8432CCBAA269 /* Frameworks */ = {
+		1669DD79AE1087DD9A384A724997E25D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABDC119F024D96386F7FEC61640B275B /* Foundation.framework in Frameworks */,
-				15F96CD77D99BFD4DB9C41A45FC30033 /* QuartzCore.framework in Frameworks */,
+				DDEA9EA614CC27C47BFA162313E3473C /* Foundation.framework in Frameworks */,
+				2E3F6CC62CB2EE0C2157806A30DC8272 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		85A96BAC74F23DE6D9D629A81C333151 /* Frameworks */ = {
+		79A6F44E683705243D0AC76B081DE5FE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8114C705D8EE130D931C38250F3D299B /* Foundation.framework in Frameworks */,
+				A3083208D534E42BE66B754FE0CA36A7 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		994914A0365402064D230609F8A16620 /* Frameworks */ = {
+		A66FFEB16BE09517288200EDE1FBCA23 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E7E2230222A21B87CCFEEC50B5689699 /* Foundation.framework in Frameworks */,
+				8EA76E94E12767356BD016491E81FA25 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AC091CDB7B5E54188B9BD01C1AC47E5D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE0939CBFC4759E85F5ED8AA1527BE39 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,28 +241,45 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C6F82729850333F1DB940AAC4F2856B7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3444AA6A01F708C4013436F692A63672 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E6A7044CA2D3A454BF57B004EB45CC8B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				98B4F060D503AB616BD4DCC2EE936126 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1679C282B1E7B7A5C06435CD7F71CF14 /* Support Files */ = {
+		0C8BE8E8BBC672BD3F0845758E0A6740 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				0B82B89C3DFDA7DBAA17E2D90413A487 /* ZFDragableModalTransition.xcconfig */,
-				1C9F401E83C91459BE1C08EFA3D34E85 /* ZFDragableModalTransition-dummy.m */,
-				09334BF12899C49950F8FBCF34A5A29E /* ZFDragableModalTransition-prefix.pch */,
+				C58091435436D22CD44466852790D0EA /* MKFoundationKit.xcconfig */,
+				7E69B78872BD00F1A731C921B54B6FB7 /* MKFoundationKit-dummy.m */,
+				BDA69928CB726B0C28BA2716ED1B84ED /* MKFoundationKit-prefix.pch */,
 			);
 			name = "Support Files";
-			path = "../Target Support Files/ZFDragableModalTransition";
+			path = "../Target Support Files/MKFoundationKit";
 			sourceTree = "<group>";
 		};
-		23DF9E168A5352540F87FEB5E5844AFC /* ZFDragableModalTransition */ = {
+		15033CD21D6EF2791C6E17CD058C392B /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				C7B32B177A72444D22212C0996F80357 /* ZFModalTransitionAnimator.h */,
-				9B63890FFDEC1E6DA7CBF1DC21F6DF15 /* ZFModalTransitionAnimator.m */,
-				1679C282B1E7B7A5C06435CD7F71CF14 /* Support Files */,
+				B1B9A52F5EEA87D935D8C1612CEF5859 /* GraphKit.xcconfig */,
+				3417503F1D3EF9FA8A769570FDDA592E /* GraphKit-dummy.m */,
+				9D640C2475899043DDE290D631F46183 /* GraphKit-prefix.pch */,
 			);
-			path = ZFDragableModalTransition;
+			name = "Support Files";
+			path = "../Target Support Files/GraphKit";
 			sourceTree = "<group>";
 		};
 		3926C638AD0708942C88C2BC89261735 /* iOS */ = {
@@ -163,6 +291,17 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
+		41E39967CB7A90CA2865B62651AD067F /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				D98C090EF170442E2C673388848B9B17 /* FrameAccessor.xcconfig */,
+				27688B6E23696BFACA510A032FF66084 /* FrameAccessor-dummy.m */,
+				DFE88A968BDD67B86FD671BD18BD7BCF /* FrameAccessor-prefix.pch */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/FrameAccessor";
+			sourceTree = "<group>";
+		};
 		433CD3331B6C3787F473C941B61FC68F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -171,54 +310,39 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		571E32C40CD8AF4713424073FEA04E72 /* JBChartView */ = {
+		6587397769FC5001DFF62B1F05987A8F /* RESideMenu */ = {
 			isa = PBXGroup;
 			children = (
-				486A5706955CC4E86919E5AED16B19A8 /* JBBarChartView.h */,
-				561786DE3DF53C90E9202BBA664A6EE0 /* JBBarChartView.m */,
-				F35AD8940B42DCF65AC1612D597E2032 /* JBChartView.h */,
-				D3F0B0B3B04BE5BA932B9E3839E642AB /* JBChartView.m */,
-				8555E367EE4061A58F584C2781F3A679 /* JBLineChartView.h */,
-				892712CDB4529B7A4AB656E5EE2D9B10 /* JBLineChartView.m */,
-				D75313B9C3A79AF162FC4987339F7A00 /* Support Files */,
+				DBDC0E8A186C5730E2A6AD5DF7441D14 /* RECommonFunctions.h */,
+				1FA8331C43C5CF17FA5DD185082957C7 /* RECommonFunctions.m */,
+				5B2F42E8C2D2E1EF859989C4D8684ACC /* RESideMenu.h */,
+				9FC7A835EFEC00D3F1238479FAB7F7F7 /* RESideMenu.m */,
+				DD5945BCDA065385E7785679F725747A /* UIViewController+RESideMenu.h */,
+				64099582B352FBE5887983F0378F9A15 /* UIViewController+RESideMenu.m */,
+				7847D6210B9EFA92AD6CF074B2884ED4 /* Support Files */,
 			);
-			path = JBChartView;
+			path = RESideMenu;
 			sourceTree = "<group>";
 		};
-		58244FD80B812B743F0534FF9BD12158 /* Support Files */ = {
+		77B67FDB272578694B3B4A27659DFC6D /* ZFDragableModalTransition */ = {
 			isa = PBXGroup;
 			children = (
-				0ED1731488F463478FA5B2ADA0F1A302 /* RESideMenu.xcconfig */,
-				018866B9255E0F578C9089743AC6EC23 /* RESideMenu-dummy.m */,
-				E9A80218E89A82C5A173B8BCCFE9E6D6 /* RESideMenu-prefix.pch */,
+				D288933A3DE3CC86A1F2179C013CE361 /* ZFModalTransitionAnimator.h */,
+				3AA138EDF45A91F12138055E7847E268 /* ZFModalTransitionAnimator.m */,
+				FC4B1684DBD3472BD7CE11D29B93B977 /* Support Files */,
+			);
+			path = ZFDragableModalTransition;
+			sourceTree = "<group>";
+		};
+		7847D6210B9EFA92AD6CF074B2884ED4 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				979A3625ED0C6D82F1AC12D2656A3000 /* RESideMenu.xcconfig */,
+				C3D993E979D1B7A46CB8BE20951CBFF6 /* RESideMenu-dummy.m */,
+				A1C4A513AD052ADC8ED91F6306335554 /* RESideMenu-prefix.pch */,
 			);
 			name = "Support Files";
 			path = "../Target Support Files/RESideMenu";
-			sourceTree = "<group>";
-		};
-		640E68360EDEE9D46BEB20381E4FFBDA /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				54F3F98247440652BB28CD49436B022F /* libJBChartView.a */,
-				5AD30317B21F2ADDB16B564F1EBF83F2 /* libPods-FantasyBasketball.a */,
-				C705AD143E99EABC45239CC343CF11E6 /* libRESideMenu.a */,
-				B7B8A1A8EC069F2AE71F0056492242F1 /* libZFDragableModalTransition.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		6B72885508B7D127F930473A916227B2 /* RESideMenu */ = {
-			isa = PBXGroup;
-			children = (
-				0EC3CCB466677B5040C449A1B73474D0 /* RECommonFunctions.h */,
-				959311089DDC4DD455F2501BAA3CA436 /* RECommonFunctions.m */,
-				F63BE34234C40F975180A625797A3F24 /* RESideMenu.h */,
-				6F314C18A8BD87D96B7E03EA1A085874 /* RESideMenu.m */,
-				020D39B899A26C1DA57B64540C45CDF8 /* UIViewController+RESideMenu.h */,
-				86A3554ABBCF0C760CC52BCCAEAF48D7 /* UIViewController+RESideMenu.m */,
-				58244FD80B812B743F0534FF9BD12158 /* Support Files */,
-			);
-			path = RESideMenu;
 			sourceTree = "<group>";
 		};
 		7DB346D0F39D3F0E887471402A8071AB = {
@@ -226,8 +350,8 @@
 			children = (
 				BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */,
 				433CD3331B6C3787F473C941B61FC68F /* Frameworks */,
-				A017F0B64F320CCD9AA3DDF8ADD6C4FC /* Pods */,
-				640E68360EDEE9D46BEB20381E4FFBDA /* Products */,
+				D4C8F0A47517A66C4B558DF360C0D926 /* Pods */,
+				FFEA5CE12AF7B8217DC4C7F5D4BF29BD /* Products */,
 				80D218B6509703A88BEEF68A04691ABD /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
@@ -240,14 +364,52 @@
 			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
-		A017F0B64F320CCD9AA3DDF8ADD6C4FC /* Pods */ = {
+		895B61B3FD3BD2E6633A6C51A1490DC4 /* GraphKit */ = {
 			isa = PBXGroup;
 			children = (
-				571E32C40CD8AF4713424073FEA04E72 /* JBChartView */,
-				6B72885508B7D127F930473A916227B2 /* RESideMenu */,
-				23DF9E168A5352540F87FEB5E5844AFC /* ZFDragableModalTransition */,
+				9A12A40FEEF70BF7024025B385ADC870 /* GKBar.h */,
+				A7BB10A4169B768AA41F5D749EA3F6CF /* GKBar.m */,
+				445D77A46F47158069D74B7DCADA30C0 /* GKBarGraph.h */,
+				1FB6C4781BBE490A165B395BB0CCA603 /* GKBarGraph.m */,
+				521CD9152C1CA65B612274151EC25E9E /* GKLineGraph.h */,
+				672800EAA0FA46BDC50E2468032401EB /* GKLineGraph.m */,
+				9614B0173AC56ADE4791B880DE3E6654 /* GraphKit.h */,
+				12BCD4FE4703DBF7D93B9EC1638B1032 /* UIColor+GraphKit.h */,
+				4A80BD54017904E89C90E1762748584A /* UIColor+GraphKit.m */,
+				15033CD21D6EF2791C6E17CD058C392B /* Support Files */,
 			);
-			name = Pods;
+			path = GraphKit;
+			sourceTree = "<group>";
+		};
+		A8ED828774DDE428EF253091A14A1E4E /* FrameAccessor */ = {
+			isa = PBXGroup;
+			children = (
+				71445369F5A217E799CCED55E01B940B /* FrameAccessor.h */,
+				AAF50C62AE817F8D9BE3E4EA4F3EE5E7 /* ScrollViewFrameAccessor.h */,
+				54D0D92B1AF36519D49564CED1B9F73E /* ScrollViewFrameAccessor.m */,
+				7406111E8F18D2F8CA029E80E2C4CF51 /* ViewFrameAccessor.h */,
+				5837DFF8C175924EC857DC8F6B488281 /* ViewFrameAccessor.m */,
+				41E39967CB7A90CA2865B62651AD067F /* Support Files */,
+			);
+			path = FrameAccessor;
+			sourceTree = "<group>";
+		};
+		AF9DB0335D829066D6629BE094D061A7 /* NSArray */ = {
+			isa = PBXGroup;
+			children = (
+				173110757D2F471132799DD3DBA6C0C0 /* NSArray+MK.h */,
+				0A84D224F8D8933BA940BC2BB26E36CD /* NSArray+MK_Block.h */,
+				6A4CBC7ECDB56213A4D1D143B8D77A63 /* NSArray+MK_Block.m */,
+				3120320BC968F3B43E21D49B51A36C68 /* NSArray+MK_Misc.h */,
+				BDF4563B6B97490C7AE2FD8C912B916B /* NSArray+MK_Misc.m */,
+				016DD66838EF24C8DC04D115F1AB34C4 /* NSMutableArray+MK_Misc.h */,
+				D912F8B568EC3C54B410DB0CF0E8E5E0 /* NSMutableArray+MK_Misc.m */,
+				DE2090B43CD205CC37DBE02922220331 /* NSMutableArray+MK_Queue.h */,
+				CD66B941E2D685F6CD0A3EFDA24DA570 /* NSMutableArray+MK_Queue.m */,
+				2549D3F4AC5DDB1FA2C6A183640BC34F /* NSMutableArray+MK_Stack.h */,
+				6614CDF7F1CD046F5060C6661AADEDE9 /* NSMutableArray+MK_Stack.m */,
+			);
+			name = NSArray;
 			sourceTree = "<group>";
 		};
 		C7C9805E771CFEB526F895FFC2DF5461 /* Pods-FantasyBasketball */ = {
@@ -265,35 +427,101 @@
 			path = "Target Support Files/Pods-FantasyBasketball";
 			sourceTree = "<group>";
 		};
-		D75313B9C3A79AF162FC4987339F7A00 /* Support Files */ = {
+		D4C8F0A47517A66C4B558DF360C0D926 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				76613D2A5E65D97271BEE74F5E693CF4 /* JBChartView.xcconfig */,
-				D5E32157BE20C02CAC74B504564D30BE /* JBChartView-dummy.m */,
-				3555C6471EBE3D1E294994B2A2C6AD70 /* JBChartView-prefix.pch */,
+				A8ED828774DDE428EF253091A14A1E4E /* FrameAccessor */,
+				895B61B3FD3BD2E6633A6C51A1490DC4 /* GraphKit */,
+				F1067501123C75353791AE661F1989B9 /* JBChartView */,
+				E57AFFC523D48465E7A17BCF69A8E220 /* MKFoundationKit */,
+				6587397769FC5001DFF62B1F05987A8F /* RESideMenu */,
+				77B67FDB272578694B3B4A27659DFC6D /* ZFDragableModalTransition */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		E57AFFC523D48465E7A17BCF69A8E220 /* MKFoundationKit */ = {
+			isa = PBXGroup;
+			children = (
+				AF9DB0335D829066D6629BE094D061A7 /* NSArray */,
+				0C8BE8E8BBC672BD3F0845758E0A6740 /* Support Files */,
+			);
+			path = MKFoundationKit;
+			sourceTree = "<group>";
+		};
+		F1067501123C75353791AE661F1989B9 /* JBChartView */ = {
+			isa = PBXGroup;
+			children = (
+				26C072C96E26ED9305660F39304B728F /* JBBarChartView.h */,
+				852D7D1F5B028DCE37D934436ADDDFA3 /* JBBarChartView.m */,
+				0952B9F3FD2540DDA186D55BF3A536CC /* JBChartView.h */,
+				C1BB319B69776B63951660561FDB2FD6 /* JBChartView.m */,
+				4EA2A92CF393B84B6FBC9F0D6C21DA41 /* JBLineChartView.h */,
+				4E03560B4716C42ABDA00119EC7F71A4 /* JBLineChartView.m */,
+				F6A24ACB7AC505DE6132BA0DE75E9851 /* Support Files */,
+			);
+			path = JBChartView;
+			sourceTree = "<group>";
+		};
+		F6A24ACB7AC505DE6132BA0DE75E9851 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				483CE51846DFB8A1CAC7A52949755562 /* JBChartView.xcconfig */,
+				B158C2CD86888BEE7078DC23A6CDC19A /* JBChartView-dummy.m */,
+				F084FD91A594E43FD25D3154F27C7182 /* JBChartView-prefix.pch */,
 			);
 			name = "Support Files";
 			path = "../Target Support Files/JBChartView";
 			sourceTree = "<group>";
 		};
+		FC4B1684DBD3472BD7CE11D29B93B977 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				47D848FAFFD4298DD127D927A149C78D /* ZFDragableModalTransition.xcconfig */,
+				9F4532A9F9575141E543EE299200D328 /* ZFDragableModalTransition-dummy.m */,
+				43587CD758ED5A9F97E6E75E317E5107 /* ZFDragableModalTransition-prefix.pch */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/ZFDragableModalTransition";
+			sourceTree = "<group>";
+		};
+		FFEA5CE12AF7B8217DC4C7F5D4BF29BD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				859FB0C88BBCC1F7FEE816541F4EB82A /* libFrameAccessor.a */,
+				FE6D68D3AF8AEA9AEB2089C8A7CDCDA7 /* libGraphKit.a */,
+				526EA0D6E903C36204EC29ECCE2189BE /* libJBChartView.a */,
+				113B7DDE9D37AEEAAB88E66B8CB2005E /* libMKFoundationKit.a */,
+				B8B2D6FFE2EFBEE89B1865B172A85926 /* libPods-FantasyBasketball.a */,
+				F026EE4DFF87FE8AEBDC09B2F85AEC6A /* libRESideMenu.a */,
+				84F88235490A3EAABAF07167F19126D6 /* libZFDragableModalTransition.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		0948577C2D2712B430BDCD13645425C0 /* Headers */ = {
+		0F8925A3256DCE2AF5A41DE0C39B0518 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A446592082638056562B5F6F377F985 /* ZFModalTransitionAnimator.h in Headers */,
+				CD153F16BAD5B778237CD79BA6AF41DA /* NSArray+MK.h in Headers */,
+				CA304F00C4767896949695447753444C /* NSArray+MK_Block.h in Headers */,
+				95023A7A1A0324545FC1CA4DFE206B94 /* NSArray+MK_Misc.h in Headers */,
+				EB842340AC24C1E5D740ADFD052F38DB /* NSMutableArray+MK_Misc.h in Headers */,
+				403783DFE445FDDE15C44E3C732A70A5 /* NSMutableArray+MK_Queue.h in Headers */,
+				1C5E0C8B17B1B927CBBDE5E068A350FB /* NSMutableArray+MK_Stack.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		1DDEA3349F085F491AD943A095649859 /* Headers */ = {
+		41C2892E3013BFF0F23E75390DDCB2C9 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A1A0ABCFB2375FAA2B715E13EF96E8A /* RECommonFunctions.h in Headers */,
-				25FC53FDA8C53C96A98C54F60F4AE94F /* RESideMenu.h in Headers */,
-				F3371A7CEA10FBF169D37DAD822830B6 /* UIViewController+RESideMenu.h in Headers */,
+				7863D7F2B2102D342ADF4C19E00179F4 /* RECommonFunctions.h in Headers */,
+				D881509F2D41ED32EED98189748F0F91 /* RESideMenu.h in Headers */,
+				1D3C68727C83F2D6A4038BE3765D2F82 /* UIViewController+RESideMenu.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,9 +535,56 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EA88A340756822CAD041304EB3DD892E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F952339396C0EDCFF3493B549A5363C2 /* FrameAccessor.h in Headers */,
+				19B9412DC02FC36F70D413BA546C244A /* ScrollViewFrameAccessor.h in Headers */,
+				3F6511F037828851D1078A838E46B9C7 /* ViewFrameAccessor.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F37D3A1BB563A4C0AB93FF812E406F68 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F725DD4AEE04E6648B92864E956633E /* ZFModalTransitionAnimator.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F922C050497BB19D23D500E0856123D5 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B185315B7ABCB51CA2E7A9D92662C63B /* GKBar.h in Headers */,
+				C52A970E886824832895A80C1BABAF3A /* GKBarGraph.h in Headers */,
+				EEA93B0A9FA22E2637F9399FC3D3121B /* GKLineGraph.h in Headers */,
+				C33B722606607036B4FD7B9C52520DE7 /* GraphKit.h in Headers */,
+				FD0344D7F3C0561F31B327A4950F8E14 /* UIColor+GraphKit.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		0F7B1940DE10624DFABB6A65D0BE9B4A /* FrameAccessor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 65C440F2AABDA4CA2F618CCAEE4CB818 /* Build configuration list for PBXNativeTarget "FrameAccessor" */;
+			buildPhases = (
+				D05ECD22FEFA860E2CBA43A94B826AB0 /* Sources */,
+				C6F82729850333F1DB940AAC4F2856B7 /* Frameworks */,
+				EA88A340756822CAD041304EB3DD892E /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FrameAccessor;
+			productName = FrameAccessor;
+			productReference = 859FB0C88BBCC1F7FEE816541F4EB82A /* libFrameAccessor.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		383DF1D0756F323FC2957E68F6997C6D /* JBChartView */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6F24AAEA5084266242D0D63FD3230262 /* Build configuration list for PBXNativeTarget "JBChartView" */;
@@ -324,16 +599,55 @@
 			);
 			name = JBChartView;
 			productName = JBChartView;
-			productReference = 54F3F98247440652BB28CD49436B022F /* libJBChartView.a */;
+			productReference = 526EA0D6E903C36204EC29ECCE2189BE /* libJBChartView.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		9E5B6D094672D2D87810C8ED1C3036E4 /* RESideMenu */ = {
+		5B76374993D313CCBB294E87BB10BAED /* Pods-FantasyBasketball */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3586AD64CCFE9300779FA3CE5CB1322A /* Build configuration list for PBXNativeTarget "RESideMenu" */;
+			buildConfigurationList = 3769740FE6D387F3D2AA27C883978F71 /* Build configuration list for PBXNativeTarget "Pods-FantasyBasketball" */;
 			buildPhases = (
-				F4861A3BE2F7F473676FF8AC35E32D9C /* Sources */,
-				802276DA56821DCFD34D8432CCBAA269 /* Frameworks */,
-				1DDEA3349F085F491AD943A095649859 /* Headers */,
+				3C9E3679696448EE0A9957A30B2C9AB1 /* Sources */,
+				E6A7044CA2D3A454BF57B004EB45CC8B /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				23F28DB88DBC62F978DFEC10507E73D0 /* PBXTargetDependency */,
+				2E448E661450A7DD91EB5E0EA9045D44 /* PBXTargetDependency */,
+				60EF957075969D4FA5BC6309AF0B2C01 /* PBXTargetDependency */,
+				331C0DC445F9E63CD3665F51A992025B /* PBXTargetDependency */,
+				D67FAC8DE503388CD1422C2ADC44C1AF /* PBXTargetDependency */,
+				338DE9E36644F4496A8FA2BEE145EB92 /* PBXTargetDependency */,
+			);
+			name = "Pods-FantasyBasketball";
+			productName = "Pods-FantasyBasketball";
+			productReference = B8B2D6FFE2EFBEE89B1865B172A85926 /* libPods-FantasyBasketball.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		970176E4C248C9FFA9FFEE0933B897DC /* MKFoundationKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D1D421AA10FF97BA57B09646380FD9C0 /* Build configuration list for PBXNativeTarget "MKFoundationKit" */;
+			buildPhases = (
+				B4D12A61AFBF93C6115143865F1D6B3D /* Sources */,
+				A66FFEB16BE09517288200EDE1FBCA23 /* Frameworks */,
+				0F8925A3256DCE2AF5A41DE0C39B0518 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MKFoundationKit;
+			productName = MKFoundationKit;
+			productReference = 113B7DDE9D37AEEAAB88E66B8CB2005E /* libMKFoundationKit.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		99C955F0F53E9B63A9CF3C1A8B378A92 /* RESideMenu */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 137525B6A4CA433F16E37F9E5DC0B51C /* Build configuration list for PBXNativeTarget "RESideMenu" */;
+			buildPhases = (
+				465C6420377A70072CEA921EEDA5B101 /* Sources */,
+				1669DD79AE1087DD9A384A724997E25D /* Frameworks */,
+				41C2892E3013BFF0F23E75390DDCB2C9 /* Headers */,
 			);
 			buildRules = (
 			);
@@ -341,35 +655,35 @@
 			);
 			name = RESideMenu;
 			productName = RESideMenu;
-			productReference = C705AD143E99EABC45239CC343CF11E6 /* libRESideMenu.a */;
+			productReference = F026EE4DFF87FE8AEBDC09B2F85AEC6A /* libRESideMenu.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		B8DAF3B465BD21778AD3C349A1A19758 /* Pods-FantasyBasketball */ = {
+		CC583880AD24A30C69B268B072649FE3 /* GraphKit */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 38B052B67652AEBC4E68ECC2D972A9C8 /* Build configuration list for PBXNativeTarget "Pods-FantasyBasketball" */;
+			buildConfigurationList = 622B5A389FFE550F16685031D7840747 /* Build configuration list for PBXNativeTarget "GraphKit" */;
 			buildPhases = (
-				1C263B3A7EB45584DB7D87B7D626CD76 /* Sources */,
-				994914A0365402064D230609F8A16620 /* Frameworks */,
+				B8F9E4714D507014ADE037C37518EB67 /* Sources */,
+				79A6F44E683705243D0AC76B081DE5FE /* Frameworks */,
+				F922C050497BB19D23D500E0856123D5 /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				B56A5D24F5C4ACE8D2A9007B67454618 /* PBXTargetDependency */,
-				95D7DF0E9AA1BA5CC25B16ED6112BDC0 /* PBXTargetDependency */,
-				E16D8094E305B807D947431AB5176BF3 /* PBXTargetDependency */,
+				E921C330C2CA72545E83BB6160C90ABE /* PBXTargetDependency */,
+				5DCABF347897EB60E7608D5EE731D388 /* PBXTargetDependency */,
 			);
-			name = "Pods-FantasyBasketball";
-			productName = "Pods-FantasyBasketball";
-			productReference = 5AD30317B21F2ADDB16B564F1EBF83F2 /* libPods-FantasyBasketball.a */;
+			name = GraphKit;
+			productName = GraphKit;
+			productReference = FE6D68D3AF8AEA9AEB2089C8A7CDCDA7 /* libGraphKit.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		EADB141B52DA47FF108810A72217CAD9 /* ZFDragableModalTransition */ = {
+		EE15FD0C5B5790F289599012737817D8 /* ZFDragableModalTransition */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 118390F49F97AEBF684E2372721089A9 /* Build configuration list for PBXNativeTarget "ZFDragableModalTransition" */;
+			buildConfigurationList = F061805A3633FCE9FA8559EC9822AF74 /* Build configuration list for PBXNativeTarget "ZFDragableModalTransition" */;
 			buildPhases = (
-				B21D04A47D407C5626CE3F849B48EDA3 /* Sources */,
-				85A96BAC74F23DE6D9D629A81C333151 /* Frameworks */,
-				0948577C2D2712B430BDCD13645425C0 /* Headers */,
+				9B650A4BE2103E0572F7393B2FC17CC6 /* Sources */,
+				AC091CDB7B5E54188B9BD01C1AC47E5D /* Frameworks */,
+				F37D3A1BB563A4C0AB93FF812E406F68 /* Headers */,
 			);
 			buildRules = (
 			);
@@ -377,7 +691,7 @@
 			);
 			name = ZFDragableModalTransition;
 			productName = ZFDragableModalTransition;
-			productReference = B7B8A1A8EC069F2AE71F0056492242F1 /* libZFDragableModalTransition.a */;
+			productReference = 84F88235490A3EAABAF07167F19126D6 /* libZFDragableModalTransition.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -397,33 +711,60 @@
 				en,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
-			productRefGroup = 640E68360EDEE9D46BEB20381E4FFBDA /* Products */;
+			productRefGroup = FFEA5CE12AF7B8217DC4C7F5D4BF29BD /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				0F7B1940DE10624DFABB6A65D0BE9B4A /* FrameAccessor */,
+				CC583880AD24A30C69B268B072649FE3 /* GraphKit */,
 				383DF1D0756F323FC2957E68F6997C6D /* JBChartView */,
-				B8DAF3B465BD21778AD3C349A1A19758 /* Pods-FantasyBasketball */,
-				9E5B6D094672D2D87810C8ED1C3036E4 /* RESideMenu */,
-				EADB141B52DA47FF108810A72217CAD9 /* ZFDragableModalTransition */,
+				970176E4C248C9FFA9FFEE0933B897DC /* MKFoundationKit */,
+				5B76374993D313CCBB294E87BB10BAED /* Pods-FantasyBasketball */,
+				99C955F0F53E9B63A9CF3C1A8B378A92 /* RESideMenu */,
+				EE15FD0C5B5790F289599012737817D8 /* ZFDragableModalTransition */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		1C263B3A7EB45584DB7D87B7D626CD76 /* Sources */ = {
+		3C9E3679696448EE0A9957A30B2C9AB1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				39166675C7DDAE528FD1A04DAE876B57 /* Pods-FantasyBasketball-dummy.m in Sources */,
+				E9F911F2E924D449BC538DFC3776A547 /* Pods-FantasyBasketball-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B21D04A47D407C5626CE3F849B48EDA3 /* Sources */ = {
+		465C6420377A70072CEA921EEDA5B101 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A4649C3CB71142058F9C8AA323AAC98 /* ZFDragableModalTransition-dummy.m in Sources */,
-				0C71195FAF1E0BB9D24FF208CAF62EE8 /* ZFModalTransitionAnimator.m in Sources */,
+				1D749466C0F4C800C038B6278E75F23B /* RECommonFunctions.m in Sources */,
+				44A060885D07DD186E65BE9E86460590 /* RESideMenu-dummy.m in Sources */,
+				A219564DD370C54DDFDD1ED6C68CB56C /* RESideMenu.m in Sources */,
+				2EAC8B319FB8DAFD248800C87554CC01 /* UIViewController+RESideMenu.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9B650A4BE2103E0572F7393B2FC17CC6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				49457CD2F71695A297D4C2ECCB4DAF7B /* ZFDragableModalTransition-dummy.m in Sources */,
+				26D4024D273BA1CFD175B8D6ACCA0286 /* ZFModalTransitionAnimator.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B4D12A61AFBF93C6115143865F1D6B3D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EB4E17D84611C2DAD7107B62A4730B5C /* MKFoundationKit-dummy.m in Sources */,
+				273B602F855CCB2D922B3CA086E719F5 /* NSArray+MK_Block.m in Sources */,
+				C4EDA27389362DD620E76FA2C724821C /* NSArray+MK_Misc.m in Sources */,
+				793044C3C6D940DB92CA7157EEFFC9BA /* NSMutableArray+MK_Misc.m in Sources */,
+				303F43B700CF71C6C1667628926EE13D /* NSMutableArray+MK_Queue.m in Sources */,
+				BE1F9E57FCC031763A01E0CE2A099EAF /* NSMutableArray+MK_Stack.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,48 +779,89 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F4861A3BE2F7F473676FF8AC35E32D9C /* Sources */ = {
+		B8F9E4714D507014ADE037C37518EB67 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BAF2E47CBF4A1DB809F8541AC0934136 /* RECommonFunctions.m in Sources */,
-				81B3024A95D95455BE0A0F17F0DA8C62 /* RESideMenu-dummy.m in Sources */,
-				713DAA066A43F8408F1D035EFB173C69 /* RESideMenu.m in Sources */,
-				62BF657644593554505029F1ADED69DF /* UIViewController+RESideMenu.m in Sources */,
+				1E88AA109A7220C69902C27547184472 /* GKBar.m in Sources */,
+				89CC5BE21517B0B633517E8D87F329F9 /* GKBarGraph.m in Sources */,
+				04B4911E495B6432B2E08524141441FA /* GKLineGraph.m in Sources */,
+				A95F50F0BC20246431E578001B63874C /* GraphKit-dummy.m in Sources */,
+				3DA0A0EF1BD7DE12DC44C4492F127EE0 /* UIColor+GraphKit.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D05ECD22FEFA860E2CBA43A94B826AB0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E86E6A51842C055E912A3811346102C9 /* FrameAccessor-dummy.m in Sources */,
+				9C89864A59B50F50CBDE0D8E45129F90 /* ScrollViewFrameAccessor.m in Sources */,
+				DCAF11106A4832E0DBBFB31949068ACD /* ViewFrameAccessor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		95D7DF0E9AA1BA5CC25B16ED6112BDC0 /* PBXTargetDependency */ = {
+		23F28DB88DBC62F978DFEC10507E73D0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = RESideMenu;
-			target = 9E5B6D094672D2D87810C8ED1C3036E4 /* RESideMenu */;
-			targetProxy = 9387EB591AB6EBBAD4A1AED7898B84BB /* PBXContainerItemProxy */;
+			name = FrameAccessor;
+			target = 0F7B1940DE10624DFABB6A65D0BE9B4A /* FrameAccessor */;
+			targetProxy = 44F32FB87AB4740858275508625FE83E /* PBXContainerItemProxy */;
 		};
-		B56A5D24F5C4ACE8D2A9007B67454618 /* PBXTargetDependency */ = {
+		2E448E661450A7DD91EB5E0EA9045D44 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GraphKit;
+			target = CC583880AD24A30C69B268B072649FE3 /* GraphKit */;
+			targetProxy = FC6CB36DEAD4FD2DFA6F0B2C2E655255 /* PBXContainerItemProxy */;
+		};
+		331C0DC445F9E63CD3665F51A992025B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MKFoundationKit;
+			target = 970176E4C248C9FFA9FFEE0933B897DC /* MKFoundationKit */;
+			targetProxy = 438338C718AAB7E34DFBB3A9AB969E93 /* PBXContainerItemProxy */;
+		};
+		338DE9E36644F4496A8FA2BEE145EB92 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ZFDragableModalTransition;
+			target = EE15FD0C5B5790F289599012737817D8 /* ZFDragableModalTransition */;
+			targetProxy = 1A3C852FA1C11C3356108894C4DF043C /* PBXContainerItemProxy */;
+		};
+		5DCABF347897EB60E7608D5EE731D388 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MKFoundationKit;
+			target = 970176E4C248C9FFA9FFEE0933B897DC /* MKFoundationKit */;
+			targetProxy = 9E21D8CD03C1644C8F51751EAB833F92 /* PBXContainerItemProxy */;
+		};
+		60EF957075969D4FA5BC6309AF0B2C01 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = JBChartView;
 			target = 383DF1D0756F323FC2957E68F6997C6D /* JBChartView */;
-			targetProxy = 1F0CF8B0F8D940F8CC0C8A69992A24C5 /* PBXContainerItemProxy */;
+			targetProxy = 270584D81B0B4F3A9DB06BE4B50C7754 /* PBXContainerItemProxy */;
 		};
-		E16D8094E305B807D947431AB5176BF3 /* PBXTargetDependency */ = {
+		D67FAC8DE503388CD1422C2ADC44C1AF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = ZFDragableModalTransition;
-			target = EADB141B52DA47FF108810A72217CAD9 /* ZFDragableModalTransition */;
-			targetProxy = 6BED3C75D80486792DD8388877E8E1D6 /* PBXContainerItemProxy */;
+			name = RESideMenu;
+			target = 99C955F0F53E9B63A9CF3C1A8B378A92 /* RESideMenu */;
+			targetProxy = D2FD98626E069B6AD150CBD7507CDE52 /* PBXContainerItemProxy */;
+		};
+		E921C330C2CA72545E83BB6160C90ABE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FrameAccessor;
+			target = 0F7B1940DE10624DFABB6A65D0BE9B4A /* FrameAccessor */;
+			targetProxy = 5193B08824381A417AF3C647B8EC0C8A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		27518B62888E8874BF96C51BC56D8DB3 /* Release */ = {
+		23ECDA491C0220A33D1EBD49CA1427BE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 76613D2A5E65D97271BEE74F5E693CF4 /* JBChartView.xcconfig */;
+			baseConfigurationReference = D98C090EF170442E2C673388848B9B17 /* FrameAccessor.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/JBChartView/JBChartView-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				GCC_PREFIX_HEADER = "Target Support Files/FrameAccessor/FrameAccessor-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -491,31 +873,30 @@
 			};
 			name = Release;
 		};
-		49C5E5310D40C3F1D0987150213A9BF0 /* Release */ = {
+		4E45D84528ABD81DC18580F3E3D9415F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0B82B89C3DFDA7DBAA17E2D90413A487 /* ZFDragableModalTransition.xcconfig */;
+			baseConfigurationReference = 27C6A1CF700C249248ECADE37A6095AB /* Pods-FantasyBasketball.release.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/ZFDragableModalTransition/ZFDragableModalTransition-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACH_O_TYPE = staticlib;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PODS_ROOT = "$(SRCROOT)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
-		57A93617C42ABFEE4F819BB078BF6421 /* Debug */ = {
+		55CD8AFDADC4E16D547D029F5579E148 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 76613D2A5E65D97271BEE74F5E693CF4 /* JBChartView.xcconfig */;
+			baseConfigurationReference = D98C090EF170442E2C673388848B9B17 /* FrameAccessor.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/JBChartView/JBChartView-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				GCC_PREFIX_HEADER = "Target Support Files/FrameAccessor/FrameAccessor-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -527,7 +908,78 @@
 			};
 			name = Debug;
 		};
-		9EB645C612834738B99727720210C23E /* Debug */ = {
+		6AEF8EBAA0625491E41468A08BC5B17D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 47D848FAFFD4298DD127D927A149C78D /* ZFDragableModalTransition.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/ZFDragableModalTransition/ZFDragableModalTransition-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		84ECB2B95BD22D1D9FA5435CAFBEC584 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C58091435436D22CD44466852790D0EA /* MKFoundationKit.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/MKFoundationKit/MKFoundationKit-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		957AF643838778DEFE02B6E0F7706830 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B2480A6589453FE7ACB9DC70AEB04302 /* Pods-FantasyBasketball.debug.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACH_O_TYPE = staticlib;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		9EE0E8BD5213D39408240409E5EBA5D0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 483CE51846DFB8A1CAC7A52949755562 /* JBChartView.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/JBChartView/JBChartView-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		A70CDAD61F90AC503C7D04CC22DA2923 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -559,20 +1011,20 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Debug;
 		};
-		A315EC2E7D7160BC76637785C18B462A /* Debug */ = {
+		C010CAFBB016C10B7F8C6A3D37265EF2 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0B82B89C3DFDA7DBAA17E2D90413A487 /* ZFDragableModalTransition.xcconfig */;
+			baseConfigurationReference = 483CE51846DFB8A1CAC7A52949755562 /* JBChartView.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/ZFDragableModalTransition/ZFDragableModalTransition-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				GCC_PREFIX_HEADER = "Target Support Files/JBChartView/JBChartView-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -584,41 +1036,115 @@
 			};
 			name = Debug;
 		};
-		A41943B3B1862CD50F8F499645185D80 /* Release */ = {
+		C84A4880FCD653663DF4DFBCCD1651E0 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 27C6A1CF700C249248ECADE37A6095AB /* Pods-FantasyBasketball.release.xcconfig */;
+			baseConfigurationReference = C58091435436D22CD44466852790D0EA /* MKFoundationKit.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
-				MACH_O_TYPE = staticlib;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		BE999A894A433F6BBB5AB5DE35FBC7DF /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = B2480A6589453FE7ACB9DC70AEB04302 /* Pods-FantasyBasketball.debug.xcconfig */;
-			buildSettings = {
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
-				MACH_O_TYPE = staticlib;
+				GCC_PREFIX_HEADER = "Target Support Files/MKFoundationKit/MKFoundationKit-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
-		E39CD1E764776175CB82EEC82A6C9948 /* Release */ = {
+		DCEFA58911005C97889AEE306F68DA03 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B1B9A52F5EEA87D935D8C1612CEF5859 /* GraphKit.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/GraphKit/GraphKit-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		DCFCA5D413B15088EEB5318B6A19C007 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 979A3625ED0C6D82F1AC12D2656A3000 /* RESideMenu.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/RESideMenu/RESideMenu-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		EDCC88CFAC1791737CABB81F9CF756C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B1B9A52F5EEA87D935D8C1612CEF5859 /* GraphKit.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/GraphKit/GraphKit-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		F7DCDE662C7AFAE37AC803735AB1B7A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 979A3625ED0C6D82F1AC12D2656A3000 /* RESideMenu.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/RESideMenu/RESideMenu-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		FA74837230E451A328AF104B37D199EA /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 47D848FAFFD4298DD127D927A149C78D /* ZFDragableModalTransition.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/ZFDragableModalTransition/ZFDragableModalTransition-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		FB45FFD90572718D82AB9092B750F0CA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -645,57 +1171,21 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				STRIP_INSTALLED_PRODUCT = NO;
 				SYMROOT = "${SRCROOT}/../build";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
-		EFADE618EF77CB8AC6F9160EE0D2EE4F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0ED1731488F463478FA5B2ADA0F1A302 /* RESideMenu.xcconfig */;
-			buildSettings = {
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/RESideMenu/RESideMenu-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		F771A5B32421C293AFD56A09AA173D91 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0ED1731488F463478FA5B2ADA0F1A302 /* RESideMenu.xcconfig */;
-			buildSettings = {
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/RESideMenu/RESideMenu-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		118390F49F97AEBF684E2372721089A9 /* Build configuration list for PBXNativeTarget "ZFDragableModalTransition" */ = {
+		137525B6A4CA433F16E37F9E5DC0B51C /* Build configuration list for PBXNativeTarget "RESideMenu" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A315EC2E7D7160BC76637785C18B462A /* Debug */,
-				49C5E5310D40C3F1D0987150213A9BF0 /* Release */,
+				F7DCDE662C7AFAE37AC803735AB1B7A4 /* Debug */,
+				DCFCA5D413B15088EEB5318B6A19C007 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -703,26 +1193,35 @@
 		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9EB645C612834738B99727720210C23E /* Debug */,
-				E39CD1E764776175CB82EEC82A6C9948 /* Release */,
+				A70CDAD61F90AC503C7D04CC22DA2923 /* Debug */,
+				FB45FFD90572718D82AB9092B750F0CA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3586AD64CCFE9300779FA3CE5CB1322A /* Build configuration list for PBXNativeTarget "RESideMenu" */ = {
+		3769740FE6D387F3D2AA27C883978F71 /* Build configuration list for PBXNativeTarget "Pods-FantasyBasketball" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				EFADE618EF77CB8AC6F9160EE0D2EE4F /* Debug */,
-				F771A5B32421C293AFD56A09AA173D91 /* Release */,
+				957AF643838778DEFE02B6E0F7706830 /* Debug */,
+				4E45D84528ABD81DC18580F3E3D9415F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		38B052B67652AEBC4E68ECC2D972A9C8 /* Build configuration list for PBXNativeTarget "Pods-FantasyBasketball" */ = {
+		622B5A389FFE550F16685031D7840747 /* Build configuration list for PBXNativeTarget "GraphKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				BE999A894A433F6BBB5AB5DE35FBC7DF /* Debug */,
-				A41943B3B1862CD50F8F499645185D80 /* Release */,
+				EDCC88CFAC1791737CABB81F9CF756C8 /* Debug */,
+				DCEFA58911005C97889AEE306F68DA03 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		65C440F2AABDA4CA2F618CCAEE4CB818 /* Build configuration list for PBXNativeTarget "FrameAccessor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55CD8AFDADC4E16D547D029F5579E148 /* Debug */,
+				23ECDA491C0220A33D1EBD49CA1427BE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -730,8 +1229,26 @@
 		6F24AAEA5084266242D0D63FD3230262 /* Build configuration list for PBXNativeTarget "JBChartView" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				57A93617C42ABFEE4F819BB078BF6421 /* Debug */,
-				27518B62888E8874BF96C51BC56D8DB3 /* Release */,
+				C010CAFBB016C10B7F8C6A3D37265EF2 /* Debug */,
+				9EE0E8BD5213D39408240409E5EBA5D0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D1D421AA10FF97BA57B09646380FD9C0 /* Build configuration list for PBXNativeTarget "MKFoundationKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C84A4880FCD653663DF4DFBCCD1651E0 /* Debug */,
+				84ECB2B95BD22D1D9FA5435CAFBEC584 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F061805A3633FCE9FA8559EC9822AF74 /* Build configuration list for PBXNativeTarget "ZFDragableModalTransition" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6AEF8EBAA0625491E41468A08BC5B17D /* Debug */,
+				FA74837230E451A328AF104B37D199EA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
