@@ -9,9 +9,9 @@
 #import "PlayerViewController.h"
 #import "FBSession.h"
 #import "TFHpple.h"
-#import "BEMSimpleLineGraphView.h"
 #import "WebViewController.h"
 #import "ZFModalTransitionAnimator.h"
+#import "BEMSimpleLineGraphView.h"
 
 @interface PlayerViewController () <BEMSimpleLineGraphDataSource, BEMSimpleLineGraphDelegate>
 
@@ -477,7 +477,6 @@
     //[_gameTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
     [_gamesBasicTableView reloadData];
     [_gameTableView reloadData];
-    [_graphView reloadGraph];
 }
 
 - (void)setupPlayerRanksView {
@@ -507,31 +506,6 @@
         self.headerOwnerLabel.text = [NSString stringWithFormat:@"Owned (%@)",self.ranks[0]];
         self.headerOwnerLabel.textColor = [UIColor whiteColor];
     }
-}
-
-- (void)setupGraphView {
-    _graphView = [[BEMSimpleLineGraphView alloc] initWithFrame:CGRectMake(0, 0, _graphContainerView.frame.size.width, _graphContainerView.frame.size.height)];
-    _graphView.delegate = self;
-    _graphView.dataSource = self;
-    _graphView.enableBezierCurve = YES;
-    _graphView.averageLine.enableAverageLine = YES;
-    _graphView.averageLine.width = 1;
-    _graphView.averageLine.alpha = 0.6;
-    _graphView.averageLine.color = [UIColor grayColor];
-    _graphView.colorLine = [UIColor lightGrayColor];
-    _graphView.colorPoint = [UIColor lightGrayColor];
-    _graphView.colorTop = [UIColor whiteColor];
-    _graphView.colorBottom = [UIColor lightGrayColor];
-    _graphView.colorBackgroundXaxis = [UIColor whiteColor];
-    _graphView.alphaBottom = 0.15;
-    _graphView.enableYAxisLabel = YES;
-    _graphView.enablePopUpReport = YES;
-    _graphView.widthLine = 2.0;
-    _graphView.alwaysDisplayDots = YES;
-    _graphView.autoScaleYAxis = YES;
-    _graphView.animationGraphEntranceTime = 1.0;
-    
-    [_graphContainerView addSubview:_graphView];
 }
 
 bool gameLogIsBasic = YES;
@@ -935,6 +909,31 @@ bool gameLogIsBasic = YES;
     }
 }
 
+- (void)setupGraphView {
+    _graphView = [[BEMSimpleLineGraphView alloc] initWithFrame:CGRectMake(5, -15, _graphContainerView.frame.size.width-15, _graphContainerView.frame.size.height+25)];
+    _graphView.delegate = self;
+    _graphView.dataSource = self;
+    _graphView.enableBezierCurve = YES;
+    _graphView.averageLine.enableAverageLine = YES;
+    _graphView.averageLine.width = 1;
+    _graphView.averageLine.alpha = 0.6;
+    _graphView.averageLine.color = [UIColor grayColor];
+    _graphView.colorLine = [UIColor lightGrayColor];
+    _graphView.colorPoint = [UIColor lightGrayColor];
+    _graphView.colorTop = [UIColor clearColor];
+    _graphView.colorBottom = [UIColor lightGrayColor];
+    _graphView.colorBackgroundXaxis = [UIColor whiteColor];
+    _graphView.alphaBottom = 0.15;
+    _graphView.enableYAxisLabel = YES;
+    _graphView.enablePopUpReport = YES;
+    _graphView.widthLine = 2.0;
+    _graphView.alwaysDisplayDots = YES;
+    _graphView.autoScaleYAxis = YES;
+    _graphView.animationGraphEntranceTime = 1.0;
+    
+    [_graphContainerView addSubview:_graphView];
+}
+
 #pragma mark - BEMSimpleGraphView Delegate Methods
 
 - (NSInteger)numberOfYAxisLabelsOnLineGraph:(BEMSimpleLineGraphView *)graph {
@@ -966,7 +965,7 @@ int numGraphPoints;
 }
 
 - (CGFloat)incrementValueForYAxisOnLineGraph:(nonnull BEMSimpleLineGraphView *)graph {
-    return 40;
+    return 20;
 }
 
 - (CGFloat)maxValueForLineGraph:(BEMSimpleLineGraphView *)graph {

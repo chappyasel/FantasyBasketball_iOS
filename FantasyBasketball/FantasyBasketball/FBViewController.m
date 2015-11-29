@@ -46,21 +46,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - FBPickerView delegate
-
--(void) fadeIn:(UIButton *)sender {
-    
-}
-
--(void)fadeOutWithPickerView: (FBPickerView *) pickerView {
-    [UIView animateWithDuration:0.2 animations:^{
-        [pickerView setAlpha:0.0];
-    } completion:^(BOOL finished) {
-        [pickerView removeFromSuperview];
-        self.navigationItem.rightBarButtonItem.enabled = YES;
-    }];
-}
-
 #pragma mark - tableView dataSource
 
 - (NSInteger) tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -69,6 +54,10 @@
 
 - (UITableViewCell *) tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     return nil;
+}
+
+-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)orientation duration:(NSTimeInterval)duration {
+    [self.tableView reloadData];
 }
 
 #pragma mark - PlayerCell delegate
@@ -124,16 +113,25 @@
 
 #pragma mark - FBPickerView delegate
 
+-(void) fadeIn:(UIButton *)sender {
+    
+}
+
+-(void)fadeOutWithPickerView: (FBPickerView *) pickerView {
+    [UIView animateWithDuration:0.2 animations:^{
+        [pickerView setAlpha:0.0];
+    } completion:^(BOOL finished) {
+        [pickerView removeFromSuperview];
+        self.navigationItem.rightBarButtonItem.enabled = YES;
+    }];
+}
+
 - (void)doneButtonPressedInPickerView:(FBPickerView *)pickerView {
     
 }
 
 - (void)cancelButtonPressedInPickerView:(FBPickerView *)pickerView {
     
-}
-
--(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)orientation duration:(NSTimeInterval)duration {
-    [self.tableView reloadData];
 }
 
 #pragma mark - Navigation

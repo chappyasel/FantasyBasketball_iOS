@@ -10,7 +10,7 @@
 #import "PlayerCell.h"
 #import "FBPickerView.h"
 
-@interface MyTeamViewController : FBViewController <UIScrollViewDelegate, FBPickerViewDelegate>
+@interface MyTeamViewController : FBViewController <UIScrollViewDelegate>
 
 @property NSString *scoringPeriod; //span of stats
 

@@ -21,9 +21,13 @@
 
 @property NSMutableArray *generalNews;
 @property NSMutableArray *transactions;
-@property NSMutableArray *teamNews;
+@property NSMutableArray *playerNews; //team and WL
 
 @property int numTeamPlayersLoaded; //out of 13 (for section header)
+@property int numWLPlayersLoaded;
+
+@property NSArray <NSNumber *> *selectorData;
+@property BOOL isLarge;
 
 @end
 
@@ -37,10 +41,13 @@
     self.imageOperationQueue = [[NSOperationQueue alloc]init];
     self.imageOperationQueue.maxConcurrentOperationCount = 4;
     self.imageCache = [[NSCache alloc] init];
+    self.isLarge = (self.view.frame.size.width > 400);
+    self.selectorData = @[[NSNumber numberWithBool:YES],[NSNumber numberWithBool:YES],[NSNumber numberWithBool:YES],[NSNumber numberWithBool:YES]];
     [self beginAsyncLoading];
 }
 
 - (void)beginAsyncLoading {
+    self.playerNews = [[NSMutableArray alloc] init];
     dispatch_queue_t myQueue = dispatch_queue_create("My Queue",NULL);
     dispatch_async(myQueue, ^{
         [self loadGeneralFantasyNewsWithCompletionBlock:^{
@@ -55,7 +62,7 @@
         }];
         [self loadTeamNewsWithCompletionBlock:^(int numCompleted) {
             //sort by time
-            self.teamNews = [[NSMutableArray alloc] initWithArray:[self.teamNews sortedArrayUsingComparator:^NSComparisonResult(NSDictionary *d1, NSDictionary *d2) {
+            self.playerNews = [[NSMutableArray alloc] initWithArray:[self.playerNews sortedArrayUsingComparator:^NSComparisonResult(NSDictionary *d1, NSDictionary *d2) {
                 NSDate *date1 = d1[@"date"];
                 NSDate *date2 = d2[@"date"];
                 return [date2 compare:date1]; //newest first
@@ -65,13 +72,23 @@
                 [self.tableView reloadData];
             });
         }];
+        [self loadWLNewsWithCompletionBlock:^(int numCompleted) {
+            //sort by time
+            self.playerNews = [[NSMutableArray alloc] initWithArray:[self.playerNews sortedArrayUsingComparator:^NSComparisonResult(NSDictionary *d1, NSDictionary *d2) {
+                NSDate *date1 = d1[@"date"];
+                NSDate *date2 = d2[@"date"];
+                return [date2 compare:date1]; //newest first
+            }]];
+            self.numWLPlayersLoaded = numCompleted;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.tableView reloadData];
+            });
+        }];
     });
 }
 
 - (void)loadTeamNewsWithCompletionBlock:(void (^)(int numCompleted)) completed {
     //load team
-    int i = 0;
-    self.teamNews = [[NSMutableArray alloc] init];
     NSMutableArray *names = [[NSMutableArray alloc] init];
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/clubhouse?leagueId=%@&teamId=%@&seasonId=%@&version=today&scoringPeriodId=%@",self.session.leagueID,self.session.teamID,self.session.seasonID,self.session.scoringPeriodID]];
     NSData *html = [NSData dataWithContentsOfURL:url];
@@ -85,14 +102,25 @@
             [names addObject:@[name[@"first"], name[@"last"]]];
         }
     }
+    int i = 0;
     for (NSArray *name in names) {
-        [self.teamNews addObjectsFromArray:[self loadRotoworldWithName:name]];
+        [self.playerNews addObjectsFromArray:[self loadRotoworldWithName:name isOnWL:NO]];
         i++;
         completed(i);
     }
 }
 
-- (NSArray <NSDictionary *> *)loadRotoworldWithName:(NSArray *)name {
+- (void)loadWLNewsWithCompletionBlock:(void (^)(int numCompleted)) completed {
+    int i = 0;
+    for (NSString *nameString in self.watchList.playerArray) {
+        NSDictionary *name = [FBPlayer separateFirstAndLastNameForString:nameString];
+        [self.playerNews addObjectsFromArray:[self loadRotoworldWithName:@[name[@"first"], name[@"last"]] isOnWL:YES]];
+        i++;
+        completed(i);
+    }
+}
+
+- (NSArray <NSDictionary *> *)loadRotoworldWithName:(NSArray *)name isOnWL: (BOOL) isOnWL{
     NSMutableArray <NSDictionary *> *news = [[NSMutableArray alloc] init];
     TFHpple *statParser = [[TFHpple alloc] initWithHTMLData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.rotoworld.com/content/playersearch.aspx?searchname=%@,%@&sport=nba",name[1],name[0]]]]];
     NSString *rotoworldLink = [[[statParser searchWithXPathQuery:@"//div[@class='moreplayernews']/a"] firstObject] objectForKey:@"href"];
@@ -123,6 +151,8 @@
             }
         }
         [rotoPeice setObject:[NSString stringWithFormat:@"%@ %@",name[0],name[1]] forKey:@"name"];
+        if (isOnWL) [rotoPeice setObject:@1 forKey:@"isOnWL"];
+        else [rotoPeice setObject:@0 forKey:@"isOnWL"];
         [news addObject:rotoPeice];
     }
     return news;
@@ -202,7 +232,7 @@
         if (transaction[@"link"]) [self linkWithTeamLink:transaction[@"link"]];
     }
     else if (indexPath.section == 2) {
-        NSDictionary *teamNewsRow = self.teamNews[indexPath.row];
+        NSDictionary *teamNewsRow = self.playerNews[indexPath.row];
         NSDictionary *name = [FBPlayer separateFirstAndLastNameForString:teamNewsRow[@"name"]];
         [self linkWithPlayerName:[[NSDictionary alloc] initWithObjects:@[name[@"first"], name[@"last"]] forKeys:@[@"first", @"last"]]];
     }
@@ -213,7 +243,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) return self.generalNews.count;
     if (section == 1) return self.transactions.count;
-    if (section == 2) return self.teamNews.count;
+    if (section == 2) return self.playerNews.count;
     return 0;
 }
 
@@ -224,24 +254,31 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (section == 0) return @"CBS Fantasy News";
     if (section == 1) return @"League Transactions";
-    if (section == 2) {
-        if (self.numTeamPlayersLoaded == 13) return @"Rotoworld Team News";
-        return [NSString stringWithFormat:@"Rotoworld Team News (%d/%d players)",self.numTeamPlayersLoaded,13];
+    if (section == 2 && self.isLarge) {
+        if (self.numTeamPlayersLoaded == 13 && self.numWLPlayersLoaded == self.watchList.playerArray.count) return @"Rotoworld Team & WL News";
+        return [NSString stringWithFormat:@"Rotoworld Team & WL News (%d/%d, %d/%d)",self.numTeamPlayersLoaded,13,self.numWLPlayersLoaded,self.watchList.playerArray.count];
+    }
+    else if (section == 2) {
+        if (self.numTeamPlayersLoaded == 13 && self.numWLPlayersLoaded == self.watchList.playerArray.count) return @"Rotoworld News";
+        return [NSString stringWithFormat:@"Rotoworld News (%d/%d, %d/%d)",self.numTeamPlayersLoaded,13,self.numWLPlayersLoaded,self.watchList.playerArray.count];
     }
     return @"";
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) return 100;
-    if (indexPath.section == 1) return 90;
-    if (indexPath.section == 2) {
-        NSString *text = [NSString stringWithFormat:@"%@ %@",[self.teamNews[indexPath.row] objectForKey:@"report"],[self.teamNews[indexPath.row] objectForKey:@"impact"]];
+    if (indexPath.section == 0 && self.selectorData[0].boolValue) return 100;
+    else if (indexPath.section == 1 && self.selectorData[1].boolValue) return 90;
+    else if (indexPath.section == 2 && (self.selectorData[2].boolValue || self.selectorData[3].boolValue)) {
+        NSDictionary *rotoPeice = self.playerNews[indexPath.row];
+        if ([rotoPeice[@"isOnWL"] isEqual: @1]) { if (!self.selectorData[3].boolValue) return 0; }
+        else { if (!self.selectorData[2].boolValue) return 0; }
+        NSString *text = [NSString stringWithFormat:@"%@ %@",[self.playerNews[indexPath.row] objectForKey:@"report"],[self.playerNews[indexPath.row] objectForKey:@"impact"]];
         UIFont *font = [UIFont systemFontOfSize:15];
         NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:@ {NSFontAttributeName: font}];
         CGRect rect = [attributedText boundingRectWithSize:(CGSize){self.view.frame.size.width-20.0, CGFLOAT_MAX} options:NSStringDrawingUsesLineFragmentOrigin context:nil];
         return (CGFloat)rect.size.height+30+35;
     }
-    return 40;
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -252,6 +289,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Identifier"];
     }
     if (indexPath.section == 0) {
+        if (!self.selectorData[0].boolValue) return cell;
         NSDictionary *newsPeice = self.generalNews[indexPath.row];
         //title
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(140, 10, width-160, 80)];
@@ -284,6 +322,7 @@
         [cell addSubview:image];
     }
     else if (indexPath.section == 1) {
+        if (!self.selectorData[1].boolValue) return cell;
         NSDictionary *transaction = self.transactions[indexPath.row];
         //title
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(55, 5, width-65, 25)];
@@ -330,12 +369,15 @@
         [cell addSubview:image];
     }
     else if (indexPath.section == 2) {
-        NSDictionary *rotoPeice = self.teamNews[indexPath.row];
+        NSDictionary *rotoPeice = self.playerNews[indexPath.row];
+        if ([rotoPeice[@"isOnWL"] isEqual: @1]) { if (!self.selectorData[3].boolValue) return cell; }
+        else { if (!self.selectorData[2].boolValue) return cell; }
         float height = [self tableView:self.tableView heightForRowAtIndexPath:indexPath];
         //name
         UILabel *name = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, width-20, 30)];
-        name.text = rotoPeice[@"name"];
-        name.font = [UIFont systemFontOfSize:21 weight:UIFontWeightMedium];
+        if ([rotoPeice[@"isOnWL"] isEqual: @1]) name.text = [NSString stringWithFormat:@"%@ - Watch List",rotoPeice[@"name"]];
+        else name.text = [NSString stringWithFormat:@"%@ - My Team",rotoPeice[@"name"]];
+        name.font = [UIFont systemFontOfSize:19 weight:UIFontWeightMedium];
         [cell addSubview:name];
         //text
         UILabel *text = [[UILabel alloc] initWithFrame:CGRectMake(10, 30, width-20, height-25-30)];
@@ -435,6 +477,43 @@
     [self.animator setContentScrollView:vc.tableView];
     modalVC.transitioningDelegate = self.animator;
     [self presentViewController:modalVC animated:YES completion:nil];
+}
+
+
+#pragma mark - FBPickerView delegate
+
+- (void)fadeOutWithPickerView:(FBNewsSelectorView *)selectorView { }
+
+-(void) fadeIn:(UIButton *)sender {
+    self.navigationItem.rightBarButtonItem.enabled = NO;
+    FBNewsSelectorView *selector = [FBNewsSelectorView loadViewFromNib];
+    selector.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    selector.delegate = self;
+    [selector resetValues];
+    [selector setValuesForAllRows:self.selectorData];
+    [selector setAlpha:0.0];
+    [self.view addSubview:selector];
+    [UIView animateWithDuration:0.25 animations:^{
+        [selector setAlpha:1.0];
+    } completion: nil];
+}
+
+-(void)fadeOutWithSelectorView: (FBNewsSelectorView *) selectorView {
+    [UIView animateWithDuration:0.2 animations:^{
+        [selectorView setAlpha:0.0];
+    } completion:^(BOOL finished) {
+        [selectorView removeFromSuperview];
+        self.navigationItem.rightBarButtonItem.enabled = YES;
+    }];
+}
+- (void)doneButtonPressedInSelectorView:(FBNewsSelectorView *)selectorView {
+    self.selectorData = [selectorView valuesForAllRows];
+    [self.tableView reloadData];
+    [self fadeOutWithSelectorView:selectorView];
+}
+
+- (void)cancelButtonPressedInSelectorView:(FBNewsSelectorView *)selectorView {
+    [self fadeOutWithSelectorView:selectorView];
 }
 
 /*
