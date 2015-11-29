@@ -123,8 +123,10 @@
         NSLog(@"No watch list, creating empty list");
         NSManagedObjectContext *context = [self managedObjectContext];
         FBWatchList *wl = [NSEntityDescription insertNewObjectForEntityForName:@"FBWatchList" inManagedObjectContext:context];
-        wl.players = [[NSMutableArray alloc] init];
-        [wl.players addObjectsFromArray:@[@"LeBron James", @"Kevin Durant", @"Hassan Whiteside"]];
+        wl.playerArray = [[NSMutableArray alloc] initWithArray:@[@"LeBron James", @"Kevin Durant", @"Hassan Whiteside"]];
+    }
+    else if (result2.count > 1) {
+        NSLog(@"Too many watch lists.");
     }
     
     if (![[self managedObjectContext] save:&error]) {

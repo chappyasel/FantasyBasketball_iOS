@@ -22,7 +22,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"Watch List";
-    self.tableView.backgroundColor = [UIColor whiteColor];
     self.scrollViews = [[NSMutableArray alloc] init];
     [self beginAsyncLoading];
 }
@@ -39,9 +38,16 @@
     });
 }
 
+- (void)refreshNonAsync {
+    [self loadplayersWithCompletionBlock:^{
+        [self.tableView reloadData];
+        if (self.players.count > 0) [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    }];
+}
+
 - (void)loadplayersWithCompletionBlock:(void (^)(void)) completed {
     self.players = [[NSMutableArray alloc] init];
-    for (NSString *name in self.watchList.players) {
+    for (NSString *name in self.watchList.playerArray) {
         NSDictionary *splitName = [FBPlayer separateFirstAndLastNameForString:name];
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/freeagency?leagueId=%@&seasonId=%@&context=freeagency&version=%@&avail=-1&search=%@&view=stats",self.session.leagueID,self.session.seasonID,@"null",splitName[@"last"]]];
         NSData *html = [NSData dataWithContentsOfURL:url];
@@ -144,14 +150,6 @@
         stats.textColor = [UIColor whiteColor];
         [scrollView addSubview:stats];
     }
-    //STATS BUTTONS
-    for (int i = 0; i < 14; i++) {
-        UIButton *refresh = [[UIButton alloc] initWithFrame:CGRectMake(50*i+120, 0, 50, 30)];
-        refresh.titleLabel.text = @"";
-        refresh.tag = i; //used for determining sortChoices[] index
-        [refresh addTarget:self action:@selector(updateSort:) forControlEvents:UIControlEventTouchUpInside];
-        [scrollView addSubview:refresh];
-    }
     return cell;
 }
 
@@ -159,9 +157,18 @@
     PlayerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Identifier"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     FBPlayer *player = self.players[indexPath.row];
-    cell = [[PlayerCell alloc] initWithPlayer:player view:self scrollDistance:_globalScrollDistance size:CGSizeMake(self.view.frame.size.width, 40.0)];
+    BOOL isOnWL = [self.watchList.playerArray containsObject:player.fullName];
+    cell = [[PlayerCell alloc] initWithPlayer:player view:self isOnWL:isOnWL size:CGSizeMake(self.view.frame.size.width, 40)];
+    [cell setScrollDistance:_globalScrollDistance];
     cell.delegate = self;
     return cell;
+}
+
+#pragma mark - PlayerCell delegate
+
+- (void)togglePlayer:(FBPlayer *)player WLStatusToState:(BOOL)isOnWL {
+    [super togglePlayer:player WLStatusToState:isOnWL];
+    [self refreshNonAsync];
 }
 
 #pragma mark - Scroll Views

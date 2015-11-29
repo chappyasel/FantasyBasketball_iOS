@@ -25,4 +25,17 @@
     return fetchedObjects[0];
 }
 
+- (void)setPlayerArray:(NSMutableArray *)playerArray {
+    self.players = [NSKeyedArchiver archivedDataWithRootObject:playerArray];
+}
+
+- (void)addPlayerArrayObject:(id)object {
+    self.playerArray[self.playerArray.count] = object;
+    self.players = [NSKeyedArchiver archivedDataWithRootObject:self.playerArray];
+}
+
+-(NSMutableArray *)playerArray {
+    return [NSKeyedUnarchiver unarchiveObjectWithData:self.players];
+}
+
 @end

@@ -13,6 +13,7 @@
 
 - (void)linkWithPlayer:(FBPlayer *)player;
 - (void)linkWithGameLink:(FBPlayer *)player;
+- (void)togglePlayer: (FBPlayer *)player WLStatusToState: (BOOL) isOnWL;
 
 @end
 
@@ -20,8 +21,12 @@
 
 @property (nonatomic, weak) id <PlayerCellDelegate> delegate;
 @property (nonatomic) FBPlayer *player;
+@property BOOL isOnWL;
 
-- (instancetype) initWithPlayer:(FBPlayer *)pl view:(UIViewController<UIScrollViewDelegate> *)superview scrollDistance:(float)dist size: (CGSize) size;
+- (instancetype) initWithPlayer:(FBPlayer *)pl
+                           view:(UIViewController<UIScrollViewDelegate> *)superview
+                         isOnWL:(BOOL) isOnWL
+                           size:(CGSize) size;
 
 - (void)setScrollDistance:(float)dist;
 

@@ -106,6 +106,22 @@
     [self presentViewController:modalVC animated:YES completion:nil];
 }
 
+- (void)togglePlayer:(FBPlayer *)player WLStatusToState:(BOOL)isOnWL {
+    if (isOnWL) {
+        NSMutableArray *arr = [[NSMutableArray alloc] initWithArray:self.watchList.playerArray];
+        [arr addObject:player.fullName];
+        self.watchList.playerArray = arr;
+    }
+    else {
+        NSMutableArray *arr = [[NSMutableArray alloc] initWithArray:self.watchList.playerArray];
+        [arr removeObject:player.fullName];
+        self.watchList.playerArray = arr;
+    }
+    NSManagedObjectContext *context = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    NSError *error;
+    if (![context save:&error]) NSLog(@"failed to save in AppDelegate: %@", [error localizedDescription]);
+}
+
 #pragma mark - FBPickerView delegate
 
 - (void)doneButtonPressedInPickerView:(FBPickerView *)pickerView {

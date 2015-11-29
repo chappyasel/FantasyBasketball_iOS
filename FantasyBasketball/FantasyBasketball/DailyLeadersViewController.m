@@ -205,7 +205,9 @@ NSTimer *updateTimer;
     PlayerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Identifier"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     FBPlayer *player = self.players[indexPath.row];
-    cell = [[PlayerCell alloc] initWithPlayer:player view:self scrollDistance:_globalScrollDistance size:CGSizeMake(self.view.frame.size.width, 40.0)];
+    BOOL isOnWL = [self.watchList.playerArray containsObject:player.fullName];
+    cell = [[PlayerCell alloc] initWithPlayer:player view:self isOnWL:isOnWL size:CGSizeMake(self.view.frame.size.width, 40)];
+    [cell setScrollDistance:_globalScrollDistance];
     cell.delegate = self;
     return cell;
 }

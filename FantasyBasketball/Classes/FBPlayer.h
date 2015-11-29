@@ -20,6 +20,7 @@ typedef NS_ENUM(NSInteger, FBGameState) {
 
 @property NSString *firstName;
 @property NSString *lastName;
+@property (nonatomic) NSString *fullName; //calculated real-time
 @property NSString *team;
 @property NSString *position;
 @property NSString *injury;

@@ -11,11 +11,16 @@
 
 @implementation PlayerCell {
     UIScrollView *scrollView;
+    UIImageView *WLBadge;
+    UIButton *WLButton;
 }
 
 //CellType: MyTeamViewController, PlayersViewController, DailyLeadersViewController
 
-- (instancetype) initWithPlayer:(FBPlayer *)pl view:(UIViewController<UIScrollViewDelegate> *)superview scrollDistance:(float)dist size:(CGSize)size{
+- (instancetype) initWithPlayer:(FBPlayer *)pl
+                           view:(UIViewController<UIScrollViewDelegate> *)superview
+                         isOnWL:(BOOL) isOnWL
+                           size:(CGSize) size {
     if (self = [super initWithFrame:CGRectMake(0, 0, size.width, size.height)]) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         NSString *playerType = [NSString stringWithFormat:@"%@",superview.class];
@@ -47,21 +52,27 @@
         }
         //TYPE, WL
         if (!isMTVC) {
-            UILabel *type = isLarge ? [[UILabel alloc] initWithFrame:CGRectMake(120, 0, 60, 15)]:
-                                      [[UILabel alloc] initWithFrame:CGRectMake(105, 0, 50, 15)];
+            UILabel *type = isLarge ? [[UILabel alloc] initWithFrame:CGRectMake(120, 0, 60, 19)]:
+                                      [[UILabel alloc] initWithFrame:CGRectMake(105, 0, 50, 19)];
             type.font = isLarge ? [UIFont boldSystemFontOfSize:14]:[UIFont boldSystemFontOfSize:12];
             type.text = [NSString stringWithFormat:@"%@",self.player.type];
+            type.textColor = [UIColor darkGrayColor];
             type.textAlignment = NSTextAlignmentCenter;
             if ([type.text isEqual:@"FA"]) type.textColor = [UIColor FBGreenColor];
             else if ([type.text containsString:@"WA-"]) type.textColor = [UIColor FBYellowColor];
             [self addSubview:type];
             
-            UIButton *WL = isLarge ? [[UIButton alloc] initWithFrame:CGRectMake(120, 15, 25, 25)]:
-                                     [[UIButton alloc] initWithFrame:CGRectMake(105, 15, 25, 25)];
-            [WL setBackgroundImage:[UIImage imageNamed:@"WL-Off.png"] forState:UIControlStateNormal];
-            //WL.backgroundColor = [UIColor redColor];
-            [WL addTarget:self action:@selector(watchListButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-            [self addSubview:WL];
+            WLBadge = isLarge ? [[UIImageView alloc] initWithFrame:CGRectMake(120+24, 15+6, 12, 13)]:
+                                             [[UIImageView alloc] initWithFrame:CGRectMake(105+19, 15+6, 12, 13)];
+            if (isOnWL) WLBadge.image = [UIImage imageNamed:@"WL-On.png"];
+            else WLBadge.image = [UIImage imageNamed:@"WL-Off.png"];
+            self.isOnWL = isOnWL;
+            [self addSubview:WLBadge];
+            
+            WLButton = isLarge ? [[UIButton alloc] initWithFrame:CGRectMake(120, 0, 60, 40)]:
+                                 [[UIButton alloc] initWithFrame:CGRectMake(105, 0, 50, 40)];
+            [WLButton addTarget:self action:@selector(watchListButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+            [self addSubview:WLButton];
         }
         //LINK
         UIButton *link;
@@ -93,7 +104,6 @@
                                    [[UIScrollView alloc] initWithFrame:CGRectMake(150, 0, size.width-150, size.height)];
             [scrollView setContentSize:CGSizeMake(12*50+120, size.height)];
         }
-        [scrollView setContentOffset:CGPointMake(dist, 0)];
         [scrollView setShowsHorizontalScrollIndicator:NO];
         [scrollView setShowsVerticalScrollIndicator:NO];
         [scrollView setBounces:NO];
@@ -181,7 +191,10 @@
 }
 
 - (IBAction)watchListButtonPressed:(id)sender {
-    NSLog(@"Press");
+    self.isOnWL = !self.isOnWL;
+    [self.delegate togglePlayer:self.player WLStatusToState:self.isOnWL];
+    if (self.isOnWL) WLBadge.image = [UIImage imageNamed:@"WL-On.png"];
+    else WLBadge.image = [UIImage imageNamed:@"WL-Off.png"];
 }
 
 - (void)setScrollDistance:(float)dist {

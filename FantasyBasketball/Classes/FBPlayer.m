@@ -106,6 +106,10 @@
     return self;
 }
 
+- (NSString *)fullName {
+    return [NSString stringWithFormat:@"%@ %@",self.firstName,self.lastName];
+}
+
 + (NSDictionary *)separateFirstAndLastNameForString: (NSString *) string { //@"first", @"last"
     NSArray *name = [string componentsSeparatedByString:@" "];
     NSString *firstName = name[0];

@@ -93,15 +93,25 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1IL-0n-Wi0">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <rect key="frame" x="0.0" y="138" width="414" height="598"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J2d-wx-kHR">
+                                <rect key="frame" x="10" y="74" width="394" height="54"/>
+                                <string key="text">You can track potential pickups outside of your team by adding them to the watch list. To add a player, touch the grey flag button in another view.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.89411764705882346" green="0.55294117647058827" blue="0.30588235294117649" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="1IL-0n-Wi0" firstAttribute="centerY" secondItem="8mf-d7-BKB" secondAttribute="centerY" id="XJo-IE-hrY"/>
+                            <constraint firstItem="J2d-wx-kHR" firstAttribute="top" secondItem="lCF-7U-APa" secondAttribute="bottom" constant="10" id="BRv-we-QrW"/>
+                            <constraint firstItem="1IL-0n-Wi0" firstAttribute="top" secondItem="J2d-wx-kHR" secondAttribute="bottom" constant="10" id="PNn-jP-Wrn"/>
+                            <constraint firstItem="J2d-wx-kHR" firstAttribute="leading" secondItem="8mf-d7-BKB" secondAttribute="leadingMargin" constant="-10" id="elh-la-TpJ"/>
+                            <constraint firstItem="Wh5-Im-W8q" firstAttribute="top" secondItem="1IL-0n-Wi0" secondAttribute="bottom" id="fvU-sw-HLQ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="J2d-wx-kHR" secondAttribute="trailing" constant="-10" id="hYt-Kl-pgS"/>
                             <constraint firstItem="1IL-0n-Wi0" firstAttribute="centerX" secondItem="8mf-d7-BKB" secondAttribute="centerX" id="lRF-QM-WZS"/>
-                            <constraint firstItem="1IL-0n-Wi0" firstAttribute="height" secondItem="8mf-d7-BKB" secondAttribute="height" id="mlG-4f-QJd"/>
                             <constraint firstItem="1IL-0n-Wi0" firstAttribute="width" secondItem="8mf-d7-BKB" secondAttribute="width" id="oRl-fP-H11"/>
                         </constraints>
                     </view>

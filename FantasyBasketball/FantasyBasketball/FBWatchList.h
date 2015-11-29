@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface FBWatchList : NSManagedObject
 
+@property (nonatomic) NSMutableArray *playerArray;
+
 + (FBWatchList *)fetchWatchList;
 
 @end
