@@ -9,8 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "FBViewController.h"
 #import "FBNewsSelectorView.h"
+#import "FBNewsSettings.h"
 
 @interface NewsViewController : FBViewController <FBNewsSelectorViewDelegate>
+
+@property FBNewsSettings *newsSettings;
 
 - (void)fadeOutWithPickerView: (FBNewsSelectorView *) selectorView;
 

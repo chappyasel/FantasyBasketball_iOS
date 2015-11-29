@@ -21,6 +21,8 @@
 		F933F7711A6B5414009E24D8 /* MatchupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F933F7701A6B5414009E24D8 /* MatchupViewController.m */; };
 		F937FCFE1C0BAE7A002D545E /* FBNewsSelectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = F937FCFC1C0BAE7A002D545E /* FBNewsSelectorView.m */; };
 		F937FCFF1C0BAE7A002D545E /* FBNewsSelectorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F937FCFD1C0BAE7A002D545E /* FBNewsSelectorView.xib */; };
+		F937FD041C0BC0E8002D545E /* FBNewsSettings+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F937FD011C0BC0E8002D545E /* FBNewsSettings+CoreDataProperties.m */; };
+		F937FD051C0BC0E8002D545E /* FBNewsSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = F937FD031C0BC0E8002D545E /* FBNewsSettings.m */; };
 		F93CC15D1C0A47EF0078E5FA /* FBWatchList+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F93CC15A1C0A47EF0078E5FA /* FBWatchList+CoreDataProperties.m */; };
 		F93CC15E1C0A47EF0078E5FA /* FBWatchList.m in Sources */ = {isa = PBXBuildFile; fileRef = F93CC15C1C0A47EF0078E5FA /* FBWatchList.m */; };
 		F93CC1611C0A55320078E5FA /* WL-Off.png in Resources */ = {isa = PBXBuildFile; fileRef = F93CC15F1C0A55320078E5FA /* WL-Off.png */; };
@@ -124,6 +126,10 @@
 		F937FCFB1C0BAE7A002D545E /* FBNewsSelectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBNewsSelectorView.h; path = FantasyBasketball/FBNewsSelectorView.h; sourceTree = "<group>"; };
 		F937FCFC1C0BAE7A002D545E /* FBNewsSelectorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBNewsSelectorView.m; path = FantasyBasketball/FBNewsSelectorView.m; sourceTree = "<group>"; };
 		F937FCFD1C0BAE7A002D545E /* FBNewsSelectorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FBNewsSelectorView.xib; path = FantasyBasketball/FBNewsSelectorView.xib; sourceTree = "<group>"; };
+		F937FD001C0BC0E8002D545E /* FBNewsSettings+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "FBNewsSettings+CoreDataProperties.h"; path = "FantasyBasketball/FBNewsSettings+CoreDataProperties.h"; sourceTree = "<group>"; };
+		F937FD011C0BC0E8002D545E /* FBNewsSettings+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "FBNewsSettings+CoreDataProperties.m"; path = "FantasyBasketball/FBNewsSettings+CoreDataProperties.m"; sourceTree = "<group>"; };
+		F937FD021C0BC0E8002D545E /* FBNewsSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBNewsSettings.h; path = FantasyBasketball/FBNewsSettings.h; sourceTree = "<group>"; };
+		F937FD031C0BC0E8002D545E /* FBNewsSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBNewsSettings.m; path = FantasyBasketball/FBNewsSettings.m; sourceTree = "<group>"; };
 		F93CC1591C0A47EF0078E5FA /* FBWatchList+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "FBWatchList+CoreDataProperties.h"; path = "FantasyBasketball/FBWatchList+CoreDataProperties.h"; sourceTree = "<group>"; };
 		F93CC15A1C0A47EF0078E5FA /* FBWatchList+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "FBWatchList+CoreDataProperties.m"; path = "FantasyBasketball/FBWatchList+CoreDataProperties.m"; sourceTree = "<group>"; };
 		F93CC15B1C0A47EF0078E5FA /* FBWatchList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBWatchList.h; path = FantasyBasketball/FBWatchList.h; sourceTree = "<group>"; };
@@ -528,6 +534,10 @@
 				F93CC15C1C0A47EF0078E5FA /* FBWatchList.m */,
 				F93CC1591C0A47EF0078E5FA /* FBWatchList+CoreDataProperties.h */,
 				F93CC15A1C0A47EF0078E5FA /* FBWatchList+CoreDataProperties.m */,
+				F937FD021C0BC0E8002D545E /* FBNewsSettings.h */,
+				F937FD031C0BC0E8002D545E /* FBNewsSettings.m */,
+				F937FD001C0BC0E8002D545E /* FBNewsSettings+CoreDataProperties.h */,
+				F937FD011C0BC0E8002D545E /* FBNewsSettings+CoreDataProperties.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -762,6 +772,7 @@
 			files = (
 				F96590911A676DB2005384D1 /* AppDelegate.m in Sources */,
 				F97063831A6C98D700A50A43 /* WebViewController.m in Sources */,
+				F937FD051C0BC0E8002D545E /* FBNewsSettings.m in Sources */,
 				F9E5F2121BEEAE42003E8CAA /* WatchListViewController.m in Sources */,
 				F9E5F2181BEEAE5C003E8CAA /* StandingsViewController.m in Sources */,
 				F93CC15D1C0A47EF0078E5FA /* FBWatchList+CoreDataProperties.m in Sources */,
@@ -769,6 +780,7 @@
 				F954E9931B65E52C000F323F /* BEMPermanentPopupView.m in Sources */,
 				F96590B91A677441005384D1 /* PlayersViewController.m in Sources */,
 				F991B1881BE6D1D5008A4EA6 /* FBSession.m in Sources */,
+				F937FD041C0BC0E8002D545E /* FBNewsSettings+CoreDataProperties.m in Sources */,
 				F9F8185D1B6ABA0700EE70E7 /* FBPlayer.m in Sources */,
 				F954E9821B65E501000F323F /* TFHpple.m in Sources */,
 				F933F7711A6B5414009E24D8 /* MatchupViewController.m in Sources */,

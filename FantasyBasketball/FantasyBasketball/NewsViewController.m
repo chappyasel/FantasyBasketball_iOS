@@ -26,7 +26,6 @@
 @property int numTeamPlayersLoaded; //out of 13 (for section header)
 @property int numWLPlayersLoaded;
 
-@property NSArray <NSNumber *> *selectorData;
 @property BOOL isLarge;
 
 @end
@@ -36,13 +35,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"News";
+    self.newsSettings = [FBNewsSettings fetchNewsSettings];
     self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.showsVerticalScrollIndicator = YES;
     self.imageOperationQueue = [[NSOperationQueue alloc]init];
     self.imageOperationQueue.maxConcurrentOperationCount = 4;
     self.imageCache = [[NSCache alloc] init];
     self.isLarge = (self.view.frame.size.width > 400);
-    self.selectorData = @[[NSNumber numberWithBool:YES],[NSNumber numberWithBool:YES],[NSNumber numberWithBool:YES],[NSNumber numberWithBool:YES]];
     [self beginAsyncLoading];
 }
 
@@ -256,22 +255,22 @@
     if (section == 1) return @"League Transactions";
     if (section == 2 && self.isLarge) {
         if (self.numTeamPlayersLoaded == 13 && self.numWLPlayersLoaded == self.watchList.playerArray.count) return @"Rotoworld Team & WL News";
-        return [NSString stringWithFormat:@"Rotoworld Team & WL News (%d/%d, %d/%d)",self.numTeamPlayersLoaded,13,self.numWLPlayersLoaded,self.watchList.playerArray.count];
+        return [NSString stringWithFormat:@"Rotoworld Team & WL News (%d/%d, %d/%ld)",self.numTeamPlayersLoaded,13,self.numWLPlayersLoaded,self.watchList.playerArray.count];
     }
     else if (section == 2) {
         if (self.numTeamPlayersLoaded == 13 && self.numWLPlayersLoaded == self.watchList.playerArray.count) return @"Rotoworld News";
-        return [NSString stringWithFormat:@"Rotoworld News (%d/%d, %d/%d)",self.numTeamPlayersLoaded,13,self.numWLPlayersLoaded,self.watchList.playerArray.count];
+        return [NSString stringWithFormat:@"Rotoworld News (%d/%d, %d/%ld)",self.numTeamPlayersLoaded,13,self.numWLPlayersLoaded,self.watchList.playerArray.count];
     }
     return @"";
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0 && self.selectorData[0].boolValue) return 100;
-    else if (indexPath.section == 1 && self.selectorData[1].boolValue) return 90;
-    else if (indexPath.section == 2 && (self.selectorData[2].boolValue || self.selectorData[3].boolValue)) {
+    if (indexPath.section == 0 && self.newsSettings.selectorDataArray[0].boolValue) return 100;
+    else if (indexPath.section == 1 && self.newsSettings.selectorDataArray[1].boolValue) return 90;
+    else if (indexPath.section == 2 && (self.newsSettings.selectorDataArray[2].boolValue || self.newsSettings.selectorDataArray[3].boolValue)) {
         NSDictionary *rotoPeice = self.playerNews[indexPath.row];
-        if ([rotoPeice[@"isOnWL"] isEqual: @1]) { if (!self.selectorData[3].boolValue) return 0; }
-        else { if (!self.selectorData[2].boolValue) return 0; }
+        if ([rotoPeice[@"isOnWL"] isEqual: @1]) { if (!self.newsSettings.selectorDataArray[3].boolValue) return 0; }
+        else { if (!self.newsSettings.selectorDataArray[2].boolValue) return 0; }
         NSString *text = [NSString stringWithFormat:@"%@ %@",[self.playerNews[indexPath.row] objectForKey:@"report"],[self.playerNews[indexPath.row] objectForKey:@"impact"]];
         UIFont *font = [UIFont systemFontOfSize:15];
         NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:@ {NSFontAttributeName: font}];
@@ -289,7 +288,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Identifier"];
     }
     if (indexPath.section == 0) {
-        if (!self.selectorData[0].boolValue) return cell;
+        if (!self.newsSettings.selectorDataArray[0].boolValue) return cell;
         NSDictionary *newsPeice = self.generalNews[indexPath.row];
         //title
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(140, 10, width-160, 80)];
@@ -322,7 +321,7 @@
         [cell addSubview:image];
     }
     else if (indexPath.section == 1) {
-        if (!self.selectorData[1].boolValue) return cell;
+        if (!self.newsSettings.selectorDataArray[1].boolValue) return cell;
         NSDictionary *transaction = self.transactions[indexPath.row];
         //title
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(55, 5, width-65, 25)];
@@ -370,8 +369,8 @@
     }
     else if (indexPath.section == 2) {
         NSDictionary *rotoPeice = self.playerNews[indexPath.row];
-        if ([rotoPeice[@"isOnWL"] isEqual: @1]) { if (!self.selectorData[3].boolValue) return cell; }
-        else { if (!self.selectorData[2].boolValue) return cell; }
+        if ([rotoPeice[@"isOnWL"] isEqual: @1]) { if (!self.newsSettings.selectorDataArray[3].boolValue) return cell; }
+        else { if (!self.newsSettings.selectorDataArray[2].boolValue) return cell; }
         float height = [self tableView:self.tableView heightForRowAtIndexPath:indexPath];
         //name
         UILabel *name = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, width-20, 30)];
@@ -490,7 +489,7 @@
     selector.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     selector.delegate = self;
     [selector resetValues];
-    [selector setValuesForAllRows:self.selectorData];
+    [selector setValuesForAllRows:self.newsSettings.selectorDataArray];
     [selector setAlpha:0.0];
     [self.view addSubview:selector];
     [UIView animateWithDuration:0.25 animations:^{
@@ -507,7 +506,10 @@
     }];
 }
 - (void)doneButtonPressedInSelectorView:(FBNewsSelectorView *)selectorView {
-    self.selectorData = [selectorView valuesForAllRows];
+    self.newsSettings.selectorDataArray = [[NSMutableArray alloc] initWithArray:[selectorView valuesForAllRows]];
+    NSManagedObjectContext *context = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    NSError *error;
+    if (![context save:&error]) NSLog(@"failed to save in NewsView: %@", [error localizedDescription]);
     [self.tableView reloadData];
     [self fadeOutWithSelectorView:selectorView];
 }

@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import <CoreData/CoreData.h>
 #import "FBSession.h"
+#import "FBNewsSettings.h"
 #import "FBWatchList.h"
 #import "TFHpple.h"
 #import "ViewDeckViewController.h"
@@ -40,7 +41,7 @@
         
     }
     else if (result.count == 0) {
-        NSLog(@"No sessions, creating exmaples");
+        NSLog(@"No sessions, creating defaults");
         NSManagedObjectContext *context = [self managedObjectContext];
         FBSession *session1 = [NSEntityDescription insertNewObjectForEntityForName:@"FBSession" inManagedObjectContext:context];
         session1.name = @"Chap Squad";
@@ -120,13 +121,33 @@
         NSLog(@"%@, %@", error, error.localizedDescription);
     }
     else if (result2.count == 0) {
-        NSLog(@"No watch list, creating empty list");
+        NSLog(@"No watch list, creating default list");
         NSManagedObjectContext *context = [self managedObjectContext];
         FBWatchList *wl = [NSEntityDescription insertNewObjectForEntityForName:@"FBWatchList" inManagedObjectContext:context];
         wl.playerArray = [[NSMutableArray alloc] initWithArray:@[@"LeBron James", @"Kevin Durant", @"Hassan Whiteside"]];
     }
     else if (result2.count > 1) {
         NSLog(@"Too many watch lists.");
+    }
+    
+    //NewsSetting creation
+    NSFetchRequest *fetchRequest3 = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity3 = [NSEntityDescription entityForName:@"FBNewsSettings" inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest3 setEntity:entity3];
+    NSMutableArray <FBNewsSettings *> *result3 = [[NSMutableArray alloc] initWithArray:
+                                               [self.managedObjectContext executeFetchRequest:fetchRequest3 error:&error]];
+    if (error) {
+        NSLog(@"Unable to execute fetch request.");
+        NSLog(@"%@, %@", error, error.localizedDescription);
+    }
+    else if (result3.count == 0) {
+        NSLog(@"No news settings, creating default settings");
+        NSManagedObjectContext *context = [self managedObjectContext];
+        FBNewsSettings *ns = [NSEntityDescription insertNewObjectForEntityForName:@"FBNewsSettings" inManagedObjectContext:context];
+        ns.selectorDataArray = [[NSMutableArray alloc] initWithArray:@[[NSNumber numberWithBool:YES],[NSNumber numberWithBool:YES],[NSNumber numberWithBool:YES],[NSNumber numberWithBool:YES]]];
+    }
+    else if (result3.count > 1) {
+        NSLog(@"Too many news settings.");
     }
     
     if (![[self managedObjectContext] save:&error]) {
