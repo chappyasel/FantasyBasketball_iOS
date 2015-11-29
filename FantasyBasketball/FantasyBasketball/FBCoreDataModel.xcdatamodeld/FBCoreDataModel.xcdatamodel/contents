@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9520" systemVersion="15A279b" minimumToolsVersion="Xcode 7.0">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9520" systemVersion="15B42" minimumToolsVersion="Xcode 7.0">
     <entity name="FBSession" representedClassName="FBSession" syncable="YES">
         <attribute name="isSelected" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="leagueID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -8,7 +8,11 @@
         <attribute name="seasonID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="teamID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
+    <entity name="FBWatchList" representedClassName="FBWatchList" syncable="YES">
+        <attribute name="players" optional="YES" attributeType="Transformable" syncable="YES"/>
+    </entity>
     <elements>
         <element name="FBSession" positionX="-63" positionY="-18" width="128" height="133"/>
+        <element name="FBWatchList" positionX="-63" positionY="153" width="128" height="58"/>
     </elements>
 </model>

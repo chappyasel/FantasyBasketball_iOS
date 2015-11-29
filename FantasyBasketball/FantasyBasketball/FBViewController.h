@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "FBPickerView.h"
 #import "FBSession.h"
+#import "FBWatchList.h"
 #import "FBPlayer.h"
 #import "TFHpple.h"
 #import "RESideMenu.h"
@@ -23,6 +24,8 @@
 @property (nonatomic, strong) ZFModalTransitionAnimator *animator;
 
 @property (strong, nonatomic) FBSession *session;
+
+@property (strong, nonatomic) FBWatchList *watchList;
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 

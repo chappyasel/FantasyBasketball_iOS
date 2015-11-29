@@ -92,17 +92,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Watch List" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oOY-Rx-XB8">
-                                <rect key="frame" x="167" y="357" width="81" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1IL-0n-Wi0">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="1IL-0n-Wi0" firstAttribute="centerY" secondItem="8mf-d7-BKB" secondAttribute="centerY" id="XJo-IE-hrY"/>
+                            <constraint firstItem="1IL-0n-Wi0" firstAttribute="centerX" secondItem="8mf-d7-BKB" secondAttribute="centerX" id="lRF-QM-WZS"/>
+                            <constraint firstItem="1IL-0n-Wi0" firstAttribute="height" secondItem="8mf-d7-BKB" secondAttribute="height" id="mlG-4f-QJd"/>
+                            <constraint firstItem="1IL-0n-Wi0" firstAttribute="width" secondItem="8mf-d7-BKB" secondAttribute="width" id="oRl-fP-H11"/>
+                        </constraints>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+                    <connections>
+                        <outlet property="tableView" destination="1IL-0n-Wi0" id="U0Z-2k-Xay"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dJZ-6a-PDx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

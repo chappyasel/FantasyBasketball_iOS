@@ -8,6 +8,7 @@
 
 #import "NewsViewController.h"
 #import "WebViewController.h"
+#import "MyTeamViewController.h"
 #import "TFHpple.h"
 #import "FBPlayer.h"
 
@@ -198,7 +199,7 @@
     }
     else if (indexPath.section == 1) {
         NSDictionary *transaction = self.transactions[indexPath.row];
-        if (transaction[@"link"]) [self linkWithWebLink:transaction[@"link"]];
+        if (transaction[@"link"]) [self linkWithTeamLink:transaction[@"link"]];
     }
     else if (indexPath.section == 2) {
         NSDictionary *teamNewsRow = self.teamNews[indexPath.row];
@@ -410,6 +411,28 @@
     self.animator.transitionDuration = 0.5;
     self.animator.direction = ZFModalTransitonDirectionBottom;
     [self.animator setContentScrollView:modalVC.webView.scrollView];
+    modalVC.transitioningDelegate = self.animator;
+    [self presentViewController:modalVC animated:YES completion:nil];
+}
+
+- (void)linkWithTeamLink:(NSString *)link {
+    MyTeamViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"mt"];
+    [vc initWithTeamLink:link];
+    UINavigationController *modalVC = [[UINavigationController alloc] initWithRootViewController:vc];
+    modalVC.navigationBar.barTintColor = [UIColor FBDarkOrangeColor];
+    modalVC.navigationBar.tintColor = [UIColor whiteColor];
+    modalVC.navigationBar.translucent = NO;
+    modalVC.navigationBar.barStyle = UIBarStyleBlack;
+    [modalVC.navigationBar setTitleTextAttributes: @{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    modalVC.modalPresentationStyle = UIModalPresentationCustom;
+    self.animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:modalVC];
+    self.animator.dragable = NO;
+    self.animator.bounces = YES;
+    self.animator.behindViewAlpha = 0.8;
+    self.animator.behindViewScale = 0.9;
+    self.animator.transitionDuration = 0.5;
+    self.animator.direction = ZFModalTransitonDirectionBottom;
+    [self.animator setContentScrollView:vc.tableView];
     modalVC.transitioningDelegate = self.animator;
     [self presentViewController:modalVC animated:YES completion:nil];
 }

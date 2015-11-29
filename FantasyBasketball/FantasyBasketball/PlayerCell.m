@@ -17,10 +17,11 @@
 
 - (instancetype) initWithPlayer:(FBPlayer *)pl view:(UIViewController<UIScrollViewDelegate> *)superview scrollDistance:(float)dist size:(CGSize)size{
     if (self = [super initWithFrame:CGRectMake(0, 0, size.width, size.height)]) {
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         NSString *playerType = [NSString stringWithFormat:@"%@",superview.class];
         self.player = pl;
         bool isMTVC = [playerType isEqual:@"MyTeamViewController"];
-        bool isPLVC = [playerType isEqual:@"PlayersViewController"];
+        bool isPLVC = [playerType isEqual:@"PlayersViewController"] || [playerType isEqual:@"WatchListViewController"];
         bool isLarge = size.width > 400;
         //NAME
         UILabel *name;
@@ -44,24 +45,28 @@
             injury.text = self.player.injury;
             [self addSubview:injury];
         }
-        //TYPE
+        //TYPE, WL
         if (!isMTVC) {
-            UILabel *type = isLarge ? [[UILabel alloc] initWithFrame:CGRectMake(120, 7, 60, 25)]:[[UILabel alloc] initWithFrame:CGRectMake(105, 7, 50, 25)];
-            type.font = isLarge ? [UIFont systemFontOfSize:17]:[UIFont systemFontOfSize:13];
+            UILabel *type = isLarge ? [[UILabel alloc] initWithFrame:CGRectMake(120, 0, 60, 15)]:
+                                      [[UILabel alloc] initWithFrame:CGRectMake(105, 0, 50, 15)];
+            type.font = isLarge ? [UIFont boldSystemFontOfSize:14]:[UIFont boldSystemFontOfSize:12];
             type.text = [NSString stringWithFormat:@"%@",self.player.type];
-            if ([type.text isEqual:@"FA"]) {
-                type.textColor = [UIColor FBGreenColor];
-            }
-            else if ([type.text containsString:@"WA-"]) {
-                type.textColor = [UIColor FBYellowColor];
-            }
             type.textAlignment = NSTextAlignmentCenter;
+            if ([type.text isEqual:@"FA"]) type.textColor = [UIColor FBGreenColor];
+            else if ([type.text containsString:@"WA-"]) type.textColor = [UIColor FBYellowColor];
             [self addSubview:type];
+            
+            UIButton *WL = isLarge ? [[UIButton alloc] initWithFrame:CGRectMake(120, 15, 25, 25)]:
+                                     [[UIButton alloc] initWithFrame:CGRectMake(105, 15, 25, 25)];
+            [WL setBackgroundImage:[UIImage imageNamed:@"WL-Off.png"] forState:UIControlStateNormal];
+            //WL.backgroundColor = [UIColor redColor];
+            [WL addTarget:self action:@selector(watchListButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+            [self addSubview:WL];
         }
         //LINK
         UIButton *link;
         if (isMTVC) link = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 120, size.height)];
-        else link = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 150, size.height)];
+        else link = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 105, size.height)];
         [link addTarget:self action:@selector(linkPlayerPressed:) forControlEvents:UIControlEventTouchUpInside];
         link.backgroundColor = [UIColor clearColor];
         link.titleLabel.text = @"";
@@ -173,6 +178,10 @@
         [scrollView addSubview:gLink];
     }
     return self;
+}
+
+- (IBAction)watchListButtonPressed:(id)sender {
+    NSLog(@"Press");
 }
 
 - (void)setScrollDistance:(float)dist {

@@ -96,6 +96,41 @@
     completed();
 }
 
+/*
+- (void)loadNBAScoreboardWithCompletionBlock:(void (^)(void)) completed {
+    self.NBAScoreboard = [[NSMutableArray alloc] init];
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"yyyymmdd"];
+    NSDate *date = [NSDate date];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://espn.go.com/nba/scoreboard/_/date/%@",@"20151128"]];
+    NSError *error;
+    NSData *html = [NSData dataWithContentsOfURL:url options:NSDataReadingMapped error:&error];
+    if (error) NSLog(@"Scoreboard error: %@",error);
+    TFHpple *parser = [TFHpple hppleWithHTMLData:html];
+    NSArray <TFHppleElement *> *nodes = [parser searchWithXPathQuery:@"//div[@id='events']"];
+    for (int i = 0; i < nodes.count; i++) {
+        TFHppleElement *gameInfo = nodes[i].firstChild.firstChild.firstChild;
+        TFHppleElement *gameStatus = [nodes[i].firstChild.firstChild children][3];
+        NSString *liveStatus = [gameStatus.firstChild.firstChild.children[1] content];
+        NSString *image = [gameStatus.firstChild.children[1] firstChild].firstChild.attributes[@"src"];
+        image = [NSString stringWithFormat:@"%@%@",@"http://www.nba.com",image];
+        NSArray *teamsElements = [gameStatus.firstChild.children[2] children];
+        NSMutableArray *teams = [[NSMutableArray alloc] init];
+        for (int e = 0; e < teamsElements.count; e++) {
+            TFHppleElement *t = teamsElements[e];
+            NSString *abbrev = t.firstChild.content;
+            NSString *teamImage = [(TFHppleElement *)t.children[1] attributes][@"src"];
+            NSString *name = [(TFHppleElement *)t.children[1] attributes][@"title"];
+            TFHppleElement *scoreRow = [gameStatus.children[1] firstChild].children[e+1];
+            [teams addObject:[[NSDictionary alloc] initWithObjects:@[abbrev, teamImage, name, scoreRow] forKeys:@[@"abbreviation",@"image",@"name",@"score"]]];
+        }
+        TFHppleElement *actionRow = [nodes[i].children[1] firstChild];
+        [self.NBAScoreboard addObject:[[NSDictionary alloc] initWithObjects:@[teams, image, liveStatus] forKeys:@[@"teams", @"tv", @"status"]]];
+    }
+    completed();
+}
+ */
+
 - (void)loadNBAScoreboardWithCompletionBlock:(void (^)(void)) completed {
     self.NBAScoreboard = [[NSMutableArray alloc] init];
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
@@ -128,6 +163,7 @@
     }
     completed();
 }
+
 
 #pragma mark - UI
 

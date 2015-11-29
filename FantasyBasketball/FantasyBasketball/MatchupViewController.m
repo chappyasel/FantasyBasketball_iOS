@@ -392,8 +392,8 @@ NSTimer *updateTimer;
         [self.autorefreshSwitch setOn:NO];
         [self autorefreshStateChanged:self.autorefreshSwitch];
     }
+    self.cells = [[NSMutableArray alloc] init];
     [self refreshNonAsync];
-    [self.tableView reloadData];
     [self fadeOutWithPickerView:pickerView];
 }
 

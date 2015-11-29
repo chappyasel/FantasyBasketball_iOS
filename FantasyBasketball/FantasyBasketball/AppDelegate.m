@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import <CoreData/CoreData.h>
 #import "FBSession.h"
+#import "FBWatchList.h"
 #import "TFHpple.h"
 #import "ViewDeckViewController.h"
 #import "MatchupViewController.h"
@@ -28,7 +29,6 @@
     [self managedObjectContext];
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"FBSession" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
     NSError *error = nil;
@@ -40,14 +40,43 @@
         
     }
     else if (result.count == 0) {
+        NSLog(@"No sessions, creating exmaples");
         NSManagedObjectContext *context = [self managedObjectContext];
-        FBSession *session = [NSEntityDescription insertNewObjectForEntityForName:@"FBSession" inManagedObjectContext:context];
-        session.name = @"Chap Squad";
-        session.leagueID = [NSNumber numberWithInt: 186088];
-        session.teamID = [NSNumber numberWithInt: 1];
-        session.seasonID = [NSNumber numberWithInt: 2016];
-        session.isSelected = YES;
-        [result addObject:session];
+        FBSession *session1 = [NSEntityDescription insertNewObjectForEntityForName:@"FBSession" inManagedObjectContext:context];
+        session1.name = @"Chap Squad";
+        session1.leagueID = [NSNumber numberWithInt: 186088];
+        session1.teamID = [NSNumber numberWithInt: 1];
+        session1.seasonID = [NSNumber numberWithInt: 2016];
+        session1.isSelected = YES;
+        
+        FBSession *session2 = [NSEntityDescription insertNewObjectForEntityForName:@"FBSession" inManagedObjectContext:context];
+        session2.name = @"Squad Asel";
+        session2.leagueID = [NSNumber numberWithInt: 169843];
+        session2.teamID = [NSNumber numberWithInt: 3];
+        session2.seasonID = [NSNumber numberWithInt: 2016];
+        session2.isSelected = NO;
+        
+        FBSession *session3 = [NSEntityDescription insertNewObjectForEntityForName:@"FBSession" inManagedObjectContext:context];
+        session3.name = @"Robot Computer";
+        session3.leagueID = [NSNumber numberWithInt: 186088];
+        session3.teamID = [NSNumber numberWithInt: 6];
+        session3.seasonID = [NSNumber numberWithInt: 2016];
+        session3.isSelected = NO;
+        
+        FBSession *session4 = [NSEntityDescription insertNewObjectForEntityForName:@"FBSession" inManagedObjectContext:context];
+        session4.name = @"Team Asel";
+        session4.leagueID = [NSNumber numberWithInt: 186088];
+        session4.teamID = [NSNumber numberWithInt: 5];
+        session4.seasonID = [NSNumber numberWithInt: 2016];
+        session4.isSelected = NO;
+        
+        FBSession *session5 = [NSEntityDescription insertNewObjectForEntityForName:@"FBSession" inManagedObjectContext:context];
+        session5.name = @"Lob City";
+        session5.leagueID = [NSNumber numberWithInt: 186088];
+        session5.teamID = [NSNumber numberWithInt: 2];
+        session5.seasonID = [NSNumber numberWithInt: 2016];
+        session5.isSelected = NO;
+        [result addObjectsFromArray:@[session1, session2, session3, session4, session5]];
     }
     
     //OLD SCORINGPERIODID METHOD
@@ -72,10 +101,6 @@
     }
     if (result[0].scoringPeriodID == 0) NSLog(@"scoringPeriodID is 0, likely unintended");
     
-    if (![[self managedObjectContext] save:&error]) {
-        NSLog(@"failed to save in AppDelegate: %@", [error localizedDescription]);
-    }
-    
     /* //POSSIBLE NEW METHOD
      NSString *dateString = @"03-Sep-14";
      NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -83,6 +108,28 @@
      NSDate *refDate = [dateFormatter dateFromString:dateString];
      session.scoringPeriodID = (int)[self daysBetweenDate:refDate andDate:[NSDate date]];
      */
+    
+    //WatchList creation
+    NSFetchRequest *fetchRequest2 = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity2 = [NSEntityDescription entityForName:@"FBWatchList" inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest2 setEntity:entity2];
+    NSMutableArray <FBWatchList *> *result2 = [[NSMutableArray alloc] initWithArray:
+                                            [self.managedObjectContext executeFetchRequest:fetchRequest2 error:&error]];
+    if (error) {
+        NSLog(@"Unable to execute fetch request.");
+        NSLog(@"%@, %@", error, error.localizedDescription);
+    }
+    else if (result2.count == 0) {
+        NSLog(@"No watch list, creating empty list");
+        NSManagedObjectContext *context = [self managedObjectContext];
+        FBWatchList *wl = [NSEntityDescription insertNewObjectForEntityForName:@"FBWatchList" inManagedObjectContext:context];
+        wl.players = [[NSMutableArray alloc] init];
+        [wl.players addObjectsFromArray:@[@"LeBron James", @"Kevin Durant", @"Hassan Whiteside"]];
+    }
+    
+    if (![[self managedObjectContext] save:&error]) {
+        NSLog(@"failed to save in AppDelegate: %@", [error localizedDescription]);
+    }
     
     //RESideMenu init
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:
@@ -95,7 +142,7 @@
     RESideMenu *sideMenuViewController = [[RESideMenu alloc] initWithContentViewController: navController
                                                                     leftMenuViewController:[[LeftSideMenuViewController alloc] init]
                                                                    rightMenuViewController:nil];
-    sideMenuViewController.backgroundImage = [UIImage imageNamed:@"StadiumBlur.jpg"];
+    sideMenuViewController.backgroundImage = [UIImage imageNamed:@"StadiumBlur2.jpg"];
     sideMenuViewController.scaleBackgroundImageView = YES;
     sideMenuViewController.scaleContentView = YES;
     sideMenuViewController.scaleMenuView = YES;

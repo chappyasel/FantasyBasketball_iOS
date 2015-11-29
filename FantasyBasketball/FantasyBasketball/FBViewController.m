@@ -27,6 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.session = [FBSession fetchCurrentSession];
+    self.watchList = [FBWatchList fetchWatchList];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.showsHorizontalScrollIndicator = NO;
