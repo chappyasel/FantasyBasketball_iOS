@@ -17,8 +17,12 @@
                     <color key="textColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="FBIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="iiJ-Km-fgY">
-                    <rect key="frame" x="200" y="200" width="80" height="80"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="FBIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="iiJ-Km-fgY">
+                    <rect key="frame" x="185" y="185" width="110" height="110"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="110" id="EIP-rQ-aco"/>
+                        <constraint firstAttribute="height" constant="110" id="V8I-lG-y1J"/>
+                    </constraints>
                 </imageView>
             </subviews>
             <color key="backgroundColor" red="0.87058823529999996" green="0.43529411759999997" blue="0.12549019610000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -35,6 +39,6 @@
         </view>
     </objects>
     <resources>
-        <image name="FBIcon.png" width="180" height="180"/>
+        <image name="FBIcon.png" width="146" height="127"/>
     </resources>
 </document>

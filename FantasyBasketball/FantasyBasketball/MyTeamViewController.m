@@ -259,7 +259,7 @@
     PlayerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Identifier"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     FBPlayer *player = self.players[indexPath.row+indexPath.section*_numStarters];
-    BOOL isOnWL = [self.watchList.players containsObject:player.fullName];
+    BOOL isOnWL = [self.watchList.playerArray containsObject:player.fullName];
     cell = [[PlayerCell alloc] initWithPlayer:player view:self isOnWL:isOnWL size:CGSizeMake(self.view.frame.size.width, 42.46)];
     [cell setScrollDistance:_globalScrollDistance];
     cell.delegate = self;
