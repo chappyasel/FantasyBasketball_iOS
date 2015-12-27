@@ -30,6 +30,7 @@
     [super viewDidLoad];
     self.title = @"Daily Leaders";
     self.scrollViews = [[NSMutableArray alloc] init];
+    [self loadTableHeaderView];
     [self loadPickerViewData];
     [self beginAsyncLoading];
 }
@@ -52,12 +53,9 @@
     }];
 }
 
-- (void)loadTableView {
-    [self loadTableHeaderView];
-}
 
 - (void)loadTableHeaderView {
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 414, 40)];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, 125, 30)];
     label.text = @"AUTO-REFRESH:";
     label.textColor = [UIColor whiteColor];
@@ -89,10 +87,6 @@ NSTimer *updateTimer;
 
 - (void)timerFired:(NSTimer *)timer {
     [self refreshButtonPressed:nil];
-}
-
--(void)viewWillAppear:(BOOL)animated{
-    [self loadTableView];
 }
 
 - (IBAction)refreshButtonPressed:(UIButton *)sender {

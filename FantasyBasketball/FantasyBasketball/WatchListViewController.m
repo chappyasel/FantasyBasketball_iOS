@@ -15,6 +15,10 @@
 
 @property NSMutableArray *players;
 
+@property NSArray <NSArray <NSString *> *> *pickerData;
+@property NSArray <NSString *> *selectedPickerData;
+@property NSString *scoringPeriod;
+
 @end
 
 @implementation WatchListViewController
@@ -163,6 +167,50 @@
     cell.delegate = self;
     return cell;
 }
+
+#pragma mark - FBPickerView
+
+- (void)loadPickerViewData {
+    _scoringPeriod = @"last15";
+    self.selectedPickerData = @[@"Last 15"];
+    self.pickerData = @[ @[@"Last 7", @"Last 15", @"Last 30", @"Season", @"Last Season", @"Projections"] ];
+}
+
+- (void)fadeIn:(UIButton *)sender {
+    self.navigationItem.rightBarButtonItem.enabled = NO;
+    [self.view endEditing:YES];
+    FBPickerView *picker = [FBPickerView loadViewFromNib];
+    picker.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    picker.delegate = self;
+    [picker resetData];
+    [picker setData:self.pickerData[0] ForColumn:0];
+    [picker selectString:self.selectedPickerData[0] inColumn:0];
+    [picker setAlpha:0.0];
+    [self.view addSubview:picker];
+    [UIView animateWithDuration:0.25 animations:^{
+        [picker setAlpha:1.0];
+    } completion: nil];
+}
+
+#pragma mark - FBPickerView delegate methods
+
+- (void)doneButtonPressedInPickerView:(FBPickerView *)pickerView {
+    int data1 = (int)[pickerView selectedIndexForColumn:0];
+    self.selectedPickerData = @[[pickerView selectedStringForColumn:0]];
+    if (data1 == 0) _scoringPeriod = @"last7";
+    else if (data1 == 1) _scoringPeriod = @"last15";
+    else if (data1 == 2) _scoringPeriod = @"last30";
+    else if (data1 == 3) _scoringPeriod = @"currSeason";
+    else if (data1 == 4) _scoringPeriod = @"lastSeason";
+    else _scoringPeriod = @"projections";
+    [self refreshNonAsync];
+    [self fadeOutWithPickerView:pickerView];
+}
+
+- (void)cancelButtonPressedInPickerView:(FBPickerView *)pickerView {
+    [self fadeOutWithPickerView:pickerView];
+}
+
 
 #pragma mark - PlayerCell delegate
 

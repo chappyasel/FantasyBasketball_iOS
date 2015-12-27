@@ -28,7 +28,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [self managedObjectContext];
-    
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"FBSession" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
@@ -78,6 +77,16 @@
         session5.seasonID = [NSNumber numberWithInt: 2016];
         session5.isSelected = NO;
         [result addObjectsFromArray:@[session1, session2, session3, session4, session5]];
+    }
+    else {
+        BOOL sessionIsSelected = NO;
+        for (FBSession *s in result) {
+            if (s.isSelected) {
+                sessionIsSelected = YES;
+                break;
+            }
+        }
+        if (!sessionIsSelected) result[0].isSelected = YES; //fail-safe for when no sessions are selected (why???)
     }
     
     //OLD SCORINGPERIODID METHOD
