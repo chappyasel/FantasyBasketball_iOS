@@ -128,7 +128,7 @@
         for (TFHppleElement *p in [self.parser searchWithXPathQuery:@"//table[@class='tablehead']/tr"]) {
             if (![[p objectForKey:@"class"] isEqual:@"stathead"] && ![[p objectForKey:@"class"] isEqual:@"colhead"]) {
                 NSArray *name = [p.firstChild.firstChild.content componentsSeparatedByString:@", "];
-                if ([name[1] containsString:self.playerFirstName]) { //player found
+                if (![name[1] rangeOfString:self.playerFirstName options:NSCaseInsensitiveSearch].location == NSNotFound) { //player found
                     self.parser = [TFHpple hppleWithHTMLData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[p.firstChild.firstChild objectForKey:@"href"]]]];
                     NSLog(@"Found player");
                     playerFound = YES;
@@ -165,7 +165,8 @@
         TFHppleElement *element = nodes[i];
         if ([element objectForKey:@"id"]) {
             NSArray <TFHppleElement *> *children = element.children;
-            if ([children[0].content containsString:self.playerFirstName]) {
+            bool playerNFound = [children[0].content rangeOfString:self.playerFirstName options:NSCaseInsensitiveSearch].location == NSNotFound;
+            if (!playerNFound) {
                 if (children[1].children.count > 2 && ![((TFHppleElement *)children[1].children[2]).tagName isEqualToString:@"a"]) //injury
                     self.playerInjury = [children[1].children[2] content];
                 NSString *teamPos = [children[0].children[1] content];
@@ -480,31 +481,33 @@
 }
 
 - (void)setupPlayerRanksView {
-    self.headerStat1.text = self.ranks[1];
-    self.headerStat2.text = self.ranks[2];
-    self.headerStat3.text = self.ranks[3];
-    self.headerStat4.text = self.ranks[4];
-    self.headerStat5.text = [NSString stringWithFormat:@"%@%%",self.ranks[5]];
-    if ([self.ranks[6] intValue] > 0) {
-        self.headerStat6.text = [NSString stringWithFormat:@"%@",self.ranks[6]];
-        self.headerStat6.textColor = [UIColor FBGreenColor];
-    }
-    else if ([self.ranks[6] intValue] == 0) self.headerStat6.text = @"0.0";
-    else {
-        self.headerStat6.text = [NSString stringWithFormat:@"%@",self.ranks[6]];
-        self.headerStat6.textColor = [UIColor FBRedColor];
-    }
-    if ([self.ranks[0] isEqualToString:@"FA"]) {
-        self.headerOwnerLabel.text = @"FA";
-        self.headerOwnerLabel.textColor = [UIColor FBGreenColor];
-    }
-    else if ([self.ranks[0] containsString:@"WA ("]) {
-        self.headerOwnerLabel.text = [NSString stringWithFormat:@"%@",self.ranks[0]];
-        self.headerOwnerLabel.textColor = [UIColor FBYellowColor];
-    }
-    else {
-        self.headerOwnerLabel.text = [NSString stringWithFormat:@"Owned (%@)",self.ranks[0]];
-        self.headerOwnerLabel.textColor = [UIColor whiteColor];
+    if (self.ranks.count > 6) {
+        self.headerStat1.text = self.ranks[1];
+        self.headerStat2.text = self.ranks[2];
+        self.headerStat3.text = self.ranks[3];
+        self.headerStat4.text = self.ranks[4];
+        self.headerStat5.text = [NSString stringWithFormat:@"%@%%",self.ranks[5]];
+        if ([self.ranks[6] intValue] > 0) {
+            self.headerStat6.text = [NSString stringWithFormat:@"%@",self.ranks[6]];
+            self.headerStat6.textColor = [UIColor FBGreenColor];
+        }
+        else if ([self.ranks[6] intValue] == 0) self.headerStat6.text = @"0.0";
+        else {
+            self.headerStat6.text = [NSString stringWithFormat:@"%@",self.ranks[6]];
+            self.headerStat6.textColor = [UIColor FBRedColor];
+        }
+        if ([self.ranks[0] isEqualToString:@"FA"]) {
+            self.headerOwnerLabel.text = @"FA";
+            self.headerOwnerLabel.textColor = [UIColor FBGreenColor];
+        }
+        else if ([self.ranks[0] containsString:@"WA ("]) {
+            self.headerOwnerLabel.text = [NSString stringWithFormat:@"%@",self.ranks[0]];
+            self.headerOwnerLabel.textColor = [UIColor FBYellowColor];
+        }
+        else {
+            self.headerOwnerLabel.text = [NSString stringWithFormat:@"Owned (%@)",self.ranks[0]];
+            self.headerOwnerLabel.textColor = [UIColor whiteColor];
+        }
     }
 }
 

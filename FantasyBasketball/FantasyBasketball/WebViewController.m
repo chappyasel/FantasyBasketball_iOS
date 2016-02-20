@@ -8,11 +8,14 @@
 
 #import "WebViewController.h"
 #import "FBSession.h"
+#import "PlayerViewController.h"
 
 @interface WebViewController ()
 
 @property UINavigationBar *navBar;
 @property UIBarButtonItem *refreshButton;
+
+@property BOOL loaded;
 
 @end
 
@@ -20,6 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.loaded = false;
     self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
     [self.view addSubview:self.webView];
     [self.webView setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -31,38 +35,41 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self loadNavBar];
+    if (!self.loaded) [self loadNavBar];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.webView
-                                                          attribute:NSLayoutAttributeWidth
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:self.view
-                                                          attribute:NSLayoutAttributeWidth
-                                                         multiplier:1.0
-                                                           constant:0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.webView
-                                                          attribute:NSLayoutAttributeHeight
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:self.view
-                                                          attribute:NSLayoutAttributeHeight
-                                                         multiplier:1.0
-                                                           constant:-64]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.webView
-                                                          attribute:NSLayoutAttributeCenterX
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:self.view
-                                                          attribute:NSLayoutAttributeCenterX
-                                                         multiplier:1.0
-                                                           constant:0.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.webView
-                                                          attribute:NSLayoutAttributeCenterY
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:self.view
-                                                          attribute:NSLayoutAttributeCenterY
-                                                         multiplier:1.0
-                                                           constant:32.0]];
+    if (!self.loaded) {
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.webView
+                                                              attribute:NSLayoutAttributeWidth
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.view
+                                                              attribute:NSLayoutAttributeWidth
+                                                             multiplier:1.0
+                                                               constant:0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.webView
+                                                              attribute:NSLayoutAttributeHeight
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.view
+                                                              attribute:NSLayoutAttributeHeight
+                                                             multiplier:1.0
+                                                               constant:-64]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.webView
+                                                              attribute:NSLayoutAttributeCenterX
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.view
+                                                              attribute:NSLayoutAttributeCenterX
+                                                             multiplier:1.0
+                                                               constant:0.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.webView
+                                                              attribute:NSLayoutAttributeCenterY
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.view
+                                                              attribute:NSLayoutAttributeCenterY
+                                                             multiplier:1.0
+                                                               constant:32.0]];
+    }
+    self.loaded = YES;
 }
 
 - (void)loadNavBar {
@@ -94,7 +101,33 @@
 #pragma mark - navigation delegate
 
 -(void)webView:(WKWebView *)webView didStartProvisionalNavigation: (WKNavigation *)navigation {
-    
+    NSString *urlString = webView.URL.absoluteString;
+    if ([urlString containsString:@"/players/"]) {
+        NSArray *urlArray = [urlString componentsSeparatedByString:@"/"];
+        NSString *nameString = urlArray[urlArray.count-2];
+        [self linkWithPlayerNameArray:[nameString componentsSeparatedByString:@"-"]];
+        
+        NSURL *nsurl=[NSURL URLWithString:self.link];
+        NSURLRequest *nsrequest=[NSURLRequest requestWithURL:nsurl];
+        [self.webView loadRequest:nsrequest]; //keep old link
+    }
+}
+
+- (void)linkWithPlayerNameArray: (NSArray *)array {
+    PlayerViewController *modalVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"p"];
+    modalVC.modalPresentationStyle = UIModalPresentationCustom;
+    modalVC.playerFirstName = array[0];
+    modalVC.playerLastName = array[1];
+    self.animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:modalVC];
+    self.animator.dragable = YES;
+    self.animator.bounces = YES;
+    self.animator.behindViewAlpha = 0.8;
+    self.animator.behindViewScale = 0.9;
+    self.animator.transitionDuration = 0.3;
+    self.animator.direction = ZFModalTransitonDirectionBottom;
+    [self.animator setContentScrollView:modalVC.bottomScrollView];
+    modalVC.transitioningDelegate = self.animator;
+    [self presentViewController:modalVC animated:YES completion:nil];
 }
 
 - (void)webView:(WKWebView *)webView didFinishNavigation: (WKNavigation *)navigation{

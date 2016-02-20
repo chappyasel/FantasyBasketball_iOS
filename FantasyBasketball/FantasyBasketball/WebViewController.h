@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
+#import "ZFModalTransitionAnimator.h"
 
 @interface WebViewController : UIViewController <WKNavigationDelegate, UIGestureRecognizerDelegate>
+
+@property (nonatomic, strong) ZFModalTransitionAnimator *animator;
 
 @property NSString *link;
 

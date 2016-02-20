@@ -157,31 +157,30 @@
     return news;
 }
 
-- (void)loadWatchListNews {
-    //load watch list
-    //load news player-by-player
-}
-
 - (void)loadGeneralFantasyNewsWithCompletionBlock:(void (^)(void)) completed {
     self.generalNews = [[NSMutableArray alloc] initWithCapacity:13];
     NSURL *url = [NSURL URLWithString:@"http://www.cbssports.com/fantasy/basketball/"];
     NSData *html = [NSData dataWithContentsOfURL:url];
     TFHpple *parser = [TFHpple hppleWithHTMLData:html];
     TFHppleElement *firstItem = [parser searchWithXPathQuery:@"//div[@class='marquee']"].firstObject; //first news item
-    NSString *imageLink = [((TFHppleElement *)((TFHppleElement *)firstItem.children[1]).children[1]).attributes valueForKey:@"src"];
-    NSString *title = ((TFHppleElement *)((TFHppleElement *)firstItem.children[3]).children[1]).content;
-    NSString *link = [((TFHppleElement *)((TFHppleElement *)firstItem.children[3]).children[1]).firstChild.attributes valueForKey:@"href"];
-    link = [NSString stringWithFormat:@"%@%@",@"http://www.cbssports.com",link];
-    [self.generalNews addObject:[[NSDictionary alloc] initWithObjects:@[imageLink, title, link] forKeys:@[@"image", @"title", @"link"]]];
+    if (((TFHppleElement *)firstItem.children[1]).children.count != 0 && firstItem.children.count > 3) {
+        NSString *imageLink = [((TFHppleElement *)((TFHppleElement *)firstItem.children[1]).children[1]).attributes valueForKey:@"src"];
+        NSString *title = ((TFHppleElement *)((TFHppleElement *)firstItem.children[3]).children[1]).content;
+        NSString *link = [((TFHppleElement *)((TFHppleElement *)firstItem.children[3]).children[1]).firstChild.attributes valueForKey:@"href"];
+        link = [NSString stringWithFormat:@"%@%@",@"http://www.cbssports.com",link];
+        [self.generalNews addObject:[[NSDictionary alloc] initWithObjects:@[imageLink, title, link] forKeys:@[@"image", @"title", @"link"]]];
+    }
     NSArray <TFHppleElement *> *otherItems = [parser searchWithXPathQuery:@"//ul[@id='latest-stream-listing']/div/li"]; //rest of news items
     for (int i = 0; i < otherItems.count; i++) {
         TFHppleElement *newsItem = otherItems[i];
         if (newsItem.attributes.count == 0) { //not an ad
-            NSString *imageLink = [((TFHppleElement *)((TFHppleElement *)newsItem.children[1]).children[1]).firstChild.attributes valueForKey:@"src"];
-            NSString *title = ((TFHppleElement *)((TFHppleElement *)newsItem.children[3]).children[3]).content;
-            NSString *link = [((TFHppleElement *)newsItem.children[1]).attributes valueForKey:@"href"];
-            link = [NSString stringWithFormat:@"%@%@",@"http://www.cbssports.com",link];
-            [self.generalNews addObject:[[NSDictionary alloc] initWithObjects:@[imageLink, title, link] forKeys:@[@"image", @"title", @"link"]]];
+            if (((TFHppleElement *)newsItem.children[1]).children.count != 0 && newsItem.children.count > 3) {
+                NSString *imageLink = [((TFHppleElement *)((TFHppleElement *)newsItem.children[1]).children[1]).firstChild.attributes valueForKey:@"src"];
+                NSString *title = ((TFHppleElement *)((TFHppleElement *)newsItem.children[3]).children[3]).content;
+                NSString *link = [((TFHppleElement *)newsItem.children[1]).attributes valueForKey:@"href"];
+                link = [NSString stringWithFormat:@"%@%@",@"http://www.cbssports.com",link];
+                [self.generalNews addObject:[[NSDictionary alloc] initWithObjects:@[imageLink, title, link] forKeys:@[@"image", @"title", @"link"]]];
+            }
         }
     }
     completed();

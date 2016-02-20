@@ -97,12 +97,14 @@
     self.playersTeam2 = [[NSMutableArray alloc] initWithCapacity:13];
     if (nodes.count == 0) {
         NSLog(@"Error");
+        /*
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Matchup Found"
                                                         message:@"No matchup was found for this week. \n\nThis message is to be expected in the offseason. \n\nIf you should have a game this week, check your league, team, seaason, and scoringID in the \"more\" tab."
                                                        delegate:self
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
         [alert show];
+         */
         _handleError = YES;
         return;
     }
@@ -166,8 +168,8 @@
         t1 = 1;
         t2 = 0;
     }
-    self.team1Display1.text = ((TFHppleElement *)nodes[t1].children[10]).content;
-    self.team2Display1.text = ((TFHppleElement *)nodes[t2].children[10]).content;
+    self.team1Display1.text = ((TFHppleElement *)nodes[t1].children[11]).content;
+    self.team2Display1.text = ((TFHppleElement *)nodes[t2].children[11]).content;
     self.scoresTeam1 = @[    @"200", //acts as setter for height
                              ((TFHppleElement *)nodes[t1].children[2]).content,
                              ((TFHppleElement *)nodes[t1].children[3]).content,
