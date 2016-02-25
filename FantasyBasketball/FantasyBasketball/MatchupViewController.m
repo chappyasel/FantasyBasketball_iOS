@@ -168,8 +168,8 @@
         t1 = 1;
         t2 = 0;
     }
-    self.team1Display1.text = ((TFHppleElement *)nodes[t1].children[11]).content;
-    self.team2Display1.text = ((TFHppleElement *)nodes[t2].children[11]).content;
+    self.team1Display1.text = ((TFHppleElement *)nodes[t1].children.lastObject).content;
+    self.team2Display1.text = ((TFHppleElement *)nodes[t2].children.lastObject).content;
     self.scoresTeam1 = @[    @"200", //acts as setter for height
                              ((TFHppleElement *)nodes[t1].children[2]).content,
                              ((TFHppleElement *)nodes[t1].children[3]).content,

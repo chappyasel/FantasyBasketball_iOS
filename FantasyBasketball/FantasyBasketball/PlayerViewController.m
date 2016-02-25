@@ -127,8 +127,9 @@
         NSLog(@"Could not Find player, looking deeper...");
         for (TFHppleElement *p in [self.parser searchWithXPathQuery:@"//table[@class='tablehead']/tr"]) {
             if (![[p objectForKey:@"class"] isEqual:@"stathead"] && ![[p objectForKey:@"class"] isEqual:@"colhead"]) {
-                NSArray *name = [p.firstChild.firstChild.content componentsSeparatedByString:@", "];
-                if (![name[1] rangeOfString:self.playerFirstName options:NSCaseInsensitiveSearch].location == NSNotFound) { //player found
+                NSArray <NSString *> *name = [p.firstChild.firstChild.content componentsSeparatedByString:@", "];
+                bool localNFound = [name.lastObject rangeOfString:self.playerFirstName options:NSCaseInsensitiveSearch].location == NSNotFound;
+                if (!localNFound) { //player found
                     self.parser = [TFHpple hppleWithHTMLData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[p.firstChild.firstChild objectForKey:@"href"]]]];
                     NSLog(@"Found player");
                     playerFound = YES;
