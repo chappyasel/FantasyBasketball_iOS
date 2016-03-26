@@ -152,8 +152,9 @@
     if (_handleError) return;
     NSString *XpathQueryString = @"//tr[@class='tableBody']";
     NSArray <TFHppleElement *> *nodes = [self.parser searchWithXPathQuery:XpathQueryString];
+    bool te2 = (nodes.count > 1);
     NSString *team1Name = nodes[0].firstChild.content;
-    NSString *team2Name = nodes[1].firstChild.content;
+    NSString *team2Name = te2 ? nodes[1].firstChild.content : @"";
     int t1;
     int t2;
     if ([team1Name containsString:firstName]) {
@@ -168,6 +169,10 @@
         t1 = 1;
         t2 = 0;
     }
+    if (!te2) { //error detection (no opponent)
+        t1 = 0;
+        t2 = 0;
+    }
     self.team1Display1.text = ((TFHppleElement *)nodes[t1].children.lastObject).content;
     self.team2Display1.text = ((TFHppleElement *)nodes[t2].children.lastObject).content;
     self.scoresTeam1 = @[    @"200", //acts as setter for height
@@ -178,7 +183,6 @@
                              ((TFHppleElement *)nodes[t1].children[6]).content,
                              ((TFHppleElement *)nodes[t1].children[7]).content,
                              ((TFHppleElement *)nodes[t1].children[8]).content];
-    
     self.scoresTeam2 = @[    ((TFHppleElement *)nodes[t2].children[8]).content,
                              ((TFHppleElement *)nodes[t2].children[7]).content,
                              ((TFHppleElement *)nodes[t2].children[6]).content,
@@ -327,9 +331,9 @@ NSTimer *updateTimer;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FBPlayer *rightPlayer;
     FBPlayer *leftPlayer;
-    if (self.playersTeam1.count-1 >= indexPath.row+indexPath.section*_numStartersTeam1)
+    if (self.playersTeam1.count!=0 && self.playersTeam1.count-1 >= indexPath.row+indexPath.section*_numStartersTeam1)
         leftPlayer = self.playersTeam1[indexPath.row+indexPath.section*_numStartersTeam1];
-    if (self.playersTeam2.count-1 >= indexPath.row+indexPath.section*_numStartersTeam2)
+    if (self.playersTeam2.count!=0 && self.playersTeam2.count-1 >= indexPath.row+indexPath.section*_numStartersTeam2)
         rightPlayer = self.playersTeam2[indexPath.row+indexPath.section*_numStartersTeam2];
     if (self.cells.count >= indexPath.row+indexPath.section*_numStartersTeam1+1) {
         MatchupPlayerCell *cell = self.cells[indexPath.row+indexPath.section*_numStartersTeam1];
