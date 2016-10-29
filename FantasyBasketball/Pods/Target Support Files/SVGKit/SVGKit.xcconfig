@@ -1,7 +1,0 @@
-CLANG_CXX_LANGUAGE_STANDARD = gnu++11
-CLANG_CXX_LIBRARY = libstdc++
-GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Private" "${PODS_ROOT}/Headers/Private/SVGKit" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/CocoaLumberjack" "${PODS_ROOT}/Headers/Public/FrameAccessor" "${PODS_ROOT}/Headers/Public/GraphKit" "${PODS_ROOT}/Headers/Public/JBChartView" "${PODS_ROOT}/Headers/Public/MKFoundationKit" "${PODS_ROOT}/Headers/Public/RESideMenu" "${PODS_ROOT}/Headers/Public/SVGKit" "${PODS_ROOT}/Headers/Public/ZFDragableModalTransition" $(SDKROOT)/usr/include/libxml2
-OTHER_LDFLAGS = -l"xml2" -framework "CoreText" -framework "QuartzCore"
-PODS_ROOT = ${SRCROOT}
-SKIP_INSTALL = YES

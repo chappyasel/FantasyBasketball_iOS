@@ -4,11 +4,6 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>CocoaLumberjack.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>FrameAccessor.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -29,17 +24,17 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>PocketSVG.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-FantasyBasketball.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
 		<key>RESideMenu.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>SVGKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -57,17 +52,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>12E2BC28C62976C425F4B71C2723F0B1</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>175D8E2A34A7F35EC5555C415FAB5A99</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>1FB50FAC00D74EF88FF8FC7F3DAEA1B3</key>
+		<key>1C1667EA9FEBC7E3E524E3B4C4E25B17</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -77,12 +62,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>38E7B2F2BEFFB15DFBE878A5E33005A4</key>
+		<key>54517DA31C511705EA3412509E684552</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>38E9F7F13A7F94A7D9460CD9F39CA655</key>
+		<key>6D7CFF0059F153771B1340637306FAE6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8DC246FDA4A18021764639F3A1EADFAF</key>
 		<dict>
 			<key>primary</key>
 			<true/>

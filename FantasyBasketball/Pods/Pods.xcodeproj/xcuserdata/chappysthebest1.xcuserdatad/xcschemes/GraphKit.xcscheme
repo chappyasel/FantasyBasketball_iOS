@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '31244C0FC7B42A3BDA90157C'
+               BlueprintIdentifier = '9F61E9074BB8B0BE78878505'
                BlueprintName = 'GraphKit'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libGraphKit.a'>

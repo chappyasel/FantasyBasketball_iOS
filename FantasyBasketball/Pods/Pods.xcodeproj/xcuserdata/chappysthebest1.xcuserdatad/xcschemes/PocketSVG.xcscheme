@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'E7722C3CA7B0C0D2825D8FFB'
-               BlueprintName = 'ZFDragableModalTransition'
+               BlueprintIdentifier = 'FDE282596C731F70929FD190'
+               BlueprintName = 'PocketSVG'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libZFDragableModalTransition.a'>
+               BuildableName = 'libPocketSVG.a'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

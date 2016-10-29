@@ -10,6 +10,7 @@
 #import "MatchupPlayerCell.h"
 #import "JBChartView.h"
 #import "JBBarChartView.h"
+#import "SVGKit.h"
 
 @interface MatchupViewController : FBViewController <UIScrollViewDelegate, JBBarChartViewDataSource, JBBarChartViewDelegate>
 

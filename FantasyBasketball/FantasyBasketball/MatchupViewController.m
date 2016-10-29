@@ -166,8 +166,16 @@
 
 - (void)loadScoresWithFirstTeamName: (NSString *)firstName {
     if (_handleError) return;
-    NSString *XpathQueryString = @"//tr[@class='tableBody']";
-    NSArray <TFHppleElement *> *nodes = [self.parser searchWithXPathQuery:XpathQueryString];
+    
+    NSMutableArray *images = [[NSMutableArray alloc] init];
+    NSArray <TFHppleElement *> *nodes = [self.parser searchWithXPathQuery:@"//div[@id='teamInfos']/div/div/div/a/img"];
+    for (TFHppleElement *node in nodes) {
+        NSURL *url = [NSURL URLWithString:[node.attributes valueForKey:@"src"]];
+        SVGKImage *image = [SVGKImage imageWithContentsOfURL:url];
+        [images addObject:image];
+    }
+    
+    nodes = [self.parser searchWithXPathQuery:@"//tr[@class='tableBody']"];
     bool te2 = (nodes.count > 1);
     NSString *team1Name = nodes[0].firstChild.content;
     NSString *team2Name = te2 ? nodes[1].firstChild.content : @"";

@@ -313,7 +313,6 @@
 		F965907F1A676DB2005384D1 = {
 			isa = PBXGroup;
 			children = (
-				F9E4AE251B655150006CFDE4 /* Classes */,
 				F965908A1A676DB2005384D1 /* FantasyBasketball */,
 				F9E4AE261B65515A006CFDE4 /* Third Party */,
 				F90461E21A6C2A2A008A2C8E /* FB - Widget */,
@@ -337,6 +336,7 @@
 		F965908A1A676DB2005384D1 /* FantasyBasketball */ = {
 			isa = PBXGroup;
 			children = (
+				F9E4AE251B655150006CFDE4 /* Classes */,
 				F97303DC1B655A8C00193A1D /* View Controllers */,
 				F96590981A676DB3005384D1 /* Main.storyboard */,
 				F965908F1A676DB2005384D1 /* AppDelegate.h */,
@@ -549,6 +549,7 @@
 				F9E4AE231B655101006CFDE4 /* User Interface */,
 			);
 			name = Classes;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		F9E4AE261B65515A006CFDE4 /* Third Party */ = {
