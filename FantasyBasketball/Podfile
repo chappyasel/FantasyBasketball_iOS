@@ -6,6 +6,7 @@ target 'FantasyBasketball' do
     pod 'ZFDragableModalTransition'
     pod 'JBChartView'
     pod 'GraphKit'
+    pod 'SVGKit'
 end
 
 target 'FantasyBasketballTests' do

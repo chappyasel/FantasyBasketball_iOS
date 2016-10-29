@@ -1,4 +1,12 @@
 PODS:
+  - CocoaLumberjack (3.0.0):
+    - CocoaLumberjack/Default (= 3.0.0)
+    - CocoaLumberjack/Extensions (= 3.0.0)
+  - CocoaLumberjack/Core (3.0.0)
+  - CocoaLumberjack/Default (3.0.0):
+    - CocoaLumberjack/Core
+  - CocoaLumberjack/Extensions (3.0.0):
+    - CocoaLumberjack/Default
   - FrameAccessor (1.3.2)
   - GraphKit (1.1.1):
     - FrameAccessor (~> 1.3.2)
@@ -6,20 +14,25 @@ PODS:
   - JBChartView (2.8.16)
   - MKFoundationKit/NSArray (1.2.3)
   - RESideMenu (4.0.7)
+  - SVGKit (1.2.0):
+    - CocoaLumberjack
   - ZFDragableModalTransition (0.5.1)
 
 DEPENDENCIES:
   - GraphKit
   - JBChartView
   - RESideMenu
+  - SVGKit
   - ZFDragableModalTransition
 
 SPEC CHECKSUMS:
+  CocoaLumberjack: c823149bccc5519a9447aeb433be7b1212a7d6a5
   FrameAccessor: 0f7ba6ce37be9a5d0302a27c731dca70af8d438b
   GraphKit: e2336bed87d9313020af525dedbca54b62e93533
   JBChartView: 8e65b7fbb4e7f1f2c0197575734fce4af1c19e17
   MKFoundationKit: 882d74557944790d4d9e172961ed71d6a66804b7
   RESideMenu: f24c508404b49c667344c54aba7e590883533958
+  SVGKit: 267d38d3db13ca62dc52f09b4738cb440f83c4c6
   ZFDragableModalTransition: 048189eda437f91944ce6d5151618b8bf770196d
 
 COCOAPODS: 0.39.0
