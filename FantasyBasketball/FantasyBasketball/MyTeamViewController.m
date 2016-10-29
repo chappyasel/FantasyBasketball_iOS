@@ -128,13 +128,14 @@
             [self.players addObject:[[FBPlayer alloc] initWithDictionary:dict]];
         }
     }
-    for (FBPlayer *player in _players) if(player.isStarting) _numStarters ++;
+    for (FBPlayer *player in _players) if (player.isStarting) _numStarters ++;
     completed();
 }
 
 #pragma mark - Table View
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if (_numStarters == self.players.count) return 1;
     return 2;
 }
 

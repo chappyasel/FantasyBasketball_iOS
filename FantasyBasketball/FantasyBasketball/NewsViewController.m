@@ -146,7 +146,7 @@
                 NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
                 [dateFormatter setDateFormat:@"MMM dd - h:mm a yyyy"];
                 NSDate *date = [dateFormatter dateFromString:dateString];
-                [rotoPeice setObject:date forKey:@"date"];
+                if (date) [rotoPeice setObject:date forKey:@"date"];
             }
         }
         [rotoPeice setObject:[NSString stringWithFormat:@"%@ %@",name[0],name[1]] forKey:@"name"];

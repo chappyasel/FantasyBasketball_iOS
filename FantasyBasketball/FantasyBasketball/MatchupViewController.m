@@ -49,8 +49,16 @@
 - (void)beginAsyncLoading {
     dispatch_queue_t myQueue = dispatch_queue_create("My Queue",NULL);
     dispatch_async(myQueue, ^{
-        [self loadPlayersWithCompletionBlock:^(NSString *firstTeamName) {
+        [self loadPlayersWithCompletionBlock:^(bool success, NSString *firstTeamName) {
             dispatch_async(dispatch_get_main_queue(), ^{
+                if (!success) {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Weekly Matchup Found"
+                                                                    message:@"The rest of the app is unlikely to function.\n\nThis message is to be expected in the offseason. \n\nIf you should have a game this week, check your league, team, season, and scoringID in the \"Settings\" tab."
+                                                                   delegate:self
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil];
+                    [alert show];
+                }
                 if (_handleError) return;
                 [self loadScoresWithFirstTeamName:firstTeamName];
                 [self.tableView reloadData];
@@ -60,7 +68,15 @@
 }
 
 - (void)refreshNonAsync {
-    [self loadPlayersWithCompletionBlock:^(NSString *firstTeamName) {
+    [self loadPlayersWithCompletionBlock:^(bool success, NSString *firstTeamName) {
+        if (!success) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Weekly Matchup Found"
+                                                            message:@"The rest of the app is unlikely to function.\n\nThis message is to be expected in the offseason. \n\nIf you should have a game this week, check your league, team, season, and scoringID in the \"Settings\" tab."
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
         if (_handleError) return;
         [self loadScoresWithFirstTeamName:firstTeamName];
         [self.tableView reloadData];
@@ -81,7 +97,7 @@
     }];
 }
 
-- (void)loadPlayersWithCompletionBlock:(void (^)(NSString *firstTeamName)) completed {
+- (void)loadPlayersWithCompletionBlock:(void (^)(bool success, NSString *firstTeamName)) completed {
     _numStartersTeam1 = 0, _numStartersTeam2 = 0;
     NSString *link = self.globalLink;
     if (link == nil) link = [NSString stringWithFormat:@"http://games.espn.go.com/fba/boxscorefull?leagueId=%@&teamId=%@&seasonId=%@",self.session.leagueID,self.session.teamID,self.session.seasonID];
@@ -93,18 +109,11 @@
     self.parser = [TFHpple hppleWithHTMLData:html];
     //table[@class='playerTableTable tableBody']/tr
     NSArray *nodes = [self.parser searchWithXPathQuery:@"//table[@class='playerTableTable tableBody']/tr"];
-    self.playersTeam1 = [[NSMutableArray alloc] initWithCapacity:13];
-    self.playersTeam2 = [[NSMutableArray alloc] initWithCapacity:13];
+    self.playersTeam1 = [[NSMutableArray alloc] init];
+    self.playersTeam2 = [[NSMutableArray alloc] init];
     if (nodes.count == 0) {
         NSLog(@"Error");
-        /*
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Matchup Found"
-                                                        message:@"No matchup was found for this week. \n\nThis message is to be expected in the offseason. \n\nIf you should have a game this week, check your league, team, seaason, and scoringID in the \"more\" tab."
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-         */
+        completed(false, nil);
         _handleError = YES;
         return;
     }
@@ -112,9 +121,12 @@
     TFHppleElement *name = [self.parser searchWithXPathQuery:@"//table[@id='playertable_0']/tr[@class='playerTableBgRowHead tableHead playertableTableHeader']/td"].firstObject;
     NSString *firstTeamName = [name.content stringByReplacingOccurrencesOfString:@" Box Score" withString:@""];
     _handleError = NO;
+    int switchPoint = 0;
+    bool switchValid = YES;
     for (int i = 0; i < nodes.count; i++) {
         TFHppleElement *element = nodes[i];
         if ([element objectForKey:@"id"]) {
+            if (switchValid) switchPoint ++;
             NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
             NSArray <TFHppleElement *> *children = element.children;
             [dict setObject:children[0].content forKey:@"isStarting"];
@@ -139,13 +151,17 @@
             [dict setObject:children[16].content forKey:@"points"];
             [dict setObject:children[18].content forKey:@"fantasyPoints"];
             //[dict setObject:[[element objectForKey:@"id"] substringFromIndex:4] forKey:@"playerID"];
-            if (i < 13) [self.playersTeam1 addObject:[[FBPlayer alloc] initWithDictionary:dict]];
-            else [self.playersTeam2 addObject:[[FBPlayer alloc] initWithDictionary:dict]];
+            [self.playersTeam1 addObject:[[FBPlayer alloc] initWithDictionary:dict]];
         }
+        else if (switchPoint != 0) switchValid = NO;
+    }
+    for (int i = 0; i < switchPoint; i++) {
+        [self.playersTeam2 addObject:[self.playersTeam1 objectAtIndex:switchPoint]];
+        [self.playersTeam1 removeObjectAtIndex:switchPoint];
     }
     for (FBPlayer *player in self.playersTeam1) if(player.isStarting) _numStartersTeam1 ++;
     for (FBPlayer *player in self.playersTeam2) if(player.isStarting) _numStartersTeam2 ++;
-    completed(firstTeamName);
+    completed(true, firstTeamName);
 }
 
 - (void)loadScoresWithFirstTeamName: (NSString *)firstName {
@@ -283,8 +299,7 @@ NSTimer *updateTimer;
 #pragma mark - Table View
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (_handleError) return 0;
-    if (self.playersTeam1) return 10;
+    if (self.playersTeam1) return MAX(self.numStartersTeam1, self.numStartersTeam2);
     return 0;
 }
 

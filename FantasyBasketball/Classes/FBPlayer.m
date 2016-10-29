@@ -41,7 +41,7 @@
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict {
     if (self = [super init]) {
-        if (![dict[@"isStarting"] isEqual:@"Bench"]) _isStarting = YES;
+        if (!([dict[@"isStarting"] isEqual:@"Bench"] || [dict[@"isStarting"] isEqual:@"IR"])) _isStarting = YES;
         else _isStarting = NO;
         NSDictionary *name = [FBPlayer separateFirstAndLastNameForString:dict[@"firstName+lastName"]];
         _firstName = name[@"first"];
