@@ -689,8 +689,8 @@ bool gameLogIsBasic = YES;
             range2 = [text rangeOfString:@"Experience:"];
         }
         NSMutableAttributedString *attributedText =[[NSMutableAttributedString alloc] initWithString:text attributes:attrs];
-        if (!range1.length == 0) [attributedText setAttributes:subAttrs range:range1];
-        if (!range2.length == 0) [attributedText setAttributes:subAttrs range:range2];
+        if (range1.length != 0) [attributedText setAttributes:subAttrs range:range1];
+        if (range2.length != 0) [attributedText setAttributes:subAttrs range:range2];
         [label setAttributedText:attributedText];
         
         [cell addSubview:label];
