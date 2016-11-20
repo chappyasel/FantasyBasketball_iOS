@@ -52,15 +52,16 @@
 @property (weak, nonatomic) IBOutlet UIView *bottomContentView;
 
 @property (weak, nonatomic) IBOutlet UITableView *infoTableView;
-@property (weak, nonatomic) IBOutlet UILabel *graphNameDisplay;
-@property (weak, nonatomic) IBOutlet UIView *graphContainerView;
-@property (strong, nonatomic) IBOutlet BEMSimpleLineGraphView *graphView;
 @property (weak, nonatomic) IBOutlet UITableView *statsBasicTableView; //to remove
 @property (weak, nonatomic) IBOutlet UITableView *gamesBasicTableView;
 
-@property (strong, nonatomic) IBOutlet UITableView *newsTableView;
-@property (strong, nonatomic) IBOutlet UITableView *gameTableView;
-@property (strong, nonatomic) IBOutlet UIScrollView *statsScrollView;
-@property (strong, nonatomic) IBOutlet UITableView *rotoworldTableView;
+@property (strong, nonatomic) UITableView *newsTableView;
+@property (strong, nonatomic) UITableView *gameTableView;
+@property (strong, nonatomic) UITableView *statsTableView;
+@property (strong, nonatomic) UITableView *rotoworldTableView;
+
+@property (weak, nonatomic) IBOutlet UILabel *graphNameDisplay;
+@property (weak, nonatomic) IBOutlet UIView *graphContainerView;
+@property (strong, nonatomic) IBOutlet BEMSimpleLineGraphView *graphView;
 
 @end
