@@ -954,7 +954,7 @@ bool gameLogIsBasic = YES;
     if (tableView == _newsTableView) {
         NSMutableDictionary *newsPeice = self.news[indexPath.row];
         if ([newsPeice objectForKey:@"link"]) {
-            WebViewController *modalVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"p"];
+            WebViewController *modalVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"w"];
             modalVC.modalPresentationStyle = UIModalPresentationCustom;
             modalVC.link = [newsPeice objectForKey:@"link"];
             self.animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:modalVC];

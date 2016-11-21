@@ -29,9 +29,12 @@
     [self.webView setTranslatesAutoresizingMaskIntoConstraints:NO];
     self.webView.navigationDelegate = self;
     
-    NSURL *nsurl=[NSURL URLWithString:self.link];
-    NSURLRequest *nsrequest=[NSURLRequest requestWithURL:nsurl];
-    [self.webView loadRequest:nsrequest];
+    if ([self.link containsString:@"http://www.espn.com/nba/boxscore?"])
+        self.link = [[self.link stringByReplacingOccurrencesOfString:@"nba/boxscore?id" withString:@"core/nba/gamecast?gameId"]
+                                stringByAppendingString:@"&action=stats"];
+    NSURL *url = [NSURL URLWithString:self.link];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [self.webView loadRequest:request];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
