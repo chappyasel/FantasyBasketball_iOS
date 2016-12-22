@@ -7,6 +7,7 @@
 //
 
 #import "MatchupViewController.h"
+#import "FBTeamComparison.h"
 
 @interface MatchupViewController ()
 
@@ -102,6 +103,13 @@
     NSString *link = self.globalLink;
     if (link == nil) link = [NSString stringWithFormat:@"http://games.espn.go.com/fba/boxscorefull?leagueId=%@&teamId=%@&seasonId=%@",self.session.leagueID,self.session.teamID,self.session.seasonID];
     link = [NSString stringWithFormat: @"%@&scoringPeriodId=%d&view=scoringperiod&version=full",link,_scoringDay];
+    
+    
+    FBTeamComparison *comp = [[FBTeamComparison alloc] init];
+    [comp loadComparisonWithMatchupLink:link updateBlock:^(int num, int total) {
+        
+    }];
+    
     NSURL *url = [NSURL URLWithString:link];
     NSError *error;
     NSData *html = [NSData dataWithContentsOfURL:url options:NSDataReadingMapped error:&error];

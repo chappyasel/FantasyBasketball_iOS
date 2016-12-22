@@ -27,6 +27,8 @@
 		F93CC15E1C0A47EF0078E5FA /* FBWatchList.m in Sources */ = {isa = PBXBuildFile; fileRef = F93CC15C1C0A47EF0078E5FA /* FBWatchList.m */; };
 		F93CC1611C0A55320078E5FA /* WL-Off.png in Resources */ = {isa = PBXBuildFile; fileRef = F93CC15F1C0A55320078E5FA /* WL-Off.png */; };
 		F93CC1621C0A55320078E5FA /* WL-On.png in Resources */ = {isa = PBXBuildFile; fileRef = F93CC1601C0A55320078E5FA /* WL-On.png */; };
+		F93DAD031E08EC9500B5F5FF /* FBTeamComparison.m in Sources */ = {isa = PBXBuildFile; fileRef = F93DAD021E08EC9500B5F5FF /* FBTeamComparison.m */; };
+		F93DAD061E08F07100B5F5FF /* FBTeamComparisonPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F93DAD051E08F07100B5F5FF /* FBTeamComparisonPlayer.m */; };
 		F9528BB91C0661F500B421DC /* NE@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F9528BB81C0661F500B421DC /* NE@2x.png */; };
 		F9528BBD1C06620D00B421DC /* SC@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F9528BBA1C06620D00B421DC /* SC@2x.png */; };
 		F9528BBE1C06620D00B421DC /* ST@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F9528BBB1C06620D00B421DC /* ST@2x.png */; };
@@ -136,6 +138,10 @@
 		F93CC15C1C0A47EF0078E5FA /* FBWatchList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBWatchList.m; path = FantasyBasketball/FBWatchList.m; sourceTree = "<group>"; };
 		F93CC15F1C0A55320078E5FA /* WL-Off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "WL-Off.png"; path = "FantasyBasketball/Images/WL-Off.png"; sourceTree = "<group>"; };
 		F93CC1601C0A55320078E5FA /* WL-On.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "WL-On.png"; path = "FantasyBasketball/Images/WL-On.png"; sourceTree = "<group>"; };
+		F93DAD011E08EC9500B5F5FF /* FBTeamComparison.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBTeamComparison.h; path = Classes/FBTeamComparison.h; sourceTree = "<group>"; };
+		F93DAD021E08EC9500B5F5FF /* FBTeamComparison.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBTeamComparison.m; path = Classes/FBTeamComparison.m; sourceTree = "<group>"; };
+		F93DAD041E08F07100B5F5FF /* FBTeamComparisonPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBTeamComparisonPlayer.h; path = Classes/FBTeamComparisonPlayer.h; sourceTree = "<group>"; };
+		F93DAD051E08F07100B5F5FF /* FBTeamComparisonPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBTeamComparisonPlayer.m; path = Classes/FBTeamComparisonPlayer.m; sourceTree = "<group>"; };
 		F9528BB81C0661F500B421DC /* NE@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "NE@2x.png"; path = "FantasyBasketball/Images/NE@2x.png"; sourceTree = "<group>"; };
 		F9528BBA1C06620D00B421DC /* SC@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SC@2x.png"; path = "FantasyBasketball/Images/SC@2x.png"; sourceTree = "<group>"; };
 		F9528BBB1C06620D00B421DC /* ST@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ST@2x.png"; path = "FantasyBasketball/Images/ST@2x.png"; sourceTree = "<group>"; };
@@ -290,6 +296,17 @@
 				F95F53D41B6BFECA00CFF253 /* LeftSideMenuViewController.m */,
 			);
 			name = "Left Menu";
+			sourceTree = "<group>";
+		};
+		F93DAD071E08F07900B5F5FF /* Team Comparison */ = {
+			isa = PBXGroup;
+			children = (
+				F93DAD011E08EC9500B5F5FF /* FBTeamComparison.h */,
+				F93DAD021E08EC9500B5F5FF /* FBTeamComparison.m */,
+				F93DAD041E08F07100B5F5FF /* FBTeamComparisonPlayer.h */,
+				F93DAD051E08F07100B5F5FF /* FBTeamComparisonPlayer.m */,
+			);
+			name = "Team Comparison";
 			sourceTree = "<group>";
 		};
 		F954E9851B65E507000F323F /* BEMLineGraph */ = {
@@ -528,6 +545,7 @@
 				F9F8185A1B6ABA0700EE70E7 /* FBPlayer.m */,
 				F991B1851BE6D1D5008A4EA6 /* FBSession.h */,
 				F991B1861BE6D1D5008A4EA6 /* FBSession.m */,
+				F93DAD071E08F07900B5F5FF /* Team Comparison */,
 				F991B1831BE6D1D5008A4EA6 /* FBSession+CoreDataProperties.h */,
 				F991B1841BE6D1D5008A4EA6 /* FBSession+CoreDataProperties.m */,
 				F93CC15B1C0A47EF0078E5FA /* FBWatchList.h */,
@@ -772,6 +790,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F96590911A676DB2005384D1 /* AppDelegate.m in Sources */,
+				F93DAD061E08F07100B5F5FF /* FBTeamComparisonPlayer.m in Sources */,
 				F97063831A6C98D700A50A43 /* WebViewController.m in Sources */,
 				F937FD051C0BC0E8002D545E /* FBNewsSettings.m in Sources */,
 				F9E5F2121BEEAE42003E8CAA /* WatchListViewController.m in Sources */,
@@ -794,6 +813,7 @@
 				F9D7023C1A9F678000AAEB18 /* PlayerCell.m in Sources */,
 				F954E9831B65E501000F323F /* TFHppleElement.m in Sources */,
 				F96590B61A6773E8005384D1 /* MyTeamViewController.m in Sources */,
+				F93DAD031E08EC9500B5F5FF /* FBTeamComparison.m in Sources */,
 				F97658511B65E69100ACC050 /* TodayViewController.m in Sources */,
 				F904F3A71B6C665600B7BD37 /* FBViewController.m in Sources */,
 				F937FCFE1C0BAE7A002D545E /* FBNewsSelectorView.m in Sources */,
