@@ -12,7 +12,7 @@
 
 @implementation FBTeamComparisonPlayer
 
-- (void)addScore: (NSNumber *)score {
+- (void)addScore: (id)score {
     if (!self.scores) self.scores = [[NSMutableArray alloc] init];
     [self.scores addObject:score];
 }
@@ -45,8 +45,7 @@
         float sum = 0;
         for (NSNumber *num in fpts) sum += [num intValue];
         self.average = sum/fpts.count;
-        self.stdDev = [self stdDevForArray:fpts withAverage:self.average];
-        NSLog(@"%@: %f       %f",self.lastName, self.average,self.stdDev);
+        self.variance = [self varianceForArray:fpts withAverage:self.average];
     }
     else NSLog(@"PLAYER NOT FOUND IN TEAM COMPARISON");
 }
@@ -90,10 +89,10 @@
     return games;
 }
 
-- (float)stdDevForArray: (NSMutableArray *)arr withAverage: (float)avg {
+- (float)varianceForArray: (NSMutableArray *)arr withAverage: (float)avg {
     float sumOfDiffs = 0;
     for (NSNumber *score in arr) sumOfDiffs += pow(([score intValue] - avg), 2);
-    return sqrt(sumOfDiffs / arr.count);
+    return sumOfDiffs / arr.count;
 }
 
 @end

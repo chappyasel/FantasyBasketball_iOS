@@ -14,12 +14,12 @@
 @property NSString *lastName;
 
 @property float average;
-@property float stdDev;
+@property float variance;
 
 @property NSMutableArray<NSNumber *> *scores;
 
 - (void)loadPlayerWithName: (NSString *)name;
 
-- (void)addScore: (NSNumber *)score;
+- (void)addScore: (id)score;
 
 @end

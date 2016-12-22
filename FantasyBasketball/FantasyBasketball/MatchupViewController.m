@@ -104,11 +104,24 @@
     if (link == nil) link = [NSString stringWithFormat:@"http://games.espn.go.com/fba/boxscorefull?leagueId=%@&teamId=%@&seasonId=%@",self.session.leagueID,self.session.teamID,self.session.seasonID];
     link = [NSString stringWithFormat: @"%@&scoringPeriodId=%d&view=scoringperiod&version=full",link,_scoringDay];
     
-    
-    FBTeamComparison *comp = [[FBTeamComparison alloc] init];
-    [comp loadComparisonWithMatchupLink:link updateBlock:^(int num, int total) {
-        
-    }];
+    dispatch_queue_t myQueue = dispatch_queue_create("My Queue",NULL);
+    dispatch_async(myQueue, ^{
+        FBTeamComparison *comp = [[FBTeamComparison alloc] init];
+        [comp loadComparisonWithMatchupLink:link updateBlock:^(int num, int total) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (num == total) {
+                    self.team1Display3.text = [NSString stringWithFormat:@"%d",comp.team1ProjScore];
+                    self.team2Display3.text = [NSString stringWithFormat:@"%d",comp.team2ProjScore];
+                    if (comp.team1WinPct > 50.0)
+                             self.centerDisplay.text = [NSString stringWithFormat:@"< %.1f%%  ",comp.team1WinPct];
+                    else     self.centerDisplay.text = [NSString stringWithFormat:@"  %.1f%% >",100-comp.team1WinPct];
+                }
+                else {
+                    self.centerDisplay.text = [NSString stringWithFormat:@"%.0f%%",(float)num/(float)total*100];
+                }
+            });
+        }];
+    });
     
     NSURL *url = [NSURL URLWithString:link];
     NSError *error;

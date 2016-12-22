@@ -17,8 +17,11 @@
 @property (strong, nonatomic) IBOutlet UISwitch *autorefreshSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *team1Display1;
 @property (weak, nonatomic) IBOutlet UILabel *team1Display2;
+@property (weak, nonatomic) IBOutlet UILabel *team1Display3;
 @property (weak, nonatomic) IBOutlet UILabel *team2Display1;
 @property (weak, nonatomic) IBOutlet UILabel *team2Display2;
+@property (weak, nonatomic) IBOutlet UILabel *team2Display3;
+@property (weak, nonatomic) IBOutlet UILabel *centerDisplay;
 
 - (void)initWithMatchupLink: (NSString *) link;
 
