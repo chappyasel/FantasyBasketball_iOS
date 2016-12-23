@@ -16,6 +16,10 @@
     return (FBNewsSelectorView *)[[[NSBundle mainBundle] loadNibNamed:@"FBNewsSelectorView" owner:self options:0] objectAtIndex:0];
 }
 
+- (void)layoutSubviews {
+    self.backgroundView.layer.cornerRadius = 10;
+}
+
 - (void) resetValues {
     [self.switch1 setOn:YES];
     [self.switch2 setOn:YES];
@@ -61,13 +65,5 @@
 - (IBAction)doneButtonPressed:(UIButton *)sender {
     [_delegate doneButtonPressedInSelectorView:self];
 }
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
 
 @end

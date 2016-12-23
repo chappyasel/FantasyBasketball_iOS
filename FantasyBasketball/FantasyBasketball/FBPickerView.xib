@@ -15,73 +15,67 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="24z-Xl-ydB">
-                    <rect key="frame" x="0.0" y="456" width="414" height="280"/>
-                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="eUz-2H-SUa">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="280"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2xg-IR-fAM">
-                                <rect key="frame" x="0.0" y="40" width="414" height="240"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="240" id="PcQ-jr-eM2"/>
-                                </constraints>
-                            </pickerView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eTV-tw-NA5">
-                                <rect key="frame" x="0.0" y="10" width="100" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="BHI-cI-vbB"/>
-                                    <constraint firstAttribute="height" constant="40" id="SfC-nP-njY"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="Cancel"/>
-                                <connections>
-                                    <action selector="cancelButtonPressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="su2-Zp-eAt"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C68-uW-ABk">
-                                <rect key="frame" x="314" y="10" width="100" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="Z2v-5a-tau"/>
-                                    <constraint firstAttribute="width" constant="100" id="ldH-Au-5T6"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="20" maxY="0.0"/>
-                                <state key="normal" title="Done"/>
-                                <connections>
-                                    <action selector="doneButtonPressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="0ZZ-jW-PYH"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <constraints>
-                            <constraint firstAttribute="bottom" secondItem="2xg-IR-fAM" secondAttribute="bottom" id="XL2-FG-ejy"/>
-                        </constraints>
-                    </view>
-                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                <view opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="OUm-1g-Yrh">
+                    <rect key="frame" x="10" y="446" width="394" height="280"/>
+                    <subviews>
+                        <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PL2-YO-6Zf">
+                            <rect key="frame" x="0.0" y="40" width="394" height="240"/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="240" id="Lc5-bL-kEE"/>
+                            </constraints>
+                        </pickerView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GNG-Db-92g">
+                            <rect key="frame" x="0.0" y="10" width="100" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="100" id="JFI-47-yj9"/>
+                                <constraint firstAttribute="height" constant="40" id="jET-wZ-Muf"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="Cancel"/>
+                            <connections>
+                                <action selector="cancelButtonPressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="0Ol-L8-xCX"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k7p-M1-YXb">
+                            <rect key="frame" x="294" y="10" width="100" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="100" id="CRE-sm-smn"/>
+                                <constraint firstAttribute="height" constant="40" id="lt7-xD-rCa"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="20" maxY="0.0"/>
+                            <state key="normal" title="Done"/>
+                            <connections>
+                                <action selector="doneButtonPressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="k8r-1F-Tat"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="eTV-tw-NA5" firstAttribute="leading" secondItem="24z-Xl-ydB" secondAttribute="leading" id="5Ca-Hk-UAh"/>
-                        <constraint firstAttribute="height" constant="280" id="JdL-at-L8f"/>
-                        <constraint firstItem="C68-uW-ABk" firstAttribute="top" secondItem="24z-Xl-ydB" secondAttribute="top" constant="10" id="Ot5-yc-VGX"/>
-                        <constraint firstAttribute="trailing" secondItem="C68-uW-ABk" secondAttribute="trailing" id="dDB-EC-MYP"/>
-                        <constraint firstItem="2xg-IR-fAM" firstAttribute="width" secondItem="24z-Xl-ydB" secondAttribute="width" id="kYC-h7-2dh"/>
-                        <constraint firstItem="2xg-IR-fAM" firstAttribute="centerX" secondItem="24z-Xl-ydB" secondAttribute="centerX" id="kYu-bR-T6a"/>
-                        <constraint firstItem="eTV-tw-NA5" firstAttribute="top" secondItem="24z-Xl-ydB" secondAttribute="top" constant="10" id="nsT-be-BM4"/>
+                        <constraint firstItem="PL2-YO-6Zf" firstAttribute="centerX" secondItem="OUm-1g-Yrh" secondAttribute="centerX" id="2rP-1V-MD1"/>
+                        <constraint firstItem="GNG-Db-92g" firstAttribute="leading" secondItem="OUm-1g-Yrh" secondAttribute="leading" id="Byh-Ag-9uM"/>
+                        <constraint firstAttribute="height" constant="280" id="L1q-9L-aTw"/>
+                        <constraint firstItem="k7p-M1-YXb" firstAttribute="top" secondItem="OUm-1g-Yrh" secondAttribute="top" constant="10" id="LWf-76-Man"/>
+                        <constraint firstAttribute="bottom" secondItem="PL2-YO-6Zf" secondAttribute="bottom" id="SAN-zP-1gI"/>
+                        <constraint firstAttribute="trailing" secondItem="k7p-M1-YXb" secondAttribute="trailing" id="hVY-Hy-xLs"/>
+                        <constraint firstItem="PL2-YO-6Zf" firstAttribute="width" secondItem="OUm-1g-Yrh" secondAttribute="width" id="lno-kM-eV8"/>
+                        <constraint firstItem="GNG-Db-92g" firstAttribute="top" secondItem="OUm-1g-Yrh" secondAttribute="top" constant="10" id="usF-jM-ZJa"/>
                     </constraints>
-                    <blurEffect style="extraLight"/>
-                </visualEffectView>
+                </view>
             </subviews>
             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="24z-Xl-ydB" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="9Ji-hs-o9Y"/>
-                <constraint firstAttribute="bottom" secondItem="24z-Xl-ydB" secondAttribute="bottom" id="fNo-r1-BWe"/>
-                <constraint firstItem="24z-Xl-ydB" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="nNU-0f-89O"/>
+                <constraint firstItem="OUm-1g-Yrh" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="O3S-Wi-ZhT"/>
+                <constraint firstAttribute="bottom" secondItem="OUm-1g-Yrh" secondAttribute="bottom" constant="10" id="PQc-yM-om2"/>
+                <constraint firstItem="OUm-1g-Yrh" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" constant="-20" id="lV5-Ng-rc3"/>
             </constraints>
             <connections>
-                <outlet property="cancelButton" destination="eTV-tw-NA5" id="ybW-1B-bbQ"/>
-                <outlet property="doneButton" destination="C68-uW-ABk" id="sST-jM-504"/>
-                <outlet property="pickerView" destination="2xg-IR-fAM" id="eLX-ce-GmG"/>
+                <outlet property="backgroundView" destination="OUm-1g-Yrh" id="k1H-x5-itL"/>
+                <outlet property="cancelButton" destination="GNG-Db-92g" id="PSh-q5-rMD"/>
+                <outlet property="doneButton" destination="k7p-M1-YXb" id="x41-TL-769"/>
+                <outlet property="pickerView" destination="PL2-YO-6Zf" id="qQM-Jt-zz0"/>
             </connections>
         </view>
     </objects>

@@ -40,7 +40,7 @@
             [self addSubview:leftSubnameView];
             //INJURY
             if (![self.leftPlayer.injury isEqualToString:@""]) {
-                UILabel *injury = [[UILabel alloc] initWithFrame:CGRectMake(size.width/2-50, 0, 50, 15)];
+                UILabel *injury = [[UILabel alloc] initWithFrame:CGRectMake(size.width/2-50, 0, 50, 18)];
                 injury.font = [UIFont boldSystemFontOfSize:9];
                 injury.textColor = [UIColor redColor];
                 injury.textAlignment = NSTextAlignmentCenter;
@@ -132,6 +132,15 @@
             if (self.rightPlayer.isPlaying) rightSubnameView.text = [NSString stringWithFormat:@"%@ %@, %@",self.rightPlayer.status,self.rightPlayer.score,self.rightPlayer.opponent];
             else rightSubnameView.text = @"-";
             [self addSubview:rightSubnameView];
+            //INJURY
+            if (![self.rightPlayer.injury isEqualToString:@""]) {
+                UILabel *injury = [[UILabel alloc] initWithFrame:CGRectMake(size.width/2, 0, 50, 18)];
+                injury.font = [UIFont boldSystemFontOfSize:9];
+                injury.textColor = [UIColor redColor];
+                injury.textAlignment = NSTextAlignmentCenter;
+                injury.text = self.rightPlayer.injury;
+                [self addSubview:injury];
+            }
             if (self.rightPlayer.gameState != FBGameStateHasntStarted) {
                 //STATS
                 rightSubname2View = [[UILabel alloc] initWithFrame:CGRectMake(size.width/2+50, 32, size.width/2-50-10, 20)];

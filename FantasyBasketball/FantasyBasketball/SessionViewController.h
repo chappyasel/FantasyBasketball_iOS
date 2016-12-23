@@ -20,6 +20,7 @@
 @property FBSession *session;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIView *backgroundView;
 
 @property (weak, nonatomic) IBOutlet UITextField *nameInput;
 @property (strong, nonatomic) IBOutlet UITextField *leagueInput;

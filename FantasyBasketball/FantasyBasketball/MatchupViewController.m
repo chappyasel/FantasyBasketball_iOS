@@ -267,7 +267,6 @@
 }
 
 - (void)setupTableView {
-    self.tableView.separatorInset = UIEdgeInsetsMake(15, 0, 0, 15);
     self.tableView.contentOffset = CGPointMake(0, 0);
     [self setupTableHeaderView];
 }

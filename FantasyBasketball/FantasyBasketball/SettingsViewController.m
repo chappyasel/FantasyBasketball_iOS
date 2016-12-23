@@ -45,7 +45,7 @@
 - (IBAction)newButtonPressed:(UIButton *)sender {
     if (self.sessions.count > 10) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Maximum Teams"
-                                                        message:@"Sorry, this app only allows you to store 10 teams for the purpose of memory management. Please delete a league to add a new league."
+                                                        message:@"Sorry, you are allowed to track a maximum of 10 teams. Please delete an existing team if you would like to add a new one."
                                                        delegate:self
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
@@ -64,8 +64,8 @@
         self.animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:modalVC];
         self.animator.dragable = NO;
         self.animator.bounces = YES;
-        self.animator.behindViewAlpha = 0.8;
-        self.animator.behindViewScale = 0.9;
+        self.animator.behindViewAlpha = 1.0;
+        self.animator.behindViewScale = 1.0;
         self.animator.transitionDuration = 0.5;
         self.animator.direction = ZFModalTransitonDirectionBottom;
         modalVC.transitioningDelegate = self.animator;

@@ -15,114 +15,116 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="24z-Xl-ydB">
-                    <rect key="frame" x="0.0" y="456" width="414" height="280"/>
-                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="eUz-2H-SUa">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="280"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eTV-tw-NA5">
-                                <rect key="frame" x="0.0" y="10" width="73" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="Cancel"/>
-                                <connections>
-                                    <action selector="cancelButtonPressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="su2-Zp-eAt"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C68-uW-ABk">
-                                <rect key="frame" x="353" y="10" width="61" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="20" maxY="0.0"/>
-                                <state key="normal" title="Done"/>
-                                <connections>
-                                    <action selector="doneButtonPressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="0ZZ-jW-PYH"/>
-                                </connections>
-                            </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UAB-ad-qQo">
-                                <rect key="frame" x="47" y="58" width="320" height="200"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="CBS News" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Seh-mm-o7v">
-                                        <rect key="frame" x="8" y="8" width="200" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Roto Team News" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MQG-8o-kVO">
-                                        <rect key="frame" x="8" y="108" width="200" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Roto Watch List News" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VTE-No-ygT">
-                                        <rect key="frame" x="8" y="158" width="200" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gtl-Bu-gdR">
-                                        <rect key="frame" x="257" y="158" width="51" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </switch>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v0G-2H-zSB">
-                                        <rect key="frame" x="257" y="108" width="51" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </switch>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CDC-aQ-DDA">
-                                        <rect key="frame" x="257" y="58" width="51" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </switch>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UyW-Ra-hYS">
-                                        <rect key="frame" x="257" y="8" width="51" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </switch>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="League Transactions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VCX-xe-VAU">
-                                        <rect key="frame" x="8" y="58" width="200" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="320" id="96L-ds-Fe7"/>
-                                    <constraint firstAttribute="height" constant="200" id="h4B-HW-iRY"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <constraints>
-                            <constraint firstItem="UAB-ad-qQo" firstAttribute="centerX" secondItem="eUz-2H-SUa" secondAttribute="centerX" id="3O9-gq-imV"/>
-                            <constraint firstAttribute="bottom" secondItem="UAB-ad-qQo" secondAttribute="bottom" constant="22" id="aWl-E0-881"/>
-                        </constraints>
-                    </view>
-                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                <view opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="yAb-hs-TKp">
+                    <rect key="frame" x="10" y="446" width="394" height="280"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lJU-MN-1TJ">
+                            <rect key="frame" x="0.0" y="10" width="100" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="3bO-zv-1Dd"/>
+                                <constraint firstAttribute="width" constant="100" id="mun-VR-6Qd"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="Cancel"/>
+                            <connections>
+                                <action selector="cancelButtonPressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="S6d-yp-6oz"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XTb-oC-ird">
+                            <rect key="frame" x="294" y="10" width="100" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="100" id="ANf-gf-JjB"/>
+                                <constraint firstAttribute="height" constant="40" id="bck-dQ-okH"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="20" maxY="0.0"/>
+                            <state key="normal" title="Done"/>
+                            <connections>
+                                <action selector="doneButtonPressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="HFx-7D-jp9"/>
+                            </connections>
+                        </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z1o-h7-yCa">
+                            <rect key="frame" x="37" y="58" width="320" height="200"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="CBS News" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b8z-53-Qj1">
+                                    <rect key="frame" x="8" y="8" width="200" height="31"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Roto Team News" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="921-fX-ZqK">
+                                    <rect key="frame" x="8" y="108" width="200" height="31"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Roto Watch List News" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="unf-Zx-kHL">
+                                    <rect key="frame" x="8" y="158" width="200" height="31"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sOf-dX-ZWc">
+                                    <rect key="frame" x="257" y="158" width="51" height="31"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </switch>
+                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SaF-7S-dFg">
+                                    <rect key="frame" x="257" y="108" width="51" height="31"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </switch>
+                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="itR-wl-8jp">
+                                    <rect key="frame" x="257" y="58" width="51" height="31"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </switch>
+                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wMw-Q3-ib9">
+                                    <rect key="frame" x="257" y="8" width="51" height="31"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </switch>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="League Transactions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bma-Rk-fRh">
+                                    <rect key="frame" x="8" y="58" width="200" height="31"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="200" id="BdB-BG-HhT"/>
+                                <constraint firstAttribute="width" constant="320" id="SpY-vi-TjR"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="eTV-tw-NA5" firstAttribute="leading" secondItem="24z-Xl-ydB" secondAttribute="leading" id="5Ca-Hk-UAh"/>
-                        <constraint firstAttribute="height" constant="280" id="JdL-at-L8f"/>
-                        <constraint firstItem="C68-uW-ABk" firstAttribute="top" secondItem="24z-Xl-ydB" secondAttribute="top" constant="10" id="Ot5-yc-VGX"/>
-                        <constraint firstAttribute="trailing" secondItem="C68-uW-ABk" secondAttribute="trailing" id="dDB-EC-MYP"/>
-                        <constraint firstItem="eTV-tw-NA5" firstAttribute="top" secondItem="24z-Xl-ydB" secondAttribute="top" constant="10" id="nsT-be-BM4"/>
+                        <constraint firstAttribute="bottom" secondItem="Z1o-h7-yCa" secondAttribute="bottom" constant="22" id="3Xh-Ec-6Cb"/>
+                        <constraint firstItem="Z1o-h7-yCa" firstAttribute="centerX" secondItem="yAb-hs-TKp" secondAttribute="centerX" id="G4d-B6-wWk"/>
+                        <constraint firstItem="lJU-MN-1TJ" firstAttribute="top" secondItem="yAb-hs-TKp" secondAttribute="top" constant="10" id="Ssl-Hi-47I"/>
+                        <constraint firstItem="XTb-oC-ird" firstAttribute="top" secondItem="yAb-hs-TKp" secondAttribute="top" constant="10" id="WfV-ul-w6B"/>
+                        <constraint firstAttribute="trailing" secondItem="XTb-oC-ird" secondAttribute="trailing" id="pfy-pW-7bT"/>
+                        <constraint firstAttribute="height" constant="280" id="seK-SV-nRm"/>
+                        <constraint firstItem="lJU-MN-1TJ" firstAttribute="leading" secondItem="yAb-hs-TKp" secondAttribute="leading" id="v8G-bA-Tr9"/>
                     </constraints>
-                    <blurEffect style="extraLight"/>
-                </visualEffectView>
+                </view>
             </subviews>
             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="24z-Xl-ydB" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="9Ji-hs-o9Y"/>
-                <constraint firstAttribute="bottom" secondItem="24z-Xl-ydB" secondAttribute="bottom" id="fNo-r1-BWe"/>
-                <constraint firstItem="24z-Xl-ydB" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="nNU-0f-89O"/>
+                <constraint firstItem="yAb-hs-TKp" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="sc6-Q8-V9I"/>
+                <constraint firstAttribute="bottom" secondItem="yAb-hs-TKp" secondAttribute="bottom" constant="10" id="yku-lV-qhK"/>
+                <constraint firstItem="yAb-hs-TKp" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" constant="-20" id="zag-pF-nAL"/>
             </constraints>
             <connections>
-                <outlet property="cancelButton" destination="eTV-tw-NA5" id="ybW-1B-bbQ"/>
-                <outlet property="doneButton" destination="C68-uW-ABk" id="sST-jM-504"/>
-                <outlet property="switch1" destination="UyW-Ra-hYS" id="hG1-CT-639"/>
-                <outlet property="switch2" destination="CDC-aQ-DDA" id="jv3-b8-aR5"/>
-                <outlet property="switch3" destination="v0G-2H-zSB" id="Tw2-PI-kzb"/>
-                <outlet property="switch4" destination="gtl-Bu-gdR" id="q4P-mK-6oh"/>
+                <outlet property="backgroundView" destination="yAb-hs-TKp" id="6gM-jS-Uze"/>
+                <outlet property="cancelButton" destination="lJU-MN-1TJ" id="4FZ-Xb-xzo"/>
+                <outlet property="doneButton" destination="XTb-oC-ird" id="nrv-V5-JM4"/>
+                <outlet property="switch1" destination="wMw-Q3-ib9" id="0HQ-za-aHy"/>
+                <outlet property="switch2" destination="itR-wl-8jp" id="NSW-cr-ayl"/>
+                <outlet property="switch3" destination="SaF-7S-dFg" id="B97-eS-FsO"/>
+                <outlet property="switch4" destination="sOf-dX-ZWc" id="WsI-BC-Vqg"/>
             </connections>
         </view>
     </objects>

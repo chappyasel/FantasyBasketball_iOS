@@ -18,6 +18,7 @@
 
 @interface FBNewsSelectorView : UIView
 
+@property (weak, nonatomic) IBOutlet UIView *backgroundView;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UIButton *doneButton;
 @property (weak, nonatomic) IBOutlet UISwitch *switch1;

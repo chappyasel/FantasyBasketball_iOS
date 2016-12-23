@@ -18,6 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width, self.scrollView.frame.size.height+260);
+    self.backgroundView.layer.cornerRadius = 10;
     self.nameInput.delegate = self;
     self.leagueInput.delegate = self;
     self.teamInput.delegate = self;

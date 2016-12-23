@@ -16,6 +16,10 @@
     return (FBPickerView *)[[[NSBundle mainBundle] loadNibNamed:@"FBPickerView" owner:self options:0] objectAtIndex:0];
 }
 
+- (void)layoutSubviews {
+    self.backgroundView.layer.cornerRadius = 10;
+}
+
 - (void) resetData {
     data = [[NSMutableArray alloc] init];
 }
