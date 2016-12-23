@@ -73,11 +73,11 @@
         [self loadParserWebpageWithCompletionBlock:^{
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self setupPlayerHeader];
-               
                 [self setupTabBar];
                 [self setupScrollView];
                 [self setupOverview];
                 [self setupGameLogTableView];
+                [self setupStatsView];
             });
             [self loadPlayerRanksWithCompletionBlock:^{
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -98,16 +98,17 @@
                     [self loadMoreGames:nil];
                 });
             }];
-            [self loadStatsWithParser:self.parser CompletionBlock:^{
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [_statsBasicTableView reloadData];
-                });
-            }];
             [self loadRotoworldWithCompletionBlock:^{
                 dispatch_async(dispatch_get_main_queue(), ^{
                     _rotoworldTableView.delegate = self;
                     _rotoworldTableView.dataSource = self;
                     [_rotoworldTableView reloadData];
+                });
+            }];
+            [self loadStatsWithParser:self.parser CompletionBlock:^{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [_statsBasicTableView reloadData];
+                    [_statsTableView reloadData];
                 });
             }];
             [self loadNewsWithCompletionBlock:^{
@@ -350,11 +351,18 @@
 } //[self loadGameLogTableView], [self loadGraphView];
 
 - (void)loadStatsWithParser: (TFHpple *)parse CompletionBlock:(void (^)(void)) completed {
+    NSArray *results = [self.parser searchWithXPathQuery:@"//div[@class='mod-content']/p[@class='footer']/a"];
+    NSString *link = @"";
+    for (TFHppleElement *e in results) if ([e.content containsString:@"Stats"]) link = [e objectForKey:@"href"];
+    NSString *url = [NSString stringWithFormat:@"http://espn.go.com%@",link];
+    NSData *html = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+    TFHpple *parser = [TFHpple hppleWithHTMLData:html];
+    
     //stats
-    NSArray *tables = [parse searchWithXPathQuery:@"//div/table[@class='tablehead']"];
+    NSArray *tables = [parser searchWithXPathQuery:@"//div/table[@class='tablehead']"];
     TFHppleElement *table = nil;
     for (TFHppleElement *tble in tables) {
-        if([[tble content] containsString:@"TOPG"]) { table = tble; break; } }
+        if([[tble content] containsString:@"TEAM"]) { table = tble; break; } }
     NSMutableArray *rawStats = [[NSMutableArray alloc] init];
     if (table) { //error checking
         for (TFHppleElement *statT in table.children) {
@@ -368,34 +376,36 @@
     }
     self.stats = [[NSMutableArray alloc] init];
     for (NSMutableArray *rawStat in rawStats) {
-        if (rawStat.count > 15) {
-            NSArray *fg = [rawStat[3] componentsSeparatedByString:@"-"];
-            NSArray *tp = [rawStat[5] componentsSeparatedByString:@"-"];
-            NSArray *ft = [rawStat[7] componentsSeparatedByString:@"-"];
-            NSMutableArray *stat = [[NSMutableArray alloc] initWithObjects:rawStat[0],
-                                    [NSNumber numberWithInteger:[rawStat[1] integerValue]],
-                                    [NSNumber numberWithFloat:[rawStat[2] floatValue]],
+        if (rawStat.count > 19) {
+            NSArray *fg = [rawStat[5] componentsSeparatedByString:@"-"];
+            NSArray *tp = [rawStat[7] componentsSeparatedByString:@"-"];
+            NSArray *ft = [rawStat[9] componentsSeparatedByString:@"-"];
+            NSMutableArray *stat = [[NSMutableArray alloc] initWithObjects:
+                                    rawStat[0], rawStat[1],
+                                    [NSNumber numberWithInt:[rawStat[2] intValue]],
+                                    [NSNumber numberWithInt:[rawStat[3] intValue]],
+                                    [NSNumber numberWithFloat:[rawStat[4] floatValue]],
                                     [NSNumber numberWithFloat:[fg[0] floatValue]],
                                     [NSNumber numberWithFloat:[fg[1] floatValue]],
                                     [NSNumber numberWithFloat:[tp[0] floatValue]],
                                     [NSNumber numberWithFloat:[tp[1] floatValue]],
                                     [NSNumber numberWithFloat:[ft[0] floatValue]],
                                     [NSNumber numberWithFloat:[ft[1] floatValue]],
-                                    [NSNumber numberWithFloat:[rawStat[9] floatValue]],
-                                    [NSNumber numberWithFloat:[rawStat[10] floatValue]],
-                                    [NSNumber numberWithFloat:[rawStat[11] floatValue]],
-                                    [NSNumber numberWithFloat:[rawStat[12] floatValue]],
                                     [NSNumber numberWithFloat:[rawStat[13] floatValue]],
                                     [NSNumber numberWithFloat:[rawStat[14] floatValue]],
-                                    [NSNumber numberWithFloat:[rawStat[15] floatValue]], nil];
-            [stat insertObject:[NSNumber numberWithFloat:[stat[3] floatValue]-[stat[4] floatValue]+[stat[7] floatValue]-[stat[8] floatValue]-
-                                [stat[14] floatValue]+[stat[15] floatValue]+[stat[12] floatValue]+[stat[11] floatValue]+[stat[10] floatValue]+
-                                [stat[9] floatValue]] atIndex:2]; //fpts
+                                    [NSNumber numberWithFloat:[rawStat[15] floatValue]],
+                                    [NSNumber numberWithFloat:[rawStat[16] floatValue]],
+                                    [NSNumber numberWithFloat:[rawStat[17] floatValue]],
+                                    [NSNumber numberWithFloat:[rawStat[18] floatValue]],
+                                    [NSNumber numberWithFloat:[rawStat[19] floatValue]], nil];
+            [stat insertObject:[NSNumber numberWithFloat:[stat[5] floatValue]-[stat[6] floatValue]+[stat[9] floatValue]-[stat[10] floatValue]-
+                                [stat[16] floatValue]+[stat[17] floatValue]+[stat[11] floatValue]+[stat[12] floatValue]+[stat[13] floatValue]+
+                                [stat[14] floatValue]] atIndex:4]; //fpts
             [self.stats addObject:stat];
         }
     }
     completed();
-} //[self loadGameLogTableView], [self loadGraphView];
+}
 
 - (void)loadMoreGames:(UIButton *)sender {
     NSArray *results = [self.parser searchWithXPathQuery:@"//div[@class='mod-content']/p[@class='footer']/a"];
@@ -586,7 +596,8 @@ bool gameLogIsBasic = YES;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (_handleError) return 0;
     if (tableView == _infoTableView) return self.info.count;
-    if (tableView == _statsBasicTableView) return self.stats.count;
+    if (tableView == _statsBasicTableView) return 2;
+    if (tableView == _statsTableView) return self.stats.count;
     if (tableView == _gamesBasicTableView) return 3;
     if (tableView == _gameTableView) return self.games.count;
     if (tableView == _rotoworldTableView) return self.rotoworld.count;
@@ -596,7 +607,8 @@ bool gameLogIsBasic = YES;
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (tableView == _gameTableView ||
         tableView == _gamesBasicTableView ||
-        tableView == _statsBasicTableView) return 25;
+        tableView == _statsBasicTableView ||
+        tableView == _statsTableView) return 25;
     return 0;
 }
 
@@ -684,7 +696,7 @@ bool gameLogIsBasic = YES;
         }
         return cell;
     }
-    if (tableView == _statsBasicTableView || tableView == _statsTableView) {
+    if (tableView == _statsBasicTableView) {
         UIView *cell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _gameTableView.frame.size.width, 40)];
         cell.backgroundColor = [UIColor lightGrayColor];
         //STATS SCROLLVIEW
@@ -704,6 +716,34 @@ bool gameLogIsBasic = YES;
         for (int i = 0; i < 7; i++) {
             UILabel *stats;
             stats = [[UILabel alloc] initWithFrame:CGRectMake(80+i*(width-80)/7, 0, (width-80)/7, 25)];
+            stats.text = [NSString stringWithFormat:@"%@",arr[i]];
+            stats.font = [UIFont boldSystemFontOfSize:14];
+            stats.textColor = [UIColor whiteColor];
+            stats.textAlignment = NSTextAlignmentCenter;
+            [scrollView addSubview:stats];
+        }
+        return cell;
+    }
+    if (tableView == _statsTableView) {
+        UIView *cell = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _gameTableView.frame.size.width, 40)];
+        cell.backgroundColor = [UIColor lightGrayColor];
+        //STATS SCROLLVIEW
+        UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, _gameTableView.frame.size.width, 40)];
+        [scrollView setContentSize:CGSizeMake(16*50+100, 40)];
+        [scrollView setShowsHorizontalScrollIndicator:NO];
+        [scrollView setShowsVerticalScrollIndicator:NO];
+        [scrollView setBounces:NO];
+        [cell addSubview:scrollView];
+        scrollView.delegate = self;
+        scrollView.tag = 2; //for 2nd seperate table
+        [scrollView setContentOffset:CGPointMake(_globalScrollDistance, 0)];
+        [self.scrollViews addObject:scrollView];
+        //STATS LABELS
+        float width = cell.frame.size.width;
+        NSString *arr[7] = {@"FPTS", @"MPG", @"REB", @"AST", @"BLK", @"STL", @"PTS"};
+        for (int i = 0; i < 7; i++) {
+            UILabel *stats;
+            stats = [[UILabel alloc] initWithFrame:CGRectMake(90+i*(width-90)/7, 0, (width-90)/7, 25)];
             stats.text = [NSString stringWithFormat:@"%@",arr[i]];
             stats.font = [UIFont boldSystemFontOfSize:14];
             stats.textColor = [UIColor whiteColor];
@@ -754,30 +794,71 @@ bool gameLogIsBasic = YES;
         [cell addSubview:label];
         return cell;
     }
+    if (tableView == _statsTableView) {
+        static NSString *MyIdentifier = @"MyIdentifier";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+        cell = nil;
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier];
+        //STATS LABELS
+        //         0    1   2  3   4    5   6   7   8   9  10  11  12  13  14  15   16   17  18
+        //season: year team gp gs fpts mpg fgm fga 3pm 3pa ftm fta rpg apg bpg spg pfpg topg ppg
+        NSMutableArray *season = self.stats[self.stats.count-indexPath.row-1];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, 90, 30)];
+        label.text = [NSString stringWithFormat:@"%@ %@",season[1],[season[0] stringByReplacingOccurrencesOfString:@"'" withString:@""]];
+        label.font = [UIFont systemFontOfSize:15];
+        label.textColor = [UIColor darkGrayColor];
+        [cell addSubview:label];
+        for (int i = 0; i < 7; i++) {
+            UILabel *stats;
+            stats = [[UILabel alloc] initWithFrame:CGRectMake(90+i*(width-90)/7, 0, (width-90)/7, 30)];
+            if (i==0)      stats.text = [NSString stringWithFormat:@"%.1f",[season[4] floatValue]];
+            else if (i==1) stats.text = [NSString stringWithFormat:@"%.1f",[season[5] floatValue]];
+            else if (i==2) stats.text = [NSString stringWithFormat:@"%.1f",[season[12] floatValue]];
+            else if (i==3) stats.text = [NSString stringWithFormat:@"%.1f",[season[13] floatValue]];
+            else if (i==4) stats.text = [NSString stringWithFormat:@"%.1f",[season[14] floatValue]];
+            else if (i==5) stats.text = [NSString stringWithFormat:@"%.1f",[season[15] floatValue]];
+            else           stats.text = [NSString stringWithFormat:@"%.1f",[season[18] floatValue]];
+            stats.font = [UIFont systemFontOfSize:17];
+            stats.textAlignment = NSTextAlignmentCenter;
+            [cell addSubview:stats];
+        }
+        return cell;
+    }
     if (tableView == _statsBasicTableView) {
         static NSString *MyIdentifier = @"MyIdentifier";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
         cell = nil;
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier];
+        //STATS LABELS
+        //         0    1   2  3   4    5   6   7   8   9  10  11  12  13  14  15   16   17  18
+        //season: year team gp gs fpts mpg fgm fga 3pm 3pa ftm fta rpg apg bpg spg pfpg topg ppg
+        NSMutableArray *season;
+        if (indexPath.row == 0) season = self.stats.lastObject;
+        else {
+            season = [[NSMutableArray alloc] initWithObjects:@"", @"", @0, @0, nil];
+            for (int i = 4; i < [self.stats.firstObject count]; i++) {
+                float sum = 0;
+                for (NSMutableArray *season in self.stats)
+                    sum += [season[i] floatValue];
+                [season addObject:[NSNumber numberWithFloat:sum/self.stats.count]];
+            }
+        }
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, 70, 30)];
         label.text = (indexPath.row == 0)? @"Season" : @"Career";
         label.font = [UIFont systemFontOfSize:15];
         label.textColor = [UIColor darkGrayColor];
         [cell addSubview:label];
-        //STATS LABELS
-        //       0   1   2    3   4   5   6   7   8   9  10  11  12  13   14   15  16
-        //game: year gp fpts mpg fgm fga 3pm 3pa ftm fta rpg apg bpg spg pfpg topg ppg
-        NSMutableArray *stat = self.stats[indexPath.row];
+
         for (int i = 0; i < 7; i++) {
             UILabel *stats;
             stats = [[UILabel alloc] initWithFrame:CGRectMake(80+i*(width-80)/7, 0, (width-80)/7, 30)];
-            if (i==0)      stats.text = [NSString stringWithFormat:@"%.1f",[stat[2] floatValue]];
-            else if (i==1) stats.text = [NSString stringWithFormat:@"%.1f",[stat[3] floatValue]];
-            else if (i==2) stats.text = [NSString stringWithFormat:@"%.1f",[stat[10] floatValue]];
-            else if (i==3) stats.text = [NSString stringWithFormat:@"%.1f",[stat[11] floatValue]];
-            else if (i==4) stats.text = [NSString stringWithFormat:@"%.1f",[stat[12] floatValue]];
-            else if (i==5) stats.text = [NSString stringWithFormat:@"%.1f",[stat[13] floatValue]];
-            else           stats.text = [NSString stringWithFormat:@"%.1f",[stat[16] floatValue]];
+            if (i==0)      stats.text = [NSString stringWithFormat:@"%.1f",[season[4] floatValue]];
+            else if (i==1) stats.text = [NSString stringWithFormat:@"%.1f",[season[5] floatValue]];
+            else if (i==2) stats.text = [NSString stringWithFormat:@"%.1f",[season[12] floatValue]];
+            else if (i==3) stats.text = [NSString stringWithFormat:@"%.1f",[season[13] floatValue]];
+            else if (i==4) stats.text = [NSString stringWithFormat:@"%.1f",[season[14] floatValue]];
+            else if (i==5) stats.text = [NSString stringWithFormat:@"%.1f",[season[15] floatValue]];
+            else           stats.text = [NSString stringWithFormat:@"%.1f",[season[18] floatValue]];
             stats.font = [UIFont systemFontOfSize:17];
             stats.textAlignment = NSTextAlignmentCenter;
             [cell addSubview:stats];
@@ -1090,13 +1171,6 @@ int numGraphPoints;
 
 - (IBAction)backButtonPressed:(UIButton *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
