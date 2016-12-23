@@ -7,7 +7,7 @@
 //
 
 #import "MatchupViewController.h"
-#import "FBTeamComparison.h"
+#import "FBWinProbablity.h"
 
 @interface MatchupViewController ()
 
@@ -106,15 +106,16 @@
     
     dispatch_queue_t myQueue = dispatch_queue_create("My Queue",NULL);
     dispatch_async(myQueue, ^{
-        FBTeamComparison *comp = [[FBTeamComparison alloc] init];
-        [comp loadComparisonWithMatchupLink:link updateBlock:^(int num, int total) {
+        FBWinProbablity *comp = [[FBWinProbablity alloc] init];
+        comp.matchupLink = link;
+        [comp loadComparisonWithUpdateBlock:^(int num, int total) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (num == total) {
                     self.team1Display3.text = [NSString stringWithFormat:@"%d",comp.team1ProjScore];
                     self.team2Display3.text = [NSString stringWithFormat:@"%d",comp.team2ProjScore];
                     if (comp.team1WinPct > 50.0)
-                             self.centerDisplay.text = [NSString stringWithFormat:@"< %.1f%%  ",comp.team1WinPct];
-                    else     self.centerDisplay.text = [NSString stringWithFormat:@"  %.1f%% >",100-comp.team1WinPct];
+                             self.centerDisplay.text = [NSString stringWithFormat:@"⇦ %.1f%%  ",comp.team1WinPct];
+                    else     self.centerDisplay.text = [NSString stringWithFormat:@"  %.1f%% ⇨",100-comp.team1WinPct];
                 }
                 else {
                     self.centerDisplay.text = [NSString stringWithFormat:@"%.0f%%",(float)num/(float)total*100];

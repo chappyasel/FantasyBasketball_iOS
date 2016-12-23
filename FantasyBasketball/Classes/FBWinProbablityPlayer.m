@@ -1,16 +1,16 @@
 //
-//  FBTeamComparisonPlayer.m
+//  FBWinProbablityPlayer.m
 //  FantasyBasketball
 //
 //  Created by Chappy Asel on 12/19/16.
 //  Copyright © 2016 CD. All rights reserved.
 //
 
-#import "FBTeamComparisonPlayer.h"
+#import "FBWinProbablityPlayer.h"
 #import "FBPlayer.h"
 #import "TFHpple.h"
 
-@implementation FBTeamComparisonPlayer
+@implementation FBWinProbablityPlayer
 
 - (void)addScore: (id)score {
     if (!self.scores) self.scores = [[NSMutableArray alloc] init];

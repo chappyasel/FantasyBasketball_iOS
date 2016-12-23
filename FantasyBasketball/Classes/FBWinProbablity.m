@@ -1,17 +1,17 @@
 //
-//  FBTeamComparison.m
+//  FBWinProbablity.m
 //  FantasyBasketball
 //
 //  Created by Chappy Asel on 12/19/16.
 //  Copyright © 2016 CD. All rights reserved.
 //
 
-#import "FBTeamComparison.h"
+#import "FBWinProbablity.h"
 #import "TFHpple.h"
 
-@implementation FBTeamComparison
+@implementation FBWinProbablity
 
-- (void)loadComparisonWithMatchupLink: (NSString *)link updateBlock: (void (^)(int num, int total))update {
+- (void)loadComparisonWithUpdateBlock: (void (^)(int num, int total))update {
     int numPlayersFinished = 0;
     int numPlayersAnticipated = 24; //12 players * 2
     int numStepsFinished = 0;
@@ -21,7 +21,7 @@
     self.team1Players = [[NSMutableDictionary alloc] init];
     self.team2Players = [[NSMutableDictionary alloc] init];
     
-    NSURL *url = [NSURL URLWithString:link];
+    NSURL *url = [NSURL URLWithString:self.matchupLink];
     NSError *error;
     NSData *html = [NSData dataWithContentsOfURL:url options:NSDataReadingMapped error:&error];
     if (error) NSLog(@"Comparison error: %@",error);
@@ -38,7 +38,7 @@
             x++;
         }
     }
-    [links insertObject:link atIndex:todayInsertion];
+    [links insertObject:self.matchupLink atIndex:todayInsertion];
     numStepsFinished ++;
     update(numPlayersFinished + numStepsFinished, numPlayersAnticipated + numStepsAnticipated);
     
@@ -71,7 +71,7 @@
                 if (switchValid) switchPoint ++;
                 if (isPlaying && isStarting) {
                     if (!self.team1Players[name] && !self.team2Players[name]) {
-                        FBTeamComparisonPlayer *player = [[FBTeamComparisonPlayer alloc] init];
+                        FBWinProbablityPlayer *player = [[FBWinProbablityPlayer alloc] init];
                         [player loadPlayerWithName:name];
                         if (switchValid) [self.team1Players setObject:player forKey:name];
                         else [self.team2Players setObject:player forKey:name];
@@ -94,45 +94,45 @@
         update(numPlayersFinished + numStepsFinished, numPlayersAnticipated + numStepsAnticipated);
     }
     
-    float team1ProjTotal = 0; //if the whole week went as simulated
-    float team1Total = 0; //results of this week combined with simulation of remaining scores
-    float team1Variance = 0;
-    for(FBTeamComparisonPlayer *player in [self.team1Players allValues]) {
-        for (NSNumber *score in player.scores) {
-            team1ProjTotal += player.average;
-            if (score.class != [NSNull class]) team1Total += score.intValue;
-            else {
-                team1Total += player.average;
-                team1Variance += player.variance;
-            }
-        }
-    }
-    
-    float team2ProjTotal = 0;
-    float team2Total = 0;
-    float team2Variance = 0;
-    for(FBTeamComparisonPlayer *player in [self.team2Players allValues]) {
-        for (NSNumber *score in player.scores) {
-            team2ProjTotal += player.average;
-            if (score.class != [NSNull class]) team2Total += score.intValue;
-            else {
-                team2Total += player.average;
-                team2Variance += player.variance;
-            }
-        }
-    }
-    
-    float sumMean = team1Total - team2Total;
-    float sumSTD = sqrt(team1Variance + team2Variance);
-    float chance = 0.5 * erfcf((sumMean/sumSTD) * M_SQRT1_2);
-    
-    self.team1ProjScore = team1Total;
-    self.team2ProjScore = team2Total;
-    self.team1WinPct = 100-chance*100;
-    
-    NSLog(@"\nteam 1: %f %f \nteam 2: %f %f \nchance: %f",team1Total,team1Variance,team2Total,team2Variance,self.team1WinPct);
+    [self calculateWinProbablity];
     numStepsFinished ++;
     update(numPlayersFinished + numStepsFinished, numPlayersAnticipated + numStepsAnticipated);
+}
+
+- (void)updateComparisonWithCompletionBlock: (void (^)(void))completion { //assumes injuries, player means and variances are constant
+    
+}
+
+- (void)calculateWinProbablity {
+    NSMutableDictionary <NSString *, NSNumber *> *team1 = [self statsForPlayerArray:[self.team1Players allValues]];
+    NSMutableDictionary <NSString *, NSNumber *> *team2 = [self statsForPlayerArray:[self.team2Players allValues]];
+    float sumMean = team1[@"total"].floatValue - team2[@"total"].floatValue;
+    float sumSTD = sqrt(team1[@"variance"].floatValue + team2[@"variance"].floatValue);
+    float chance = 0.5 * erfcf((sumMean/sumSTD) * M_SQRT1_2);
+    self.team1ProjScore = team1[@"total"].floatValue;
+    self.team2ProjScore = team2[@"total"].floatValue;
+    self.team1WinPct = 100-chance*100;
+    //NSLog(@"\nteam 1: %f %f \nteam 2: %f %f \nchance: %f",team1Total,team1Variance,team2Total,team2Variance,self.team1WinPct);
+}
+
+- (NSMutableDictionary *)statsForPlayerArray: (NSArray *)arr {
+    float projTotal = 0; //if the whole week went as simulated
+    float total = 0; //results of this week combined with simulation of remaining scores
+    float variance = 0;
+    for(FBWinProbablityPlayer *player in arr) {
+        for (NSNumber *score in player.scores) {
+            projTotal += player.average;
+            if (score.class != [NSNull class]) total += score.intValue;
+            else {
+                total += player.average;
+                variance += player.variance;
+            }
+        }
+    }
+    return [[NSMutableDictionary alloc] initWithObjects:@[[NSNumber numberWithFloat:projTotal],
+                                                          [NSNumber numberWithFloat:total],
+                                                          [NSNumber numberWithFloat:variance]]
+                                                forKeys:@[@"projTotal", @"total", @"variance"]];
 }
 
 @end
