@@ -52,8 +52,15 @@
     numStepsFinished ++;
     update(numPlayersFinished + numStepsFinished, numPlayersAnticipated + numStepsAnticipated);
     
+    self.todayTeam1ProjScore = 0;
+    self.todayTeam2ProjScore = 0;
     for (NSString *l in links) {
-        [self loadMatchupLink:l withPlayerLoadUpdateBlock:^{
+        [self loadMatchupLink:l withPlayerProcessedBlock:^(FBWinProbablityPlayer *player) {
+            if ([l isEqualToString:self.matchupLink]) {
+                if (player.teamNum == 1) self.todayTeam1ProjScore += player.average;
+                else                     self.todayTeam2ProjScore += player.average;
+            }
+        } playerLoadBlock:^{
             numPlayersFinished = MIN(24, numPlayersFinished + 1);
             update(numPlayersFinished + numStepsFinished, numPlayersAnticipated + numStepsAnticipated);
         }];
@@ -71,13 +78,29 @@
     if (self.calcInProcess) return;
     self.calcInProcess = YES;
     self.isUpdating = YES;
-    [self loadMatchupLink:self.matchupLink withPlayerLoadUpdateBlock:^{}];
+    self.todayTeam1ProjScore = 0;
+    self.todayTeam2ProjScore = 0;
+    [self loadMatchupLink:self.matchupLink withPlayerProcessedBlock:^(FBWinProbablityPlayer *player) {
+        if (player.teamNum == 1) self.todayTeam1ProjScore += player.average;
+        else                     self.todayTeam2ProjScore += player.average;
+    } playerLoadBlock:^{}];
     [self calculateWinProbablity];
     completion();
     self.calcInProcess = NO;
 }
 
-- (void)loadMatchupLink: (NSString *)link withPlayerLoadUpdateBlock: (void (^)(void))playerLoad {
+- (void)loadTodayScoresForMatchupLink: (NSString *)link withCompletionBlock: (void (^)(void))completion {
+    self.todayTeam1ProjScore = 0;
+    self.todayTeam2ProjScore = 0;
+    [self loadMatchupLink:link withPlayerProcessedBlock:^(FBWinProbablityPlayer *player) {
+        if (player.teamNum == 1) self.todayTeam1ProjScore += player.average;
+        else                     self.todayTeam2ProjScore += player.average;
+    } playerLoadBlock:^{}];
+    completion();
+}
+
+- (void)loadMatchupLink: (NSString *)link withPlayerProcessedBlock: (void (^)(FBWinProbablityPlayer *player))playerProcessed
+                                                   playerLoadBlock: (void (^)(void))playerLoad {
     NSURL *url = [NSURL URLWithString:link];
     NSError *error;
     NSData *html = [NSData dataWithContentsOfURL:url options:NSDataReadingMapped error:&error];
@@ -112,6 +135,7 @@
                     player = [[FBWinProbablityPlayer alloc] init];
                     [player loadPlayerWithName:name];
                     player.injuryStatus = injuryStatus;
+                    player.teamNum = (switchValid)? 1 : 2;
                     if (switchValid) [self.team1Players setObject:player forKey:name];
                     else [self.team2Players setObject:player forKey:name];
                     playerLoad();
@@ -127,6 +151,7 @@
                     if (gameOver) [player addScore:fpts];
                     else [player addScore:[NSNull null]];
                 }
+                playerProcessed(player);
             }
         }
         else if (switchPoint != 0) switchValid = NO;

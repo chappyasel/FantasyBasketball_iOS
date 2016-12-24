@@ -117,6 +117,7 @@
 }
 
 - (void)updateProjectionDisplay {
+    NSLog(@"%f %f",_winProbability.todayTeam1ProjScore,_winProbability.todayTeam2ProjScore);
     self.team1Display3.text = [NSString stringWithFormat:@"%.0f",_winProbability.team1ProjScore];
     self.team2Display3.text = [NSString stringWithFormat:@"%.0f",_winProbability.team2ProjScore];
     if (_winProbability.team1WinPct > 50.0)
@@ -129,18 +130,22 @@
     [self.tableView reloadData];
 }
 
-- (void)loadPlayersWithCompletionBlock:(void (^)(bool success, NSString *firstTeamName)) completed {
-    _numStartersTeam1 = 0, _numStartersTeam2 = 0;
+- (NSString *)matchupString {
     NSString *link = self.globalLink;
     if (link == nil) link = [NSString stringWithFormat:@"http://games.espn.go.com/fba/boxscorefull?leagueId=%@&teamId=%@&seasonId=%@",self.session.leagueID,self.session.teamID,self.session.seasonID];
     else link = [link substringToIndex:[link rangeOfString:@"&scoringPeriodId"].location];
-    link = [NSString stringWithFormat: @"%@&scoringPeriodId=%d&view=scoringperiod&version=full",link,_scoringDay];
+    return [NSString stringWithFormat:@"%@&scoringPeriodId=%d&view=scoringperiod&version=full",link,_scoringDay];
+}
+
+- (void)loadPlayersWithCompletionBlock:(void (^)(bool success, NSString *firstTeamName)) completed {
+    _numStartersTeam1 = 0, _numStartersTeam2 = 0;
+    NSString *mS = [self matchupString];
     if(!_winProbability) {
         _winProbability = [[FBWinProbablity alloc] init];
-        _winProbability.matchupLink = link;
+        _winProbability.matchupLink = mS;
     }
     
-    NSURL *url = [NSURL URLWithString:link];
+    NSURL *url = [NSURL URLWithString:mS];
     NSError *error;
     NSData *html = [NSData dataWithContentsOfURL:url options:NSDataReadingMapped error:&error];
     if (error) NSLog(@"Matchup error: %@",error);
@@ -397,18 +402,30 @@
             if (player.isPlaying) tot2 += player.fantasyPoints;
         }
     }
-    UILabel *stats = [[UILabel alloc] initWithFrame:CGRectMake(width/2-50, 0, 50, 40)];
-    stats.text = [NSString stringWithFormat:@"%.0f",tot1];
-    stats.textAlignment = NSTextAlignmentCenter;
-    stats.font = [UIFont boldSystemFontOfSize:19];
-    stats.textColor = [UIColor whiteColor];
-    [cell addSubview:stats];
-    UILabel *stats2 = [[UILabel alloc] initWithFrame:CGRectMake(width/2, 0, 50, 40)];
-    stats2.text = [NSString stringWithFormat:@"%.0f",tot2];
-    stats2.textAlignment = NSTextAlignmentCenter;
-    stats2.font = [UIFont boldSystemFontOfSize:19];
-    stats2.textColor = [UIColor whiteColor];
-    [cell addSubview:stats2];
+    UILabel *leftStats = [[UILabel alloc] initWithFrame:CGRectMake(width/2-50, 0, 50, 40)];
+    leftStats.text = [NSString stringWithFormat:@"%.0f",tot1];
+    leftStats.textAlignment = NSTextAlignmentCenter;
+    leftStats.font = [UIFont boldSystemFontOfSize:19];
+    leftStats.textColor = [UIColor whiteColor];
+    [cell addSubview:leftStats];
+    UILabel *leftStats2 = [[UILabel alloc] initWithFrame:CGRectMake(width/2-100, 0, 50, 40)];
+    leftStats2.text = [NSString stringWithFormat:@"%.0f",_winProbability.todayTeam1ProjScore];
+    leftStats2.textAlignment = NSTextAlignmentCenter;
+    leftStats2.font = [UIFont boldSystemFontOfSize:15];
+    leftStats2.textColor = [UIColor colorWithWhite:1 alpha:.7];
+    [cell addSubview:leftStats2];
+    UILabel *rightStats = [[UILabel alloc] initWithFrame:CGRectMake(width/2, 0, 50, 40)];
+    rightStats.text = [NSString stringWithFormat:@"%.0f",tot2];
+    rightStats.textAlignment = NSTextAlignmentCenter;
+    rightStats.font = [UIFont boldSystemFontOfSize:19];
+    rightStats.textColor = [UIColor whiteColor];
+    [cell addSubview:rightStats];
+    UILabel *rightStats2 = [[UILabel alloc] initWithFrame:CGRectMake(width/2+50, 0, 50, 40)];
+    rightStats2.text = [NSString stringWithFormat:@"%.0f",_winProbability.todayTeam2ProjScore];
+    rightStats2.textAlignment = NSTextAlignmentCenter;
+    rightStats2.font = [UIFont boldSystemFontOfSize:15];
+    rightStats2.textColor = [UIColor colorWithWhite:1 alpha:.7];
+    [cell addSubview:rightStats2];
     return cell;
 }
 
@@ -488,6 +505,11 @@
 
 - (void)doneButtonPressedInPickerView:(FBPickerView *)pickerView {
     int data1 = [pickerView selectedIndexForColumn:0];
+    if (data1 != 6) {
+        [self.autorefreshSwitch setOn: NO];
+        self.autorefreshSwitch.enabled = NO;
+    }
+    else self.autorefreshSwitch.enabled = YES;
     self.selectedPickerData = [pickerView selectedStringForColumn:0];
     _scoringDay = self.session.scoringPeriodID.intValue-6+data1;
     if (_scoringDay != self.session.scoringPeriodID.intValue) {
@@ -496,6 +518,9 @@
     }
     self.cells = [[NSMutableArray alloc] init];
     [self refreshAsync];
+    [_winProbability loadTodayScoresForMatchupLink:[self matchupString] withCompletionBlock:^{
+        
+    }];
     [self fadeOutWithPickerView:pickerView];
 }
 

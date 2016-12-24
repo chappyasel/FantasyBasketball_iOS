@@ -15,6 +15,9 @@
 @property float team1ProjScore;
 @property float team2ProjScore;
 
+@property float todayTeam1ProjScore;
+@property float todayTeam2ProjScore;
+
 @property NSMutableDictionary<NSString *, FBWinProbablityPlayer *> *team1Players;
 @property NSMutableDictionary<NSString *, FBWinProbablityPlayer *> *team2Players;
 
@@ -23,5 +26,7 @@
 - (void)loadComparisonWithUpdateBlock: (void (^)(int num, int total))update;
 
 - (void)updateComparisonWithCompletionBlock: (void (^)(void))completion;
+
+- (void)loadTodayScoresForMatchupLink: (NSString *)link withCompletionBlock: (void (^)(void))completion; //already handled by update??
 
 @end

@@ -12,6 +12,7 @@
 
 @property NSString *firstName;
 @property NSString *lastName;
+@property int teamNum;
 
 @property float average;
 @property float variance;
