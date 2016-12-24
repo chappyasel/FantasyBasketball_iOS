@@ -22,6 +22,8 @@
 @property int scoringDay;
 @property int team;
 
+@property NSTimer *updateTimer;
+
 @end
 
 @implementation DailyLeadersViewController
@@ -65,7 +67,7 @@
     self.autorefreshSwitch.onTintColor = [UIColor whiteColor];
     self.autorefreshSwitch.tintColor = [UIColor whiteColor];
     [self.autorefreshSwitch addTarget:self action:@selector(autorefreshStateChanged:) forControlEvents:UIControlEventValueChanged];
-    updateTimer = [[NSTimer alloc] initWithFireDate:[NSDate date] interval:2 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
+    self.updateTimer = [[NSTimer alloc] initWithFireDate:[NSDate date] interval:2 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
     [headerView addSubview:label];
     [headerView addSubview:self.autorefreshSwitch];
     self.tableView.tableHeaderView = headerView;
@@ -74,16 +76,14 @@
 
 - (void)autorefreshStateChanged:(UISwitch *)sender{
     if (sender.isOn) {
-        updateTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
+        self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
         [self timerFired:nil];
     }
     else {
-        [updateTimer invalidate];
-        updateTimer = nil;
+        [self.updateTimer invalidate];
+        self.updateTimer = nil;
     }
 }
-
-NSTimer *updateTimer;
 
 - (void)timerFired:(NSTimer *)timer {
     [self refreshButtonPressed:nil];

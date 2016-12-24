@@ -15,6 +15,9 @@
     UILabel *rightSubnameView;
     UILabel *leftSubnameView;
     
+    UILabel *rightSubscoreView;
+    UILabel *leftSubscoreView;
+    
     UILabel *rightPointsView;
     UIView *rightPointsBackground;
     UILabel *leftPointsView;
@@ -47,17 +50,25 @@
         leftSubnameView.lineBreakMode = NSLineBreakByTruncatingMiddle;
         [background addSubview:leftSubnameView];
         //left score bg
-        leftPointsBackground = [[UIView alloc] initWithFrame:CGRectMake(5, 55, (size.width-20)/2-10, 40)];
+        leftPointsBackground = [[UIView alloc] initWithFrame:CGRectMake(5, 52, (size.width-20)/2-10, 40)];
         leftPointsBackground.alpha = 0.0;
         [background addSubview:leftPointsBackground];
         //left score
-        leftPointsView = [[UILabel alloc] initWithFrame:CGRectMake(5, 55, (size.width-20)/2-10, 40)];
+        leftPointsView = [[UILabel alloc] initWithFrame:CGRectMake(5, 52, (size.width-20)/2-10, 40)];
         leftPointsView.text = matchup[@"teams"][0][@"score"];
         leftPointsView.font = [UIFont systemFontOfSize:40 weight:UIFontWeightRegular];
         leftPointsView.textAlignment = NSTextAlignmentCenter;
         leftPointsView.textColor = [UIColor whiteColor];
         leftPointsView.lineBreakMode = NSLineBreakByTruncatingMiddle;
         [background addSubview:leftPointsView];
+        //left leading scorer
+        leftSubscoreView = [[UILabel alloc] initWithFrame:CGRectMake(5, 90, (size.width-20)/2-10, 20)];
+        leftSubscoreView.text = [NSString stringWithFormat:@"%@",matchup[@"teams"][0][@"leadingScorer"]];
+        leftSubscoreView.font = [UIFont systemFontOfSize:12 weight:UIFontWeightRegular];
+        leftSubscoreView.textAlignment = NSTextAlignmentCenter;
+        leftSubscoreView.textColor = [UIColor whiteColor];
+        leftSubscoreView.lineBreakMode = NSLineBreakByTruncatingMiddle;
+        [background addSubview:leftSubscoreView];
         //right name
         rightNameView = [[UILabel alloc] initWithFrame:CGRectMake(size.width-(size.width-20)/2-10-5, 5, (size.width-20)/2-10, 30)];
         rightNameView.text = matchup[@"teams"][1][@"name"];
@@ -74,24 +85,34 @@
         rightSubnameView.textColor = [UIColor whiteColor];
         rightSubnameView.lineBreakMode = NSLineBreakByTruncatingMiddle;
         [background addSubview:rightSubnameView];
-        //left score bg
-        rightPointsBackground = [[UIView alloc] initWithFrame:CGRectMake(size.width-(size.width-20)/2-10-5, 55, (size.width-20)/2-10, 40)];
+        //right score bg
+        rightPointsBackground = [[UIView alloc] initWithFrame:CGRectMake(size.width-(size.width-20)/2-10-5, 52, (size.width-20)/2-10, 40)];
         rightPointsBackground.alpha = 0.0;
         [background addSubview:rightPointsBackground];
         //right score
-        rightPointsView = [[UILabel alloc] initWithFrame:CGRectMake(size.width-(size.width-20)/2-10-5, 55, (size.width-20)/2-10, 40)];
+        rightPointsView = [[UILabel alloc] initWithFrame:CGRectMake(size.width-(size.width-20)/2-10-5, 52, (size.width-20)/2-10, 40)];
         rightPointsView.text = matchup[@"teams"][1][@"score"];
         rightPointsView.font = [UIFont systemFontOfSize:40 weight:UIFontWeightRegular];
         rightPointsView.textAlignment = NSTextAlignmentCenter;
         rightPointsView.textColor = [UIColor whiteColor];
         rightPointsView.lineBreakMode = NSLineBreakByTruncatingMiddle;
         [background addSubview:rightPointsView];
+        //right leading scorer
+        rightSubscoreView = [[UILabel alloc] initWithFrame:CGRectMake(size.width-(size.width-20)/2-10-5, 90, (size.width-20)/2-10, 20)];
+        rightSubscoreView.text = [NSString stringWithFormat:@"%@",matchup[@"teams"][1][@"leadingScorer"]];
+        rightSubscoreView.font = [UIFont systemFontOfSize:12 weight:UIFontWeightRegular];
+        rightSubscoreView.textAlignment = NSTextAlignmentCenter;
+        rightSubscoreView.textColor = [UIColor whiteColor];
+        rightSubscoreView.lineBreakMode = NSLineBreakByTruncatingMiddle;
+        [background addSubview:rightSubscoreView];
     }
     return self;
 }
 
 - (void)updateWithMatchup: (NSDictionary *) matchup {
     self.matchup = matchup;
+    rightSubscoreView.text = [NSString stringWithFormat:@"%@",matchup[@"teams"][1][@"leadingScorer"]];
+    leftSubscoreView.text = [NSString stringWithFormat:@"%@",matchup[@"teams"][0][@"leadingScorer"]];
     if (![rightPointsView.text isEqualToString:self.matchup[@"teams"][1][@"score"]]) {
         if (rightPointsView.text.intValue <= [self.matchup[@"teams"][1][@"score"] intValue])
             rightPointsBackground.backgroundColor = [UIColor FBBlueHighlightColor];

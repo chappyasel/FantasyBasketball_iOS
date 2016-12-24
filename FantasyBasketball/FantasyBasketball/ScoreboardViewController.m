@@ -18,6 +18,8 @@
 
 @property NSMutableArray *cells;
 
+@property NSTimer *updateTimer;
+
 @end
 
 @implementation ScoreboardViewController
@@ -87,6 +89,8 @@
             for (int i = 2; i < recordManager.count; i++) manager = [NSString stringWithFormat:@"%@ %@",manager,recordManager[i]];
             teamDict[@"manager"] = manager;
             teamDict[@"record"] = [recordManager[0] stringByReplacingOccurrencesOfString:@"(" withString:@""];
+            TFHppleElement *scoringDetails = [matchupElement.children[2] firstChild].children[1];
+            teamDict[@"leadingScorer"] = [[scoringDetails.children[((t == 0) ? 2 : 5)] firstChild] content];
             [muTeams addObject:teamDict];
         }
         NSString *link = [matchupElement.children[2] firstChild].firstChild.firstChild.attributes[@"href"];
@@ -178,7 +182,7 @@
     self.autorefreshSwitch.onTintColor = [UIColor FBMediumOrangeColor];
     self.autorefreshSwitch.tintColor = [UIColor lightGrayColor];
     [self.autorefreshSwitch addTarget:self action:@selector(autorefreshStateChanged:) forControlEvents:UIControlEventValueChanged];
-    updateTimer = [[NSTimer alloc] initWithFireDate:[NSDate date] interval:2 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
+    self.updateTimer = [[NSTimer alloc] initWithFireDate:[NSDate date] interval:2 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
     [headerView addSubview:label];
     [headerView addSubview:self.autorefreshSwitch];
     self.tableView.tableHeaderView = headerView;
@@ -187,16 +191,14 @@
 
 - (void)autorefreshStateChanged:(UISwitch *)sender{
     if (sender.isOn) {
-        updateTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
+        self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
         [self timerFired:nil];
     }
     else {
-        [updateTimer invalidate];
-        updateTimer = nil;
+        [self.updateTimer invalidate];
+        self.updateTimer = nil;
     }
 }
-
-NSTimer *updateTimer;
 
 - (void)timerFired:(NSTimer *)timer {
     [self refreshButtonPressed:nil];

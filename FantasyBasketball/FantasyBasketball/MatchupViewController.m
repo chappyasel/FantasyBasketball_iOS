@@ -36,6 +36,8 @@
 
 @property BOOL tableViewShowingWinProbabilityStatistics;
 
+@property NSTimer *updateTimer;
+
 @end
 
 @implementation MatchupViewController
@@ -131,8 +133,8 @@
     _numStartersTeam1 = 0, _numStartersTeam2 = 0;
     NSString *link = self.globalLink;
     if (link == nil) link = [NSString stringWithFormat:@"http://games.espn.go.com/fba/boxscorefull?leagueId=%@&teamId=%@&seasonId=%@",self.session.leagueID,self.session.teamID,self.session.seasonID];
+    else link = [link substringToIndex:[link rangeOfString:@"&scoringPeriodId"].location];
     link = [NSString stringWithFormat: @"%@&scoringPeriodId=%d&view=scoringperiod&version=full",link,_scoringDay];
-    
     if(!_winProbability) {
         _winProbability = [[FBWinProbablity alloc] init];
         _winProbability.matchupLink = link;
@@ -214,7 +216,7 @@
     }
      */
     
-     NSArray <TFHppleElement *> *nodes = [self.parser searchWithXPathQuery:@"//tr[@class='tableBody']"];
+    NSArray <TFHppleElement *> *nodes = [self.parser searchWithXPathQuery:@"//tr[@class='tableBody']"];
     bool te2 = (nodes.count > 1);
     NSString *team1Name = nodes[0].firstChild.content;
     NSString *team2Name = te2 ? nodes[1].firstChild.content : @"";
@@ -297,7 +299,7 @@
     self.autorefreshSwitch.onTintColor = [UIColor whiteColor];
     self.autorefreshSwitch.tintColor = [UIColor whiteColor];
     [self.autorefreshSwitch addTarget:self action:@selector(autorefreshStateChanged:) forControlEvents:UIControlEventValueChanged];
-    updateTimer = [[NSTimer alloc] initWithFireDate:[NSDate date] interval:5 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
+    self.updateTimer = [[NSTimer alloc] initWithFireDate:[NSDate date] interval:5 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
     [headerView addSubview:label];
     [headerView addSubview:self.autorefreshSwitch];
     
@@ -320,12 +322,12 @@
 - (void)autorefreshStateChanged:(UISwitch *)sender{
     if (_handleError) return;
     if (sender.isOn) {
-        updateTimer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
+        self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
         [self timerFired:nil];
     }
     else {
-        [updateTimer invalidate];
-        updateTimer = nil;
+        [self.updateTimer invalidate];
+        self.updateTimer = nil;
     }
 }
 
@@ -334,8 +336,6 @@
     self.cells = [[NSMutableArray alloc] init];
     [self.tableView reloadData];
 }
-
-NSTimer *updateTimer;
 
 - (void)timerFired:(NSTimer *)timer {
     [self refreshButtonPressed:nil];
