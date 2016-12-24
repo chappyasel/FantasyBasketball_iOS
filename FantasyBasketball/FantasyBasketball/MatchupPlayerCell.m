@@ -8,20 +8,27 @@
 
 #import "MatchupPlayerCell.h"
 
-@implementation MatchupPlayerCell {
-    UILabel *rightSubnameView;
-    UILabel *leftSubnameView;
-    
-    UILabel *rightSubname2View;
-    UILabel *leftSubname2View;
-    
-    UILabel *rightPointsView;
-    UIView *rightPointsBackground;
-    UILabel *leftPointsView;
-    UIView *leftPointsBackground;
-}
+@interface MatchupPlayerCell()
+
+@property UILabel *rightSubnameView;
+@property UILabel *leftSubnameView;
+
+@property UILabel *rightSubname2View;
+@property UILabel *leftSubname2View;
+
+@property UILabel *rightPointsView;
+@property UIView *rightPointsBackground;
+@property UILabel *leftPointsView;
+@property UIView *leftPointsBackground;
+
+@property BOOL expanded;
+
+@end
+
+@implementation MatchupPlayerCell
 
 - (instancetype) initWithRightPlayer:(FBPlayer *)rP leftPlayer:(FBPlayer *)lP view:(UIViewController *)superview expanded:(bool)expanded size:(CGSize)size{
+    self.expanded = expanded;
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     if (self = [super initWithFrame:CGRectMake(0, 0, size.width, size.height)]) {
         self.rightPlayer = rP;
@@ -31,75 +38,51 @@
             UILabel *name = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, size.width/2-50-5, 25)];
             name.text = [NSString stringWithFormat:@"%@. %@",[self.leftPlayer.firstName substringToIndex:1],self.leftPlayer.lastName];
             [self addSubview:name];
-            //INFO
-            leftSubnameView = [[UILabel alloc] initWithFrame:CGRectMake(10, 19, size.width/2-50-5, 20)];
-            leftSubnameView.textColor = [UIColor grayColor];
-            leftSubnameView.font = (size.width > 400) ? [UIFont systemFontOfSize:11]:[UIFont systemFontOfSize:9];
-            if (self.leftPlayer.isPlaying) leftSubnameView.text = [NSString stringWithFormat:@"%@, %@ %@",self.leftPlayer.opponent,self.leftPlayer.status,self.leftPlayer.score];
-            else leftSubnameView.text = @"-";
-            [self addSubview:leftSubnameView];
+            //POINTS
+            self.leftPointsView = [[UILabel alloc] initWithFrame:CGRectMake(size.width/2-50, 0, 50, size.height)];
+            self.leftPointsBackground = [[UIView alloc] initWithFrame:self.leftPointsView.frame];
+            self.leftPointsBackground.backgroundColor = [UIColor blackColor];
+            self.leftPointsBackground.alpha = 0.0;
+            if (!self.leftPlayer.isPlaying) self.leftPointsView.text = @"-";
+            else self.leftPointsView.text = [NSString stringWithFormat:@"%.0f",self.leftPlayer.fantasyPoints];
+            if (self.leftPlayer.gameState == FBGameStateHasntStarted) self.leftPointsView.textColor = [UIColor lightGrayColor];
+            else self.leftPointsView.textColor = [UIColor blackColor];
+            self.leftPointsView.textAlignment = NSTextAlignmentCenter;
+            self.leftPointsView.font = [UIFont boldSystemFontOfSize:19];
+            [self addSubview:self.leftPointsBackground];
+            [self addSubview:self.leftPointsView];
             //INJURY
             if (![self.leftPlayer.injury isEqualToString:@""]) {
                 UILabel *injury = [[UILabel alloc] initWithFrame:CGRectMake(size.width/2-50, 0, 50, 18)];
+                if (!self.expanded) injury.frame = CGRectMake(size.width/2-50, 0, 50, 14);
                 injury.font = [UIFont boldSystemFontOfSize:9];
                 injury.textColor = [UIColor redColor];
                 injury.textAlignment = NSTextAlignmentCenter;
                 injury.text = self.leftPlayer.injury;
                 [self addSubview:injury];
             }
-            if (self.leftPlayer.gameState != FBGameStateHasntStarted) {
-                //STATS
-                leftSubname2View = [[UILabel alloc] initWithFrame:CGRectMake(10, 32, size.width/2-50-10, 20)];
-                leftSubname2View.textColor = [UIColor grayColor];
-                leftSubname2View.font = (size.width > 400) ? [UIFont systemFontOfSize:11]:[UIFont systemFontOfSize:9];
-                NSArray *strList = @[@"pts",@"r",@"a",@"s",@"b"];
-                if (size.width > 400) strList = @[@"pts",@"reb",@"ast",@"stl",@"blk"];
-                int stat1 = 0;
-                int stat2 = 0;
-                NSString *stat1t = @"";
-                NSString *stat2t = @""; //pick largest stats of: reb, ast, blk, stl
-                if ((int)self.leftPlayer.blocks >= (int)self.leftPlayer.assists ||
-                    (int)self.leftPlayer.steals > (int)self.leftPlayer.assists ||
-                    (int)self.leftPlayer.steals > (int)self.leftPlayer.rebounds) {
-                    if ((int)self.leftPlayer.rebounds >= (int)self.leftPlayer.assists) {
-                        stat1 = self.leftPlayer.rebounds;
-                        stat1t = strList[1];
-                    }
-                    else {
-                        stat1 = self.leftPlayer.assists;
-                        stat1t = strList[2];
-                    }
-                    if ((int)self.leftPlayer.blocks >= (int)self.leftPlayer.steals) {
-                        stat2 = self.leftPlayer.blocks;
-                        stat2t = strList[4];
-                    }
-                    else {
-                        stat2 = self.leftPlayer.steals;
-                        stat2t = strList[3];
-                    }
+            //INFO
+            self.leftSubnameView = [[UILabel alloc] initWithFrame:CGRectMake(10, 19, size.width/2-50-5, 20)];
+            self.leftSubnameView.textColor = [UIColor grayColor];
+            self.leftSubnameView.font = (size.width > 400) ? [UIFont systemFontOfSize:11]:[UIFont systemFontOfSize:9];
+            NSString *leftPlayerStats = [self statsForPlayer:self.leftPlayer expanded:(size.width > 400 && self.expanded)];
+            if (self.leftPlayer.isPlaying)
+                self.leftSubnameView.text = (self.expanded) ?
+                    [NSString stringWithFormat:@"%@, %@ %@",self.leftPlayer.opponent,self.leftPlayer.status,self.leftPlayer.score] :
+                    [NSString stringWithFormat:@"%@: %@",self.leftPlayer.status, leftPlayerStats];
+            else self.leftSubnameView.text = @"-";
+            [self addSubview:self.leftSubnameView];
+            if (self.expanded) {
+                self.leftSubname2View = [[UILabel alloc] initWithFrame:CGRectMake(10, 32, size.width/2-50-10, 20)];
+                self.leftSubname2View.textColor = [UIColor clearColor];
+                self.leftSubname2View.font = (size.width > 400) ? [UIFont systemFontOfSize:11]:[UIFont systemFontOfSize:9];
+                if (self.leftPlayer.gameState != FBGameStateHasntStarted) {
+                    //STATS
+                    self.leftSubname2View.textColor = [UIColor grayColor];
+                    self.leftSubname2View.text = leftPlayerStats;
+                    [self addSubview:self.leftSubname2View];
                 }
-                else {
-                    stat1 = self.leftPlayer.rebounds;
-                    stat1t = strList[1];
-                    stat2 = self.leftPlayer.assists;
-                    stat2t = strList[2];
-                }
-                leftSubname2View.text = [NSString stringWithFormat:@"%.0f/%.0f, %.0f %@, %d %@, %d %@",self.leftPlayer.fgm,self.leftPlayer.fga,self.leftPlayer.points,strList[0],stat1,stat1t,stat2,stat2t];
-                [self addSubview:leftSubname2View];
             }
-            //Points
-            leftPointsView = [[UILabel alloc] initWithFrame:CGRectMake(size.width/2-50, 0, 50, size.height)];
-            leftPointsBackground = [[UIView alloc] initWithFrame:leftPointsView.frame];
-            leftPointsBackground.backgroundColor = [UIColor blackColor];
-            leftPointsBackground.alpha = 0.0;
-            if (!self.leftPlayer.isPlaying) leftPointsView.text = @"-";
-            else leftPointsView.text = [NSString stringWithFormat:@"%.0f",self.leftPlayer.fantasyPoints];
-            if (self.leftPlayer.gameState == FBGameStateHasntStarted) leftPointsView.textColor = [UIColor lightGrayColor];
-            else leftPointsView.textColor = [UIColor blackColor];
-            leftPointsView.textAlignment = NSTextAlignmentCenter;
-            leftPointsView.font = [UIFont boldSystemFontOfSize:19];
-            [self addSubview:leftPointsBackground];
-            [self addSubview:leftPointsView];
             //Link
             UIButton *link = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, size.width/2-50, size.height)];
             [link addTarget:self action:@selector(linkPlayerPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -114,9 +97,6 @@
             gLink.backgroundColor = [UIColor clearColor];
             gLink.titleLabel.text = @"";
             [self addSubview:gLink];
-            if (expanded) {
-                
-            }
         }
         if (self.rightPlayer) {
             //NAME
@@ -124,77 +104,53 @@
             name2.text = [NSString stringWithFormat:@"%@. %@",[self.rightPlayer.firstName substringToIndex:1],self.rightPlayer.lastName];
             name2.textAlignment = NSTextAlignmentRight;
             [self addSubview:name2];
-            //INFO
-            rightSubnameView = [[UILabel alloc] initWithFrame:CGRectMake(size.width/2+50, 20, size.width/2-50-10, 20)];
-            rightSubnameView.font = (size.width > 400) ? [UIFont systemFontOfSize:11]:[UIFont systemFontOfSize:9];
-            rightSubnameView.textColor = [UIColor grayColor];
-            rightSubnameView.textAlignment = NSTextAlignmentRight;
-            if (self.rightPlayer.isPlaying) rightSubnameView.text = [NSString stringWithFormat:@"%@ %@, %@",self.rightPlayer.status,self.rightPlayer.score,self.rightPlayer.opponent];
-            else rightSubnameView.text = @"-";
-            [self addSubview:rightSubnameView];
+            //POINTS
+            self.rightPointsView = [[UILabel alloc] initWithFrame:CGRectMake(size.width/2, 0, 50, size.height)];
+            self.rightPointsBackground = [[UIView alloc] initWithFrame:self.rightPointsView.frame];
+            self.rightPointsBackground.backgroundColor = [UIColor blackColor];
+            self.rightPointsBackground.alpha = 0.0;
+            if (!self.rightPlayer.isPlaying) self.rightPointsView.text = @"-";
+            else self.rightPointsView.text = [NSString stringWithFormat:@"%.0f",self.rightPlayer.fantasyPoints];
+            if (self.rightPlayer.gameState == FBGameStateHasntStarted) self.rightPointsView.textColor = [UIColor lightGrayColor];
+            else self.rightPointsView.textColor = [UIColor blackColor];
+            self.rightPointsView.textAlignment = NSTextAlignmentCenter;
+            self.rightPointsView.font = [UIFont boldSystemFontOfSize:19];
+            [self addSubview:self.rightPointsBackground];
+            [self addSubview:self.rightPointsView];
             //INJURY
             if (![self.rightPlayer.injury isEqualToString:@""]) {
                 UILabel *injury = [[UILabel alloc] initWithFrame:CGRectMake(size.width/2, 0, 50, 18)];
+                if (!self.expanded) injury.frame = CGRectMake(size.width/2, 0, 50, 14);
                 injury.font = [UIFont boldSystemFontOfSize:9];
                 injury.textColor = [UIColor redColor];
                 injury.textAlignment = NSTextAlignmentCenter;
                 injury.text = self.rightPlayer.injury;
                 [self addSubview:injury];
             }
-            if (self.rightPlayer.gameState != FBGameStateHasntStarted) {
-                //STATS
-                rightSubname2View = [[UILabel alloc] initWithFrame:CGRectMake(size.width/2+50, 32, size.width/2-50-10, 20)];
-                rightSubname2View.textColor = [UIColor grayColor];
-                rightSubname2View.font = (size.width > 400) ? [UIFont systemFontOfSize:11]:[UIFont systemFontOfSize:9];
-                rightSubname2View.textAlignment = NSTextAlignmentRight;
-                NSArray *strList = @[@"pts",@"r",@"a",@"s",@"b"];
-                if (size.width > 400) strList = @[@"pts",@"reb",@"ast",@"stl",@"blk"];
-                int stat1 = 0;
-                int stat2 = 0;
-                NSString *stat1t = @"";
-                NSString *stat2t = @""; //pick largest stats of: reb, ast, blk, stl
-                if ((int)self.rightPlayer.blocks > (int)self.rightPlayer.assists ||
-                    (int)self.rightPlayer.steals > (int)self.rightPlayer.assists ||
-                    (int)self.rightPlayer.steals > (int)self.rightPlayer.rebounds) {
-                    if ((int)self.rightPlayer.rebounds >= (int)self.rightPlayer.assists) {
-                        stat1 = self.rightPlayer.rebounds;
-                        stat1t = strList[1];
-                    }
-                    else {
-                        stat1 = self.rightPlayer.assists;
-                        stat1t = strList[2];
-                    }
-                    if ((int)self.rightPlayer.blocks >= (int)self.rightPlayer.steals) {
-                        stat2 = self.rightPlayer.blocks;
-                        stat2t = strList[4];
-                    }
-                    else {
-                        stat2 = self.rightPlayer.steals;
-                        stat2t = strList[3];
-                    }
+            //INFO
+            self.rightSubnameView = [[UILabel alloc] initWithFrame:CGRectMake(size.width/2+50, 20, size.width/2-50-10, 20)];
+            self.rightSubnameView.font = (size.width > 400) ? [UIFont systemFontOfSize:11]:[UIFont systemFontOfSize:9];
+            self.rightSubnameView.textColor = [UIColor grayColor];
+            self.rightSubnameView.textAlignment = NSTextAlignmentRight;
+            NSString *rightPlayerStats = [self statsForPlayer:self.rightPlayer expanded:(size.width > 400 && self.expanded)];
+            if (self.rightPlayer.isPlaying)
+                self.rightSubnameView.text = (self.expanded) ?
+                [NSString stringWithFormat:@"%@ %@, %@",self.rightPlayer.status,self.rightPlayer.score,self.rightPlayer.opponent] :
+                [NSString stringWithFormat:@"%@: %@",rightPlayerStats,self.rightPlayer.status];
+            else self.rightSubnameView.text = @"-";
+            [self addSubview:self.rightSubnameView];
+            if (self.expanded) {
+                self.rightSubname2View = [[UILabel alloc] initWithFrame:CGRectMake(size.width/2+50, 32, size.width/2-50-10, 20)];
+                self.rightSubname2View.textColor = [UIColor clearColor];
+                self.rightSubname2View.textAlignment = NSTextAlignmentRight;
+                self.rightSubname2View.font = (size.width > 400) ? [UIFont systemFontOfSize:11]:[UIFont systemFontOfSize:9];
+                if (self.rightPlayer.gameState != FBGameStateHasntStarted) {
+                    //STATS
+                    self.rightSubname2View.textColor = [UIColor grayColor];
+                    self.rightSubname2View.text = [self statsForPlayer:self.rightPlayer expanded:(size.width > 400 && self.expanded)];
+                    [self addSubview:self.rightSubname2View];
                 }
-                else {
-                    stat1 = self.rightPlayer.rebounds;
-                    stat1t = strList[1];
-                    stat2 = self.rightPlayer.assists;
-                    stat2t = strList[2];
-                }
-                rightSubname2View.text = [NSString stringWithFormat:@"%.0f/%.0f, %.0f %@, %d %@, %d %@",self.rightPlayer.fgm,self.rightPlayer.fga,self.rightPlayer.points,strList[0],stat1,stat1t,stat2,stat2t];
-                [self addSubview:rightSubname2View];
             }
-            //Points
-            rightPointsView = [[UILabel alloc] initWithFrame:CGRectMake(size.width/2, 0, 50, size.height)];
-            rightPointsBackground = [[UIView alloc] initWithFrame:rightPointsView.frame];
-            rightPointsBackground.backgroundColor = [UIColor blackColor];
-            rightPointsBackground.alpha = 0.0;
-            if (!self.rightPlayer.isPlaying) rightPointsView.text = @"-";
-            else rightPointsView.text = [NSString stringWithFormat:@"%.0f",self.rightPlayer.fantasyPoints];
-            if (self.rightPlayer.gameState == FBGameStateHasntStarted) rightPointsView.textColor = [UIColor lightGrayColor];
-            else rightPointsView.textColor = [UIColor blackColor];
-            rightPointsView.textAlignment = NSTextAlignmentCenter;
-            rightPointsView.font = [UIFont boldSystemFontOfSize:19];
-            [self addSubview:rightPointsBackground];
-            [self addSubview:rightPointsView];
             //Link
             UIButton *link = [[UIButton alloc] initWithFrame:CGRectMake(size.width/2+50, 0, size.width/2-50, size.height)];
             [link addTarget:self action:@selector(linkPlayerPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -209,9 +165,6 @@
             gLink.backgroundColor = [UIColor clearColor];
             gLink.titleLabel.text = @"";
             [self addSubview:gLink];
-            if (expanded) {
-                
-            }
         }
     }
     return self;
@@ -220,117 +173,102 @@
 - (void)updateWithRightPlayer:(FBPlayer *)rP leftPlayer:(FBPlayer *)lP {
     self.rightPlayer = rP;
     self.leftPlayer = lP;
-    if (self.rightPlayer.isPlaying) rightSubnameView.text = [NSString stringWithFormat:@"%@ %@, %@",self.rightPlayer.status,self.rightPlayer.score,self.rightPlayer.opponent];
-    else rightSubnameView.text = @"-";
-    if (self.leftPlayer.isPlaying) leftSubnameView.text = [NSString stringWithFormat:@"%@, %@ %@",self.leftPlayer.opponent,self.leftPlayer.status,self.leftPlayer.score];
-    else leftSubnameView.text = @"-";
-    if (self.rightPlayer.gameState != FBGameStateHasntStarted) {
-        int stat1 = 0;
-        int stat2 = 0;
-        NSString *stat1t = @"";
-        NSString *stat2t = @""; //pick largest stats of: reb, ast, blk, stl
-        if ((int)self.rightPlayer.blocks >= (int)self.rightPlayer.assists ||
-            (int)self.rightPlayer.steals > (int)self.rightPlayer.assists ||
-            (int)self.rightPlayer.steals > (int)self.rightPlayer.rebounds) {
-            if ((int)self.rightPlayer.rebounds >= (int)self.rightPlayer.assists) {
-                stat1 = self.rightPlayer.rebounds;
-                stat1t = @"reb";
-            }
-            else {
-                stat1 = self.rightPlayer.assists;
-                stat1t = @"ast";
-            }
-            if ((int)self.rightPlayer.blocks >= (int)self.rightPlayer.steals) {
-                stat2 = self.rightPlayer.blocks;
-                stat2t = @"blk";
-            }
-            else {
-                stat2 = self.rightPlayer.steals;
-                stat2t = @"stl";
-            }
-        }
-        else {
-            stat1 = self.rightPlayer.rebounds;
-            stat1t = @"reb";
-            stat2 = self.rightPlayer.assists;
-            stat2t = @"ast";
-        }
-        rightSubname2View.text = [NSString stringWithFormat:@"%.0f/%.0f, %.0f pts, %d %@, %d %@",self.rightPlayer.fgm,self.rightPlayer.fga,self.rightPlayer.points,stat1,stat1t,stat2,stat2t];
+    NSString *rightPlayerStats = [self statsForPlayer:self.rightPlayer expanded:(self.frame.size.width > 400 && self.expanded)];
+    NSString *leftPlayerStats = [self statsForPlayer:self.leftPlayer expanded:(self.frame.size.width > 400 && self.expanded)];
+    if (self.rightPlayer.isPlaying)
+        self.rightSubnameView.text = (self.expanded) ?
+        [NSString stringWithFormat:@"%@ %@, %@",self.rightPlayer.status,self.rightPlayer.score,self.rightPlayer.opponent] :
+        [NSString stringWithFormat:@"%@: %@",rightPlayerStats,self.rightPlayer.status];
+    else self.rightSubnameView.text = @"-";
+    if (self.leftPlayer.isPlaying)
+        self.leftSubnameView.text = (self.expanded) ?
+        [NSString stringWithFormat:@"%@, %@ %@",self.leftPlayer.opponent,self.leftPlayer.status,self.leftPlayer.score] :
+        [NSString stringWithFormat:@"%@: %@",self.leftPlayer.status, leftPlayerStats];
+    else self.leftSubnameView.text = @"-";
+    if (self.expanded && self.rightPlayer.gameState != FBGameStateHasntStarted) {
+        self.rightSubname2View.textColor = [UIColor grayColor];
+        self.rightSubname2View.text = rightPlayerStats;
     }
-    if (self.leftPlayer.gameState != FBGameStateHasntStarted) {
-        int stat1 = 0;
-        int stat2 = 0;
-        NSString *stat1t = @"";
-        NSString *stat2t = @""; //pick largest stats of: reb, ast, blk, stl
-        if ((int)self.leftPlayer.blocks >= (int)self.leftPlayer.assists ||
-            (int)self.leftPlayer.steals > (int)self.leftPlayer.assists ||
-            (int)self.leftPlayer.steals > (int)self.leftPlayer.rebounds) {
-            if ((int)self.leftPlayer.rebounds >= (int)self.leftPlayer.assists) {
-                stat1 = self.leftPlayer.rebounds;
-                stat1t = @"reb";
-            }
-            else {
-                stat1 = self.leftPlayer.assists;
-                stat1t = @"ast";
-            }
-            if ((int)self.leftPlayer.blocks >= (int)self.leftPlayer.steals) {
-                stat2 = self.leftPlayer.blocks;
-                stat2t = @"blk";
-            }
-            else {
-                stat2 = self.leftPlayer.steals;
-                stat2t = @"stl";
-            }
-        }
-        else {
-            stat1 = self.leftPlayer.rebounds;
-            stat1t = @"reb";
-            stat2 = self.leftPlayer.assists;
-            stat2t = @"ast";
-        }
-        leftSubname2View.text = [NSString stringWithFormat:@"%.0f/%.0f, %.0f pts, %d %@, %d %@",self.leftPlayer.fgm,self.leftPlayer.fga,self.leftPlayer.points,stat1,stat1t,stat2,stat2t];
+    if (self.expanded && self.leftPlayer.gameState != FBGameStateHasntStarted) {
+        self.leftSubname2View.textColor = [UIColor grayColor];
+        self.leftSubname2View.text = leftPlayerStats;
     }
-    if (!self.rightPlayer.isPlaying) rightPointsView.text = @"-";
-    else if (![rightPointsView.text isEqualToString:[NSString stringWithFormat:@"%.0f",self.rightPlayer.fantasyPoints]]) {
-        if (rightPointsView.text.intValue <= (int)self.rightPlayer.fantasyPoints) rightPointsBackground.backgroundColor = [UIColor FBBlueHighlightColor];
-        else rightPointsBackground.backgroundColor = [UIColor FBRedHighlightColor];
-        rightPointsView.text = [NSString stringWithFormat:@"%.0f",self.rightPlayer.fantasyPoints];
+    if (!self.rightPlayer.isPlaying) self.rightPointsView.text = @"-";
+    else if (![self.rightPointsView.text isEqualToString:[NSString stringWithFormat:@"%.0f",self.rightPlayer.fantasyPoints]]) {
+        if (self.rightPointsView.text.intValue <= (int)self.rightPlayer.fantasyPoints) self.rightPointsBackground.backgroundColor = [UIColor FBBlueHighlightColor];
+        else self.rightPointsBackground.backgroundColor = [UIColor FBRedHighlightColor];
+        self.rightPointsView.text = [NSString stringWithFormat:@"%.0f",self.rightPlayer.fantasyPoints];
         [self highlightRightScore];
     }
-    if (!self.leftPlayer.isPlaying) leftPointsView.text = @"-";
-    else if (![leftPointsView.text isEqualToString:[NSString stringWithFormat:@"%.0f",self.leftPlayer.fantasyPoints]]) {
-        if (leftPointsView.text.intValue <= (int)self.leftPlayer.fantasyPoints) leftPointsBackground.backgroundColor = [UIColor FBBlueHighlightColor];
-        else leftPointsBackground.backgroundColor = [UIColor FBRedHighlightColor];
-        leftPointsView.text = [NSString stringWithFormat:@"%.0f",self.leftPlayer.fantasyPoints];
+    if (!self.leftPlayer.isPlaying) self.leftPointsView.text = @"-";
+    else if (![self.leftPointsView.text isEqualToString:[NSString stringWithFormat:@"%.0f",self.leftPlayer.fantasyPoints]]) {
+        if (self.leftPointsView.text.intValue <= (int)self.leftPlayer.fantasyPoints) self.leftPointsBackground.backgroundColor = [UIColor FBBlueHighlightColor];
+        else self.leftPointsBackground.backgroundColor = [UIColor FBRedHighlightColor];
+        self.leftPointsView.text = [NSString stringWithFormat:@"%.0f",self.leftPlayer.fantasyPoints];
         [self highlightLeftScore];
     }
-    if (self.rightPlayer.gameState == FBGameStateHasntStarted) rightPointsView.textColor = [UIColor lightGrayColor];
-    else rightPointsView.textColor = [UIColor blackColor];
-    if (self.leftPlayer.gameState == FBGameStateHasntStarted) leftPointsView.textColor = [UIColor lightGrayColor];
-    else leftPointsView.textColor = [UIColor blackColor];
+    if (self.rightPlayer.gameState == FBGameStateHasntStarted) self.rightPointsView.textColor = [UIColor lightGrayColor];
+    else self.rightPointsView.textColor = [UIColor blackColor];
+    if (self.leftPlayer.gameState == FBGameStateHasntStarted) self.leftPointsView.textColor = [UIColor lightGrayColor];
+    else self.leftPointsView.textColor = [UIColor blackColor];
+}
+
+- (NSString *)statsForPlayer: (FBPlayer *)player expanded: (BOOL)expanded {
+    NSArray *strList = (expanded) ? @[@" pts",@" reb",@" ast",@" stl",@" blk"] : @[@"p",@"r",@"a",@"s",@"b"];
+    int stat1 = 0, stat2 = 0;
+    NSString *stat1t = @"", *stat2t = @""; //pick largest stats of: reb, ast, blk, stl
+    if ((int)player.blocks >= (int)player.assists ||
+        (int)player.steals > (int)player.assists ||
+        (int)player.steals > (int)player.rebounds) {
+        if ((int)player.rebounds >= (int)player.assists) {
+            stat1 = player.rebounds;
+            stat1t = strList[1];
+        }
+        else {
+            stat1 = player.assists;
+            stat1t = strList[2];
+        }
+        if ((int)player.blocks >= (int)player.steals) {
+            stat2 = player.blocks;
+            stat2t = strList[4];
+        }
+        else {
+            stat2 = player.steals;
+            stat2t = strList[3];
+        }
+    }
+    else {
+        stat1 = player.rebounds;
+        stat1t = strList[1];
+        stat2 = player.assists;
+        stat2t = strList[2];
+    }
+    NSString *str = [NSString stringWithFormat:@"%.0f%@, %d%@, %d%@",player.points,strList[0],stat1,stat1t,stat2,stat2t];
+    return (self.expanded) ? [[NSString stringWithFormat:@"%.0f/%.0f, ",player.fgm,player.fga] stringByAppendingString:str] : str;
+    
 }
 
 - (void)highlightLeftScore {
-    leftPointsBackground.alpha = 1.0;
+    self.leftPointsBackground.alpha = 1.0;
     [self performSelector:@selector(unhighlightLeftScore) withObject:nil afterDelay:1.5];
 }
 
 - (void)unhighlightLeftScore {
     [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
     [UIView animateWithDuration:3.5 animations:^{
-        leftPointsBackground.alpha = 0.0;
+        self.leftPointsBackground.alpha = 0.0;
     }];
 };
 
 - (void)highlightRightScore {
-    rightPointsBackground.alpha = 1.0;
+    self.rightPointsBackground.alpha = 1.0;
     [self performSelector:@selector(unhighlightRightScore) withObject:nil afterDelay:1.5];
 }
 
 - (void)unhighlightRightScore {
     [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
     [UIView animateWithDuration:3.5 animations:^{
-        rightPointsBackground.alpha = 0.0;
+        self.rightPointsBackground.alpha = 0.0;
     }];
 };
 

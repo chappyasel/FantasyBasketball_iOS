@@ -12,6 +12,7 @@
 @interface FBWinProbablity()
 
 @property BOOL isUpdating;
+@property BOOL calcInProcess;
 
 @end
 
@@ -19,6 +20,8 @@
 
 - (void)loadComparisonWithUpdateBlock: (void (^)(int num, int total))update {
     self.isUpdating = NO;
+    if (self.calcInProcess) return;
+    self.calcInProcess = YES;
     int __block numPlayersFinished = 0;
     int numPlayersAnticipated = 24; //12 players * 2
     int numStepsFinished = 0;
@@ -61,13 +64,17 @@
     [self calculateWinProbablity];
     numStepsFinished ++;
     update(numPlayersFinished + numStepsFinished, numPlayersAnticipated + numStepsAnticipated);
+    self.calcInProcess = NO;
 }
 
 - (void)updateComparisonWithCompletionBlock: (void (^)(void))completion { //assumes injuries, player means and variances are constant
+    if (self.calcInProcess) return;
+    self.calcInProcess = YES;
     self.isUpdating = YES;
     [self loadMatchupLink:self.matchupLink withPlayerLoadUpdateBlock:^{}];
     [self calculateWinProbablity];
     completion();
+    self.calcInProcess = NO;
 }
 
 - (void)loadMatchupLink: (NSString *)link withPlayerLoadUpdateBlock: (void (^)(void))playerLoad {

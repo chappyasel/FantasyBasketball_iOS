@@ -292,6 +292,19 @@
     updateTimer = [[NSTimer alloc] initWithFireDate:[NSDate date] interval:5 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
     [headerView addSubview:label];
     [headerView addSubview:self.autorefreshSwitch];
+    
+    UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width-191, 5, 125, 30)];
+    label2.text = @"EXPAND STATS:";
+    label2.textColor = [UIColor whiteColor];
+    label2.font = [UIFont boldSystemFontOfSize:14];
+    label2.textAlignment = NSTextAlignmentRight;
+    self.expandSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(self.view.frame.size.width-61, 4.5, 51, 31)];
+    self.expandSwitch.onTintColor = [UIColor whiteColor];
+    self.expandSwitch.tintColor = [UIColor whiteColor];
+    [self.expandSwitch addTarget:self action:@selector(expandStateChanged:) forControlEvents:UIControlEventValueChanged];
+    [headerView addSubview:label2];
+    [headerView addSubview:self.expandSwitch];
+    
     self.tableView.tableHeaderView = headerView;
     [self.tableView setContentOffset:CGPointMake(0,40)];
 }
@@ -306,6 +319,12 @@
         [updateTimer invalidate];
         updateTimer = nil;
     }
+}
+
+- (void)expandStateChanged:(UISwitch *)sender{
+    if (_handleError) return;
+    self.cells = [[NSMutableArray alloc] init];
+    [self.tableView reloadData];
 }
 
 NSTimer *updateTimer;
@@ -346,7 +365,8 @@ NSTimer *updateTimer;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 52.7;
+    if (self.expandSwitch.isOn) return 53; //dont forget to change at cellForRowAtIndexPath
+    return 42.333;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
@@ -391,7 +411,7 @@ NSTimer *updateTimer;
     if (self.cells.count >= indexPath.row+indexPath.section*_numStartersTeam1+1) {
         MatchupPlayerCell *cell = self.cells[indexPath.row+indexPath.section*_numStartersTeam1];
         if (!cell) {
-            cell = [[MatchupPlayerCell alloc] initWithRightPlayer:rightPlayer leftPlayer:leftPlayer view:self expanded:NO size:CGSizeMake(self.tableView.frame.size.width, 52.7)];
+            cell = [[MatchupPlayerCell alloc] initWithRightPlayer:rightPlayer leftPlayer:leftPlayer view:self expanded:self.expandSwitch.isOn size:CGSizeMake(self.tableView.frame.size.width, (self.expandSwitch.isOn) ? 53 : 42.333)];
             cell.delegate = self;
             cell.index = (int)indexPath.row;
             [self.cells addObject:cell];
@@ -399,7 +419,7 @@ NSTimer *updateTimer;
         else [cell updateWithRightPlayer:rightPlayer leftPlayer:leftPlayer];
         return cell;
     }
-    MatchupPlayerCell *cell = [[MatchupPlayerCell alloc] initWithRightPlayer:rightPlayer leftPlayer:leftPlayer view:self expanded:NO size:CGSizeMake(self.tableView.frame.size.width, 52.7)];
+    MatchupPlayerCell *cell = [[MatchupPlayerCell alloc] initWithRightPlayer:rightPlayer leftPlayer:leftPlayer view:self expanded:self.expandSwitch.isOn size:CGSizeMake(self.tableView.frame.size.width, (self.expandSwitch.isOn) ? 53 : 42.333)];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.delegate = self;
     cell.index = (int)indexPath.row;

@@ -15,6 +15,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *scoreView;
 @property (strong, nonatomic) IBOutlet UISwitch *autorefreshSwitch;
+@property (strong, nonatomic) IBOutlet UISwitch *expandSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *team1Display1;
 @property (weak, nonatomic) IBOutlet UILabel *team1Display2;
 @property (weak, nonatomic) IBOutlet UILabel *team1Display3;
