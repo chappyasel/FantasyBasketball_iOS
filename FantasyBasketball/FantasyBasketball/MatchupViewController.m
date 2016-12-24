@@ -32,6 +32,8 @@
 @property NSString *selectedPickerData;
 @property int scoringDay; //time of stats
 
+@property FBWinProbablity *winProbability;
+
 @end
 
 @implementation MatchupViewController
@@ -52,36 +54,47 @@
     dispatch_async(myQueue, ^{
         [self loadPlayersWithCompletionBlock:^(bool success, NSString *firstTeamName) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                if (!success) {
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Weekly Matchup Found"
-                                                                    message:@"The rest of the app is unlikely to function.\n\nThis message is to be expected in the offseason. \n\nIf you should have a game this week, check your league, team, season, and scoringID in the \"Settings\" tab."
-                                                                   delegate:self
-                                                          cancelButtonTitle:@"OK"
-                                                          otherButtonTitles:nil];
-                    [alert show];
-                }
+                if (!success) [self showMatchupAlert];
                 if (_handleError) return;
                 [self loadScoresWithFirstTeamName:firstTeamName];
                 [self.tableView reloadData];
             });
         }];
+        [_winProbability loadComparisonWithUpdateBlock:^(int num, int total) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (num == total) [self updateProjectionDisplay];
+                else self.centerDisplay.text = [NSString stringWithFormat:@"%.0f%%",(float)num/(float)total*100];
+            });
+        }];
     });
 }
 
-- (void)refreshNonAsync {
+- (void)refreshAsync {
     [self loadPlayersWithCompletionBlock:^(bool success, NSString *firstTeamName) {
-        if (!success) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Weekly Matchup Found"
-                                                            message:@"The rest of the app is unlikely to function.\n\nThis message is to be expected in the offseason. \n\nIf you should have a game this week, check your league, team, season, and scoringID in the \"Settings\" tab."
-                                                           delegate:self
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-            [alert show];
-        }
-        if (_handleError) return;
-        [self loadScoresWithFirstTeamName:firstTeamName];
-        [self.tableView reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (!success) [self showMatchupAlert];
+            if (_handleError) return;
+            [self loadScoresWithFirstTeamName:firstTeamName];
+        });
     }];
+    dispatch_queue_t myQueue = dispatch_queue_create("My Queue",NULL);
+    dispatch_async(myQueue, ^{
+        [_winProbability updateComparisonWithCompletionBlock:^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self updateProjectionDisplay];
+            });
+        }];
+    });
+    [self.tableView reloadData];
+}
+
+- (void)showMatchupAlert {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Weekly Matchup Found"
+                                                    message:@"The rest of the app is unlikely to function.\n\nThis message is to be expected in the offseason. \n\nIf you should have a game this week, check your league, team, season, and scoringID in the \"Settings\" tab."
+                                                   delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
 }
 
 - (void)initWithMatchupLink: (NSString *) link {
@@ -98,31 +111,24 @@
     }];
 }
 
+- (void)updateProjectionDisplay {
+    self.team1Display3.text = [NSString stringWithFormat:@"%.0f",_winProbability.team1ProjScore];
+    self.team2Display3.text = [NSString stringWithFormat:@"%.0f",_winProbability.team2ProjScore];
+    if (_winProbability.team1WinPct > 50.0)
+        self.centerDisplay.text = [NSString stringWithFormat:@"⇦ %.1f%%",_winProbability.team1WinPct];
+    else     self.centerDisplay.text = [NSString stringWithFormat:@"%.1f%% ⇨",100-_winProbability.team1WinPct];
+}
+
 - (void)loadPlayersWithCompletionBlock:(void (^)(bool success, NSString *firstTeamName)) completed {
     _numStartersTeam1 = 0, _numStartersTeam2 = 0;
     NSString *link = self.globalLink;
     if (link == nil) link = [NSString stringWithFormat:@"http://games.espn.go.com/fba/boxscorefull?leagueId=%@&teamId=%@&seasonId=%@",self.session.leagueID,self.session.teamID,self.session.seasonID];
     link = [NSString stringWithFormat: @"%@&scoringPeriodId=%d&view=scoringperiod&version=full",link,_scoringDay];
     
-    dispatch_queue_t myQueue = dispatch_queue_create("My Queue",NULL);
-    dispatch_async(myQueue, ^{
-        FBWinProbablity *comp = [[FBWinProbablity alloc] init];
-        comp.matchupLink = link;
-        [comp loadComparisonWithUpdateBlock:^(int num, int total) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (num == total) {
-                    self.team1Display3.text = [NSString stringWithFormat:@"%d",comp.team1ProjScore];
-                    self.team2Display3.text = [NSString stringWithFormat:@"%d",comp.team2ProjScore];
-                    if (comp.team1WinPct > 50.0)
-                             self.centerDisplay.text = [NSString stringWithFormat:@"⇦ %.1f%%  ",comp.team1WinPct];
-                    else     self.centerDisplay.text = [NSString stringWithFormat:@"  %.1f%% ⇨",100-comp.team1WinPct];
-                }
-                else {
-                    self.centerDisplay.text = [NSString stringWithFormat:@"%.0f%%",(float)num/(float)total*100];
-                }
-            });
-        }];
-    });
+    if(!_winProbability) {
+        _winProbability = [[FBWinProbablity alloc] init];
+        _winProbability.matchupLink = link;
+    }
     
     NSURL *url = [NSURL URLWithString:link];
     NSError *error;
@@ -283,7 +289,7 @@
     self.autorefreshSwitch.onTintColor = [UIColor whiteColor];
     self.autorefreshSwitch.tintColor = [UIColor whiteColor];
     [self.autorefreshSwitch addTarget:self action:@selector(autorefreshStateChanged:) forControlEvents:UIControlEventValueChanged];
-    updateTimer = [[NSTimer alloc] initWithFireDate:[NSDate date] interval:2 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
+    updateTimer = [[NSTimer alloc] initWithFireDate:[NSDate date] interval:5 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
     [headerView addSubview:label];
     [headerView addSubview:self.autorefreshSwitch];
     self.tableView.tableHeaderView = headerView;
@@ -293,7 +299,7 @@
 - (void)autorefreshStateChanged:(UISwitch *)sender{
     if (_handleError) return;
     if (sender.isOn) {
-        updateTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
+        updateTimer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
         [self timerFired:nil];
     }
     else {
@@ -309,7 +315,7 @@ NSTimer *updateTimer;
 }
 
 - (IBAction)refreshButtonPressed:(UIButton *)sender {
-    [self refreshNonAsync];
+    [self refreshAsync];
     [self.tableView reloadData];
 }
 
@@ -446,7 +452,7 @@ NSTimer *updateTimer;
         [self autorefreshStateChanged:self.autorefreshSwitch];
     }
     self.cells = [[NSMutableArray alloc] init];
-    [self refreshNonAsync];
+    [self refreshAsync];
     [self fadeOutWithPickerView:pickerView];
 }
 

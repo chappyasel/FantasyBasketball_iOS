@@ -12,8 +12,8 @@
 @interface FBWinProbablity : NSObject
 
 @property float team1WinPct;
-@property int team1ProjScore;
-@property int team2ProjScore;
+@property float team1ProjScore;
+@property float team2ProjScore;
 
 @property NSMutableDictionary<NSString *, FBWinProbablityPlayer *> *team1Players;
 @property NSMutableDictionary<NSString *, FBWinProbablityPlayer *> *team2Players;

@@ -19,7 +19,8 @@
 @property int injuryStatus; // 0 = Healthy, 1 = DTD, 2 = Out
 
 @property BOOL gameToday;
-@property float gameProgress; // 0 - 1 (0 = game not started, 1 = game over)
+@property int gameTodayScore;
+@property float gameTodayProgress; // 0 - 1 (0 = game not started, 1 = game over)
 
 @property NSMutableArray<NSNumber *> *scores;
 

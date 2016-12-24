@@ -95,4 +95,8 @@
     return sumOfDiffs / arr.count;
 }
 
+- (NSString *)description {
+    return [NSString stringWithFormat: @"%@: %.1f %.1f scores: %@ today: %d %f injury: %d", self.lastName, self.average, self.variance, self.scores, self.gameToday, self.gameTodayProgress, self.injuryStatus];
+}
+
 @end
