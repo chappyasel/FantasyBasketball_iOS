@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "FBPlayer.h"
-#import <WebKit/WebKit.h>
 #import "PlayerCell.h"
+#import "FBWinProbablityPlayer.h"
 
 @interface MatchupPlayerCell : UITableViewCell
 
@@ -21,5 +21,7 @@
 - (instancetype) initWithRightPlayer:(FBPlayer *)rP leftPlayer:(FBPlayer *)lP view:(UIViewController *)superview expanded:(bool)expanded size: (CGSize) size;
 
 - (void)updateWithRightPlayer:(FBPlayer *)rP leftPlayer:(FBPlayer *)lP;
+
+- (void)loadWinProbabilityRightPlayer: (FBWinProbablityPlayer *)wpRightPlayer leftPlayer: (FBWinProbablityPlayer *) wpLeftPlayer;
 
 @end

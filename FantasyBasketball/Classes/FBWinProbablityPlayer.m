@@ -46,6 +46,7 @@
         for (NSNumber *num in fpts) sum += [num intValue];
         self.average = sum/fpts.count;
         self.variance = [self varianceForArray:fpts withAverage:self.average];
+        self.standardDeviation = sqrtf(self.variance);
     }
     else NSLog(@"PLAYER NOT FOUND IN TEAM COMPARISON");
 }

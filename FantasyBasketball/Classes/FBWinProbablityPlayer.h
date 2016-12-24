@@ -15,6 +15,7 @@
 
 @property float average;
 @property float variance;
+@property float standardDeviation;
 
 @property int injuryStatus; // 0 = Healthy, 1 = DTD, 2 = Out
 

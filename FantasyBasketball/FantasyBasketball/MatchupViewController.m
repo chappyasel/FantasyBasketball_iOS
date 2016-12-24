@@ -34,6 +34,8 @@
 
 @property FBWinProbablity *winProbability;
 
+@property BOOL tableViewShowingWinProbabilityStatistics;
+
 @end
 
 @implementation MatchupViewController
@@ -42,6 +44,7 @@
     [super viewDidLoad];
     self.title = @"Matchup";
     _handleError = NO;
+    self.tableViewShowingWinProbabilityStatistics = NO;
     self.cells = [[NSMutableArray alloc] init];
     [self setupTableView];
     [self setupBarCharts];
@@ -115,8 +118,13 @@
     self.team1Display3.text = [NSString stringWithFormat:@"%.0f",_winProbability.team1ProjScore];
     self.team2Display3.text = [NSString stringWithFormat:@"%.0f",_winProbability.team2ProjScore];
     if (_winProbability.team1WinPct > 50.0)
-        self.centerDisplay.text = [NSString stringWithFormat:@"⇦ %.1f%%",_winProbability.team1WinPct];
-    else     self.centerDisplay.text = [NSString stringWithFormat:@"%.1f%% ⇨",100-_winProbability.team1WinPct];
+         self.centerDisplay.text = [NSString stringWithFormat:@"⇦ %.1f%%",_winProbability.team1WinPct];
+    else self.centerDisplay.text = [NSString stringWithFormat:@"%.1f%% ⇨",100-_winProbability.team1WinPct];
+    if (!self.tableViewShowingWinProbabilityStatistics) {
+        self.tableViewShowingWinProbabilityStatistics = YES;
+        self.cells = [[NSMutableArray alloc] init];
+    }
+    [self.tableView reloadData];
 }
 
 - (void)loadPlayersWithCompletionBlock:(void (^)(bool success, NSString *firstTeamName)) completed {
@@ -365,7 +373,10 @@ NSTimer *updateTimer;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.expandSwitch.isOn) return 53; //dont forget to change at cellForRowAtIndexPath
+    if (self.expandSwitch.isOn) {
+        if (self.tableViewShowingWinProbabilityStatistics) return 70; //dont forget to change at cellForRowAtIndexPath
+        return 53;
+    }
     return 42.333;
 }
 
@@ -411,19 +422,31 @@ NSTimer *updateTimer;
     if (self.cells.count >= indexPath.row+indexPath.section*_numStartersTeam1+1) {
         MatchupPlayerCell *cell = self.cells[indexPath.row+indexPath.section*_numStartersTeam1];
         if (!cell) {
-            cell = [[MatchupPlayerCell alloc] initWithRightPlayer:rightPlayer leftPlayer:leftPlayer view:self expanded:self.expandSwitch.isOn size:CGSizeMake(self.tableView.frame.size.width, (self.expandSwitch.isOn) ? 53 : 42.333)];
+            cell = [[MatchupPlayerCell alloc] initWithRightPlayer:rightPlayer leftPlayer:leftPlayer view:self expanded:self.expandSwitch.isOn size:CGSizeMake(self.tableView.frame.size.width, (self.expandSwitch.isOn) ?
+                        (self.tableViewShowingWinProbabilityStatistics) ? 70 : 53 : 42.333)];
             cell.delegate = self;
             cell.index = (int)indexPath.row;
             [self.cells addObject:cell];
         }
         else [cell updateWithRightPlayer:rightPlayer leftPlayer:leftPlayer];
+        if (self.tableViewShowingWinProbabilityStatistics) {
+            FBWinProbablityPlayer *rP = self.winProbability.team2Players[cell.rightPlayer.fullName];
+            FBWinProbablityPlayer *lP = self.winProbability.team1Players[cell.leftPlayer.fullName];
+            [cell loadWinProbabilityRightPlayer:rP leftPlayer:lP];
+        }
         return cell;
     }
-    MatchupPlayerCell *cell = [[MatchupPlayerCell alloc] initWithRightPlayer:rightPlayer leftPlayer:leftPlayer view:self expanded:self.expandSwitch.isOn size:CGSizeMake(self.tableView.frame.size.width, (self.expandSwitch.isOn) ? 53 : 42.333)];
+    MatchupPlayerCell *cell = [[MatchupPlayerCell alloc] initWithRightPlayer:rightPlayer leftPlayer:leftPlayer view:self expanded:self.expandSwitch.isOn size:CGSizeMake(self.tableView.frame.size.width, (self.expandSwitch.isOn) ?
+            (self.tableViewShowingWinProbabilityStatistics) ? 70 : 53 : 42.333)];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.delegate = self;
     cell.index = (int)indexPath.row;
     [self.cells addObject:cell];
+    if (self.tableViewShowingWinProbabilityStatistics) {
+        FBWinProbablityPlayer *rP = self.winProbability.team2Players[cell.rightPlayer.fullName];
+        FBWinProbablityPlayer *lP = self.winProbability.team1Players[cell.leftPlayer.fullName];
+        [cell loadWinProbabilityRightPlayer:rP leftPlayer:lP];
+    }
     return cell;
 }
 
