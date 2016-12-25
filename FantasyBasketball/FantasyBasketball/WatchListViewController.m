@@ -54,7 +54,7 @@
     self.players = [[NSMutableArray alloc] init];
     for (NSString *name in self.watchList.playerArray) {
         NSDictionary *splitName = [FBPlayer separateFirstAndLastNameForString:name];
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/freeagency?leagueId=%@&seasonId=%@&context=freeagency&version=%@&avail=-1&search=%@&view=stats",self.session.leagueID,self.session.seasonID,_scoringPeriod,splitName[@"last"]]];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.com/fba/freeagency?leagueId=%@&seasonId=%@&context=freeagency&version=%@&avail=-1&search=%@&view=stats",self.session.leagueID,self.session.seasonID,_scoringPeriod,splitName[@"last"]]];
         NSData *html = [NSData dataWithContentsOfURL:url];
         TFHpple *parserR = [TFHpple hppleWithHTMLData:html];
         NSString *XpathQueryString = @"//table[@class='playerTableTable tableBody']/tr";

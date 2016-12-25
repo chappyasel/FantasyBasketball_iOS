@@ -34,7 +34,7 @@ int numSlots = 0;
         session.leagueID = 294156;
         session.teamID = 11;
         session.seasonID = 2015;
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/clubhouse?leagueId=%d&teamId=%d&seasonId=%d&version=today",session.leagueID,session.teamID,session.seasonID]];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.com/fba/clubhouse?leagueId=%d&teamId=%d&seasonId=%d&version=today",session.leagueID,session.teamID,session.seasonID]];
         NSData *html = [NSData dataWithContentsOfURL:url];
         TFHpple *parser = [TFHpple hppleWithHTMLData:html];
         NSString *XpathQueryString = @"//div[@class='playertablefiltersmenucontainer']/a";
@@ -89,7 +89,7 @@ int numSlots = 0;
 
 - (void)loadplayersMU {
     int numStarters1 = 0, numStarters2 = 0;
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/boxscorefull?leagueId=%d&teamId=%d&scoringPeriodId=%d&seasonId=%d&view=scoringperiod&version=full",session.leagueID,session.teamID,session.scoringPeriodID,session.seasonID]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.com/fba/boxscorefull?leagueId=%d&teamId=%d&scoringPeriodId=%d&seasonId=%d&view=scoringperiod&version=full",session.leagueID,session.teamID,session.scoringPeriodID,session.seasonID]];
     NSData *html = [NSData dataWithContentsOfURL:url];
     parser = [TFHpple hppleWithHTMLData:html];
     NSString *XpathQueryString = @"//table[@class='playerTableTable tableBody']/tr";

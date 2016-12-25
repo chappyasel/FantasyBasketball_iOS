@@ -162,7 +162,7 @@
 
 - (void)loadPlayerRanksWithCompletionBlock:(void (^)(void)) completed { //also includes injury, team
     FBSession *session = [FBSession fetchCurrentSession];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/freeagency?leagueId=%@&seasonId=%@&context=freeagency&version=%@&avail=-1&search=%@&view=research",session.leagueID,session.seasonID,@"null",self.playerLastName]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.com/fba/freeagency?leagueId=%@&seasonId=%@&context=freeagency&version=%@&avail=-1&search=%@&view=research",session.leagueID,session.seasonID,@"null",self.playerLastName]];
     NSData *html = [NSData dataWithContentsOfURL:url];
     TFHpple *parserR = [TFHpple hppleWithHTMLData:html];
     NSString *XpathQueryString = @"//table[@class='playerTableTable tableBody']/tr";

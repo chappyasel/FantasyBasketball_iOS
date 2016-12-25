@@ -95,7 +95,7 @@
 }
 
 - (void)loadplayersWithCompletionBlock:(void (^)(void)) completed {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/freeagency?leagueId=%@&seasonId=%@&context=freeagency&view=stats&version=%@&avail=%d&sortMap=%@&slotCategoryGroup=%@&search=%@&proTeamId=%d",self.session.leagueID,self.session.seasonID,_scoringPeriod,_availability,_sort,@"null",_searchText,_team]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.com/fba/freeagency?leagueId=%@&seasonId=%@&context=freeagency&view=stats&version=%@&avail=%d&sortMap=%@&slotCategoryGroup=%@&search=%@&proTeamId=%d",self.session.leagueID,self.session.seasonID,_scoringPeriod,_availability,_sort,@"null",_searchText,_team]];
     NSData *html = [NSData dataWithContentsOfURL:url];
     self.parser = [TFHpple hppleWithHTMLData:html];
     NSString *XpathQueryString = @"//table[@class='playerTableTable tableBody']/tr";

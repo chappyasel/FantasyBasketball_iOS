@@ -12,9 +12,12 @@
 
 @implementation FBWinProbablityPlayer
 
-- (void)addScore: (id)score {
-    if (!self.scores) self.scores = [[NSMutableArray alloc] init];
-    [self.scores addObject:score];
+- (void)addGame: (FBWinProbabilityGame *)game atIndex: (int)index {
+    if (!self.games) {
+        self.games = [[NSMutableArray alloc] init];
+        for (int i = 0; i < 7; i++) [self.games addObject:[NSNull null]];
+    }
+    [self.games replaceObjectAtIndex:index withObject:game];
 }
 
 - (void)loadPlayerWithName: (NSString *)name {
@@ -97,7 +100,7 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat: @"%@: %.1f %.1f scores: %@ today: %d %f injury: %d", self.lastName, self.average, self.variance, self.scores, self.gameToday, self.gameTodayProgress, self.injuryStatus];
+    return [NSString stringWithFormat: @"%@: %.1f %.1f scores: %@ injury: %d", self.lastName, self.average, self.variance, self.games, self.injuryStatus];
 }
 
 @end

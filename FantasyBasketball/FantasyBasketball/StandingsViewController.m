@@ -43,7 +43,7 @@
 - (void)loadLeagueStandingsWithCompletionBlock:(void (^)(void)) completed {
     self.standingTables = [[NSMutableArray alloc] init];
     self.teamStats = [[NSMutableArray alloc] init];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/standings?leagueId=%@&seasonId=%@",self.session.leagueID,self.session.seasonID]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.com/fba/standings?leagueId=%@&seasonId=%@",self.session.leagueID,self.session.seasonID]];
     NSError *error;
     NSData *html = [NSData dataWithContentsOfURL:url options:NSDataReadingMapped error:&error];
     if (error) NSLog(@"Standings error: %@",error);
@@ -55,7 +55,7 @@
         NSMutableArray *teams = [[NSMutableArray alloc] init];
         for (int t = 3; t < table.children.count; t++) {
             TFHppleElement *team = table.children[t];
-            NSString *link = [NSString stringWithFormat:@"%@%@",@"http://games.espn.go.com",team.firstChild.firstChild.attributes[@"href"]];
+            NSString *link = [NSString stringWithFormat:@"%@%@",@"http://games.espn.com",team.firstChild.firstChild.attributes[@"href"]];
             NSString *teamName = team.firstChild.content;
             NSArray *info = @[[team.children[1] content], [team.children[2] content],
                               [team.children[3] content], [team.children[5] content]];
@@ -67,7 +67,7 @@
     TFHppleElement *statTable = nodes[1];
     for (int i = 7; i <statTable.children.count; i+=2) {
         TFHppleElement *teamRow = statTable.children[i];
-        NSString *link = [NSString stringWithFormat:@"%@%@",@"http://games.espn.go.com",[teamRow.children[1] firstChild].attributes[@"href"]];
+        NSString *link = [NSString stringWithFormat:@"%@%@",@"http://games.espn.com",[teamRow.children[1] firstChild].attributes[@"href"]];
         NSString *teamName = [teamRow.children[1] content];
         NSArray *info = @[link, teamName, [teamRow.children[16] content], [teamRow.children[17] content], [teamRow.children[19] content]];
         NSArray *keys = @[@"link", @"name", @"pf", @"pa", @"moves"];

@@ -65,7 +65,7 @@
                 [self.tableView reloadData];
             });
         }];
-        [_winProbability loadComparisonWithUpdateBlock:^(int num, int total) {
+        [_winProbability loadProjectionsWithUpdateBlock:^(int num, int total) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (num == total) [self updateProjectionDisplay];
                 else self.centerDisplay.text = [NSString stringWithFormat:@"%.0f%%",(float)num/(float)total*100];
@@ -84,7 +84,7 @@
     }];
     dispatch_queue_t myQueue = dispatch_queue_create("My Queue",NULL);
     dispatch_async(myQueue, ^{
-        [_winProbability updateComparisonWithCompletionBlock:^{
+        [_winProbability updateProjectionsWithCompletionBlock:^{
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self updateProjectionDisplay];
             });
@@ -117,7 +117,6 @@
 }
 
 - (void)updateProjectionDisplay {
-    NSLog(@"%f %f",_winProbability.todayTeam1ProjScore,_winProbability.todayTeam2ProjScore);
     self.team1Display3.text = [NSString stringWithFormat:@"%.0f",_winProbability.team1ProjScore];
     self.team2Display3.text = [NSString stringWithFormat:@"%.0f",_winProbability.team2ProjScore];
     if (_winProbability.team1WinPct > 50.0)
@@ -132,7 +131,7 @@
 
 - (NSString *)matchupString {
     NSString *link = self.globalLink;
-    if (link == nil) link = [NSString stringWithFormat:@"http://games.espn.go.com/fba/boxscorefull?leagueId=%@&teamId=%@&seasonId=%@",self.session.leagueID,self.session.teamID,self.session.seasonID];
+    if (link == nil) link = [NSString stringWithFormat:@"http://games.espn.com/fba/boxscorefull?leagueId=%@&teamId=%@&seasonId=%@",self.session.leagueID,self.session.teamID,self.session.seasonID];
     else link = [link substringToIndex:[link rangeOfString:@"&scoringPeriodId"].location];
     return [NSString stringWithFormat:@"%@&scoringPeriodId=%d&view=scoringperiod&version=full",link,_scoringDay];
 }
@@ -198,7 +197,8 @@
         }
         else if (switchPoint != 0) switchValid = NO;
     }
-    for (int i = 0; i < switchPoint; i++) {
+    int len = (int)self.playersTeam1.count-switchPoint;
+    for (int i = 0; i < len; i++) {
         [self.playersTeam2 addObject:[self.playersTeam1 objectAtIndex:switchPoint]];
         [self.playersTeam1 removeObjectAtIndex:switchPoint];
     }
@@ -402,6 +402,7 @@
             if (player.isPlaying) tot2 += player.fantasyPoints;
         }
     }
+    [_winProbability setTodayProjectionsToDayWithLink:[self matchupString]];
     UILabel *leftStats = [[UILabel alloc] initWithFrame:CGRectMake(width/2-50, 0, 50, 40)];
     leftStats.text = [NSString stringWithFormat:@"%.0f",tot1];
     leftStats.textAlignment = NSTextAlignmentCenter;
@@ -409,7 +410,8 @@
     leftStats.textColor = [UIColor whiteColor];
     [cell addSubview:leftStats];
     UILabel *leftStats2 = [[UILabel alloc] initWithFrame:CGRectMake(width/2-100, 0, 50, 40)];
-    leftStats2.text = [NSString stringWithFormat:@"%.0f",_winProbability.todayTeam1ProjScore];
+    if (_winProbability.team1ProjScoreToday == 0) leftStats2.text = @"";
+    else leftStats2.text = [NSString stringWithFormat:@"%.0f",_winProbability.team1ProjScoreToday];
     leftStats2.textAlignment = NSTextAlignmentCenter;
     leftStats2.font = [UIFont boldSystemFontOfSize:15];
     leftStats2.textColor = [UIColor colorWithWhite:1 alpha:.7];
@@ -421,7 +423,8 @@
     rightStats.textColor = [UIColor whiteColor];
     [cell addSubview:rightStats];
     UILabel *rightStats2 = [[UILabel alloc] initWithFrame:CGRectMake(width/2+50, 0, 50, 40)];
-    rightStats2.text = [NSString stringWithFormat:@"%.0f",_winProbability.todayTeam2ProjScore];
+    if (_winProbability.team2ProjScoreToday == 0) rightStats2.text = @"";
+    else rightStats2.text = [NSString stringWithFormat:@"%.0f",_winProbability.team2ProjScoreToday];
     rightStats2.textAlignment = NSTextAlignmentCenter;
     rightStats2.font = [UIFont boldSystemFontOfSize:15];
     rightStats2.textColor = [UIColor colorWithWhite:1 alpha:.7];
@@ -518,9 +521,6 @@
     }
     self.cells = [[NSMutableArray alloc] init];
     [self refreshAsync];
-    [_winProbability loadTodayScoresForMatchupLink:[self matchupString] withCompletionBlock:^{
-        
-    }];
     [self fadeOutWithPickerView:pickerView];
 }
 

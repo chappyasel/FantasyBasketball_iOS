@@ -223,51 +223,61 @@
     if (!self.rightScores) {
         self.rightScores = [[NSMutableArray alloc] init];
         self.leftScores = [[NSMutableArray alloc] init];
-        for (int i = 0; i < wpLeftPlayer.scores.count; i++) {
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10+25*i, 50, 15, 15)];
-            label.textColor = [UIColor whiteColor];
+        for (int i = 0; i < wpLeftPlayer.games.count; i++) {
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10+20*i, 50, 15, 15)];
+            label.textColor = [UIColor grayColor];
             label.textAlignment = NSTextAlignmentCenter;
             label.font = [UIFont systemFontOfSize:8 weight:UIFontWeightSemibold];
             label.layer.cornerRadius = 7.5;
             label.clipsToBounds = YES;
+            label.text = @[@"M",@"T",@"W",@"T",@"F",@"S",@"S"][i];
             [self addSubview:label];
             [self.leftScores addObject:label];
         }
-        for (int i = 0; i < wpRightPlayer.scores.count; i++) {
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(self.size.width-25-25*i, 50, 15, 15)];
-            label.textColor = [UIColor whiteColor];
+        for (int i = 0; i < wpRightPlayer.games.count; i++) {
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(self.size.width-20*7-10+20*i, 50, 15, 15)];
+            label.textColor = [UIColor grayColor];
             label.textAlignment = NSTextAlignmentCenter;
             label.font = [UIFont systemFontOfSize:8 weight:UIFontWeightSemibold];
             label.layer.cornerRadius = 7.5;
             label.clipsToBounds = YES;
+            label.text = @[@"M",@"T",@"W",@"T",@"F",@"S",@"S"][i];
             [self addSubview:label];
             [self.rightScores addObject:label];
         }
     }
     for (int i = 0; i < self.rightScores.count; i++) {
-        if (wpRightPlayer.scores[i].class == [NSNull class]) self.rightScores[i].backgroundColor = [UIColor colorWithWhite:.8 alpha:1];
-        else {
-            float STDoff = (wpRightPlayer.scores[i].intValue-wpRightPlayer.average)/wpRightPlayer.standardDeviation;
-            //if (STDoff > 0)
-            //     self.rightScores[i].backgroundColor = [UIColor colorWithHue:91/360.0 saturation:1 brightness:.90-.2*STDoff alpha:1];
-            //else self.rightScores[i].backgroundColor = [UIColor colorWithHue:0/360.0 saturation:1 brightness:.90+.1*STDoff alpha:1];
-            if (STDoff > 0)
-                self.rightScores[i].backgroundColor = [UIColor colorWithHue:110/360.0 saturation:1 brightness:.6 alpha:MIN(1,.5+.3*STDoff)];
-            else self.rightScores[i].backgroundColor = [UIColor colorWithHue:0/360.0 saturation:1 brightness:.9 alpha:MIN(1,.5-.2*STDoff)];
-            self.rightScores[i].text = [NSString stringWithFormat:@"%d",wpRightPlayer.scores[i].intValue];
+        if ([wpRightPlayer.games[i] class] != [NSNull class])  {
+            self.rightScores[i].textColor = [UIColor whiteColor];
+            if (((FBWinProbabilityGame *)wpRightPlayer.games[i]).progress == 0)
+                self.rightScores[i].backgroundColor = [UIColor colorWithWhite:.8 alpha:1];
+            else {
+                float STDoff = (((FBWinProbabilityGame *)wpRightPlayer.games[i]).score-wpRightPlayer.average)/wpRightPlayer.standardDeviation;
+                //if (STDoff > 0)
+                //     self.rightScores[i].backgroundColor = [UIColor colorWithHue:91/360.0 saturation:1 brightness:.90-.2*STDoff alpha:1];
+                //else self.rightScores[i].backgroundColor = [UIColor colorWithHue:0/360.0 saturation:1 brightness:.90+.1*STDoff alpha:1];
+                if (STDoff > 0)
+                    self.rightScores[i].backgroundColor = [UIColor colorWithHue:110/360.0 saturation:1 brightness:.6 alpha:MIN(1,.5+.3*STDoff)];
+                else self.rightScores[i].backgroundColor = [UIColor colorWithHue:0/360.0 saturation:1 brightness:.9 alpha:MIN(1,.5-.2*STDoff)];
+                self.rightScores[i].text = [NSString stringWithFormat:@"%d",((FBWinProbabilityGame *)wpRightPlayer.games[i]).score];
+            }
         }
     }
     for (int i = 0; i < self.leftScores.count; i++) {
-        if (wpLeftPlayer.scores[i].class == [NSNull class]) self.leftScores[i].backgroundColor = [UIColor colorWithWhite:.8 alpha:1];
-        else {
-            float STDoff = (wpLeftPlayer.scores[i].intValue-wpLeftPlayer.average)/wpLeftPlayer.standardDeviation;
-            //if (STDoff > 0)
-            //    self.leftScores[i].backgroundColor = [UIColor colorWithHue:91/360.0 saturation:1 brightness:.9-.2*STDoff alpha:1];
-            //else self.leftScores[i].backgroundColor = [UIColor colorWithHue:0/360.0 saturation:1 brightness:.9+.1*STDoff alpha:1];
-            if (STDoff > 0)
-                self.leftScores[i].backgroundColor = [UIColor colorWithHue:110/360.0 saturation:1 brightness:.6 alpha:MIN(1,.5+.3*STDoff)];
-            else self.leftScores[i].backgroundColor = [UIColor colorWithHue:0/360.0 saturation:1 brightness:.9 alpha:MIN(1,.5-.2*STDoff)];
-            self.leftScores[i].text = [NSString stringWithFormat:@"%d",wpLeftPlayer.scores[i].intValue];
+        if ([wpLeftPlayer.games[i] class] != [NSNull class]) {
+            self.leftScores[i].textColor = [UIColor whiteColor];
+            if (((FBWinProbabilityGame *)wpLeftPlayer.games[i]).progress == 0)
+                self.leftScores[i].backgroundColor = [UIColor colorWithWhite:.8 alpha:1];
+            else {
+                float STDoff = (((FBWinProbabilityGame *)wpLeftPlayer.games[i]).score-wpLeftPlayer.average)/wpLeftPlayer.standardDeviation;
+                //if (STDoff > 0)
+                //    self.leftScores[i].backgroundColor = [UIColor colorWithHue:91/360.0 saturation:1 brightness:.9-.2*STDoff alpha:1];
+                //else self.leftScores[i].backgroundColor = [UIColor colorWithHue:0/360.0 saturation:1 brightness:.9+.1*STDoff alpha:1];
+                if (STDoff > 0)
+                    self.leftScores[i].backgroundColor = [UIColor colorWithHue:110/360.0 saturation:1 brightness:.6 alpha:MIN(1,.5+.3*STDoff)];
+                else self.leftScores[i].backgroundColor = [UIColor colorWithHue:0/360.0 saturation:1 brightness:.9 alpha:MIN(1,.5-.2*STDoff)];
+                self.leftScores[i].text = [NSString stringWithFormat:@"%d",((FBWinProbabilityGame *)wpLeftPlayer.games[i]).score];
+            }
 
         }
     }

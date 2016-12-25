@@ -14,14 +14,21 @@
 @property BOOL isUpdating;
 @property BOOL calcInProcess;
 
+@property int todayIndex;
+@property NSMutableArray<NSString *> *dayLinks;
+@property NSMutableArray<NSNumber *> *dayProjectionsTeam1;
+@property NSMutableArray<NSNumber *> *dayProjectionsTeam2;
+@property NSMutableArray<NSNumber *> *dayVariancesTeam1;
+@property NSMutableArray<NSNumber *> *dayVariancesTeam2;
+
 @end
 
 @implementation FBWinProbablity
 
-- (void)loadComparisonWithUpdateBlock: (void (^)(int num, int total))update {
-    self.isUpdating = NO;
+- (void)loadProjectionsWithUpdateBlock: (void (^)(int num, int total))update {
     if (self.calcInProcess) return;
     self.calcInProcess = YES;
+    self.isUpdating = NO;
     int __block numPlayersFinished = 0;
     int numPlayersAnticipated = 24; //12 players * 2
     int numStepsFinished = 0;
@@ -30,6 +37,7 @@
     
     self.team1Players = [[NSMutableDictionary alloc] init];
     self.team2Players = [[NSMutableDictionary alloc] init];
+    self.dayLinks = [[NSMutableArray alloc] init];
     
     NSURL *url = [NSURL URLWithString:self.matchupLink];
     NSError *error;
@@ -38,29 +46,21 @@
     TFHpple *parser = [TFHpple hppleWithHTMLData:html];
     NSArray *nodes = [parser searchWithXPathQuery:@"//div[@class='games-fullcol games-fullcol-extramargin']/div[@class='bodyCopy']"];
     NSArray *linkBar = [nodes[1] children];
-    NSMutableArray *links = [[NSMutableArray alloc] init];
-    int todayInsertion = 0, x = 0;
+    int x = 0;
     for (int i = 4; i < linkBar.count; i++) {
         TFHppleElement *element = linkBar[i];
         if (![element.content containsString:@"|"]) {
-            if ([element.content containsString:@"Today"]) todayInsertion = x;
-            else [links addObject:[element objectForKey:@"href"]];
+            if ([element.content containsString:@"Today"]) self.todayIndex = x;
+            else [self.dayLinks addObject:[element objectForKey:@"href"]];
             x++;
         }
     }
-    [links insertObject:self.matchupLink atIndex:todayInsertion];
+    [self.dayLinks insertObject:self.matchupLink atIndex:self.todayIndex];
     numStepsFinished ++;
     update(numPlayersFinished + numStepsFinished, numPlayersAnticipated + numStepsAnticipated);
     
-    self.todayTeam1ProjScore = 0;
-    self.todayTeam2ProjScore = 0;
-    for (NSString *l in links) {
-        [self loadMatchupLink:l withPlayerProcessedBlock:^(FBWinProbablityPlayer *player) {
-            if ([l isEqualToString:self.matchupLink]) {
-                if (player.teamNum == 1) self.todayTeam1ProjScore += player.average;
-                else                     self.todayTeam2ProjScore += player.average;
-            }
-        } playerLoadBlock:^{
+    for (NSString *l in self.dayLinks) {
+        [self loadMatchupLink:l withPlayerLoadBlock:^{
             numPlayersFinished = MIN(24, numPlayersFinished + 1);
             update(numPlayersFinished + numStepsFinished, numPlayersAnticipated + numStepsAnticipated);
         }];
@@ -74,33 +74,32 @@
     self.calcInProcess = NO;
 }
 
-- (void)updateComparisonWithCompletionBlock: (void (^)(void))completion { //assumes injuries, player means and variances are constant
+- (void)updateProjectionsWithCompletionBlock: (void (^)(void))completion { //assumes injuries, player means and variances are constant
     if (self.calcInProcess) return;
     self.calcInProcess = YES;
     self.isUpdating = YES;
-    self.todayTeam1ProjScore = 0;
-    self.todayTeam2ProjScore = 0;
-    [self loadMatchupLink:self.matchupLink withPlayerProcessedBlock:^(FBWinProbablityPlayer *player) {
-        if (player.teamNum == 1) self.todayTeam1ProjScore += player.average;
-        else                     self.todayTeam2ProjScore += player.average;
-    } playerLoadBlock:^{}];
+    [self loadMatchupLink:self.matchupLink withPlayerLoadBlock:^{}];
     [self calculateWinProbablity];
     completion();
     self.calcInProcess = NO;
 }
 
-- (void)loadTodayScoresForMatchupLink: (NSString *)link withCompletionBlock: (void (^)(void))completion {
-    self.todayTeam1ProjScore = 0;
-    self.todayTeam2ProjScore = 0;
-    [self loadMatchupLink:link withPlayerProcessedBlock:^(FBWinProbablityPlayer *player) {
-        if (player.teamNum == 1) self.todayTeam1ProjScore += player.average;
-        else                     self.todayTeam2ProjScore += player.average;
-    } playerLoadBlock:^{}];
-    completion();
+- (void)setTodayProjectionsToDayWithLink: (NSString *)link {
+    NSLog(@"%@",link);
+    NSLog(@"%@",self.dayLinks);
+    int index = (int)[self.dayLinks indexOfObject:link];
+    if (index == -1) {
+        self.team1ProjScoreToday = 0;
+        self.team2ProjScoreToday = 0;
+    }
+    else {
+        self.team1ProjScoreToday = self.dayProjectionsTeam1[index].floatValue;
+        self.team2ProjScoreToday = self.dayProjectionsTeam2[index].floatValue;
+    }
 }
 
-- (void)loadMatchupLink: (NSString *)link withPlayerProcessedBlock: (void (^)(FBWinProbablityPlayer *player))playerProcessed
-                                                   playerLoadBlock: (void (^)(void))playerLoad {
+- (void)loadMatchupLink: (NSString *)link withPlayerLoadBlock: (void (^)(void))playerLoad {
+    int index = (int)[self.dayLinks indexOfObject:link];
     NSURL *url = [NSURL URLWithString:link];
     NSError *error;
     NSData *html = [NSData dataWithContentsOfURL:url options:NSDataReadingMapped error:&error];
@@ -119,7 +118,6 @@
             NSArray <TFHppleElement *> *children = element.children;
             BOOL isStarting = (!([children[0].content isEqual:@"Bench"] || [children[0].content isEqual:@"IR"]));
             BOOL isPlaying = ![children[3].content isEqualToString:@""];
-            BOOL gameOver = [children[3].content containsString:@"L"] || [children[3].content containsString:@"W"];
             NSString *gameStatus = children[3].content;
             NSString *name = [children[1].children[0] content];
             int injuryStatus = 0;
@@ -127,7 +125,7 @@
                 if ([[children[1].children[2] content] containsString:@"O"]) injuryStatus = 2;
                 else injuryStatus = 1;
             }
-            NSNumber *fpts = [NSNumber numberWithInt:[children[18].content intValue]];
+            int fpts = [children[18].content intValue];
             if (switchValid) switchPoint ++;
             if (isPlaying && isStarting) {
                 FBWinProbablityPlayer *player;
@@ -141,89 +139,79 @@
                     playerLoad();
                 }
                 player = (switchValid) ? self.team1Players[name] : self.team2Players[name];
-                if (isPlaying && [link isEqualToString:self.matchupLink]) { //playing in a game today
-                    player.gameToday = YES;
-                    player.gameTodayScore = fpts.intValue;
-                    if (gameOver) player.gameTodayProgress = 1;
-                    else player.gameTodayProgress = [self progressForGameStatus:gameStatus];
-                }
-                if(!self.isUpdating) {
-                    if (gameOver) [player addScore:fpts];
-                    else [player addScore:[NSNull null]];
-                }
-                playerProcessed(player);
+                if(!self.isUpdating)
+                    [player addGame:[FBWinProbabilityGame gameWithScore:fpts gameStatus:gameStatus] atIndex:index];
             }
         }
         else if (switchPoint != 0) switchValid = NO;
     }
 }
 
-- (float)progressForGameStatus: (NSString *)status {
-    float progress = 0;
-    if      ([status containsString:@"Half"]) return .5;
-    if      ([status containsString:@"AM"] || [status containsString:@"PM"]) return 0;
-    if      ([status containsString:@"1st"]) progress += .0;
-    else if ([status containsString:@"2nd"]) progress += .25;
-    else if ([status containsString:@"3rd"]) progress += .50;
-    else                                     progress += .75; //OT handled appropriately due to 5:00 length
-    if ([status containsString:@"End"]) progress += .25;
-    else {
-        int loc = (int)[status rangeOfString:@":"].location;
-        float timeMinute = [[status substringWithRange:NSMakeRange(loc-2, 2)] intValue];
-        float timeSecond = [[status substringWithRange:NSMakeRange(loc+1, 2)] intValue];
-        progress += (1-timeMinute/12)/4;
-        progress += -timeSecond/60/12/4;
-    }
-    return MIN(1.0, progress);
-}
-
 - (void)calculateWinProbablity {
-    NSMutableDictionary <NSString *, NSNumber *> *team1 = [self statsForPlayerArray:[self.team1Players allValues]];
-    NSMutableDictionary <NSString *, NSNumber *> *team2 = [self statsForPlayerArray:[self.team2Players allValues]];
-    float sumMean = team1[@"total"].floatValue - team2[@"total"].floatValue;
-    float sumSTD = sqrt(team1[@"variance"].floatValue + team2[@"variance"].floatValue);
+    if (self.isUpdating) //recalculate 1 day
+        [self calculateStatsForDayIndex:self.todayIndex];
+    else { //calculate all days
+        self.dayProjectionsTeam1 = [[NSMutableArray alloc] initWithObjects:@0, @0, @0, @0, @0, @0, @0, nil];
+        self.dayProjectionsTeam2 = [[NSMutableArray alloc] initWithObjects:@0, @0, @0, @0, @0, @0, @0, nil];
+        self.dayVariancesTeam1 = [[NSMutableArray alloc] initWithObjects:@0, @0, @0, @0, @0, @0, @0, nil];
+        self.dayVariancesTeam2 = [[NSMutableArray alloc] initWithObjects:@0, @0, @0, @0, @0, @0, @0, nil];
+        for (int i = 0; i < 7; i++) [self calculateStatsForDayIndex:i];
+    }
+    self.team1ProjScore = 0;
+    self.team2ProjScore = 0;
+    float team1Variance = 0;
+    float team2Variance = 0;
+    for (int i = 0; i < 7; i++) {
+        self.team1ProjScore += self.dayProjectionsTeam1[i].floatValue;
+        self.team2ProjScore += self.dayProjectionsTeam2[i].floatValue;
+        team1Variance += self.dayVariancesTeam1[i].floatValue;
+        team2Variance += self.dayVariancesTeam2[i].floatValue;
+    }
+    float sumMean = self.team1ProjScore - self.team2ProjScore;
+    float sumSTD = sqrt(team1Variance + team2Variance);
     float chance = 0.5 * erfcf((sumMean/sumSTD) * M_SQRT1_2);
-    self.team1ProjScore = team1[@"total"].floatValue;
-    self.team2ProjScore = team2[@"total"].floatValue;
     self.team1WinPct = 100-chance*100;
     //NSLog(@"\nteam 1: %f \nteam 2: %f \nchance: %f",self.team1ProjScore,self.team2ProjScore,self.team1WinPct);
 }
 
-- (NSMutableDictionary *)statsForPlayerArray: (NSArray *)arr {
-    //NSLog(@"%@",arr);
-    float projTotal = 0; //if the whole week went as simulated
-    float total = 0; //results of this week combined with simulation of remaining scores
+- (void)calculateStatsForDayIndex: (int)index {
+    [self calculateStatsForTeamNumber:1 dayIndex:index];
+    [self calculateStatsForTeamNumber:2 dayIndex:index];
+}
+
+- (void)calculateStatsForTeamNumber: (int)num dayIndex: (int)index {
+    NSArray *arr = (num == 1)? [self.team1Players allValues] : [self.team2Players allValues];
+    float total = 0;
     float variance = 0;
     for(FBWinProbablityPlayer *player in arr) {
-        BOOL DTDValid = YES;
-        BOOL gameTodayValid = YES;
-        for (NSNumber *score in player.scores) {
-            projTotal += player.average;
-            if (score.class == [NSNull class]) {
+        if ([player.games[index] class] != [NSNull class]) {
+            FBWinProbabilityGame *game = player.games[index];
+            if (game.progress == 1) //game over
+                total += game.score;
+            else { //game not started/in progress
                 if (player.injuryStatus == 0) {
-                    if (player.gameToday && gameTodayValid) {
-                        total += player.gameTodayScore + player.average * (1-player.gameTodayProgress);
-                        variance += player.variance * (1-player.gameTodayProgress);
-                    }
-                    else {
-                        total += player.average;
-                        variance += player.variance;
-                    }
+                    total += game.score + player.average * (1-game.progress);
+                    variance += player.variance * (1-game.progress);
                 }
-                else if (player.injuryStatus == 1 && !DTDValid) {
-                    total += player.average;
-                    variance += player.variance;
+                else if (game.score != 0) {
+                    total += game.score + player.average * (1-game.progress);
+                    variance += player.variance * (1-game.progress);
                 }
-                DTDValid = NO;
-                gameTodayValid = NO;
+                else if (player.injuryStatus == 1 && index != self.todayIndex) {
+                    total += game.score + player.average * (1-game.progress);
+                    variance += player.variance * (1-game.progress);
+                }
             }
-            else total += score.intValue;
         }
     }
-    return [[NSMutableDictionary alloc] initWithObjects:@[[NSNumber numberWithFloat:projTotal],
-                                                          [NSNumber numberWithFloat:total],
-                                                          [NSNumber numberWithFloat:variance]]
-                                                forKeys:@[@"projTotal", @"total", @"variance"]];
+    if (num == 1) {
+        self.dayProjectionsTeam1[index] = [NSNumber numberWithFloat:total];
+        self.dayVariancesTeam1[index] = [NSNumber numberWithFloat:variance];
+    }
+    else {
+        self.dayProjectionsTeam2[index] = [NSNumber numberWithFloat:total];
+        self.dayVariancesTeam2[index] = [NSNumber numberWithFloat:variance];
+    }
 }
 
 @end

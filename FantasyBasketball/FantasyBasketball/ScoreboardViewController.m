@@ -66,7 +66,7 @@
 
 - (void)loadLeagueScoreboardWithCompletionBlock:(void (^)(void)) completed {
     self.leagueScoreboard = [[NSMutableArray alloc] init];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/scoreboard?leagueId=%@&seasonId=%@",self.session.leagueID,self.session.seasonID]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.com/fba/scoreboard?leagueId=%@&seasonId=%@",self.session.leagueID,self.session.seasonID]];
     NSError *error;
     NSData *html = [NSData dataWithContentsOfURL:url options:NSDataReadingMapped error:&error];
     if (error) NSLog(@"Scoreboard error: %@",error);
@@ -94,7 +94,7 @@
             [muTeams addObject:teamDict];
         }
         NSString *link = [matchupElement.children[2] firstChild].firstChild.firstChild.attributes[@"href"];
-        link = [NSString stringWithFormat:@"%@%@",@"http://games.espn.go.com",link];
+        link = [NSString stringWithFormat:@"%@%@",@"http://games.espn.com",link];
         [self.leagueScoreboard addObject:[[NSDictionary alloc] initWithObjects:@[muTeams, link] forKeys:@[@"teams", @"link"]]];
     }
     completed();

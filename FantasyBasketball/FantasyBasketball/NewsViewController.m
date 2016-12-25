@@ -89,7 +89,7 @@
 - (void)loadTeamNewsWithCompletionBlock:(void (^)(int numCompleted)) completed {
     //load team
     NSMutableArray *names = [[NSMutableArray alloc] init];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/clubhouse?leagueId=%@&teamId=%@&seasonId=%@&version=today&scoringPeriodId=%@",self.session.leagueID,self.session.teamID,self.session.seasonID,self.session.scoringPeriodID]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.com/fba/clubhouse?leagueId=%@&teamId=%@&seasonId=%@&version=today&scoringPeriodId=%@",self.session.leagueID,self.session.teamID,self.session.seasonID,self.session.scoringPeriodID]];
     NSData *html = [NSData dataWithContentsOfURL:url];
     TFHpple *parser = [TFHpple hppleWithHTMLData:html];
     NSArray *nodes = [parser searchWithXPathQuery:@"//table[@class='playerTableTable tableBody']/tr"];
@@ -192,7 +192,7 @@
     NSDate *sevenDaysAgo = [endDate dateByAddingTimeInterval:-7*24*60*60];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyyMMdd"];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat: @"http://games.espn.go.com/fba/recentactivity?leagueId=%@&seasonId=%@&activityType=2&startDate=%@&endDate=%@&teamId=-1&tranType=-2",self.session.leagueID,self.session.seasonID,[dateFormatter stringFromDate:sevenDaysAgo],[dateFormatter stringFromDate:endDate]]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat: @"http://games.espn.com/fba/recentactivity?leagueId=%@&seasonId=%@&activityType=2&startDate=%@&endDate=%@&teamId=-1&tranType=-2",self.session.leagueID,self.session.seasonID,[dateFormatter stringFromDate:sevenDaysAgo],[dateFormatter stringFromDate:endDate]]];
     NSData *html = [NSData dataWithContentsOfURL:url];
     TFHpple *parser = [TFHpple hppleWithHTMLData:html];
     NSArray <TFHppleElement *> *transactions = [parser searchWithXPathQuery:@"//table[@class='tableBody']/tr"];
@@ -211,7 +211,7 @@
         action = [action stringByReplacingOccurrencesOfString:@"  " withString:@" - "]; //need to make this work
         NSString *detail = ((TFHppleElement *)transaction.children[2]).content;
         NSString *link = ((TFHppleElement *)transaction.children[3]).firstChild.attributes[@"href"];
-        link = [NSString stringWithFormat:@"%@%@",@"http://games.espn.go.com",link];
+        link = [NSString stringWithFormat:@"%@%@",@"http://games.espn.com",link];
         [self.transactions addObject:[[NSDictionary alloc] initWithObjects:@[date, action, detail, link, image] forKeys:@[@"date",@"title",@"text",@"link",@"image"]]];
     }
     completed();

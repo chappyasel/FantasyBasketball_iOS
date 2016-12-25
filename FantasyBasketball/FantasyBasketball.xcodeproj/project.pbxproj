@@ -70,6 +70,7 @@
 		F9947F6A1B66A44E008F9B70 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9947F691B66A44E008F9B70 /* CoreGraphics.framework */; };
 		F9947F6C1B66A456008F9B70 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9947F6B1B66A456008F9B70 /* UIKit.framework */; };
 		F9947F6E1B66A45F008F9B70 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9947F6D1B66A45F008F9B70 /* Foundation.framework */; };
+		F9AAF19A1E0F5B4200A0C065 /* FBWinProbabilityGame.m in Sources */ = {isa = PBXBuildFile; fileRef = F9AAF1991E0F5B4200A0C065 /* FBWinProbabilityGame.m */; };
 		F9CA8B3A1C07A66600771533 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9CA8B391C07A66600771533 /* WebKit.framework */; };
 		F9D7023C1A9F678000AAEB18 /* PlayerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9D7023B1A9F678000AAEB18 /* PlayerCell.m */; };
 		F9E5F20E1BEEAC04003E8CAA /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9E5F20D1BEEAC04003E8CAA /* NewsViewController.m */; };
@@ -208,6 +209,8 @@
 		F9947F691B66A44E008F9B70 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		F9947F6B1B66A456008F9B70 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F9947F6D1B66A45F008F9B70 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		F9AAF1981E0F5B4200A0C065 /* FBWinProbabilityGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBWinProbabilityGame.h; path = Classes/FBWinProbabilityGame.h; sourceTree = "<group>"; };
+		F9AAF1991E0F5B4200A0C065 /* FBWinProbabilityGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBWinProbabilityGame.m; path = Classes/FBWinProbabilityGame.m; sourceTree = "<group>"; };
 		F9CA8B391C07A66600771533 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		F9D7023A1A9F678000AAEB18 /* PlayerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayerCell.h; path = FantasyBasketball/PlayerCell.h; sourceTree = "<group>"; };
 		F9D7023B1A9F678000AAEB18 /* PlayerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayerCell.m; path = FantasyBasketball/PlayerCell.m; sourceTree = "<group>"; };
@@ -305,6 +308,8 @@
 				F93DAD021E08EC9500B5F5FF /* FBWinProbablity.m */,
 				F93DAD041E08F07100B5F5FF /* FBWinProbablityPlayer.h */,
 				F93DAD051E08F07100B5F5FF /* FBWinProbablityPlayer.m */,
+				F9AAF1981E0F5B4200A0C065 /* FBWinProbabilityGame.h */,
+				F9AAF1991E0F5B4200A0C065 /* FBWinProbabilityGame.m */,
 			);
 			name = WinProbablity;
 			sourceTree = "<group>";
@@ -809,6 +814,7 @@
 				F933F76E1A6B2585009E24D8 /* DailyLeadersViewController.m in Sources */,
 				F913152B1BEC2C3A007ADCD2 /* UIColor+FBColors.m in Sources */,
 				F97063801A6C98B800A50A43 /* PlayerViewController.m in Sources */,
+				F9AAF19A1E0F5B4200A0C065 /* FBWinProbabilityGame.m in Sources */,
 				F954E9911B65E52C000F323F /* BEMCircle.m in Sources */,
 				F9D7023C1A9F678000AAEB18 /* PlayerCell.m in Sources */,
 				F954E9831B65E501000F323F /* TFHppleElement.m in Sources */,

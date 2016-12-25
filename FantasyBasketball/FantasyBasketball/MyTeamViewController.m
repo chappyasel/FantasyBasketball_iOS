@@ -83,7 +83,7 @@
 - (void)loadplayersWithCompletionBlock:(void (^)(void)) completed {
     _numStarters = 0;
     NSString *link = self.globalLink;
-    if (link == nil) link = [NSString stringWithFormat:@"http://games.espn.go.com/fba/clubhouse?leagueId=%@&teamId=%@&seasonId=%@",self.session.leagueID,self.session.teamID,self.session.seasonID];
+    if (link == nil) link = [NSString stringWithFormat:@"http://games.espn.com/fba/clubhouse?leagueId=%@&teamId=%@&seasonId=%@",self.session.leagueID,self.session.teamID,self.session.seasonID];
     link = [NSString stringWithFormat:@"%@&version=%@&scoringPeriodId=%d",link,_scoringPeriod,_scoringDay];
     NSURL *url = [NSURL URLWithString:link];
     NSData *html = [NSData dataWithContentsOfURL:url];

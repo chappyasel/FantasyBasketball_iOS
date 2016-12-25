@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "FBWinProbabilityGame.h"
 
 @interface FBWinProbablityPlayer : NSObject
 
@@ -20,14 +21,10 @@
 
 @property int injuryStatus; // 0 = Healthy, 1 = DTD, 2 = Out
 
-@property BOOL gameToday;
-@property int gameTodayScore;
-@property float gameTodayProgress; // 0 - 1 (0 = game not started, 1 = game over)
-
-@property NSMutableArray<NSNumber *> *scores;
+@property NSMutableArray *games;
 
 - (void)loadPlayerWithName: (NSString *)name;
 
-- (void)addScore: (id)score;
+- (void)addGame: (FBWinProbabilityGame *)game atIndex: (int)index;
 
 @end

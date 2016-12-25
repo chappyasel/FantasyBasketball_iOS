@@ -91,7 +91,7 @@
     
     //OLD SCORINGPERIODID METHOD
     FBSession *session = result[0];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.go.com/fba/clubhouse?leagueId=%@&teamId=%@&seasonId=%@",session.leagueID,session.teamID,session.seasonID]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://games.espn.com/fba/clubhouse?leagueId=%@&teamId=%@&seasonId=%@",session.leagueID,session.teamID,session.seasonID]];
     NSError *errorHTML;
     NSData *html = [NSData dataWithContentsOfURL:url options:NSDataReadingMapped error:&errorHTML];
     if (errorHTML) NSLog(@"%@",errorHTML);
