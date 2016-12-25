@@ -17,7 +17,8 @@
     return game;
 }
 
-- (void)updateWithGameStatus: (NSString *)gameStatus {
+- (void)updateWithScore:(int)score gameStatus:(NSString *)gameStatus {
+    self.score = score;
     self.progress = [FBWinProbabilityGame progressForGameStatus:gameStatus];
 }
 

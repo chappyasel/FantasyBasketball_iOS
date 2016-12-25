@@ -85,17 +85,9 @@
 }
 
 - (void)setTodayProjectionsToDayWithLink: (NSString *)link {
-    NSLog(@"%@",link);
-    NSLog(@"%@",self.dayLinks);
     int index = (int)[self.dayLinks indexOfObject:link];
-    if (index == -1) {
-        self.team1ProjScoreToday = 0;
-        self.team2ProjScoreToday = 0;
-    }
-    else {
-        self.team1ProjScoreToday = self.dayProjectionsTeam1[index].floatValue;
-        self.team2ProjScoreToday = self.dayProjectionsTeam2[index].floatValue;
-    }
+    self.team1ProjScoreToday = (index == -1)? 0 : self.dayProjectionsTeam1[index].floatValue;
+    self.team2ProjScoreToday = (index == -1)? 0 : self.dayProjectionsTeam2[index].floatValue;
 }
 
 - (void)loadMatchupLink: (NSString *)link withPlayerLoadBlock: (void (^)(void))playerLoad {
@@ -139,8 +131,8 @@
                     playerLoad();
                 }
                 player = (switchValid) ? self.team1Players[name] : self.team2Players[name];
-                if(!self.isUpdating)
-                    [player addGame:[FBWinProbabilityGame gameWithScore:fpts gameStatus:gameStatus] atIndex:index];
+                if (self.isUpdating) [player.games[index] updateWithScore:fpts gameStatus:gameStatus];
+                else                 [player addGame:[FBWinProbabilityGame gameWithScore:fpts gameStatus:gameStatus] atIndex:index];
             }
         }
         else if (switchPoint != 0) switchValid = NO;

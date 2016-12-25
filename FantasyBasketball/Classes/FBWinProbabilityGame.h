@@ -15,7 +15,7 @@
 
 +(FBWinProbabilityGame *)gameWithScore: (int)score gameStatus: (NSString *)gameStatus;
 
-- (void)updateWithGameStatus: (NSString *)gameStatus;
+- (void)updateWithScore: (int)score gameStatus: (NSString *)gameStatus;
 
 + (float)progressForGameStatus: (NSString *)status;
 
