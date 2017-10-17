@@ -32,7 +32,7 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"FBSession" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
     NSError *error = nil;
-    [self resetSessionListWithRequest:fetchRequest]; //RESET SESSION LIST
+    //[self resetSessionListWithRequest:fetchRequest]; //RESET SESSION LIST
     NSMutableArray <FBSession *> *result = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error].mutableCopy;
     if (error) {
         NSLog(@"Unable to execute fetch request.");

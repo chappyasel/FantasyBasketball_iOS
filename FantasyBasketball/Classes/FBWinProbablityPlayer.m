@@ -20,7 +20,7 @@
     [self.games replaceObjectAtIndex:index withObject:game];
 }
 
-- (void)loadPlayerWithName: (NSString *)name {
+- (void)loadPlayerWithName:(NSString *)name completionBlock: (void (^)(void))completion {
     NSDictionary *playerName = [FBPlayer separateFirstAndLastNameForString:name];
     NSString *url = [NSString stringWithFormat:@"http://espn.go.com/nba/players/_/search/%@",[playerName[@"last"]stringByReplacingOccurrencesOfString:@" " withString:@"_"]];
     NSData *html = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
@@ -52,6 +52,7 @@
         self.standardDeviation = sqrtf(self.variance);
     }
     else NSLog(@"PLAYER NOT FOUND IN TEAM COMPARISON");
+    completion();
 }
 
 - (NSMutableArray<NSNumber *> *)fptsArrayWithParser: (TFHpple *) parser {

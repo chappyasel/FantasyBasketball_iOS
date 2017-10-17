@@ -55,7 +55,7 @@
 }
 
 - (void)beginAsyncLoading {
-    dispatch_queue_t myQueue = dispatch_queue_create("My Queue",NULL);
+    dispatch_queue_t myQueue = dispatch_queue_create("Queue",NULL);
     dispatch_async(myQueue, ^{
         [self loadPlayersWithCompletionBlock:^(bool success, NSString *firstTeamName) {
             dispatch_async(dispatch_get_main_queue(), ^{

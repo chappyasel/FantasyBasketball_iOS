@@ -15,6 +15,9 @@
 @property BOOL calcInProcess;
 
 @property int todayIndex;
+
+@property NSMutableArray<NSString *> *playersLoading;
+
 @property NSMutableArray<NSString *> *dayLinks;
 @property NSMutableArray<NSNumber *> *dayProjectionsTeam1;
 @property NSMutableArray<NSNumber *> *dayProjectionsTeam2;
@@ -30,15 +33,16 @@
     self.calcInProcess = YES;
     self.isUpdating = NO;
     int __block numPlayersFinished = 0;
-    int numPlayersAnticipated = 24; //12 players * 2
-    int numStepsFinished = 0;
+    int numPlayersAnticipated = 26; //13 players * 2
+    int __block numStepsFinished = 0;
     int numStepsAnticipated = 9; //1 linkBar, 7 days, 1 data
-    update(numPlayersFinished + numStepsFinished, numPlayersAnticipated + numStepsAnticipated);
+    update(0, numPlayersAnticipated + numStepsAnticipated);
     
     self.team1Players = [[NSMutableDictionary alloc] init];
     self.team2Players = [[NSMutableDictionary alloc] init];
     self.dayLinks = [[NSMutableArray alloc] init];
     
+    //DAY LINKS
     NSURL *url = [NSURL URLWithString:self.matchupLink];
     NSError *error;
     NSData *html = [NSData dataWithContentsOfURL:url options:NSDataReadingMapped error:&error];
@@ -57,39 +61,48 @@
     }
     [self.dayLinks insertObject:self.matchupLink atIndex:self.todayIndex];
     numStepsFinished ++;
-    update(numPlayersFinished + numStepsFinished, numPlayersAnticipated + numStepsAnticipated);
+    update(0 + numStepsFinished, numPlayersAnticipated + numStepsAnticipated);
     
+    int __block numDays = 0;
+    self.playersLoading = @[].mutableCopy;
     for (NSString *l in self.dayLinks) {
-        [self loadMatchupLink:l withPlayerLoadBlock:^{
-            numPlayersFinished = MIN(24, numPlayersFinished + 1);
-            update(numPlayersFinished + numStepsFinished, numPlayersAnticipated + numStepsAnticipated);
-        }];
-        numStepsFinished ++;
-        update(numPlayersFinished + numStepsFinished, numPlayersAnticipated + numStepsAnticipated);
+        dispatch_queue_t myQueue = dispatch_queue_create("Queue",NULL);
+        dispatch_async(myQueue, ^{
+            [self loadMatchupLink:l withPlayerLoadBlock:^{
+                numPlayersFinished = MIN(26, (int)self.team1Players.count + (int)self.team2Players.count);
+                update(numPlayersFinished + numStepsFinished, numPlayersAnticipated + numStepsAnticipated);
+            } completionBlock:^{
+                numStepsFinished ++;
+                update(numPlayersFinished + numStepsFinished, numPlayersAnticipated + numStepsAnticipated);
+                numDays ++;
+                if (numDays == self.dayLinks.count) {
+                    [self calculateWinProbablity];
+                    numStepsFinished ++;
+                    update(numPlayersAnticipated + numStepsAnticipated, numPlayersAnticipated + numStepsAnticipated);
+                    self.calcInProcess = NO;
+                }
+            }];
+        });
     }
-    [self calculateWinProbablity];
-    numStepsFinished ++;
-    update(numPlayersFinished + numStepsFinished, numPlayersAnticipated + numStepsAnticipated);
-    self.calcInProcess = NO;
 }
 
-- (void)updateProjectionsWithCompletionBlock: (void (^)(void))completion { //assumes injuries, player means and variances are constant
+- (void)updateProjectionsWithCompletionBlock:(void (^)(void))completion { //assumes injuries, player means and variances are constant
     if (self.calcInProcess) return;
     self.calcInProcess = YES;
     self.isUpdating = YES;
-    [self loadMatchupLink:self.matchupLink withPlayerLoadBlock:^{}];
+    [self loadMatchupLink:self.matchupLink withPlayerLoadBlock:nil completionBlock:nil];
     [self calculateWinProbablity];
     completion();
     self.calcInProcess = NO;
 }
 
-- (void)setTodayProjectionsToDayWithLink: (NSString *)link {
+- (void)setTodayProjectionsToDayWithLink:(NSString *)link {
     int index = (int)[self.dayLinks indexOfObject:link];
     self.team1ProjScoreToday = (index == -1)? 0 : self.dayProjectionsTeam1[index].floatValue;
     self.team2ProjScoreToday = (index == -1)? 0 : self.dayProjectionsTeam2[index].floatValue;
 }
 
-- (void)loadMatchupLink: (NSString *)link withPlayerLoadBlock: (void (^)(void))playerLoad {
+- (void)loadMatchupLink:(NSString *)link withPlayerLoadBlock:(void (^)(void))playerLoad completionBlock:(void (^)(void))completed {
     int index = (int)[self.dayLinks indexOfObject:link];
     NSURL *url = [NSURL URLWithString:link];
     NSError *error;
@@ -122,12 +135,25 @@
                 FBWinProbablityPlayer *player;
                 if (!self.team1Players[name] && !self.team2Players[name]) {
                     player = [[FBWinProbablityPlayer alloc] init];
-                    [player loadPlayerWithName:name];
-                    player.injuryStatus = injuryStatus;
-                    player.teamNum = (switchValid)? 1 : 2;
-                    if (switchValid) [self.team1Players setObject:player forKey:name];
-                    else [self.team2Players setObject:player forKey:name];
-                    playerLoad();
+                    if (![self.playersLoading containsObject:name]) {
+                        NSMutableArray *temp = self.playersLoading.mutableCopy;
+                        [temp addObject:name];
+                        self.playersLoading = temp;
+                        [player loadPlayerWithName:name completionBlock:^{
+                            player.injuryStatus = injuryStatus;
+                            player.teamNum = (switchValid)? 1 : 2;
+                            if (switchValid) [self.team1Players setObject:player forKey:name];
+                            else [self.team2Players setObject:player forKey:name];
+                            NSMutableArray *temp = self.playersLoading.mutableCopy;
+                            [temp removeObject:name];
+                            self.playersLoading = temp;
+                            playerLoad();
+                        }];
+                    }
+                    else
+                        while (true)
+                            if (![self.playersLoading containsObject:name])
+                                break;
                 }
                 player = (switchValid) ? self.team1Players[name] : self.team2Players[name];
                 if (self.isUpdating) [player.games[index] updateWithScore:fpts gameStatus:gameStatus];
@@ -136,6 +162,7 @@
         }
         else if (switchPoint != 0) switchValid = NO;
     }
+    completed();
 }
 
 - (void)calculateWinProbablity {
@@ -165,12 +192,12 @@
     //NSLog(@"\nteam 1: %f \nteam 2: %f \nchance: %f",self.team1ProjScore,self.team2ProjScore,self.team1WinPct);
 }
 
-- (void)calculateStatsForDayIndex: (int)index {
+- (void)calculateStatsForDayIndex:(int)index {
     [self calculateStatsForTeamNumber:1 dayIndex:index];
     [self calculateStatsForTeamNumber:2 dayIndex:index];
 }
 
-- (void)calculateStatsForTeamNumber: (int)num dayIndex: (int)index {
+- (void)calculateStatsForTeamNumber:(int)num dayIndex:(int)index {
     NSArray *arr = (num == 1)? [self.team1Players allValues] : [self.team2Players allValues];
     float total = 0;
     float variance = 0;
