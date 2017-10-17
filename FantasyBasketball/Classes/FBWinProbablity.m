@@ -25,7 +25,7 @@
 
 @implementation FBWinProbablity
 
-- (void)loadProjectionsWithUpdateBlock: (void (^)(int num, int total))update {
+- (void)loadProjectionsWithUpdateBlock:(void (^)(int num, int total))update {
     if (self.calcInProcess) return;
     self.calcInProcess = YES;
     self.isUpdating = NO;
@@ -67,7 +67,6 @@
         numStepsFinished ++;
         update(numPlayersFinished + numStepsFinished, numPlayersAnticipated + numStepsAnticipated);
     }
-    
     [self calculateWinProbablity];
     numStepsFinished ++;
     update(numPlayersFinished + numStepsFinished, numPlayersAnticipated + numStepsAnticipated);

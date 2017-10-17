@@ -64,12 +64,14 @@
                 [self loadScoresWithFirstTeamName:firstTeamName];
                 [self.tableView reloadData];
             });
-        }];
-        [_winProbability loadProjectionsWithUpdateBlock:^(int num, int total) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (num == total) [self updateProjectionDisplay];
-                else self.centerDisplay.text = [NSString stringWithFormat:@"%.0f%%",(float)num/(float)total*100];
-            });
+            if (success && !_handleError) {
+                [_winProbability loadProjectionsWithUpdateBlock:^(int num, int total) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        if (num == total) [self updateProjectionDisplay];
+                        else self.centerDisplay.text = [NSString stringWithFormat:@"%.0f%%",(float)num/(float)total*100];
+                    });
+                }];
+            }
         }];
     });
 }

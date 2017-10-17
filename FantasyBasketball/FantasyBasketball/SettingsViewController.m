@@ -113,7 +113,7 @@
     }
     FBSession *session = self.sessions[indexPath.row];
     cell.textLabel.text = [NSString stringWithFormat:@"%@",session.name];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"LeagueID: %@, TeamID: %@",session.leagueID,session.teamID];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"League: %@, Team: %@, Season: %@",session.leagueID,session.teamID, session.seasonID];
     if (session.leagueID.intValue == 0 || session.teamID.intValue == 0 || session.seasonID.intValue == 0) { //not a valid team
         cell.textLabel.text = [NSString stringWithFormat:@"%@ (Invalid)",cell.textLabel.text];
         cell.detailTextLabel.textColor = [UIColor FBRedColor];
@@ -147,6 +147,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     for (FBSession *session in self.sessions) session.isSelected = NO;
     self.sessions[indexPath.row].isSelected = YES;
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.chappyasel.fantasybasketball.sharedsession"];
+    [sharedDefaults setObject:@{@"leagueID": self.sessions[indexPath.row].leagueID,
+                                @"teamID"  : self.sessions[indexPath.row].teamID,
+                                @"seasonID": self.sessions[indexPath.row].seasonID} forKey:@"sharedSession"];
+    [sharedDefaults synchronize];
     NSManagedObjectContext *context = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
     [context save:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"SessionChangeNotification"

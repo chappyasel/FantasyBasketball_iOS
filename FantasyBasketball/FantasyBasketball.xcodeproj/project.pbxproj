@@ -7,7 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		62F83CE2C126DEFEF597543B /* libPods-FantasyBasketball.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EB74AB10145C6C0AE2BFA13 /* libPods-FantasyBasketball.a */; };
+		50ABFF8D1F956560007AB627 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F90461E01A6C2A29008A2C8E /* NotificationCenter.framework */; };
+		50ABFF911F956560007AB627 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50ABFF901F956560007AB627 /* TodayViewController.m */; };
+		50ABFF941F956560007AB627 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50ABFF921F956560007AB627 /* MainInterface.storyboard */; };
+		50ABFF981F956560007AB627 /* Fantasy Basketball.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 50ABFF8C1F956560007AB627 /* Fantasy Basketball.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		50ABFF9E1F956B06007AB627 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = F954E97D1B65E501000F323F /* TFHpple.m */; };
+		50ABFF9F1F956B10007AB627 /* FBSession.m in Sources */ = {isa = PBXBuildFile; fileRef = F991B1861BE6D1D5008A4EA6 /* FBSession.m */; };
+		50ABFFA21F956B5C007AB627 /* FBCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F991B1801BE6D0E0008A4EA6 /* FBCoreDataModel.xcdatamodeld */; };
+		50ABFFA51F957062007AB627 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = F954E97F1B65E501000F323F /* TFHppleElement.m */; };
+		50ABFFA61F957069007AB627 /* FBPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F9F8185A1B6ABA0700EE70E7 /* FBPlayer.m */; };
+		50ABFFA91F9570CE007AB627 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = F954E9811B65E501000F323F /* XPathQuery.m */; };
+		50ABFFAC1F957255007AB627 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50ABFFAB1F957255007AB627 /* libxml2.2.dylib */; };
+		68192259E82B91EEEE6CE6FC /* libPods-FantasyBasketball.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABC2724644021577544FAD08 /* libPods-FantasyBasketball.a */; };
+		9637B00BAC7B9F4A7E401A96 /* libPods-Fantasy Basketball.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB2534FC3C9F2BE9E0D3AC0 /* libPods-Fantasy Basketball.a */; };
+		DAD741FB8C0C8FA99F0EEA49 /* libPods-FantasyBasketballTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81AE1371DD205E740B5D5852 /* libPods-FantasyBasketballTests.a */; };
 		F904F3A71B6C665600B7BD37 /* FBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F904F3A61B6C665600B7BD37 /* FBViewController.m */; };
 		F904F3AC1B6C8E7B00B7BD37 /* MA@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F904F3A81B6C8E7B00B7BD37 /* MA@2x.png */; };
 		F904F3AD1B6C8E7B00B7BD37 /* MY@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F904F3A91B6C8E7B00B7BD37 /* MY@2x.png */; };
@@ -58,10 +71,6 @@
 		F96DAF461B6C2F5200648CCF /* FBPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F96DAF451B6C2F5200648CCF /* FBPickerView.xib */; };
 		F97063801A6C98B800A50A43 /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F970637F1A6C98B800A50A43 /* PlayerViewController.m */; };
 		F97063831A6C98D700A50A43 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F97063821A6C98D700A50A43 /* WebViewController.m */; };
-		F976584E1B65E69100ACC050 /* Fantasy Basketball.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = F97658491B65E69100ACC050 /* Fantasy Basketball.entitlements */; };
-		F976584F1B65E69100ACC050 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F976584A1B65E69100ACC050 /* Info.plist */; };
-		F97658501B65E69100ACC050 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F976584B1B65E69100ACC050 /* MainInterface.storyboard */; };
-		F97658511B65E69100ACC050 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F976584D1B65E69100ACC050 /* TodayViewController.m */; };
 		F9908DFF1AA250F0008DF9D8 /* MatchupPlayerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9908DFE1AA250F0008DF9D8 /* MatchupPlayerCell.m */; };
 		F991B1821BE6D0E0008A4EA6 /* FBCoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F991B1801BE6D0E0008A4EA6 /* FBCoreDataModel.xcdatamodeld */; };
 		F991B1871BE6D1D5008A4EA6 /* FBSession+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F991B1841BE6D1D5008A4EA6 /* FBSession+CoreDataProperties.m */; };
@@ -84,6 +93,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		50ABFF961F956560007AB627 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F96590801A676DB2005384D1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 50ABFF8B1F956560007AB627;
+			remoteInfo = "Fantasy Basketball";
+		};
 		F96590A51A676DB3005384D1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F96590801A676DB2005384D1 /* Project object */;
@@ -100,6 +116,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				50ABFF981F956560007AB627 /* Fantasy Basketball.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -107,9 +124,24 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		122CB8A91D2F72D65F0DA429 /* Pods-FantasyBasketball.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FantasyBasketball.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FantasyBasketball/Pods-FantasyBasketball.debug.xcconfig"; sourceTree = "<group>"; };
-		7A065097D2C2A9E707E3B632 /* Pods-FantasyBasketball.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FantasyBasketball.release.xcconfig"; path = "Pods/Target Support Files/Pods-FantasyBasketball/Pods-FantasyBasketball.release.xcconfig"; sourceTree = "<group>"; };
-		7EB74AB10145C6C0AE2BFA13 /* libPods-FantasyBasketball.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FantasyBasketball.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C13CAD95BCEDD1E38D717A1 /* Pods-FantasyBasketballTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FantasyBasketballTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FantasyBasketballTests/Pods-FantasyBasketballTests.debug.xcconfig"; sourceTree = "<group>"; };
+		46A9D1CA45B5CFD889DDE265 /* Pods-Fantasy Basketball.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fantasy Basketball.release.xcconfig"; path = "Pods/Target Support Files/Pods-Fantasy Basketball/Pods-Fantasy Basketball.release.xcconfig"; sourceTree = "<group>"; };
+		50ABFF8C1F956560007AB627 /* Fantasy Basketball.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Fantasy Basketball.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		50ABFF8F1F956560007AB627 /* TodayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodayViewController.h; sourceTree = "<group>"; };
+		50ABFF901F956560007AB627 /* TodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
+		50ABFF931F956560007AB627 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		50ABFF951F956560007AB627 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		50ABFFA31F956E89007AB627 /* FantasyBasketball.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FantasyBasketball.entitlements; sourceTree = "<group>"; };
+		50ABFFA41F956EA0007AB627 /* Fantasy Basketball.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Fantasy Basketball.entitlements"; sourceTree = "<group>"; };
+		50ABFFA71F957095007AB627 /* libxml2.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.2.tbd; path = usr/lib/libxml2.2.tbd; sourceTree = SDKROOT; };
+		50ABFFAB1F957255007AB627 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = ../../../../../../usr/lib/libxml2.2.dylib; sourceTree = "<group>"; };
+		54D846C71E2E1A6570CCC85D /* Pods-FantasyBasketballTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FantasyBasketballTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FantasyBasketballTests/Pods-FantasyBasketballTests.release.xcconfig"; sourceTree = "<group>"; };
+		722489F9C43580DF05AF8309 /* Pods-Fantasy Basketball.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fantasy Basketball.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Fantasy Basketball/Pods-Fantasy Basketball.debug.xcconfig"; sourceTree = "<group>"; };
+		81AE1371DD205E740B5D5852 /* libPods-FantasyBasketballTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FantasyBasketballTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9DB2534FC3C9F2BE9E0D3AC0 /* libPods-Fantasy Basketball.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Fantasy Basketball.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABC2724644021577544FAD08 /* libPods-FantasyBasketball.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FantasyBasketball.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BFB6DC3A6ECAE8D4487F85DC /* Pods-FantasyBasketball.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FantasyBasketball.release.xcconfig"; path = "Pods/Target Support Files/Pods-FantasyBasketball/Pods-FantasyBasketball.release.xcconfig"; sourceTree = "<group>"; };
+		EEBECDFE64BEDB4E46B7C20B /* Pods-FantasyBasketball.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FantasyBasketball.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FantasyBasketball/Pods-FantasyBasketball.debug.xcconfig"; sourceTree = "<group>"; };
 		F90461E01A6C2A29008A2C8E /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		F904F3A51B6C665600B7BD37 /* FBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBViewController.h; sourceTree = "<group>"; };
 		F904F3A61B6C665600B7BD37 /* FBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBViewController.m; sourceTree = "<group>"; };
@@ -192,11 +224,6 @@
 		F970637F1A6C98B800A50A43 /* PlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerViewController.m; sourceTree = "<group>"; };
 		F97063811A6C98D600A50A43 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		F97063821A6C98D700A50A43 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
-		F97658491B65E69100ACC050 /* Fantasy Basketball.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "Fantasy Basketball.entitlements"; path = "FB - Widget/Fantasy Basketball.entitlements"; sourceTree = SOURCE_ROOT; };
-		F976584A1B65E69100ACC050 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "FB - Widget/Info.plist"; sourceTree = SOURCE_ROOT; };
-		F976584B1B65E69100ACC050 /* MainInterface.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = MainInterface.storyboard; path = "FB - Widget/MainInterface.storyboard"; sourceTree = SOURCE_ROOT; };
-		F976584C1B65E69100ACC050 /* TodayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TodayViewController.h; path = "FB - Widget/TodayViewController.h"; sourceTree = SOURCE_ROOT; };
-		F976584D1B65E69100ACC050 /* TodayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TodayViewController.m; path = "FB - Widget/TodayViewController.m"; sourceTree = SOURCE_ROOT; };
 		F9908DFD1AA250F0008DF9D8 /* MatchupPlayerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MatchupPlayerCell.h; path = FantasyBasketball/MatchupPlayerCell.h; sourceTree = "<group>"; };
 		F9908DFE1AA250F0008DF9D8 /* MatchupPlayerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MatchupPlayerCell.m; path = FantasyBasketball/MatchupPlayerCell.m; sourceTree = "<group>"; };
 		F991B1811BE6D0E0008A4EA6 /* FBCoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FBCoreDataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -232,6 +259,16 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		50ABFF891F956560007AB627 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50ABFFAC1F957255007AB627 /* libxml2.2.dylib in Frameworks */,
+				50ABFF8D1F956560007AB627 /* NotificationCenter.framework in Frameworks */,
+				9637B00BAC7B9F4A7E401A96 /* libPods-Fantasy Basketball.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F96590851A676DB2005384D1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -242,7 +279,7 @@
 				F9947F6C1B66A456008F9B70 /* UIKit.framework in Frameworks */,
 				F9947F6A1B66A44E008F9B70 /* CoreGraphics.framework in Frameworks */,
 				F96590CB1A67872E005384D1 /* libxml2.dylib in Frameworks */,
-				62F83CE2C126DEFEF597543B /* libPods-FantasyBasketball.a in Frameworks */,
+				68192259E82B91EEEE6CE6FC /* libPods-FantasyBasketball.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,17 +287,34 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAD741FB8C0C8FA99F0EEA49 /* libPods-FantasyBasketballTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2416B10074ECEB10A4B6055A /* Pods */ = {
+		50ABFF8E1F956560007AB627 /* Fantasy Basketball */ = {
 			isa = PBXGroup;
 			children = (
-				122CB8A91D2F72D65F0DA429 /* Pods-FantasyBasketball.debug.xcconfig */,
-				7A065097D2C2A9E707E3B632 /* Pods-FantasyBasketball.release.xcconfig */,
+				50ABFFA41F956EA0007AB627 /* Fantasy Basketball.entitlements */,
+				50ABFF8F1F956560007AB627 /* TodayViewController.h */,
+				50ABFF901F956560007AB627 /* TodayViewController.m */,
+				50ABFF921F956560007AB627 /* MainInterface.storyboard */,
+				50ABFF951F956560007AB627 /* Info.plist */,
+			);
+			path = "Fantasy Basketball";
+			sourceTree = "<group>";
+		};
+		9F4FCE3A2CD998F6E4EA72BE /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				722489F9C43580DF05AF8309 /* Pods-Fantasy Basketball.debug.xcconfig */,
+				46A9D1CA45B5CFD889DDE265 /* Pods-Fantasy Basketball.release.xcconfig */,
+				EEBECDFE64BEDB4E46B7C20B /* Pods-FantasyBasketball.debug.xcconfig */,
+				BFB6DC3A6ECAE8D4487F85DC /* Pods-FantasyBasketball.release.xcconfig */,
+				3C13CAD95BCEDD1E38D717A1 /* Pods-FantasyBasketballTests.debug.xcconfig */,
+				54D846C71E2E1A6570CCC85D /* Pods-FantasyBasketballTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -268,28 +322,19 @@
 		F90461DF1A6C2A29008A2C8E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				50ABFFAB1F957255007AB627 /* libxml2.2.dylib */,
+				50ABFFA71F957095007AB627 /* libxml2.2.tbd */,
 				F9CA8B391C07A66600771533 /* WebKit.framework */,
 				F9573F341B6BF3AA00AE4872 /* QuartzCore.framework */,
 				F9947F6D1B66A45F008F9B70 /* Foundation.framework */,
 				F9947F6B1B66A456008F9B70 /* UIKit.framework */,
 				F9947F691B66A44E008F9B70 /* CoreGraphics.framework */,
 				F90461E01A6C2A29008A2C8E /* NotificationCenter.framework */,
-				7EB74AB10145C6C0AE2BFA13 /* libPods-FantasyBasketball.a */,
+				9DB2534FC3C9F2BE9E0D3AC0 /* libPods-Fantasy Basketball.a */,
+				ABC2724644021577544FAD08 /* libPods-FantasyBasketball.a */,
+				81AE1371DD205E740B5D5852 /* libPods-FantasyBasketballTests.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		F90461E21A6C2A2A008A2C8E /* FB - Widget */ = {
-			isa = PBXGroup;
-			children = (
-				F97658491B65E69100ACC050 /* Fantasy Basketball.entitlements */,
-				F976584A1B65E69100ACC050 /* Info.plist */,
-				F976584B1B65E69100ACC050 /* MainInterface.storyboard */,
-				F976584C1B65E69100ACC050 /* TodayViewController.h */,
-				F976584D1B65E69100ACC050 /* TodayViewController.m */,
-			);
-			name = "FB - Widget";
-			path = "Fantasy Basketball";
 			sourceTree = "<group>";
 		};
 		F904F3B41B6C8FA600B7BD37 /* Left Menu */ = {
@@ -337,12 +382,12 @@
 			children = (
 				F965908A1A676DB2005384D1 /* FantasyBasketball */,
 				F9E4AE261B65515A006CFDE4 /* Third Party */,
-				F90461E21A6C2A2A008A2C8E /* FB - Widget */,
 				F9908E021AA26365008DF9D8 /* Images */,
 				F96590A71A676DB3005384D1 /* FantasyBasketballTests */,
+				50ABFF8E1F956560007AB627 /* Fantasy Basketball */,
 				F90461DF1A6C2A29008A2C8E /* Frameworks */,
 				F96590891A676DB2005384D1 /* Products */,
-				2416B10074ECEB10A4B6055A /* Pods */,
+				9F4FCE3A2CD998F6E4EA72BE /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -351,6 +396,7 @@
 			children = (
 				F96590881A676DB2005384D1 /* FantasyBasketball.app */,
 				F96590A41A676DB3005384D1 /* FantasyBasketballTests.xctest */,
+				50ABFF8C1F956560007AB627 /* Fantasy Basketball.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -365,7 +411,6 @@
 				F96590901A676DB2005384D1 /* AppDelegate.m */,
 				F991B1801BE6D0E0008A4EA6 /* FBCoreDataModel.xcdatamodeld */,
 				F965909B1A676DB3005384D1 /* Images.xcassets */,
-				F965909D1A676DB3005384D1 /* LaunchScreen.xib */,
 				F965908B1A676DB2005384D1 /* Supporting Files */,
 			);
 			path = FantasyBasketball;
@@ -374,6 +419,8 @@
 		F965908B1A676DB2005384D1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				50ABFFA31F956E89007AB627 /* FantasyBasketball.entitlements */,
+				F965909D1A676DB3005384D1 /* LaunchScreen.xib */,
 				F9DB2EF11B66A25E00B7AC82 /* FanstasyBaskeyballPrefixHeader.pch */,
 				F965908C1A676DB2005384D1 /* Info.plist */,
 				F965908D1A676DB2005384D1 /* main.m */,
@@ -623,21 +670,41 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F96590871A676DB2005384D1 /* FantasyBasketball */ = {
+		50ABFF8B1F956560007AB627 /* Fantasy Basketball */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F96590AE1A676DB3005384D1 /* Build configuration list for PBXNativeTarget "FantasyBasketball" */;
+			buildConfigurationList = 50ABFF991F956560007AB627 /* Build configuration list for PBXNativeTarget "Fantasy Basketball" */;
 			buildPhases = (
-				04ED10DE5FC832CF4675A9BE /* Check Pods Manifest.lock */,
-				F96590841A676DB2005384D1 /* Sources */,
-				F96590851A676DB2005384D1 /* Frameworks */,
-				F96590861A676DB2005384D1 /* Resources */,
-				F90461F01A6C2A2A008A2C8E /* Embed App Extensions */,
-				993FB9C4574F915447329B5C /* Copy Pods Resources */,
-				F4F18DA0C9BD944DEF6F6AEE /* Embed Pods Frameworks */,
+				5DFB05765C94A9B48D1EF7AB /* [CP] Check Pods Manifest.lock */,
+				50ABFF881F956560007AB627 /* Sources */,
+				50ABFF891F956560007AB627 /* Frameworks */,
+				50ABFF8A1F956560007AB627 /* Resources */,
+				F5531F127417CE2DD8A9B433 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+			);
+			name = "Fantasy Basketball";
+			productName = "Fantasy Basketball";
+			productReference = 50ABFF8C1F956560007AB627 /* Fantasy Basketball.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		F96590871A676DB2005384D1 /* FantasyBasketball */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F96590AE1A676DB3005384D1 /* Build configuration list for PBXNativeTarget "FantasyBasketball" */;
+			buildPhases = (
+				2A13267CE0221360FEAF24B4 /* [CP] Check Pods Manifest.lock */,
+				F96590841A676DB2005384D1 /* Sources */,
+				F96590851A676DB2005384D1 /* Frameworks */,
+				F96590861A676DB2005384D1 /* Resources */,
+				F90461F01A6C2A2A008A2C8E /* Embed App Extensions */,
+				2AF3A499F3647F00BCFCF97F /* [CP] Embed Pods Frameworks */,
+				8F8D86D6BA57D0FA1F385E66 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				50ABFF971F956560007AB627 /* PBXTargetDependency */,
 			);
 			name = FantasyBasketball;
 			productName = FantasyBasketball;
@@ -648,9 +715,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F96590B11A676DB3005384D1 /* Build configuration list for PBXNativeTarget "FantasyBasketballTests" */;
 			buildPhases = (
+				B23CEB55B69BD947A1BC25F3 /* [CP] Check Pods Manifest.lock */,
 				F96590A01A676DB3005384D1 /* Sources */,
 				F96590A11A676DB3005384D1 /* Frameworks */,
 				F96590A21A676DB3005384D1 /* Resources */,
+				132138A13CC89AB942759678 /* [CP] Embed Pods Frameworks */,
+				4D9322C0840C4BE4E61CE86E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -668,12 +738,27 @@
 		F96590801A676DB2005384D1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = CD;
 				TargetAttributes = {
+					50ABFF8B1F956560007AB627 = {
+						CreatedOnToolsVersion = 9.1;
+						DevelopmentTeam = Q82S7VERUD;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
 					F96590871A676DB2005384D1 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = AE4TCQ8Z49;
+						DevelopmentTeam = Q82S7VERUD;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					F96590A31A676DB3005384D1 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -696,11 +781,20 @@
 			targets = (
 				F96590871A676DB2005384D1 /* FantasyBasketball */,
 				F96590A31A676DB3005384D1 /* FantasyBasketballTests */,
+				50ABFF8B1F956560007AB627 /* Fantasy Basketball */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		50ABFF8A1F956560007AB627 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50ABFF941F956560007AB627 /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F96590861A676DB2005384D1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -714,8 +808,6 @@
 				F904F3B31B6C8E8100B7BD37 /* GR@2x.png in Resources */,
 				F95F53D21B6BFE5300CFF253 /* StadiumBlur.jpg in Resources */,
 				F9F9877C1C096A48007C3BE9 /* FBIcon.png in Resources */,
-				F976584E1B65E69100ACC050 /* Fantasy Basketball.entitlements in Resources */,
-				F97658501B65E69100ACC050 /* MainInterface.storyboard in Resources */,
 				F904F3AC1B6C8E7B00B7BD37 /* MA@2x.png in Resources */,
 				F904F3AF1B6C8E7B00B7BD37 /* SE@2x.png in Resources */,
 				F9EDB5131C097B84007E752F /* StadiumBlur2.jpg in Resources */,
@@ -727,7 +819,6 @@
 				F918BB151B6D344A00E927C4 /* basketball@2x.png in Resources */,
 				F93CC1621C0A55320078E5FA /* WL-On.png in Resources */,
 				F9528BBE1C06620D00B421DC /* ST@2x.png in Resources */,
-				F976584F1B65E69100ACC050 /* Info.plist in Resources */,
 				F965909C1A676DB3005384D1 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -742,44 +833,44 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		04ED10DE5FC832CF4675A9BE /* Check Pods Manifest.lock */ = {
+		132138A13CC89AB942759678 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FantasyBasketballTests/Pods-FantasyBasketballTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		993FB9C4574F915447329B5C /* Copy Pods Resources */ = {
+		2A13267CE0221360FEAF24B4 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FantasyBasketball/Pods-FantasyBasketball-resources.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		F4F18DA0C9BD944DEF6F6AEE /* Embed Pods Frameworks */ = {
+		2AF3A499F3647F00BCFCF97F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -787,9 +878,98 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FantasyBasketball/Pods-FantasyBasketball-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		4D9322C0840C4BE4E61CE86E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FantasyBasketballTests/Pods-FantasyBasketballTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5DFB05765C94A9B48D1EF7AB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		8F8D86D6BA57D0FA1F385E66 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FantasyBasketball/Pods-FantasyBasketball-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B23CEB55B69BD947A1BC25F3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F5531F127417CE2DD8A9B433 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Fantasy Basketball/Pods-Fantasy Basketball-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		50ABFF881F956560007AB627 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50ABFFA91F9570CE007AB627 /* XPathQuery.m in Sources */,
+				50ABFFA61F957069007AB627 /* FBPlayer.m in Sources */,
+				50ABFFA51F957062007AB627 /* TFHppleElement.m in Sources */,
+				50ABFF9F1F956B10007AB627 /* FBSession.m in Sources */,
+				50ABFFA21F956B5C007AB627 /* FBCoreDataModel.xcdatamodeld in Sources */,
+				50ABFF9E1F956B06007AB627 /* TFHpple.m in Sources */,
+				50ABFF911F956560007AB627 /* TodayViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F96590841A676DB2005384D1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -820,7 +1000,6 @@
 				F954E9831B65E501000F323F /* TFHppleElement.m in Sources */,
 				F96590B61A6773E8005384D1 /* MyTeamViewController.m in Sources */,
 				F93DAD031E08EC9500B5F5FF /* FBWinProbablity.m in Sources */,
-				F97658511B65E69100ACC050 /* TodayViewController.m in Sources */,
 				F904F3A71B6C665600B7BD37 /* FBViewController.m in Sources */,
 				F937FCFE1C0BAE7A002D545E /* FBNewsSelectorView.m in Sources */,
 				F954E9941B65E52C000F323F /* BEMSimpleLineGraphView.m in Sources */,
@@ -850,6 +1029,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		50ABFF971F956560007AB627 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 50ABFF8B1F956560007AB627 /* Fantasy Basketball */;
+			targetProxy = 50ABFF961F956560007AB627 /* PBXContainerItemProxy */;
+		};
 		F96590A61A676DB3005384D1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F96590871A676DB2005384D1 /* FantasyBasketball */;
@@ -858,6 +1042,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		50ABFF921F956560007AB627 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				50ABFF931F956560007AB627 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 		F96590981A676DB3005384D1 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -877,6 +1069,101 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		50ABFF9A1F956560007AB627 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 722489F9C43580DF05AF8309 /* Pods-Fantasy Basketball.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Fantasy Basketball/Fantasy Basketball.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = Q82S7VERUD;
+				ENABLE_ON_DEMAND_RESOURCES = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/FrameAccessor\"",
+					"\"${PODS_ROOT}/Headers/Public/GraphKit\"",
+					"\"${PODS_ROOT}/Headers/Public/JBChartView\"",
+					"\"${PODS_ROOT}/Headers/Public/MKFoundationKit\"",
+					"\"${PODS_ROOT}/Headers/Public/RESideMenu\"",
+					"\"${PODS_ROOT}/Headers/Public/ZFDragableModalTransition\"",
+					"$(SDKROOT)/usr/include/libxml2",
+				);
+				INFOPLIST_FILE = "Fantasy Basketball/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chappyasel.fantasybasketball.Fantasy-Basketball";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		50ABFF9B1F956560007AB627 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 46A9D1CA45B5CFD889DDE265 /* Pods-Fantasy Basketball.release.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Fantasy Basketball/Fantasy Basketball.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = Q82S7VERUD;
+				ENABLE_ON_DEMAND_RESOURCES = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/FrameAccessor\"",
+					"\"${PODS_ROOT}/Headers/Public/GraphKit\"",
+					"\"${PODS_ROOT}/Headers/Public/JBChartView\"",
+					"\"${PODS_ROOT}/Headers/Public/MKFoundationKit\"",
+					"\"${PODS_ROOT}/Headers/Public/RESideMenu\"",
+					"\"${PODS_ROOT}/Headers/Public/ZFDragableModalTransition\"",
+					"$(SDKROOT)/usr/include/libxml2",
+				);
+				INFOPLIST_FILE = "Fantasy Basketball/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chappyasel.fantasybasketball.Fantasy-Basketball";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		F96590AC1A676DB3005384D1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -885,14 +1172,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -930,14 +1223,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -962,22 +1261,24 @@
 		};
 		F96590AF1A676DB3005384D1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 122CB8A91D2F72D65F0DA429 /* Pods-FantasyBasketball.debug.xcconfig */;
+			baseConfigurationReference = EEBECDFE64BEDB4E46B7C20B /* Pods-FantasyBasketball.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = FantasyBasketball/FantasyBasketball.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = Q82S7VERUD;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "/Users/chappysthebest1/Desktop/Github Repos/FantasyBasketball_iOS/FantasyBasketball/FantasyBasketball/FanstasyBaskeyballPrefixHeader.pch";
+				GCC_PREFIX_HEADER = "/Users/chappyasel/Desktop/Github Repos/FantasyBasketball_iOS/FantasyBasketball/FantasyBasketball/FanstasyBaskeyballPrefixHeader.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SDKROOT)/usr/include/libxml2",
 				);
 				INFOPLIST_FILE = FantasyBasketball/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "CDdesigns.FantasyBasketball.Fantasy-Basketball";
+				PRODUCT_BUNDLE_IDENTIFIER = com.chappyasel.fantasybasketball;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
@@ -986,23 +1287,25 @@
 		};
 		F96590B01A676DB3005384D1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7A065097D2C2A9E707E3B632 /* Pods-FantasyBasketball.release.xcconfig */;
+			baseConfigurationReference = BFB6DC3A6ECAE8D4487F85DC /* Pods-FantasyBasketball.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = FantasyBasketball/FantasyBasketball.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = Q82S7VERUD;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "/Users/chappysthebest1/Desktop/Github Repos/FantasyBasketball_iOS/FantasyBasketball/FantasyBasketball/FanstasyBaskeyballPrefixHeader.pch";
+				GCC_PREFIX_HEADER = "/Users/chappyasel/Desktop/Github Repos/FantasyBasketball_iOS/FantasyBasketball/FantasyBasketball/FanstasyBaskeyballPrefixHeader.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SDKROOT)/usr/include/libxml2",
 				);
 				INFOPLIST_FILE = FantasyBasketball/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "CDdesigns.FantasyBasketball.Fantasy-Basketball";
+				PRODUCT_BUNDLE_IDENTIFIER = com.chappyasel.fantasybasketball;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
@@ -1011,6 +1314,7 @@
 		};
 		F96590B21A676DB3005384D1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C13CAD95BCEDD1E38D717A1 /* Pods-FantasyBasketballTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1031,6 +1335,7 @@
 		};
 		F96590B31A676DB3005384D1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 54D846C71E2E1A6570CCC85D /* Pods-FantasyBasketballTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1048,6 +1353,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		50ABFF991F956560007AB627 /* Build configuration list for PBXNativeTarget "Fantasy Basketball" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50ABFF9A1F956560007AB627 /* Debug */,
+				50ABFF9B1F956560007AB627 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F96590831A676DB2005384D1 /* Build configuration list for PBXProject "FantasyBasketball" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

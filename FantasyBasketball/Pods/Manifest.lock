@@ -5,14 +5,12 @@ PODS:
     - MKFoundationKit/NSArray (~> 1.2.2)
   - JBChartView (2.8.16)
   - MKFoundationKit/NSArray (1.2.3)
-  - PocketSVG (0.7)
   - RESideMenu (4.0.7)
   - ZFDragableModalTransition (0.5.1)
 
 DEPENDENCIES:
   - GraphKit
   - JBChartView
-  - PocketSVG
   - RESideMenu
   - ZFDragableModalTransition
 
@@ -21,8 +19,9 @@ SPEC CHECKSUMS:
   GraphKit: e2336bed87d9313020af525dedbca54b62e93533
   JBChartView: 8e65b7fbb4e7f1f2c0197575734fce4af1c19e17
   MKFoundationKit: 882d74557944790d4d9e172961ed71d6a66804b7
-  PocketSVG: e05e6b008c6232d7b6410bb1ff34db71957b776d
   RESideMenu: f24c508404b49c667344c54aba7e590883533958
   ZFDragableModalTransition: 048189eda437f91944ce6d5151618b8bf770196d
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: c340186934ad49ef154067103b6c3fd6fd7ae870
+
+COCOAPODS: 1.2.1
