@@ -474,7 +474,7 @@
 				F97303E01B655AC300193A1D /* Daily Leaders */,
 				F9E5F21A1BEEAE68003E8CAA /* Scoreboard */,
 				F9E5F2191BEEAE61003E8CAA /* Standings */,
-				F97303E21B655AD300193A1D /* Individual Player */,
+				F97303E21B655AD300193A1D /* Player Details */,
 				F97303E31B655ADC00193A1D /* Web Page */,
 				F904F3B41B6C8FA600B7BD37 /* Left Menu */,
 			);
@@ -528,13 +528,13 @@
 			name = Settings;
 			sourceTree = "<group>";
 		};
-		F97303E21B655AD300193A1D /* Individual Player */ = {
+		F97303E21B655AD300193A1D /* Player Details */ = {
 			isa = PBXGroup;
 			children = (
 				F970637E1A6C98B800A50A43 /* PlayerViewController.h */,
 				F970637F1A6C98B800A50A43 /* PlayerViewController.m */,
 			);
-			name = "Individual Player";
+			name = "Player Details";
 			sourceTree = "<group>";
 		};
 		F97303E31B655ADC00193A1D /* Web Page */ = {

@@ -19,9 +19,9 @@
 @property (nonatomic, strong) NSOperationQueue *imageOperationQueue;
 @property (nonatomic, strong) NSCache *imageCache;
 
-@property NSMutableArray *generalNews;
-@property NSMutableArray *transactions;
-@property NSMutableArray *playerNews; //team and WL
+@property (nonatomic) NSMutableArray *generalNews;
+@property (nonatomic) NSMutableArray *transactions;
+@property (nonatomic) NSMutableArray __block *playerNews; //team and WL
 
 @property int numTeamPlayersLoaded; //out of 13 (for section header)
 @property int numWLPlayersLoaded;
@@ -66,6 +66,7 @@
                 NSDate *date2 = d2[@"date"];
                 return [date2 compare:date1]; //newest first
             }]];
+            NSLog(@"%ld",self.playerNews.count);
             self.numTeamPlayersLoaded = numCompleted;
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.tableView reloadData];
@@ -101,25 +102,33 @@
             [names addObject:@[name[@"first"], name[@"last"]]];
         }
     }
-    int i = 0;
+    int __block i = 0;
     for (NSArray *name in names) {
-        [self.playerNews addObjectsFromArray:[self loadRotoworldWithName:name isOnWL:NO]];
-        i++;
-        completed(i);
+        dispatch_async(dispatch_queue_create("Queue",NULL), ^{
+            [self loadRotoworldWithName:name isOnWL:NO completionBlock:^(NSArray<NSDictionary *> *news) {
+                [self.playerNews addObjectsFromArray:news];
+                i++;
+                completed(i);
+            }];
+        });
     }
 }
 
-- (void)loadWLNewsWithCompletionBlock:(void (^)(int numCompleted)) completed {
-    int i = 0;
+- (void)loadWLNewsWithCompletionBlock:(void (^)(int numCompleted))completed {
+    int __block i = 0;
     for (NSString *nameString in self.watchList.playerArray) {
-        NSDictionary *name = [FBPlayer separateFirstAndLastNameForString:nameString];
-        [self.playerNews addObjectsFromArray:[self loadRotoworldWithName:@[name[@"first"], name[@"last"]] isOnWL:YES]];
-        i++;
-        completed(i);
+        dispatch_async(dispatch_queue_create("Queue",NULL), ^{
+            NSDictionary *name = [FBPlayer separateFirstAndLastNameForString:nameString];
+            [self loadRotoworldWithName:@[name[@"first"], name[@"last"]] isOnWL:YES completionBlock:^(NSArray<NSDictionary *> *news) {
+                [self.playerNews addObjectsFromArray:news];
+                i++;
+                completed(i);
+            }];
+        });
     }
 }
 
-- (NSArray <NSDictionary *> *)loadRotoworldWithName:(NSArray *)name isOnWL: (BOOL) isOnWL{
+- (void)loadRotoworldWithName:(NSArray *)name isOnWL:(BOOL)isOnWL completionBlock:(void (^)(NSArray <NSDictionary *> *news))completed {
     NSMutableArray <NSDictionary *> *news = [[NSMutableArray alloc] init];
     TFHpple *statParser = [[TFHpple alloc] initWithHTMLData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.rotoworld.com/content/playersearch.aspx?searchname=%@,%@&sport=nba",name[1],name[0]]]]];
     NSString *rotoworldLink = [[[statParser searchWithXPathQuery:@"//div[@class='moreplayernews']/a"] firstObject] objectForKey:@"href"];
@@ -154,7 +163,7 @@
         else [rotoPeice setObject:@0 forKey:@"isOnWL"];
         [news addObject:rotoPeice];
     }
-    return news;
+    completed(news);
 }
 
 - (void)loadGeneralFantasyNewsWithCompletionBlock:(void (^)(void)) completed {

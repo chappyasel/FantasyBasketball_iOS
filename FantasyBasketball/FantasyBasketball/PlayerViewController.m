@@ -68,7 +68,7 @@
 }
 
 - (void)beginAsyncLoading {
-    dispatch_queue_t myQueue = dispatch_queue_create("My Queue",NULL);
+    dispatch_queue_t myQueue = dispatch_queue_create("Queue",NULL);
     dispatch_async(myQueue, ^{
         [self loadParserWebpageWithCompletionBlock:^{
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -173,7 +173,7 @@
         if ([element objectForKey:@"id"]) {
             NSArray <TFHppleElement *> *children = element.children;
             bool playerNFound = [children[0].content rangeOfString:self.playerFirstName options:NSCaseInsensitiveSearch].location == NSNotFound;
-            if (!playerNFound) {
+            if (!playerNFound && children.count > 16) {
                 if (children[0].children.count > 2 && ![((TFHppleElement *)children[0].children[2]).tagName isEqualToString:@"a"]) //injury
                     self.playerInjury = [children[0].children[2] content];
                 NSString *teamPos = [children[0].children[1] content];
@@ -226,6 +226,10 @@
     self.rotoworld = [[NSMutableArray alloc] init];
     TFHpple *statParser = [[TFHpple alloc] initWithHTMLData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.rotoworld.com/content/playersearch.aspx?searchname=%@,%@&sport=nba",self.playerLastName,self.playerFirstName]]]];
     NSString *rotoworldLink = [[[statParser searchWithXPathQuery:@"//div[@class='moreplayernews']/a"] firstObject] objectForKey:@"href"];
+    if (!rotoworldLink) {
+        statParser = [[TFHpple alloc] initWithHTMLData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.rotoworld.com/content/playersearch.aspx?searchname=%@&sport=nba",self.playerLastName]]]];
+        rotoworldLink = [[[statParser searchWithXPathQuery:@"//div[@class='moreplayernews']/a"] firstObject] objectForKey:@"href"];
+    }
     TFHpple *rotoParser = [[TFHpple alloc] initWithHTMLData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.rotoworld.com%@",rotoworldLink]]]];
     NSArray *data = [rotoParser searchWithXPathQuery:@"//div[@class='RW_pn']/div[@class='pb']/div[@style='width:460px; float:left;']"];
     for (TFHppleElement *e in data) {
@@ -808,19 +812,21 @@ bool gameLogIsBasic = YES;
         label.font = [UIFont systemFontOfSize:15];
         label.textColor = [UIColor darkGrayColor];
         [cell addSubview:label];
-        for (int i = 0; i < 7; i++) {
-            UILabel *stats;
-            stats = [[UILabel alloc] initWithFrame:CGRectMake(90+i*(width-90)/7, 0, (width-90)/7, 30)];
-            if (i==0)      stats.text = [NSString stringWithFormat:@"%.1f",[season[4] floatValue]];
-            else if (i==1) stats.text = [NSString stringWithFormat:@"%.1f",[season[5] floatValue]];
-            else if (i==2) stats.text = [NSString stringWithFormat:@"%.1f",[season[12] floatValue]];
-            else if (i==3) stats.text = [NSString stringWithFormat:@"%.1f",[season[13] floatValue]];
-            else if (i==4) stats.text = [NSString stringWithFormat:@"%.1f",[season[14] floatValue]];
-            else if (i==5) stats.text = [NSString stringWithFormat:@"%.1f",[season[15] floatValue]];
-            else           stats.text = [NSString stringWithFormat:@"%.1f",[season[18] floatValue]];
-            stats.font = [UIFont systemFontOfSize:17];
-            stats.textAlignment = NSTextAlignmentCenter;
-            [cell addSubview:stats];
+        if (season.count > 18) {
+            for (int i = 0; i < 7; i++) {
+                UILabel *stats;
+                stats = [[UILabel alloc] initWithFrame:CGRectMake(90+i*(width-90)/7, 0, (width-90)/7, 30)];
+                if (i==0)      stats.text = [NSString stringWithFormat:@"%.1f",[season[4] floatValue]];
+                else if (i==1) stats.text = [NSString stringWithFormat:@"%.1f",[season[5] floatValue]];
+                else if (i==2) stats.text = [NSString stringWithFormat:@"%.1f",[season[12] floatValue]];
+                else if (i==3) stats.text = [NSString stringWithFormat:@"%.1f",[season[13] floatValue]];
+                else if (i==4) stats.text = [NSString stringWithFormat:@"%.1f",[season[14] floatValue]];
+                else if (i==5) stats.text = [NSString stringWithFormat:@"%.1f",[season[15] floatValue]];
+                else           stats.text = [NSString stringWithFormat:@"%.1f",[season[18] floatValue]];
+                stats.font = [UIFont systemFontOfSize:17];
+                stats.textAlignment = NSTextAlignmentCenter;
+                [cell addSubview:stats];
+            }
         }
         return cell;
     }
@@ -834,7 +840,7 @@ bool gameLogIsBasic = YES;
         //season: year team gp gs fpts mpg fgm fga 3pm 3pa ftm fta rpg apg bpg spg pfpg topg ppg
         NSMutableArray *season;
         if (indexPath.row == 0) season = self.stats.lastObject;
-        else {
+        else if (self.stats.count) {
             season = [[NSMutableArray alloc] initWithObjects:@"", @"", @0, @0, nil];
             for (int i = 4; i < [self.stats.firstObject count]; i++) {
                 float sum = 0;
@@ -875,7 +881,7 @@ bool gameLogIsBasic = YES;
         //game: date game fpts min fgm fga 3pm 3pa ftm fta reb ast blk stl pf to pts
         NSMutableArray *game = self.games[indexPath.row];
         if (gameLogIsBasic) {
-            if (game != nil) {
+            if (game != nil && game.count > 16) {
                 for (int i = 0; i < 8; i++) {
                     UILabel *stats;
                     if (i==0) stats = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width*.17, height)];
@@ -926,8 +932,8 @@ bool gameLogIsBasic = YES;
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
         cell = nil;
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MyIdentifier];
-        NSMutableArray *game = self.games[indexPath.row];
-        if (game!= nil) {
+        NSMutableArray *game = (self.games.count > indexPath.row) ? self.games[indexPath.row] : nil;
+        if (game != nil && game.count > 16) {
             for (int i = 0; i < 8; i++) {
                 UILabel *stats;
                 if (i==0) stats = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width*.17, 30)];
