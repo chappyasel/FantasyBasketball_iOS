@@ -18,7 +18,7 @@
 @property (nonatomic) FBPlayer *rightPlayer;
 @property (nonatomic) FBPlayer *leftPlayer;
 
-- (instancetype) initWithRightPlayer:(FBPlayer *)rP leftPlayer:(FBPlayer *)lP view:(UIViewController *)superview expanded:(bool)expanded size: (CGSize) size;
+- (void)loadWithRightPlayer:(FBPlayer *)rP leftPlayer:(FBPlayer *)lP expanded:(bool)expanded;
 
 - (void)updateWithRightPlayer:(FBPlayer *)rP leftPlayer:(FBPlayer *)lP;
 

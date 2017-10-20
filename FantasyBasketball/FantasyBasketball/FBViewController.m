@@ -81,19 +81,11 @@
 }
 
 - (void)linkWithGameLink:(FBPlayer *)player {
-    WebViewController *modalVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"w"];
-    modalVC.modalPresentationStyle = UIModalPresentationCustom;
-    modalVC.link = player.gameLink;
-    self.animator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:modalVC];
-    self.animator.dragable = YES;
-    self.animator.bounces = YES;
-    self.animator.behindViewAlpha = 0.8;
-    self.animator.behindViewScale = 0.9;
-    self.animator.transitionDuration = 0.5;
-    self.animator.direction = ZFModalTransitonDirectionBottom;
-    [self.animator setContentScrollView:modalVC.webView.scrollView];
-    modalVC.transitioningDelegate = self.animator;
-    [self presentViewController:modalVC animated:YES completion:nil];
+    SFSafariViewController *svc = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:player.gameLink]];
+    svc.delegate = self;
+    svc.preferredBarTintColor = [UIColor whiteColor];
+    svc.preferredControlTintColor = [UIColor FBDarkOrangeColor];
+    [self presentViewController:svc animated:YES completion:nil];
 }
 
 - (void)togglePlayer:(FBPlayer *)player WLStatusToState:(BOOL)isOnWL {
@@ -133,6 +125,12 @@
 
 - (void)cancelButtonPressedInPickerView:(FBPickerView *)pickerView {
     
+}
+
+#pragma mark - SFSafariView delegate
+
+- (void)safariViewControllerDidFinish:(SFSafariViewController *)controller {
+    [self dismissViewControllerAnimated:true completion:nil];
 }
 
 #pragma mark - Navigation

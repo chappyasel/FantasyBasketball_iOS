@@ -54,33 +54,40 @@
         [sharedDefaults synchronize];
         
         FBSession *session2 = [NSEntityDescription insertNewObjectForEntityForName:@"FBSession" inManagedObjectContext:context];
-        session2.name = @"Squad Asel";
-        session2.leagueID = [NSNumber numberWithInt: 169843];
-        session2.teamID = [NSNumber numberWithInt: 3];
+        session2.name = @"Team Johnny";
+        session2.leagueID = [NSNumber numberWithInt: 186088];
+        session2.teamID = [NSNumber numberWithInt: 2];
         session2.seasonID = [NSNumber numberWithInt: 2018];
         session2.isSelected = NO;
         
         FBSession *session3 = [NSEntityDescription insertNewObjectForEntityForName:@"FBSession" inManagedObjectContext:context];
-        session3.name = @"Robot Computer";
+        session3.name = @"Team Bobby";
         session3.leagueID = [NSNumber numberWithInt: 186088];
-        session3.teamID = [NSNumber numberWithInt: 6];
+        session3.teamID = [NSNumber numberWithInt: 3];
         session3.seasonID = [NSNumber numberWithInt: 2018];
         session3.isSelected = NO;
         
         FBSession *session4 = [NSEntityDescription insertNewObjectForEntityForName:@"FBSession" inManagedObjectContext:context];
-        session4.name = @"Team Asel";
+        session4.name = @"Team Billy";
         session4.leagueID = [NSNumber numberWithInt: 186088];
-        session4.teamID = [NSNumber numberWithInt: 5];
+        session4.teamID = [NSNumber numberWithInt: 4];
         session4.seasonID = [NSNumber numberWithInt: 2018];
         session4.isSelected = NO;
         
         FBSession *session5 = [NSEntityDescription insertNewObjectForEntityForName:@"FBSession" inManagedObjectContext:context];
-        session5.name = @"Lob City";
+        session5.name = @"Team Paul";
         session5.leagueID = [NSNumber numberWithInt: 186088];
-        session5.teamID = [NSNumber numberWithInt: 2];
+        session5.teamID = [NSNumber numberWithInt: 5];
         session5.seasonID = [NSNumber numberWithInt: 2018];
         session5.isSelected = NO;
-        [result addObjectsFromArray:@[session1, session2, session3, session4, session5]];
+        
+        FBSession *session6 = [NSEntityDescription insertNewObjectForEntityForName:@"FBSession" inManagedObjectContext:context];
+        session6.name = @"Team Mary";
+        session6.leagueID = [NSNumber numberWithInt: 186088];
+        session6.teamID = [NSNumber numberWithInt: 6];
+        session6.seasonID = [NSNumber numberWithInt: 2018];
+        session6.isSelected = NO;
+        [result addObjectsFromArray:@[session1, session2, session3, session4, session5, session6]];
     }
     else {
         BOOL sessionIsSelected = NO;

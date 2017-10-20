@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		50003EC01F9970DF009D11B2 /* MatchupHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 50003EBF1F9970DF009D11B2 /* MatchupHeaderView.m */; };
+		50003EC21F9970E7009D11B2 /* MatchupHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50003EC11F9970E7009D11B2 /* MatchupHeaderView.xib */; };
+		50003EC51F997754009D11B2 /* MatchupPlayerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50003EC41F997754009D11B2 /* MatchupPlayerCell.xib */; };
+		50891CA31F9825F40073A482 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50891CA21F9825F40073A482 /* SafariServices.framework */; };
 		50ABFF8D1F956560007AB627 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F90461E01A6C2A29008A2C8E /* NotificationCenter.framework */; };
 		50ABFF911F956560007AB627 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50ABFF901F956560007AB627 /* TodayViewController.m */; };
 		50ABFF941F956560007AB627 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50ABFF921F956560007AB627 /* MainInterface.storyboard */; };
@@ -126,6 +130,11 @@
 /* Begin PBXFileReference section */
 		3C13CAD95BCEDD1E38D717A1 /* Pods-FantasyBasketballTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FantasyBasketballTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FantasyBasketballTests/Pods-FantasyBasketballTests.debug.xcconfig"; sourceTree = "<group>"; };
 		46A9D1CA45B5CFD889DDE265 /* Pods-Fantasy Basketball.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fantasy Basketball.release.xcconfig"; path = "Pods/Target Support Files/Pods-Fantasy Basketball/Pods-Fantasy Basketball.release.xcconfig"; sourceTree = "<group>"; };
+		50003EBE1F9970DF009D11B2 /* MatchupHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MatchupHeaderView.h; sourceTree = "<group>"; };
+		50003EBF1F9970DF009D11B2 /* MatchupHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MatchupHeaderView.m; sourceTree = "<group>"; };
+		50003EC11F9970E7009D11B2 /* MatchupHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MatchupHeaderView.xib; sourceTree = "<group>"; };
+		50003EC41F997754009D11B2 /* MatchupPlayerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MatchupPlayerCell.xib; sourceTree = "<group>"; };
+		50891CA21F9825F40073A482 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		50ABFF8C1F956560007AB627 /* Fantasy Basketball.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Fantasy Basketball.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		50ABFF8F1F956560007AB627 /* TodayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodayViewController.h; sourceTree = "<group>"; };
 		50ABFF901F956560007AB627 /* TodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
@@ -273,6 +282,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50891CA31F9825F40073A482 /* SafariServices.framework in Frameworks */,
 				F9CA8B3A1C07A66600771533 /* WebKit.framework in Frameworks */,
 				F9573F351B6BF3AA00AE4872 /* QuartzCore.framework in Frameworks */,
 				F9947F6E1B66A45F008F9B70 /* Foundation.framework in Frameworks */,
@@ -294,6 +304,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		50003EC31F9970FB009D11B2 /* MatchupHeaderView */ = {
+			isa = PBXGroup;
+			children = (
+				50003EBE1F9970DF009D11B2 /* MatchupHeaderView.h */,
+				50003EBF1F9970DF009D11B2 /* MatchupHeaderView.m */,
+				50003EC11F9970E7009D11B2 /* MatchupHeaderView.xib */,
+			);
+			name = MatchupHeaderView;
+			sourceTree = "<group>";
+		};
 		50ABFF8E1F956560007AB627 /* Fantasy Basketball */ = {
 			isa = PBXGroup;
 			children = (
@@ -322,6 +342,7 @@
 		F90461DF1A6C2A29008A2C8E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				50891CA21F9825F40073A482 /* SafariServices.framework */,
 				50ABFFAB1F957255007AB627 /* libxml2.2.dylib */,
 				50ABFFA71F957095007AB627 /* libxml2.2.tbd */,
 				F9CA8B391C07A66600771533 /* WebKit.framework */,
@@ -486,6 +507,7 @@
 			children = (
 				F933F76F1A6B5414009E24D8 /* MatchupViewController.h */,
 				F933F7701A6B5414009E24D8 /* MatchupViewController.m */,
+				50003EC31F9970FB009D11B2 /* MatchupHeaderView */,
 			);
 			name = Matchup;
 			sourceTree = "<group>";
@@ -576,6 +598,7 @@
 				F9D7023B1A9F678000AAEB18 /* PlayerCell.m */,
 				F9908DFD1AA250F0008DF9D8 /* MatchupPlayerCell.h */,
 				F9908DFE1AA250F0008DF9D8 /* MatchupPlayerCell.m */,
+				50003EC41F997754009D11B2 /* MatchupPlayerCell.xib */,
 				F9F9877D1C097268007C3BE9 /* ScoreboardCell.h */,
 				F9F9877E1C097268007C3BE9 /* ScoreboardCell.m */,
 				F937FCFB1C0BAE7A002D545E /* FBNewsSelectorView.h */,
@@ -799,6 +822,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50003EC51F997754009D11B2 /* MatchupPlayerCell.xib in Resources */,
 				F904F3B21B6C8E8100B7BD37 /* DL@2x.png in Resources */,
 				F965909A1A676DB3005384D1 /* Main.storyboard in Resources */,
 				F937FCFF1C0BAE7A002D545E /* FBNewsSelectorView.xib in Resources */,
@@ -813,6 +837,7 @@
 				F9EDB5131C097B84007E752F /* StadiumBlur2.jpg in Resources */,
 				F9528BB91C0661F500B421DC /* NE@2x.png in Resources */,
 				F904F3AD1B6C8E7B00B7BD37 /* MY@2x.png in Resources */,
+				50003EC21F9970E7009D11B2 /* MatchupHeaderView.xib in Resources */,
 				F904F3AE1B6C8E7B00B7BD37 /* PL@2x.png in Resources */,
 				F9528BBD1C06620D00B421DC /* SC@2x.png in Resources */,
 				F965909F1A676DB3005384D1 /* LaunchScreen.xib in Resources */,
@@ -1008,6 +1033,7 @@
 				F9E5F2151BEEAE4F003E8CAA /* ScoreboardViewController.m in Sources */,
 				F991B1821BE6D0E0008A4EA6 /* FBCoreDataModel.xcdatamodeld in Sources */,
 				F965908E1A676DB2005384D1 /* main.m in Sources */,
+				50003EC01F9970DF009D11B2 /* MatchupHeaderView.m in Sources */,
 				F954E9901B65E52C000F323F /* BEMAverageLine.m in Sources */,
 				F95F53E01B6C0FDE00CFF253 /* SettingsViewController.m in Sources */,
 				F9E5F20E1BEEAC04003E8CAA /* NewsViewController.m in Sources */,

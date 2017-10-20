@@ -13,11 +13,11 @@
 @implementation FBWinProbablityPlayer
 
 - (void)addGame: (FBWinProbabilityGame *)game atIndex: (int)index {
-    if (!self.games) {
-        self.games = [[NSMutableArray alloc] init];
-        for (int i = 0; i < 7; i++) [self.games addObject:[NSNull null]];
-    }
-    [self.games replaceObjectAtIndex:index withObject:game];
+    if (!self.games)
+        self.games = @[[NSNull null], [NSNull null], [NSNull null], [NSNull null],
+                       [NSNull null], [NSNull null], [NSNull null]].mutableCopy;
+    if (self.games.count > index) //Shouldnt ever be an error?
+        [self.games replaceObjectAtIndex:index withObject:game];
 }
 
 - (void)loadPlayerWithName:(NSString *)name completionBlock: (void (^)(void))completion {

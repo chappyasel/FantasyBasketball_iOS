@@ -270,7 +270,7 @@
 - (void)setupBarCharts {
     float width = self.scoreView.frame.size.width/2-15;
     self.barChartTeam1 = [[JBBarChartView alloc] init];
-    self.barChartTeam1.frame = CGRectMake(-width/8, 0, width, 104);
+    self.barChartTeam1.frame = CGRectMake(-width/8, 0, width, 90);
     self.barChartTeam1.dataSource = self;
     self.barChartTeam1.delegate = self;
     self.barChartTeam1.inverted = YES;
@@ -280,7 +280,7 @@
     [self.scoreView sendSubviewToBack:self.barChartTeam1];
     
     self.barChartTeam2 = [[JBBarChartView alloc] init];
-    self.barChartTeam2.frame = CGRectMake(width+2*15+width/8, 0, width, 104);
+    self.barChartTeam2.frame = CGRectMake(width+2*15+width/8, 0, width, 90);
     self.barChartTeam2.dataSource = self;
     self.barChartTeam2.delegate = self;
     self.barChartTeam2.inverted = YES;
@@ -296,34 +296,13 @@
 }
 
 - (void)setupTableHeaderView {
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 414, 40)];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, 125, 30)];
-    label.text = @"AUTO-REFRESH:";
-    label.textColor = [UIColor whiteColor];
-    label.font = [UIFont boldSystemFontOfSize:14];
-    label.textAlignment = NSTextAlignmentRight;
-    self.autorefreshSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(130, 4.5, 51, 31)];
-    self.autorefreshSwitch.onTintColor = [UIColor whiteColor];
-    self.autorefreshSwitch.tintColor = [UIColor whiteColor];
-    [self.autorefreshSwitch addTarget:self action:@selector(autorefreshStateChanged:) forControlEvents:UIControlEventValueChanged];
-    self.updateTimer = [[NSTimer alloc] initWithFireDate:[NSDate date] interval:5 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
-    [headerView addSubview:label];
-    [headerView addSubview:self.autorefreshSwitch];
-    
-    UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width-191, 5, 125, 30)];
-    label2.text = @"EXPAND STATS:";
-    label2.textColor = [UIColor whiteColor];
-    label2.font = [UIFont boldSystemFontOfSize:14];
-    label2.textAlignment = NSTextAlignmentRight;
-    self.expandSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(self.view.frame.size.width-61, 4.5, 51, 31)];
-    self.expandSwitch.onTintColor = [UIColor whiteColor];
-    self.expandSwitch.tintColor = [UIColor whiteColor];
-    [self.expandSwitch addTarget:self action:@selector(expandStateChanged:) forControlEvents:UIControlEventValueChanged];
-    [headerView addSubview:label2];
-    [headerView addSubview:self.expandSwitch];
-    
-    self.tableView.tableHeaderView = headerView;
+    self.headerView = [[NSBundle mainBundle] loadNibNamed:@"MatchupHeaderView" owner:self options:nil].firstObject;
+    self.headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    [self.headerView.autorefreshSwitch addTarget:self action:@selector(autorefreshStateChanged:) forControlEvents:UIControlEventValueChanged];
+    [self.headerView.expandStatsSwitch addTarget:self action:@selector(expandStateChanged:) forControlEvents:UIControlEventValueChanged];
+    self.tableView.tableHeaderView = self.headerView;
     [self.tableView setContentOffset:CGPointMake(0,40)];
+    self.updateTimer = [[NSTimer alloc] initWithFireDate:[NSDate date] interval:5 target:self selector:@selector(timerFired:) userInfo:nil repeats:YES];
 }
 
 - (void)autorefreshStateChanged:(UISwitch *)sender{
@@ -380,11 +359,11 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.expandSwitch.isOn) {
+    if (self.headerView.expandStatsSwitch.isOn) {
         if (self.tableViewShowingWinProbabilityStatistics) return 70; //dont forget to change at cellForRowAtIndexPath
         return 53;
     }
-    return 42.333;
+    return 41.846;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
@@ -408,7 +387,7 @@
     UILabel *leftStats = [[UILabel alloc] initWithFrame:CGRectMake(width/2-50, 0, 50, 40)];
     leftStats.text = [NSString stringWithFormat:@"%.0f",tot1];
     leftStats.textAlignment = NSTextAlignmentCenter;
-    leftStats.font = [UIFont boldSystemFontOfSize:19];
+    leftStats.font = [UIFont boldSystemFontOfSize:20];
     leftStats.textColor = [UIColor whiteColor];
     [cell addSubview:leftStats];
     UILabel *leftStats2 = [[UILabel alloc] initWithFrame:CGRectMake(width/2-100, 0, 50, 40)];
@@ -421,7 +400,7 @@
     UILabel *rightStats = [[UILabel alloc] initWithFrame:CGRectMake(width/2, 0, 50, 40)];
     rightStats.text = [NSString stringWithFormat:@"%.0f",tot2];
     rightStats.textAlignment = NSTextAlignmentCenter;
-    rightStats.font = [UIFont boldSystemFontOfSize:19];
+    rightStats.font = [UIFont boldSystemFontOfSize:20];
     rightStats.textColor = [UIColor whiteColor];
     [cell addSubview:rightStats];
     UILabel *rightStats2 = [[UILabel alloc] initWithFrame:CGRectMake(width/2+50, 0, 50, 40)];
@@ -444,8 +423,8 @@
     if (self.cells.count >= indexPath.row+indexPath.section*_numStartersTeam1+1) {
         MatchupPlayerCell *cell = self.cells[indexPath.row+indexPath.section*_numStartersTeam1];
         if (!cell) {
-            cell = [[MatchupPlayerCell alloc] initWithRightPlayer:rightPlayer leftPlayer:leftPlayer view:self expanded:self.expandSwitch.isOn size:CGSizeMake(self.tableView.frame.size.width, (self.expandSwitch.isOn) ?
-                        (self.tableViewShowingWinProbabilityStatistics) ? 70 : 53 : 42.333)];
+            cell = [[NSBundle mainBundle] loadNibNamed:@"MatchupPlayerCell" owner:self options:nil].firstObject;
+            [cell loadWithRightPlayer:rightPlayer leftPlayer:leftPlayer expanded:self.headerView.expandStatsSwitch.isOn];
             cell.delegate = self;
             cell.index = (int)indexPath.row;
             [self.cells addObject:cell];
@@ -458,8 +437,8 @@
         }
         return cell;
     }
-    MatchupPlayerCell *cell = [[MatchupPlayerCell alloc] initWithRightPlayer:rightPlayer leftPlayer:leftPlayer view:self expanded:self.expandSwitch.isOn size:CGSizeMake(self.tableView.frame.size.width, (self.expandSwitch.isOn) ?
-            (self.tableViewShowingWinProbabilityStatistics) ? 70 : 53 : 42.333)];
+    MatchupPlayerCell *cell = [[NSBundle mainBundle] loadNibNamed:@"MatchupPlayerCell" owner:self options:nil].firstObject;
+    [cell loadWithRightPlayer:rightPlayer leftPlayer:leftPlayer expanded:self.headerView.expandStatsSwitch.isOn];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.delegate = self;
     cell.index = (int)indexPath.row;
@@ -491,7 +470,7 @@
     }
 }
 
--(void) fadeIn:(UIButton *)sender {
+-(void)fadeIn:(UIButton *)sender {
     self.navigationItem.rightBarButtonItem.enabled = NO;
     FBPickerView *picker = [FBPickerView loadViewFromNib];
     picker.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
@@ -511,15 +490,15 @@
 - (void)doneButtonPressedInPickerView:(FBPickerView *)pickerView {
     int data1 = [pickerView selectedIndexForColumn:0];
     if (data1 != 6) {
-        [self.autorefreshSwitch setOn: NO];
-        self.autorefreshSwitch.enabled = NO;
+        [self.headerView.autorefreshSwitch setOn: NO];
+        self.headerView.autorefreshSwitch.enabled = NO;
     }
-    else self.autorefreshSwitch.enabled = YES;
+    else self.headerView.autorefreshSwitch.enabled = YES;
     self.selectedPickerData = [pickerView selectedStringForColumn:0];
     _scoringDay = self.session.scoringPeriodID.intValue-6+data1;
     if (_scoringDay != self.session.scoringPeriodID.intValue) {
-        [self.autorefreshSwitch setOn:NO];
-        [self autorefreshStateChanged:self.autorefreshSwitch];
+        [self.headerView.autorefreshSwitch setOn:NO];
+        [self autorefreshStateChanged:self.headerView.autorefreshSwitch];
     }
     self.cells = [[NSMutableArray alloc] init];
     [self refreshAsync];

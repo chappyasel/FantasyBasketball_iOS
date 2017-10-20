@@ -18,8 +18,9 @@
 #import "PlayerViewController.h"
 #import "WebViewController.h"
 #import "AppDelegate.h"
+#import <SafariServices/SafariServices.h>
 
-@interface FBViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, FBPickerViewDelegate, PlayerCellDelegate>
+@interface FBViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, FBPickerViewDelegate, PlayerCellDelegate, SFSafariViewControllerDelegate>
 
 @property (nonatomic, strong) ZFModalTransitionAnimator *animator;
 
