@@ -193,8 +193,8 @@
     self.leftProjectionsView.alpha = expanded;
 }
 
-- (NSString *)statsForPlayer: (FBPlayer *)player expanded: (BOOL)expanded {
-    NSArray *strList = (expanded) ? @[@" pts",@" reb",@" ast",@" stl",@" blk"] : @[@"p",@"r",@"a",@"s",@"b"];
+- (NSString *)statsForPlayer: (FBPlayer *)player expanded:(BOOL)expanded {
+    NSArray *strList = (NO) ? @[@" pts",@" reb",@" ast",@" stl",@" blk"] : @[@"p",@"r",@"a",@"s",@"b"];
     int stat1 = 0, stat2 = 0;
     NSString *stat1t = @"", *stat2t = @""; //pick largest stats of: reb, ast, blk, stl
     if ((int)player.blocks >= (int)player.assists ||

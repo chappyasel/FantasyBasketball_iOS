@@ -174,6 +174,9 @@
         NSLog(@"failed to save in AppDelegate: %@", [error localizedDescription]);
     }
     
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor],
+                                                           NSFontAttributeName:[UIFont systemFontOfSize:21 weight:UIFontWeightSemibold]}];
+    
     //RESideMenu init
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:
                         [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"mu"]];
@@ -182,7 +185,7 @@
     navController.navigationBar.translucent = NO;
     navController.navigationBar.barStyle = UIBarStyleBlack;
     [navController.navigationBar setTitleTextAttributes: @{NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    RESideMenu *sideMenuViewController = [[RESideMenu alloc] initWithContentViewController: navController
+    RESideMenu *sideMenuViewController = [[RESideMenu alloc] initWithContentViewController:navController
                                                                     leftMenuViewController:[[LeftSideMenuViewController alloc] init]
                                                                    rightMenuViewController:nil];
     sideMenuViewController.backgroundImage = [UIImage imageNamed:@"StadiumBlur2.jpg"];
