@@ -10,14 +10,43 @@
 #import "FBPlayer.h"
 #import "TFHpple.h"
 
+@interface FBWinProbablityPlayer()
+
+@property NSLock *gamesLock;
+
+@end
+
 @implementation FBWinProbablityPlayer
 
-- (void)addGame: (FBWinProbabilityGame *)game atIndex: (int)index {
-    if (!self.games)
+@synthesize games = _games;
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
         self.games = @[[NSNull null], [NSNull null], [NSNull null], [NSNull null],
                        [NSNull null], [NSNull null], [NSNull null]].mutableCopy;
-    if (self.games.count > index) //Shouldnt ever be an error?
-        [self.games replaceObjectAtIndex:index withObject:game];
+        self.gamesLock = [[NSLock alloc] init];
+    }
+    return self;
+}
+
+- (void)addGame:(FBWinProbabilityGame *)game atIndex:(int)index {
+    [self.gamesLock lock];
+    _games[index] = game;
+    [self.gamesLock unlock];
+}
+
+- (void)setGames:(NSMutableArray *)games {
+    [self.gamesLock lock];
+    _games = games;
+    [self.gamesLock unlock];
+}
+
+- (NSMutableArray *)games {
+    [self.gamesLock lock];
+    NSMutableArray *arr = _games.mutableCopy;
+    [self.gamesLock unlock];
+    return arr;
 }
 
 - (void)loadPlayerWithName:(NSString *)name completionBlock: (void (^)(void))completion {
@@ -46,7 +75,9 @@
         NSMutableArray *fpts = [self fptsArrayWithParser:parser];
         //PARSE FPTS HERE INTO STATS
         float sum = 0;
-        for (NSNumber *num in fpts) sum += [num intValue];
+        for (NSNumber *num in fpts) {
+            sum += [num intValue];
+        }
         self.average = sum/fpts.count;
         self.variance = [self varianceForArray:fpts withAverage:self.average];
         self.standardDeviation = sqrtf(self.variance);
@@ -94,7 +125,7 @@
     return games;
 }
 
-- (float)varianceForArray: (NSMutableArray *)arr withAverage: (float)avg {
+- (float)varianceForArray:(NSMutableArray *)arr withAverage:(float)avg {
     float sumOfDiffs = 0;
     for (NSNumber *score in arr) sumOfDiffs += pow(([score intValue] - avg), 2);
     return sumOfDiffs / arr.count;

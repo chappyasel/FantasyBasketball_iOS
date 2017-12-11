@@ -23,8 +23,8 @@
 
 @property NSMutableArray *games;
 
-- (void)loadPlayerWithName:(NSString *)name completionBlock: (void (^)(void))completion;
+- (void)loadPlayerWithName:(NSString *)name completionBlock:(void (^)(void))completion;
 
-- (void)addGame: (FBWinProbabilityGame *)game atIndex: (int)index;
+- (void)addGame:(FBWinProbabilityGame *)game atIndex:(int)index;
 
 @end

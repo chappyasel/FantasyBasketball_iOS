@@ -159,7 +159,9 @@
                 player = (switchValid) ? self.team1Players[name] : self.team2Players[name];
                 if (self.isUpdating && [player.games[index] isKindOfClass:[FBWinProbabilityGame class]])
                      [player.games[index] updateWithScore:fpts gameStatus:gameStatus];
-                else [player addGame:[FBWinProbabilityGame gameWithScore:fpts gameStatus:gameStatus] atIndex:index];
+                else {
+                    [player addGame:[FBWinProbabilityGame gameWithScore:fpts gameStatus:gameStatus] atIndex:index];
+                }
             }
         }
         else if (switchPoint != 0) switchValid = NO;

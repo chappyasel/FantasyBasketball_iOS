@@ -360,7 +360,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.headerView.expandStatsSwitch.isOn) {
-        if (self.tableViewShowingWinProbabilityStatistics) return 70; //dont forget to change at cellForRowAtIndexPath
+        if (self.tableViewShowingWinProbabilityStatistics) return 85; //dont forget to change at cellForRowAtIndexPath
         return 53;
     }
     return 41.846;

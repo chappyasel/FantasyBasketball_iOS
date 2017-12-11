@@ -31,6 +31,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *rightProjectionsView;
 @property (weak, nonatomic) IBOutlet UILabel *leftProjectionsView;
 
+@property (weak, nonatomic) IBOutlet UILabel *rightStatsView;
+@property (weak, nonatomic) IBOutlet UILabel *leftStatsView;
+
 @property (nonatomic) BOOL expanded;
 
 @end
@@ -61,15 +64,6 @@
         //INJURY
         if (![self.leftPlayer.injury isEqualToString:@""])
             self.leftInjuryView.text = self.leftPlayer.injury;
-        //INFO
-        NSString *playerStats = [self statsForPlayer:self.leftPlayer expanded:(self.expanded)];
-        if (self.leftPlayer.isPlaying)
-            self.leftSubnameView.text = (self.expanded) ?
-                [NSString stringWithFormat:@"%@, %@ %@",self.leftPlayer.opponent,self.leftPlayer.status,self.leftPlayer.score] :
-                [NSString stringWithFormat:@"%@: %@",self.leftPlayer.status, playerStats];
-        else self.leftSubnameView.text = @"-";
-        if (self.expanded && self.leftPlayer.gameState != FBGameStateHasntStarted)
-            self.leftSubname2View.text = playerStats;
         //Link
         [self.leftLinkButton addTarget:self action:@selector(linkPlayerPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -87,18 +81,10 @@
         //INJURY
         if (![self.rightPlayer.injury isEqualToString:@""])
             self.rightInjuryView.text = self.rightPlayer.injury;
-        //INFO
-        NSString *playerStats = [self statsForPlayer:self.rightPlayer expanded:(self.expanded)];
-        if (self.rightPlayer.isPlaying)
-            self.rightSubnameView.text = (self.expanded) ?
-            [NSString stringWithFormat:@"%@, %@ %@",self.rightPlayer.opponent,self.rightPlayer.status,self.rightPlayer.score] :
-            [NSString stringWithFormat:@"%@: %@",self.rightPlayer.status, playerStats];
-        else self.rightSubnameView.text = @"-";
-        if (self.expanded && self.rightPlayer.gameState != FBGameStateHasntStarted)
-            self.rightSubname2View.text = playerStats;
         //Link
         [self.rightLinkButton addTarget:self action:@selector(linkPlayerPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
+    [self updateWithRightPlayer:rP leftPlayer:lP];
 }
 
 - (void)updateWithRightPlayer:(FBPlayer *)rP leftPlayer:(FBPlayer *)lP {
@@ -108,12 +94,12 @@
     NSString *leftPlayerStats = [self statsForPlayer:self.leftPlayer expanded:(self.frame.size.width > 400 && self.expanded)];
     if (self.rightPlayer.isPlaying)
         self.rightSubnameView.text = (self.expanded) ?
-        [NSString stringWithFormat:@"%@ %@, %@",self.rightPlayer.status,self.rightPlayer.score,self.rightPlayer.opponent] :
-        [NSString stringWithFormat:@"%@: %@",rightPlayerStats,self.rightPlayer.status];
+        [NSString stringWithFormat:@"%@ %@, %@", self.rightPlayer.status, self.rightPlayer.score, self.rightPlayer.opponent] :
+        [NSString stringWithFormat:@"%@: %@",rightPlayerStats, self.rightPlayer.status];
     else self.rightSubnameView.text = @"-";
     if (self.leftPlayer.isPlaying)
         self.leftSubnameView.text = (self.expanded) ?
-        [NSString stringWithFormat:@"%@, %@ %@",self.leftPlayer.opponent,self.leftPlayer.status,self.leftPlayer.score] :
+        [NSString stringWithFormat:@"%@, %@ %@", self.leftPlayer.opponent, self.leftPlayer.status, self.leftPlayer.score] :
         [NSString stringWithFormat:@"%@: %@",self.leftPlayer.status, leftPlayerStats];
     else self.leftSubnameView.text = @"-";
     if (self.expanded && self.rightPlayer.gameState != FBGameStateHasntStarted) {
@@ -183,6 +169,8 @@
         [leftStr addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(i*2, 1)];
     }
     self.leftProjectionsView.attributedText = leftStr;
+    self.rightStatsView.text = [NSString stringWithFormat:@"μ: %.1f   σ: %.1f", wpRightPlayer.average, wpRightPlayer.standardDeviation];
+    self.leftStatsView.text = [NSString stringWithFormat:@"μ: %.1f   σ: %.1f", wpLeftPlayer.average, wpLeftPlayer.standardDeviation];
 }
 
 - (void)setExpanded:(BOOL)expanded {
@@ -191,6 +179,8 @@
     self.leftSubname2View.alpha = expanded;
     self.rightProjectionsView.alpha = expanded;
     self.leftProjectionsView.alpha = expanded;
+    self.rightStatsView.alpha = expanded;
+    self.leftStatsView.alpha = expanded;
 }
 
 - (NSString *)statsForPlayer: (FBPlayer *)player expanded:(BOOL)expanded {
